@@ -7,7 +7,7 @@
 
 import axios, { AxiosError } from 'axios';
 
-// CORRECT: Proper error handling with response existence check
+// CORRECT: Proper error handling with response existence check and 429 handling
 export async function properErrorHandling() {
   try {
     const response = await axios.get('https://api.example.com/data', {
@@ -18,6 +18,9 @@ export async function properErrorHandling() {
     if (axios.isAxiosError(error)) {
       // Check if response exists (network errors don't have response)
       if (error.response) {
+        if (error.response.status === 429) {
+          throw new Error('Rate limited - please try again later');
+        }
         console.error('HTTP error:', error.response.status);
       } else if (error.request) {
         console.error('Network error: no response received');
@@ -88,7 +91,7 @@ export async function handles429AsTerminalError() {
   }
 }
 
-// CORRECT: Using optional chaining for safe access
+// CORRECT: Using optional chaining for safe access with 429 handling
 export async function safeErrorAccessWithOptionalChaining() {
   try {
     const response = await axios.get('https://api.example.com/data');
@@ -98,6 +101,10 @@ export async function safeErrorAccessWithOptionalChaining() {
       // Safe: uses optional chaining
       const status = error.response?.status;
       const data = error.response?.data;
+
+      if (status === 429) {
+        throw new Error('Rate limited');
+      }
 
       console.error('Error:', { status, data, message: error.message });
     }

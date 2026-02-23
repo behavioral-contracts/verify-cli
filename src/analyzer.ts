@@ -60,14 +60,22 @@ export class Analyzer {
    * Analyzes a single source file
    */
   private analyzeFile(sourceFile: ts.SourceFile): void {
-    const visit = (node: ts.Node) => {
-      // Look for call expressions
-      if (ts.isCallExpression(node)) {
-        this.analyzeCallExpression(node, sourceFile);
+    const self = this;
+
+    function visit(node: ts.Node, parent?: ts.Node): void {
+      // Set parent pointer if not already set
+      if (parent && !(node as any).parent) {
+        (node as any).parent = parent;
       }
 
-      ts.forEachChild(node, visit);
-    };
+      // Look for call expressions
+      if (ts.isCallExpression(node)) {
+        self.analyzeCallExpression(node, sourceFile);
+      }
+
+      // Recursively visit children, passing current node as parent
+      ts.forEachChild(node, (child) => visit(child, node));
+    }
 
     visit(sourceFile);
   }
@@ -111,7 +119,7 @@ export class Analyzer {
    * Extracts call site information from a call expression
    */
   private extractCallSite(node: ts.CallExpression, sourceFile: ts.SourceFile): CallSite | null {
-    const { line, character } = sourceFile.getLineAndCharacterOfPosition(node.getStart());
+    const { line, character } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
 
     // Try to determine the function and package being called
     let functionName: string | null = null;
@@ -227,7 +235,7 @@ export class Analyzer {
       analysis.checksResponseExists = this.catchChecksResponseExists(catchClause);
       analysis.checksStatusCode = this.catchChecksStatusCode(catchClause);
       analysis.handledStatusCodes = this.extractHandledStatusCodes(catchClause);
-      analysis.hasRetryLogic = this.catchHasRetryLogic(catchClause);
+      analysis.hasRetryLogic = this.catchHasRetryLogic(catchClause, sourceFile);
     }
 
     return analysis;
@@ -272,19 +280,20 @@ export class Analyzer {
     let found = false;
 
     const visit = (node: ts.Node) => {
-      // Look for: error.response, err.response, e.response, etc.
-      if (ts.isPropertyAccessExpression(node) && node.name.text === 'response') {
-        // Check if it's used in a conditional or optional chain
-        const parent = node.parent;
-        if (parent && (ts.isIfStatement(parent) || ts.isBinaryExpression(parent))) {
+      // Look for if statements checking error.response
+      if (ts.isIfStatement(node)) {
+        const expression = node.expression;
+        // Check the if condition for error.response patterns
+        const hasResponseCheck = this.expressionChecksResponse(expression);
+        if (hasResponseCheck) {
           found = true;
         }
       }
 
-      // Look for optional chaining: error.response?.status
-      if (ts.isPropertyAccessExpression(node) && node.expression.kind === ts.SyntaxKind.QuestionDotToken) {
+      // Look for optional chaining: error.response?.status or error.response?.data
+      if (ts.isPropertyAccessExpression(node) && node.questionDotToken) {
         if (ts.isPropertyAccessExpression(node.expression) &&
-            (node.expression as ts.PropertyAccessExpression).name.text === 'response') {
+            node.expression.name.text === 'response') {
           found = true;
         }
       }
@@ -294,6 +303,35 @@ export class Analyzer {
 
     visit(catchClause.block);
     return found;
+  }
+
+  /**
+   * Checks if an expression checks for response property
+   */
+  private expressionChecksResponse(node: ts.Expression): boolean {
+    // Direct check: if (error.response)
+    if (ts.isPropertyAccessExpression(node) && node.name.text === 'response') {
+      return true;
+    }
+
+    // Negated check: if (!error.response)
+    if (ts.isPrefixUnaryExpression(node) && node.operator === ts.SyntaxKind.ExclamationToken) {
+      if (ts.isPropertyAccessExpression(node.operand) && node.operand.name.text === 'response') {
+        return true;
+      }
+    }
+
+    // Binary expression: if (error.response && ...)
+    if (ts.isBinaryExpression(node)) {
+      return this.expressionChecksResponse(node.left) || this.expressionChecksResponse(node.right);
+    }
+
+    // Parenthesized: if ((error.response))
+    if (ts.isParenthesizedExpression(node)) {
+      return this.expressionChecksResponse(node.expression);
+    }
+
+    return false;
   }
 
   /**
@@ -348,9 +386,9 @@ export class Analyzer {
   /**
    * Checks if catch block has retry logic
    */
-  private catchHasRetryLogic(catchClause: ts.CatchClause): boolean {
+  private catchHasRetryLogic(catchClause: ts.CatchClause, sourceFile: ts.SourceFile): boolean {
     // Look for common retry patterns: retry, attempt, backoff, setTimeout, etc.
-    const text = catchClause.getText().toLowerCase();
+    const text = catchClause.getText(sourceFile).toLowerCase();
     return text.includes('retry') ||
            text.includes('backoff') ||
            text.includes('attempt') ||

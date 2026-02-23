@@ -4,13 +4,17 @@
 
 import { describe, it, expect, beforeAll } from 'vitest';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import { loadCorpus } from '../src/corpus-loader.js';
 import { Analyzer } from '../src/analyzer.js';
 import type { AnalyzerConfig } from '../src/types.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 describe('Corpus Loader', () => {
   it('should load axios contract from corpus', async () => {
-    const corpusPath = path.join(__dirname, '../../../corpus');
+    const corpusPath = path.join(__dirname, '../../corpus');
     const result = await loadCorpus(corpusPath);
 
     expect(result.errors).toHaveLength(0);
@@ -22,7 +26,7 @@ describe('Corpus Loader', () => {
   });
 
   it('should validate contract schema', async () => {
-    const corpusPath = path.join(__dirname, '../../../corpus');
+    const corpusPath = path.join(__dirname, '../../corpus');
     const result = await loadCorpus(corpusPath);
 
     // All contracts should be valid
@@ -43,7 +47,7 @@ describe('Analyzer - Violations', () => {
 
   beforeAll(async () => {
     // Load corpus
-    const corpusPath = path.join(__dirname, '../../../corpus');
+    const corpusPath = path.join(__dirname, '../../corpus');
     const corpusResult = await loadCorpus(corpusPath);
 
     expect(corpusResult.errors).toHaveLength(0);
@@ -56,7 +60,7 @@ describe('Analyzer - Violations', () => {
     // Create analyzer with violations fixture
     const config: AnalyzerConfig = {
       tsconfigPath: path.join(__dirname, '../tsconfig.test.json'),
-      corpusPath: path.join(__dirname, '../../../corpus'),
+      corpusPath: path.join(__dirname, '../../corpus'),
     };
 
     analyzer = new Analyzer(config, corpus.contracts);
@@ -89,7 +93,7 @@ describe('Analyzer - Violations', () => {
     // Create analyzer with clean baseline
     const config: AnalyzerConfig = {
       tsconfigPath: path.join(__dirname, '../tsconfig.test.json'),
-      corpusPath: path.join(__dirname, '../../../corpus'),
+      corpusPath: path.join(__dirname, '../../corpus'),
     };
 
     analyzer = new Analyzer(config, corpus.contracts);
@@ -127,7 +131,7 @@ describe('Analyzer - Error Detection Patterns', () => {
 
 describe('Analyzer - Stats', () => {
   it('should provide accurate analysis statistics', async () => {
-    const corpusPath = path.join(__dirname, '../../../corpus');
+    const corpusPath = path.join(__dirname, '../../corpus');
     const corpusResult = await loadCorpus(corpusPath);
 
     const config: AnalyzerConfig = {

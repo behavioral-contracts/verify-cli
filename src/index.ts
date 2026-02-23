@@ -7,6 +7,7 @@
 import { Command } from 'commander';
 import * as path from 'path';
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import { loadCorpus } from './corpus-loader.js';
 import { Analyzer } from './analyzer.js';
@@ -17,6 +18,9 @@ import {
   printCorpusErrors,
 } from './reporter.js';
 import type { AnalyzerConfig } from './types.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const program = new Command();
 
