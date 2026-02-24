@@ -67,6 +67,10 @@ export class Analyzer {
     const axiosInstances = new Map<string, string>(); // variableName -> packageName
     const instancesWithInterceptors = new Set<string>(); // variableName
 
+    // Track variables that are schema instances (zod, yup, etc.)
+    // Maps variable name to package name (e.g., "userSchema" -> "zod")
+    const schemaInstances = new Map<string, string>();
+
     // Detect global React Query error handlers once per file
     const reactQueryAnalyzer = new ReactQueryAnalyzer(sourceFile, this.program.getTypeChecker());
     const globalHandlers = reactQueryAnalyzer.detectGlobalHandlers(sourceFile);
@@ -89,6 +93,12 @@ export class Analyzer {
           axiosInstances.set(varName, newPackageName);
         }
 
+        // Check for schema factory methods (z.object(), z.string(), etc.)
+        const schemaPackageName = self.extractPackageFromSchemaFactory(node.initializer, sourceFile);
+        if (schemaPackageName) {
+          schemaInstances.set(varName, schemaPackageName);
+        }
+
       }
 
       // Look for: this._axios = axios.create(...) or this.db = new PrismaClient()
@@ -107,6 +117,12 @@ export class Analyzer {
         const newPackageName = self.extractPackageFromNewExpression(node.right, sourceFile);
         if (newPackageName) {
           axiosInstances.set(varName, newPackageName);
+        }
+
+        // Check for schema factory methods
+        const schemaPackageName = self.extractPackageFromSchemaFactory(node.right, sourceFile);
+        if (schemaPackageName) {
+          schemaInstances.set(varName, schemaPackageName);
         }
       }
 
@@ -188,7 +204,8 @@ export class Analyzer {
           sourceFile,
           axiosInstances,
           instancesWithInterceptors,
-          globalHandlers
+          globalHandlers,
+          schemaInstances
         );
       }
 
@@ -207,7 +224,8 @@ export class Analyzer {
     sourceFile: ts.SourceFile,
     axiosInstances: Map<string, string>,
     instancesWithInterceptors: Set<string>,
-    globalHandlers: { hasQueryCacheOnError: boolean; hasMutationCacheOnError: boolean }
+    globalHandlers: { hasQueryCacheOnError: boolean; hasMutationCacheOnError: boolean },
+    schemaInstances: Map<string, string>
   ): void {
     // Check if this is a React Query hook
     const reactQueryAnalyzer = new ReactQueryAnalyzer(sourceFile, this.program.getTypeChecker());
@@ -218,7 +236,7 @@ export class Analyzer {
       return;
     }
 
-    const callSite = this.extractCallSite(node, sourceFile, axiosInstances);
+    const callSite = this.extractCallSite(node, sourceFile, axiosInstances, schemaInstances);
     if (!callSite) return;
 
     const contract = this.contracts.get(callSite.packageName);
@@ -487,7 +505,8 @@ export class Analyzer {
   private extractCallSite(
     node: ts.CallExpression,
     sourceFile: ts.SourceFile,
-    axiosInstances: Map<string, string>
+    axiosInstances: Map<string, string>,
+    schemaInstances: Map<string, string>
   ): CallSite | null {
     const { line, character } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
 
@@ -521,6 +540,10 @@ export class Analyzer {
         // Check if root is a known instance variable (e.g., axiosInstance, prismaClient)
         else if (axiosInstances.has(rootIdentifier)) {
           packageName = axiosInstances.get(rootIdentifier)!;
+        }
+        // Check if root is a tracked schema instance (e.g., userSchema created from z.object())
+        else if (schemaInstances.has(rootIdentifier)) {
+          packageName = schemaInstances.get(rootIdentifier)!;
         }
         // Fallback: resolve from imports
         else {
@@ -683,6 +706,89 @@ export class Analyzer {
         if (packageName && this.contracts.has(packageName)) {
           return packageName;
         }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Extracts package name from schema factory methods (z.object(), z.string(), etc.)
+   * Returns the package name if this is a schema creation call
+   */
+  private extractPackageFromSchemaFactory(node: ts.Expression, sourceFile: ts.SourceFile): string | null {
+    // Pattern: z.object(...), z.string(), z.number(), etc.
+    // These are factory methods that return schema instances
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+      const methodName = node.expression.name.text;
+
+      // Common zod schema factory methods
+      const zodFactoryMethods = [
+        'object', 'string', 'number', 'boolean', 'array', 'tuple',
+        'union', 'intersection', 'record', 'map', 'set', 'date',
+        'undefined', 'null', 'void', 'any', 'unknown', 'never',
+        'literal', 'enum', 'nativeEnum', 'promise', 'function',
+        'lazy', 'discriminatedUnion', 'instanceof', 'nan', 'optional',
+        'nullable', 'coerce'
+      ];
+
+      if (zodFactoryMethods.includes(methodName)) {
+        if (ts.isIdentifier(node.expression.expression)) {
+          const objectName = node.expression.expression.text;
+
+          // Check if this is 'z' from zod import
+          const packageName = this.resolvePackageFromImports(objectName, sourceFile);
+          if (packageName === 'zod') {
+            return packageName;
+          }
+
+          // Direct match if imported as something else
+          if (objectName === 'z' || objectName === 'zod') {
+            // Verify it's actually from zod package
+            const resolved = this.resolvePackageFromImports(objectName, sourceFile);
+            if (resolved) {
+              return resolved;
+            }
+          }
+        }
+      }
+    }
+
+    // Pattern: z.ZodObject.create(...) - less common but possible
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+      const methodName = node.expression.name.text;
+      if (methodName === 'create' && ts.isPropertyAccessExpression(node.expression.expression)) {
+        // Check if this is z.ZodObject.create()
+        const className = node.expression.expression.name.text;
+        if (className.startsWith('Zod')) {
+          const rootExpr = node.expression.expression.expression;
+          if (ts.isIdentifier(rootExpr)) {
+            const packageName = this.resolvePackageFromImports(rootExpr.text, sourceFile);
+            if (packageName === 'zod') {
+              return packageName;
+            }
+          }
+        }
+      }
+    }
+
+    // Pattern: schema.extend(...), schema.merge(...), schema.pick(...), etc.
+    // These also return new schema instances
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+      const methodName = node.expression.name.text;
+      const schemaTransformMethods = [
+        'extend', 'merge', 'pick', 'omit', 'partial', 'required',
+        'passthrough', 'strict', 'strip', 'catchall', 'brand',
+        'default', 'describe', 'refine', 'superRefine', 'transform',
+        'preprocess', 'pipe', 'readonly', 'optional', 'nullable',
+        'nullish', 'array', 'promise', 'or', 'and'
+      ];
+
+      if (schemaTransformMethods.includes(methodName)) {
+        // Check if the base is already a tracked schema
+        // This is a bit tricky since we're in the instance detection phase
+        // For now, we'll just check if it looks like a schema method call
+        return null; // Will be handled by tracking the base schema
       }
     }
 
