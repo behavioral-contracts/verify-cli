@@ -66,38 +66,84 @@ export class Analyzer {
     const axiosInstances = new Map<string, string>(); // variableName -> packageName
     const instancesWithInterceptors = new Set<string>(); // variableName
 
-    // First pass: find all axios instance declarations and interceptors
+    // First pass: find all package instance declarations and interceptors
     function findAxiosInstances(node: ts.Node): void {
       // Look for: const instance = axios.create(...)
       if (ts.isVariableDeclaration(node) && node.initializer) {
         const varName = node.name.getText(sourceFile);
+
+        // Check for factory methods (axios.create, etc.)
         const packageName = self.extractPackageFromAxiosCreate(node.initializer, sourceFile);
         if (packageName) {
           axiosInstances.set(varName, packageName);
         }
+
+        // Check for new expressions (new PrismaClient(), new Stripe(), etc.)
+        const newPackageName = self.extractPackageFromNewExpression(node.initializer, sourceFile);
+        if (newPackageName) {
+          axiosInstances.set(varName, newPackageName);
+        }
       }
 
-      // Look for: this._axios = axios.create(...)
+      // Look for: this._axios = axios.create(...) or this.db = new PrismaClient()
       if (ts.isBinaryExpression(node) &&
           node.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
           ts.isPropertyAccessExpression(node.left)) {
         const varName = node.left.name.text;
+
+        // Check for factory methods
         const packageName = self.extractPackageFromAxiosCreate(node.right, sourceFile);
         if (packageName) {
           axiosInstances.set(varName, packageName);
         }
+
+        // Check for new expressions
+        const newPackageName = self.extractPackageFromNewExpression(node.right, sourceFile);
+        if (newPackageName) {
+          axiosInstances.set(varName, newPackageName);
+        }
       }
 
-      // Look for: private _axios: AxiosInstance
+      // Look for: private _axios: AxiosInstance or private prisma: PrismaClient
       if (ts.isPropertyDeclaration(node) && node.type) {
         const varName = node.name.getText(sourceFile);
         if (ts.isTypeReferenceNode(node.type) &&
-            ts.isIdentifier(node.type.typeName) &&
-            node.type.typeName.text === 'AxiosInstance') {
-          // Check if axios is imported in this file
-          const axiosPackage = self.findAxiosImportInFile(sourceFile);
-          if (axiosPackage) {
-            axiosInstances.set(varName, axiosPackage);
+            ts.isIdentifier(node.type.typeName)) {
+          const typeName = node.type.typeName.text;
+
+          // Map type names to package names
+          const typeToPackage: Record<string, string> = {
+            'AxiosInstance': 'axios',
+            'PrismaClient': '@prisma/client',
+            'PrismaService': '@prisma/client',
+          };
+
+          if (typeToPackage[typeName]) {
+            axiosInstances.set(varName, typeToPackage[typeName]);
+          }
+        }
+      }
+
+      // Look for: constructor(private readonly prisma: PrismaService)
+      // TypeScript/NestJS pattern where constructor parameters with modifiers create implicit properties
+      if (ts.isParameter(node) &&
+          (node.modifiers?.some(m => m.kind === ts.SyntaxKind.PrivateKeyword || m.kind === ts.SyntaxKind.PublicKeyword || m.kind === ts.SyntaxKind.ProtectedKeyword)) &&
+          node.type &&
+          ts.isIdentifier(node.name)) {
+        const varName = node.name.text;
+        if (ts.isTypeReferenceNode(node.type) &&
+            ts.isIdentifier(node.type.typeName)) {
+          const typeName = node.type.typeName.text;
+
+          // Map type names to package names
+          const typeToPackage: Record<string, string> = {
+            'AxiosInstance': 'axios',
+            'PrismaClient': '@prisma/client',
+            'PrismaService': '@prisma/client',
+          };
+
+          if (typeToPackage[typeName]) {
+            axiosInstances.set(varName, typeToPackage[typeName]);
           }
         }
       }
@@ -186,6 +232,36 @@ export class Analyzer {
   }
 
   /**
+   * Walks up a property access chain and returns components
+   * Example: prisma.user.create → { root: 'prisma', chain: ['user'], method: 'create' }
+   * Example: axios.get → { root: 'axios', chain: [], method: 'get' }
+   * Example: openai.chat.completions.create → { root: 'openai', chain: ['chat', 'completions'], method: 'create' }
+   */
+  private walkPropertyAccessChain(
+    expr: ts.PropertyAccessExpression,
+    _sourceFile: ts.SourceFile
+  ): { root: string; chain: string[]; method: string } | null {
+    const chain: string[] = [];
+    let current: ts.Expression = expr.expression;
+
+    // Walk up the chain, collecting property names
+    while (ts.isPropertyAccessExpression(current)) {
+      chain.unshift(current.name.text); // Add to front to maintain order
+      current = current.expression;
+    }
+
+    // At this point, current should be the root identifier
+    if (!ts.isIdentifier(current)) {
+      return null; // Unsupported pattern (e.g., complex expression)
+    }
+
+    const root = current.text;
+    const method = expr.name.text;
+
+    return { root, chain, method };
+  }
+
+  /**
    * Extracts call site information from a call expression
    */
   private extractCallSite(
@@ -200,25 +276,35 @@ export class Analyzer {
     let packageName: string | null = null;
 
     if (ts.isPropertyAccessExpression(node.expression)) {
-      // Pattern: something.method(...)
-      functionName = node.expression.name.text;
+      // Walk the full property access chain to handle both simple and chained calls
+      // Simple: axios.get() → { root: 'axios', chain: [], method: 'get' }
+      // Chained: prisma.user.create() → { root: 'prisma', chain: ['user'], method: 'create' }
+      // Property: this.prisma.user.create() → { root: 'this', chain: ['prisma', 'user'], method: 'create' }
+      const chainInfo = this.walkPropertyAccessChain(node.expression, sourceFile);
 
-      if (ts.isIdentifier(node.expression.expression)) {
-        // Pattern: axios.get(...) - direct identifier
-        const identifierName = node.expression.expression.text;
-        packageName = identifierName;
+      if (chainInfo) {
+        functionName = chainInfo.method;
+        let rootIdentifier = chainInfo.root;
 
-        // Check if this identifier is a known axios instance variable
-        if (axiosInstances.has(identifierName)) {
-          packageName = axiosInstances.get(identifierName)!;
+        // Special handling for 'this.property' patterns
+        if (rootIdentifier === 'this' && chainInfo.chain.length > 0) {
+          // For this.prisma.user.create(), use 'prisma' as the identifier
+          rootIdentifier = chainInfo.chain[0];
+          // Remove first element from chain since we're using it as root
+          chainInfo.chain = chainInfo.chain.slice(1);
         }
-      } else if (ts.isPropertyAccessExpression(node.expression.expression)) {
-        // Pattern: this._axios.request(...) or obj.instance.get(...)
-        const propertyName = node.expression.expression.name.text;
 
-        // Check if this property is a known axios instance
-        if (axiosInstances.has(propertyName)) {
-          packageName = axiosInstances.get(propertyName)!;
+        // Check if root is a direct package name
+        if (this.contracts.has(rootIdentifier)) {
+          packageName = rootIdentifier;
+        }
+        // Check if root is a known instance variable (e.g., axiosInstance, prismaClient)
+        else if (axiosInstances.has(rootIdentifier)) {
+          packageName = axiosInstances.get(rootIdentifier)!;
+        }
+        // Fallback: resolve from imports
+        else {
+          packageName = this.resolvePackageFromImports(rootIdentifier, sourceFile);
         }
       }
     } else if (ts.isIdentifier(node.expression)) {
@@ -307,6 +393,36 @@ export class Analyzer {
   }
 
   /**
+   * Extracts package name from new expressions
+   * Examples: new PrismaClient() → "@prisma/client"
+   *          new Stripe(key) → "stripe"
+   *          new OpenAI(config) → "openai"
+   */
+  private extractPackageFromNewExpression(
+    node: ts.Expression,
+    sourceFile: ts.SourceFile
+  ): string | null {
+    if (!ts.isNewExpression(node)) return null;
+
+    const className = node.expression.getText(sourceFile);
+
+    // Map class names to package names
+    const classToPackage: Record<string, string> = {
+      'PrismaClient': '@prisma/client',
+      'PrismaService': '@prisma/client', // NestJS wrapper around PrismaClient
+      'Stripe': 'stripe',
+      'OpenAI': 'openai',
+    };
+
+    if (classToPackage[className]) {
+      return classToPackage[className];
+    }
+
+    // Fallback: resolve from imports
+    return this.resolvePackageFromImports(className, sourceFile);
+  }
+
+  /**
    * Extracts package name from axios.create() call
    * Returns the package name if this is an axios.create() or similar factory call
    */
@@ -329,28 +445,6 @@ export class Analyzer {
           // Direct match (e.g., axios.create where axios is imported as 'axios')
           if (this.contracts.has(objectName)) {
             return objectName;
-          }
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   * Finds if axios is imported in the given source file
-   */
-  private findAxiosImportInFile(sourceFile: ts.SourceFile): string | null {
-    for (const statement of sourceFile.statements) {
-      if (ts.isImportDeclaration(statement)) {
-        const moduleSpecifier = statement.moduleSpecifier;
-
-        if (ts.isStringLiteral(moduleSpecifier)) {
-          const packageName = moduleSpecifier.text;
-
-          // Check if this is a package we have contracts for
-          if (this.contracts.has(packageName)) {
-            return packageName;
           }
         }
       }
