@@ -250,6 +250,230 @@ verify-cli/
 
 ---
 
+## Bulk Analysis & Cross-Repo Scanning
+
+For analyzing multiple repositories at once (e.g., testing against Top 50 TypeScript repos), use the bulk scanner.
+
+### Quick Start
+
+```bash
+# From the workspace root (parent of verify-cli)
+./tools/scan-all-repos.sh
+```
+
+This will:
+1. Build verify-cli (skip with `--skip-build`)
+2. Scan all repos in `test-repos/`
+3. Generate comprehensive reports with unique run IDs
+4. Create per-repo and per-package breakdowns
+
+### Output Structure
+
+Each run creates a timestamped directory with complete analysis results:
+
+```
+verify-cli/output/runs/20260224-163824-9192ca6/
+├── run-metadata.json                     # Run metadata (timestamp, git hash, stats)
+├── summary.md                            # Main overview table (all repos)
+└── <repo-name>/
+    ├── summary.md                        # Per-repo package breakdown
+    ├── audit.json                        # Machine-readable violations
+    ├── output.txt                        # Human-readable violations
+    └── packages/                         # Per-package violation files
+        ├── INDEX.md
+        ├── axios/
+        │   ├── violations.json
+        │   └── violations.txt
+        ├── zod/
+        │   ├── violations.json
+        │   └── violations.txt
+        └── ...
+```
+
+### Navigation Workflow
+
+**1. Start at Main Summary** (`summary.md`)
+
+Overview table showing all repos:
+
+| Repo | Version | Git Hash | Passed | Files | Packages | Contracts | Total | Errors | Warnings | Info | Details |
+|------|---------|----------|--------|-------|----------|-----------|-------|--------|----------|------|---------|
+| [angular](./angular/) | 0.1.0 | 98e64c5 | ❌ | 1178 | 10 | 44 | 15 | 9 | 6 | 0 | [📊 Summary](./angular/summary.md) · [📦 Packages](./angular/packages/) · [📄 JSON](./angular/audit.json) · [📝 TXT](./angular/output.txt) |
+
+Click:
+- **Repo name** → Navigate to repo directory
+- **📊 Summary** → View per-repo package breakdown
+- **📦 Packages** → View per-package violation index
+- **📄 JSON** → Machine-readable audit
+- **📝 TXT** → Human-readable violations with code context
+
+**2. Repo Summary** (`<repo>/summary.md`)
+
+Shows which packages were analyzed and which had violations:
+
+| Package | Contracts | Total | Errors | Warnings | Info | Status | Details |
+|---------|-----------|-------|--------|----------|------|--------|---------|
+| react-hook-form | 2 | 12 | 6 | 6 | 0 | ❌ Failed | [📄 JSON](./packages/react-hook-form/violations.json) · [📝 TXT](./packages/react-hook-form/violations.txt) |
+| zod | 0 | 0 | 0 | 0 | 0 | ✅ Passed | - |
+
+**Sorted automatically:**
+- ❌ Failed packages (with violations) at top
+- ✅ Passed packages at bottom
+
+**3. Package Violations** (`<repo>/packages/<package>/`)
+
+Individual violation files for cross-repo analysis:
+- `violations.json` - Machine-readable violations for this package in this repo
+- `violations.txt` - Human-readable with code snippets
+
+### Cross-Repo Analysis
+
+#### Find all violations for a specific package
+
+```bash
+# Find all axios violations across all runs
+find verify-cli/output/runs -path "*/packages/axios/violations.json"
+
+# Find axios violations in latest run
+find verify-cli/output/runs -path "*/packages/axios/violations.json" | sort | tail -1
+```
+
+#### Count violations per repo for a package
+
+```bash
+# How many zod violations in each repo?
+find verify-cli/output/runs/20260224-163824-9192ca6 \
+  -path "*/packages/zod/violations.json" \
+  -exec sh -c 'echo -n "$(dirname $1 | xargs dirname | xargs basename): "; jq .total_violations "$1"' sh {} \;
+```
+
+**Output:**
+```
+angular: 8
+nextjs: 15
+vitest: 3
+```
+
+#### Extract all violation descriptions for a package
+
+```bash
+# See all zod violation types across repos
+find verify-cli/output/runs/20260224-163824-9192ca6 \
+  -path "*/packages/zod/violations.json" \
+  -exec jq -r '.violations[].description' {} \; | sort | uniq
+```
+
+#### Compare package usage between repos
+
+```bash
+# Which repos use axios?
+find verify-cli/output/runs/20260224-163824-9192ca6 \
+  -path "*/packages/axios" -type d | \
+  xargs dirname | xargs basename
+```
+
+#### Aggregate statistics for a package
+
+```bash
+# Total violations for react-hook-form across all repos
+find verify-cli/output/runs/20260224-163824-9192ca6 \
+  -path "*/packages/react-hook-form/violations.json" \
+  -exec jq '.total_violations' {} \; | \
+  awk '{sum+=$1} END {print "Total:", sum}'
+```
+
+### Run Metadata
+
+Each run includes `run-metadata.json` with:
+
+```json
+{
+  "run_id": "20260224-163824-9192ca6",
+  "timestamp": "2026-02-24T16:38:24Z",
+  "git_commit": "9192ca6f...",
+  "git_branch": "main",
+  "scanner_version": "0.1.0",
+  "trigger": "manual",
+  "repos_scanned": 50,
+  "repos_failed": 0,
+  "total_files": 45832,
+  "total_packages": 500,
+  "total_contracts": 2200,
+  "total_violations": 3456,
+  "total_errors": 2100,
+  "total_warnings": 1200,
+  "total_info": 156
+}
+```
+
+### Advanced Usage
+
+#### Analyze specific repos only
+
+```bash
+# Remove unwanted repos from test-repos/ first
+rm -rf test-repos/unwanted-repo
+./tools/scan-all-repos.sh
+```
+
+#### Skip build for faster iteration
+
+```bash
+# If verify-cli hasn't changed
+./tools/scan-all-repos.sh --skip-build
+```
+
+#### Compare runs over time
+
+```bash
+# List all runs
+ls -1 verify-cli/output/runs/
+
+# Compare violation counts
+echo "Run 1:" && jq .total_violations verify-cli/output/runs/20260224-163824-9192ca6/run-metadata.json
+echo "Run 2:" && jq .total_violations verify-cli/output/runs/20260224-170000-abc123d/run-metadata.json
+```
+
+#### Deep-dive analysis for a specific violation
+
+```bash
+# Find all occurrences of a specific contract violation
+find verify-cli/output/runs -name "*.json" \
+  -exec jq -r '.violations[] | select(.contract_clause == "empty-catch-block-silent-failure") | .file + ":" + (.line|tostring)' {} \;
+```
+
+### Integration with CI/CD
+
+**Track violations over time:**
+
+```yaml
+# .github/workflows/contracts.yml
+- name: Run contract scanner
+  run: |
+    ./tools/scan-all-repos.sh
+
+- name: Upload results
+  uses: actions/upload-artifact@v3
+  with:
+    name: contract-violations-${{ github.sha }}
+    path: verify-cli/output/runs/latest/
+```
+
+**Fail on new violations:**
+
+```bash
+# Compare current run with baseline
+BASELINE_VIOLATIONS=$(jq .total_violations baseline/run-metadata.json)
+CURRENT_VIOLATIONS=$(jq .total_violations verify-cli/output/runs/latest/run-metadata.json)
+
+if [ $CURRENT_VIOLATIONS -gt $BASELINE_VIOLATIONS ]; then
+  echo "❌ New violations introduced!"
+  exit 1
+fi
+```
+
+---
+
 ## Development
 
 ### Setup
