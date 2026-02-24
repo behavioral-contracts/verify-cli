@@ -47,9 +47,11 @@ async function main() {
   console.log(`✓ Loaded ${corpusResult.contracts.size} contracts\n`);
 
   // Discover all fixture files
+  // Use ** to match both regular packages (packages/axios) and scoped packages (packages/@org/package)
+  // Use {ts,tsx} to match both TypeScript and TSX files (for React components)
   const fixturePattern = packageFilter
-    ? `packages/${packageFilter}/fixtures/*.ts`
-    : 'packages/*/fixtures/*.ts';
+    ? `packages/${packageFilter}/**/fixtures/*.{ts,tsx}`
+    : 'packages/**/fixtures/*.{ts,tsx}';
 
   const fixtureFiles = glob.sync(fixturePattern, {
     cwd: corpusPath,
@@ -64,7 +66,8 @@ async function main() {
   let errors = 0;
 
   for (const fixtureFile of fixtureFiles) {
-    const packageMatch = fixtureFile.match(/packages\/([^/]+)\/fixtures/);
+    // Match both regular packages (packages/axios) and scoped packages (packages/@org/package)
+    const packageMatch = fixtureFile.match(/packages\/((?:@[^/]+\/)?[^/]+)\/fixtures/);
     const packageName = packageMatch?.[1] || 'unknown';
 
     const fixtureBasename = path.basename(fixtureFile, '.ts');
@@ -130,19 +133,30 @@ function generateExpectedFromViolations(violations, fixtureFilename, packageName
   for (const [functionName, viols] of grouped.entries()) {
     if (viols.length === 0) continue;
 
-    const clauses = [...new Set(viols.map(v => v.contract_clause))];
-    const severity = viols[0].severity;
-    const lines = viols.map(v => v.line);
+    // Group by severity within the function to handle mixed severities
+    const bySeverity = new Map();
+    for (const v of viols) {
+      if (!bySeverity.has(v.severity)) {
+        bySeverity.set(v.severity, []);
+      }
+      bySeverity.get(v.severity).push(v);
+    }
 
-    expectations.push({
-      id: `${functionName.replace(/[^a-zA-Z0-9]/g, '-')}-violations`,
-      description: `Violations in ${functionName}`,
-      functionName: functionName === 'unknown' ? undefined : functionName,
-      minViolations: viols.length,
-      expectedClauses: clauses,
-      severity,
-      approximateLines: lines.length > 0 ? [Math.min(...lines), Math.max(...lines)] : undefined
-    });
+    // Create separate expectations for each severity level
+    for (const [severity, severityViols] of bySeverity.entries()) {
+      const clauses = [...new Set(severityViols.map(v => v.contract_clause))];
+      const lines = severityViols.map(v => v.line);
+
+      expectations.push({
+        id: `${functionName.replace(/[^a-zA-Z0-9]/g, '-')}-${severity}-violations`,
+        description: `${severity.toUpperCase()} violations in ${functionName}`,
+        functionName: functionName === 'unknown' ? undefined : functionName,
+        minViolations: severityViols.length,
+        expectedClauses: clauses,
+        severity,
+        approximateLines: lines.length > 0 ? [Math.min(...lines), Math.max(...lines)] : undefined
+      });
+    }
   }
 
   // Calculate summary counts
