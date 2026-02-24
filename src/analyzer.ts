@@ -13,6 +13,7 @@ import type {
   Postcondition,
 } from './types.js';
 import { ReactQueryAnalyzer } from './analyzers/react-query-analyzer.js';
+import { AsyncErrorAnalyzer } from './analyzers/async-error-analyzer.js';
 
 /**
  * Main analyzer that coordinates the verification process
@@ -191,6 +192,10 @@ export class Analyzer {
 
     findAxiosInstances(sourceFile);
 
+    // Async error detection pass
+    const asyncErrorAnalyzer = new AsyncErrorAnalyzer(sourceFile);
+    this.detectAsyncErrors(sourceFile, asyncErrorAnalyzer);
+
     function visit(node: ts.Node, parent?: ts.Node): void {
       // Set parent pointer if not already set
       if (parent && !(node as any).parent) {
@@ -214,6 +219,193 @@ export class Analyzer {
     }
 
     visit(sourceFile);
+  }
+
+  /**
+   * Detects async functions with unprotected await expressions
+   */
+  private detectAsyncErrors(sourceFile: ts.SourceFile, asyncErrorAnalyzer: AsyncErrorAnalyzer): void {
+    const self = this;
+
+    function visitForAsyncFunctions(node: ts.Node): void {
+      // Check if this is an async function
+      if (asyncErrorAnalyzer.isAsyncFunction(node)) {
+        const unprotectedAwaits = asyncErrorAnalyzer.findUnprotectedAwaits(node);
+
+        // For each unprotected await, check if any contract requires error handling
+        for (const detection of unprotectedAwaits) {
+          // Try to determine which package this await is calling
+          // This is a simplified approach - we create a violation for any unprotected await
+          // that might be calling a package function
+          const violation = self.createAsyncErrorViolation(
+            sourceFile,
+            detection,
+            node
+          );
+
+          if (violation) {
+            self.violations.push(violation);
+          }
+        }
+      }
+
+      // Continue traversing
+      ts.forEachChild(node, visitForAsyncFunctions);
+    }
+
+    visitForAsyncFunctions(sourceFile);
+
+    // Also detect empty/ineffective catch blocks
+    const catchBlocks = asyncErrorAnalyzer.findAllCatchBlocks(sourceFile);
+    for (const catchBlock of catchBlocks) {
+      const effectiveness = asyncErrorAnalyzer.isCatchBlockEffective(catchBlock);
+
+      if (effectiveness.isEmpty || effectiveness.hasConsoleOnly) {
+        const violation = this.createEmptyCatchViolation(
+          sourceFile,
+          catchBlock,
+          effectiveness
+        );
+
+        if (violation) {
+          this.violations.push(violation);
+        }
+      }
+    }
+  }
+
+  /**
+   * Creates a violation for unprotected async calls
+   */
+  private createAsyncErrorViolation(
+    sourceFile: ts.SourceFile,
+    detection: { line: number; column: number; awaitText: string; functionName: string },
+    _functionNode: ts.Node
+  ): Violation | null {
+    // Look for contracts that have async-related postconditions
+    // For now, we'll check react-hook-form as it has the async-submit-unhandled-error postcondition
+
+    // Extract the await expression to see what's being called
+    const awaitText = detection.awaitText.toLowerCase();
+
+    // Check if this looks like it could be a contract violation
+    // (API call, database operation, etc.)
+    const likelyApiCall =
+      awaitText.includes('fetch') ||
+      awaitText.includes('api') ||
+      awaitText.includes('.get') ||
+      awaitText.includes('.post') ||
+      awaitText.includes('.put') ||
+      awaitText.includes('.delete') ||
+      awaitText.includes('.patch') ||
+      awaitText.includes('axios') ||
+      awaitText.includes('prisma') ||
+      awaitText.includes('supabase') ||
+      awaitText.includes('stripe') ||
+      awaitText.includes('.create') ||
+      awaitText.includes('.update') ||
+      awaitText.includes('.query') ||
+      awaitText.includes('.mutate');
+
+    if (!likelyApiCall) {
+      return null;
+    }
+
+    // Try to find a matching contract with async error postconditions
+    let matchingPostcondition: Postcondition | undefined;
+    let matchingPackageName: string | undefined;
+    let matchingFunctionName: string | undefined;
+
+    for (const [packageName, contract] of this.contracts.entries()) {
+      for (const func of contract.functions) {
+        // Check if any postcondition mentions async errors
+        const asyncErrorPostcondition = func.postconditions?.find(
+          pc => pc.id?.includes('async') || pc.id?.includes('unhandled')
+        );
+
+        if (asyncErrorPostcondition) {
+          matchingPostcondition = asyncErrorPostcondition;
+          matchingPackageName = packageName;
+          matchingFunctionName = func.name;
+          break;
+        }
+      }
+      if (matchingPostcondition) break;
+    }
+
+    // If we found a matching contract, create a violation
+    if (matchingPostcondition && matchingPackageName && matchingFunctionName) {
+      const description = `Async function '${detection.functionName}' contains unprotected await expression. ${detection.awaitText.substring(0, 50)}... may throw unhandled errors.`;
+
+      return {
+        id: `${matchingPackageName}-${matchingPostcondition.id}`,
+        severity: 'error',
+        file: sourceFile.fileName,
+        line: detection.line,
+        column: detection.column,
+        package: matchingPackageName,
+        function: matchingFunctionName,
+        contract_clause: matchingPostcondition.id,
+        description,
+        source_doc: matchingPostcondition.source,
+        suggested_fix: matchingPostcondition.required_handling,
+      };
+    }
+
+    return null;
+  }
+
+  /**
+   * Creates a violation for empty or ineffective catch blocks
+   */
+  private createEmptyCatchViolation(
+    sourceFile: ts.SourceFile,
+    catchBlock: ts.CatchClause,
+    effectiveness: { isEmpty: boolean; hasConsoleOnly: boolean; hasCommentOnly: boolean; hasUserFeedback: boolean }
+  ): Violation | null {
+    // Look for contracts with empty-catch-block postconditions
+    let matchingPostcondition: Postcondition | undefined;
+    let matchingPackageName: string | undefined;
+    let matchingFunctionName: string | undefined;
+
+    for (const [packageName, contract] of this.contracts.entries()) {
+      for (const func of contract.functions) {
+        const emptyCatchPostcondition = func.postconditions?.find(
+          pc => pc.id?.includes('empty-catch') || pc.id?.includes('silent-failure')
+        );
+
+        if (emptyCatchPostcondition) {
+          matchingPostcondition = emptyCatchPostcondition;
+          matchingPackageName = packageName;
+          matchingFunctionName = func.name;
+          break;
+        }
+      }
+      if (matchingPostcondition) break;
+    }
+
+    if (!matchingPostcondition || !matchingPackageName || !matchingFunctionName) {
+      return null;
+    }
+
+    const location = sourceFile.getLineAndCharacterOfPosition(catchBlock.getStart());
+    const description = effectiveness.isEmpty
+      ? 'Empty catch block - errors are silently swallowed. Users receive no feedback when operations fail.'
+      : 'Catch block only logs to console without user feedback. Consider using toast.error() or setError().';
+
+    return {
+      id: `${matchingPackageName}-${matchingPostcondition.id}`,
+      severity: effectiveness.isEmpty ? 'error' : 'warning',
+      file: sourceFile.fileName,
+      line: location.line + 1,
+      column: location.character + 1,
+      package: matchingPackageName,
+      function: matchingFunctionName,
+      contract_clause: matchingPostcondition.id,
+      description,
+      source_doc: matchingPostcondition.source,
+      suggested_fix: matchingPostcondition.required_handling,
+    };
   }
 
   /**
