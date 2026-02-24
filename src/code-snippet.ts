@@ -23,13 +23,13 @@ export interface CodeLine {
  *
  * @param filePath - Path to the source file
  * @param violationLine - Line number where the violation occurred
- * @param contextLines - Number of lines to show before and after (default: 2)
+ * @param contextLines - Number of lines to show before and after (default: 4)
  * @returns Code snippet with context
  */
 export async function extractCodeSnippet(
   filePath: string,
   violationLine: number,
-  contextLines: number = 2
+  contextLines: number = 4
 ): Promise<CodeSnippet | null> {
   try {
     // Read the entire file

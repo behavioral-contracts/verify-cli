@@ -21,7 +21,7 @@ export async function enrichViolationsWithSnippets(
   const enrichedViolations: Violation[] = [];
 
   for (const violation of violations) {
-    const snippet = await extractCodeSnippet(violation.file, violation.line, 2);
+    const snippet = await extractCodeSnippet(violation.file, violation.line, 4);
 
     if (snippet) {
       enrichedViolations.push({
