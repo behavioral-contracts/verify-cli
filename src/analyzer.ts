@@ -525,38 +525,48 @@ export class Analyzer {
     packageName: string,
     functionName: string
   ): Violation | null {
+    const hasAnyErrorHandling = analysis.hasTryCatch || analysis.hasPromiseCatch;
+
     // Specific violation checks based on postcondition ID
     if (postcondition.id.includes('429') || postcondition.id.includes('rate-limit')) {
       // Rate limiting check
-      if (!analysis.hasTryCatch) {
+      if (!hasAnyErrorHandling) {
         return this.createViolation(callSite, postcondition, packageName, functionName,
-          'No try-catch block found. Rate limit errors (429) will crash the application.');
+          'No try-catch block found. Rate limit errors (429) will crash the application.', 'error');
       }
 
+      // WARNING: Has error handling but doesn't handle 429 specifically
       if (!analysis.handledStatusCodes.includes(429) && !analysis.hasRetryLogic) {
         return this.createViolation(callSite, postcondition, packageName, functionName,
-          'Rate limit response (429) is not explicitly handled and no retry logic detected.');
+          'Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.', 'warning');
       }
     }
 
     if (postcondition.id.includes('network')) {
       // Network failure check
-      if (!analysis.hasTryCatch) {
+      if (!hasAnyErrorHandling) {
         return this.createViolation(callSite, postcondition, packageName, functionName,
-          'No try-catch block found. Network failures will crash the application.');
+          'No try-catch block found. Network failures will crash the application.', 'error');
       }
 
-      if (!analysis.checksResponseExists) {
+      // WARNING: Has error handling but doesn't check response.exists
+      if (hasAnyErrorHandling && !analysis.checksResponseExists) {
         return this.createViolation(callSite, postcondition, packageName, functionName,
-          'Catch block does not check if error.response exists before accessing it.');
+          'Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.', 'warning');
       }
     }
 
     if (postcondition.id.includes('error') && postcondition.severity === 'error') {
       // Generic error handling check
-      if (!analysis.hasTryCatch && !analysis.hasPromiseCatch) {
+      if (!hasAnyErrorHandling) {
         return this.createViolation(callSite, postcondition, packageName, functionName,
-          'No error handling found. Errors will crash the application.');
+          'No error handling found. Errors will crash the application.', 'error');
+      }
+
+      // WARNING: Has generic error handling but doesn't inspect status codes
+      if (hasAnyErrorHandling && !analysis.checksStatusCode) {
+        return this.createViolation(callSite, postcondition, packageName, functionName,
+          'Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.', 'warning');
       }
     }
 
@@ -571,11 +581,12 @@ export class Analyzer {
     postcondition: Postcondition,
     packageName: string,
     functionName: string,
-    description: string
+    description: string,
+    severityOverride?: 'error' | 'warning' | 'info'
   ): Violation {
     return {
       id: `${packageName}-${postcondition.id}`,
-      severity: postcondition.severity,
+      severity: severityOverride || postcondition.severity,
       file: callSite.file,
       line: callSite.line,
       column: callSite.column,
