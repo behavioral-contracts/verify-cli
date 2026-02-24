@@ -12,6 +12,9 @@
     "dev": "tsc --watch",
     "test": "vitest",
     "test:ci": "vitest run",
+    "test:fixtures": "vitest run fixture-regression",
+    "test:fixtures:watch": "vitest fixture-regression",
+    "test:fixtures:generate": "node scripts/generate-expected-outputs.js",
     "lint": "eslint src --ext .ts",
     "clean": "rm -rf dist"
   },
