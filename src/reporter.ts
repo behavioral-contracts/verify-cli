@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import chalk from 'chalk';
-import type { AuditRecord, Violation, VerificationSummary } from './types.js';
+import type { AuditRecord, Violation, VerificationSummary, EnhancedAuditRecord, PackageDiscoveryResult } from './types.js';
 
 const TOOL_NAME = '@behavioral-contracts/verify-cli';
 const TOOL_VERSION = '0.1.0'; // Should match package.json
@@ -217,4 +217,150 @@ export function printCorpusErrors(errors: string[]): void {
     console.error(chalk.red(`  ✗ ${err}`));
   });
   console.error('');
+}
+
+/**
+ * Generates an enhanced audit record with package discovery
+ */
+export function generateEnhancedAuditRecord(
+  baseRecord: AuditRecord,
+  packageDiscovery: PackageDiscoveryResult
+): EnhancedAuditRecord {
+  // Group violations by package
+  const violationsByPackage: Record<string, {
+    total: number;
+    errors: number;
+    warnings: number;
+    info: number;
+    violations: Violation[];
+  }> = {};
+
+  for (const violation of baseRecord.violations) {
+    if (!violationsByPackage[violation.package]) {
+      violationsByPackage[violation.package] = {
+        total: 0,
+        errors: 0,
+        warnings: 0,
+        info: 0,
+        violations: [],
+      };
+    }
+
+    const group = violationsByPackage[violation.package];
+    group.total++;
+    group.violations.push(violation);
+
+    if (violation.severity === 'error') group.errors++;
+    else if (violation.severity === 'warning') group.warnings++;
+    else if (violation.severity === 'info') group.info++;
+  }
+
+  return {
+    ...baseRecord,
+    package_discovery: packageDiscovery,
+    violations_by_package: violationsByPackage,
+  };
+}
+
+/**
+ * Prints package discovery report
+ */
+export function printPackageDiscoveryReport(discovery: PackageDiscoveryResult): void {
+  const coveragePercent = discovery.total > 0
+    ? ((discovery.withContracts / discovery.total) * 100).toFixed(1)
+    : '0.0';
+
+  console.log('\n' + chalk.bold('Package Discovery & Coverage'));
+  console.log(chalk.gray('─'.repeat(80)));
+  console.log(`\n  Total packages: ${discovery.total}`);
+  console.log(`  Packages with contracts: ${chalk.green(discovery.withContracts)} (${coveragePercent}%)`);
+  console.log(`  Packages without contracts: ${chalk.yellow(discovery.withoutContracts)}`);
+
+  if (discovery.withContracts > 0) {
+    console.log(`\n  ${chalk.green('✓')} Packages with contracts:`);
+    for (const pkg of discovery.packages.filter(p => p.hasContract)) {
+      console.log(`    ${pkg.name}@${pkg.version} ${chalk.dim(`(contract v${pkg.contractVersion})`)}`);
+    }
+  }
+
+  if (discovery.withoutContracts > 0 && discovery.withoutContracts <= 20) {
+    console.log(`\n  ${chalk.yellow('⚠')} Packages without contracts:`);
+    for (const pkg of discovery.packages.filter(p => !p.hasContract)) {
+      const usageInfo = pkg.usedIn.length > 0 ? chalk.dim(` (used in ${pkg.usedIn.length} files)`) : '';
+      console.log(`    ${pkg.name}@${pkg.version}${usageInfo}`);
+    }
+  } else if (discovery.withoutContracts > 20) {
+    console.log(`\n  ${chalk.yellow('⚠')} Packages without contracts (showing top 20):`);
+    for (const pkg of discovery.packages.filter(p => !p.hasContract).slice(0, 20)) {
+      const usageInfo = pkg.usedIn.length > 0 ? chalk.dim(` (used in ${pkg.usedIn.length} files)`) : '';
+      console.log(`    ${pkg.name}@${pkg.version}${usageInfo}`);
+    }
+    console.log(`    ${chalk.dim(`... and ${discovery.withoutContracts - 20} more`)}`);
+  }
+
+  console.log('');
+}
+
+/**
+ * Prints enhanced terminal report with violations grouped by package
+ */
+export function printEnhancedTerminalReport(record: EnhancedAuditRecord): void {
+  console.log('\n' + chalk.bold('Behavioral Contract Verification Report'));
+  console.log(chalk.gray('─'.repeat(80)));
+
+  // Summary
+  console.log(`\n${chalk.bold('Summary:')}`);
+  console.log(`  Files analyzed: ${record.files_analyzed}`);
+  console.log(`  Contracts applied: ${record.contracts_applied}`);
+  console.log(`  Timestamp: ${record.timestamp}`);
+
+  if (record.git_commit) {
+    console.log(`  Git commit: ${record.git_commit.substring(0, 8)}`);
+  }
+  if (record.git_branch) {
+    console.log(`  Git branch: ${record.git_branch}`);
+  }
+
+  // Package discovery
+  printPackageDiscoveryReport(record.package_discovery);
+
+  // Violations grouped by package
+  if (record.violations.length === 0) {
+    console.log(`${chalk.green('✓')} ${chalk.bold('No violations found!')}`);
+    console.log(chalk.gray('─'.repeat(80)) + '\n');
+    return;
+  }
+
+  console.log(chalk.bold('Violations by Package'));
+  console.log(chalk.gray('─'.repeat(80)));
+
+  const packageNames = Object.keys(record.violations_by_package).sort();
+
+  for (const packageName of packageNames) {
+    const group = record.violations_by_package[packageName];
+    console.log(`\n${chalk.bold.cyan(packageName)} ${chalk.dim(`(${group.total} violations)`)}`);
+    console.log(`  Errors: ${chalk.red(group.errors)} | Warnings: ${chalk.yellow(group.warnings)} | Info: ${chalk.blue(group.info)}`);
+
+    // Show first 5 violations for this package
+    const displayCount = Math.min(5, group.violations.length);
+    for (let i = 0; i < displayCount; i++) {
+      printViolation(group.violations[i]);
+    }
+
+    if (group.violations.length > displayCount) {
+      console.log(`\n    ${chalk.dim(`... and ${group.violations.length - displayCount} more violations in this package`)}`);
+    }
+  }
+
+  // Summary stats
+  console.log(chalk.gray('\n' + '─'.repeat(80)));
+  console.log(chalk.bold('\nOverall Summary:'));
+  console.log(`  Total violations: ${record.summary.total_violations}`);
+  console.log(`  ${chalk.red('Errors')}: ${record.summary.error_count}`);
+  console.log(`  ${chalk.yellow('Warnings')}: ${record.summary.warning_count}`);
+  console.log(`  ${chalk.blue('Info')}: ${record.summary.info_count}`);
+
+  const statusIcon = record.summary.passed ? chalk.green('✓') : chalk.red('✗');
+  const statusText = record.summary.passed ? chalk.green('PASSED') : chalk.red('FAILED');
+  console.log(`\n${statusIcon} ${statusText}\n`);
 }

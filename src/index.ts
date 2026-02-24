@@ -11,10 +11,13 @@ import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import { loadCorpus } from './corpus-loader.js';
 import { Analyzer } from './analyzer.js';
+import { PackageDiscovery } from './package-discovery.js';
 import {
   generateAuditRecord,
+  generateEnhancedAuditRecord,
   writeAuditRecord,
   printTerminalReport,
+  printEnhancedTerminalReport,
   printCorpusErrors,
 } from './reporter.js';
 import { ensureTsconfig } from './tsconfig-generator.js';
@@ -34,8 +37,10 @@ program
   .option('--tsconfig <path>', 'Path to tsconfig.json', './tsconfig.json')
   .option('--corpus <path>', 'Path to corpus directory', findDefaultCorpusPath())
   .option('--output <path>', 'Output path for audit record JSON', './behavioral-audit.json')
+  .option('--project <path>', 'Path to project root (for package.json discovery)', process.cwd())
   .option('--no-terminal', 'Disable terminal output (JSON only)')
   .option('--fail-on-warnings', 'Exit with error code if warnings are found')
+  .option('--discover-packages', 'Enable package discovery and coverage reporting', true)
   .parse(process.argv);
 
 const options = program.opts();
@@ -76,6 +81,18 @@ async function main() {
 
   console.log(chalk.green(`✓ Loaded ${corpusResult.contracts.size} package contracts\n`));
 
+  // Discover packages (if enabled)
+  let packageDiscovery;
+  if (options.discoverPackages !== false) {
+    console.log(chalk.dim('Discovering packages...'));
+    const discoveryTool = new PackageDiscovery(corpusResult.contracts);
+    packageDiscovery = await discoveryTool.discoverPackages(
+      options.project,
+      path.resolve(options.tsconfig)
+    );
+    console.log(chalk.green(`✓ Discovered ${packageDiscovery.total} packages\n`));
+  }
+
   // Create analyzer
   const config: AnalyzerConfig = {
     tsconfigPath: path.resolve(options.tsconfig),
@@ -101,13 +118,22 @@ async function main() {
     corpusVersion: '1.0.0', // TODO: Read from corpus metadata
   });
 
+  // Generate enhanced audit record if package discovery was run
+  const finalRecord = packageDiscovery
+    ? generateEnhancedAuditRecord(auditRecord, packageDiscovery)
+    : auditRecord;
+
   // Write JSON output
-  writeAuditRecord(auditRecord, options.output);
+  writeAuditRecord(finalRecord, options.output);
   console.log(chalk.gray(`Audit record written to ${options.output}`));
 
   // Print terminal report
   if (options.terminal !== false) {
-    printTerminalReport(auditRecord);
+    if (packageDiscovery) {
+      printEnhancedTerminalReport(finalRecord as any);
+    } else {
+      printTerminalReport(auditRecord);
+    }
   }
 
   // Exit with appropriate code

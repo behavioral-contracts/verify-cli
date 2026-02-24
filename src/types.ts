@@ -152,3 +152,39 @@ export interface CorpusLoadResult {
   contracts: Map<string, PackageContract>;
   errors: string[];
 }
+
+/**
+ * A package discovered in the project
+ */
+export interface DiscoveredPackage {
+  name: string;
+  version: string;
+  source: 'package.json' | 'import' | 'both';
+  hasContract: boolean;
+  contractVersion?: string;
+  usedIn: string[]; // Files where the package is imported
+}
+
+/**
+ * Result of package discovery scan
+ */
+export interface PackageDiscoveryResult {
+  total: number;
+  withContracts: number;
+  withoutContracts: number;
+  packages: DiscoveredPackage[];
+}
+
+/**
+ * Enhanced audit record with package discovery
+ */
+export interface EnhancedAuditRecord extends AuditRecord {
+  package_discovery: PackageDiscoveryResult;
+  violations_by_package: Record<string, {
+    total: number;
+    errors: number;
+    warnings: number;
+    info: number;
+    violations: Violation[];
+  }>;
+}
