@@ -250,6 +250,28 @@ export class Analyzer {
       current = current.expression;
     }
 
+    // NEW: Handle builder patterns - walk through call expressions
+    // Example: supabase.from('users').select()
+    // - current is now: from('users') [CallExpression]
+    // - need to walk through it to reach 'supabase' [Identifier]
+    while (ts.isCallExpression(current)) {
+      if (ts.isPropertyAccessExpression(current.expression)) {
+        // The call is on a property access (e.g., supabase.from)
+        // Add the method name to the chain
+        chain.unshift(current.expression.name.text);
+        current = current.expression.expression;
+
+        // Continue walking through any additional property accesses
+        while (ts.isPropertyAccessExpression(current)) {
+          chain.unshift(current.name.text);
+          current = current.expression;
+        }
+      } else {
+        // Call expression but not on a property access
+        break;
+      }
+    }
+
     // At this point, current should be the root identifier
     if (!ts.isIdentifier(current)) {
       return null; // Unsupported pattern (e.g., complex expression)
@@ -427,7 +449,7 @@ export class Analyzer {
    * Returns the package name if this is an axios.create() or similar factory call
    */
   private extractPackageFromAxiosCreate(node: ts.Expression, sourceFile: ts.SourceFile): string | null {
-    // Check for: axios.create(...)
+    // Pattern 1: axios.create(...)
     if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
       const methodName = node.expression.name.text;
 
@@ -446,6 +468,22 @@ export class Analyzer {
           if (this.contracts.has(objectName)) {
             return objectName;
           }
+        }
+      }
+    }
+
+    // Pattern 2: createClient(...) - named function import
+    // Example: import { createClient } from '@supabase/supabase-js'
+    //          const supabase = createClient(url, key)
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+      const functionName = node.expression.text;
+
+      // Check if this is a factory function (createClient, etc.)
+      if (functionName.startsWith('create') || functionName === 'default') {
+        // Resolve which package this function is from
+        const packageName = this.resolvePackageFromImports(functionName, sourceFile);
+        if (packageName && this.contracts.has(packageName)) {
+          return packageName;
         }
       }
     }
