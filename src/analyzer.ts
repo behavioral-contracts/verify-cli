@@ -67,6 +67,10 @@ export class Analyzer {
     const axiosInstances = new Map<string, string>(); // variableName -> packageName
     const instancesWithInterceptors = new Set<string>(); // variableName
 
+    // Detect global React Query error handlers once per file
+    const reactQueryAnalyzer = new ReactQueryAnalyzer(sourceFile, this.program.getTypeChecker());
+    const globalHandlers = reactQueryAnalyzer.detectGlobalHandlers(sourceFile);
+
     // First pass: find all package instance declarations and interceptors
     function findAxiosInstances(node: ts.Node): void {
       // Look for: const instance = axios.create(...)
@@ -84,6 +88,7 @@ export class Analyzer {
         if (newPackageName) {
           axiosInstances.set(varName, newPackageName);
         }
+
       }
 
       // Look for: this._axios = axios.create(...) or this.db = new PrismaClient()
@@ -178,7 +183,13 @@ export class Analyzer {
 
       // Look for call expressions
       if (ts.isCallExpression(node)) {
-        self.analyzeCallExpression(node, sourceFile, axiosInstances, instancesWithInterceptors);
+        self.analyzeCallExpression(
+          node,
+          sourceFile,
+          axiosInstances,
+          instancesWithInterceptors,
+          globalHandlers
+        );
       }
 
       // Recursively visit children, passing current node as parent
@@ -195,14 +206,15 @@ export class Analyzer {
     node: ts.CallExpression,
     sourceFile: ts.SourceFile,
     axiosInstances: Map<string, string>,
-    instancesWithInterceptors: Set<string>
+    instancesWithInterceptors: Set<string>,
+    globalHandlers: { hasQueryCacheOnError: boolean; hasMutationCacheOnError: boolean }
   ): void {
     // Check if this is a React Query hook
     const reactQueryAnalyzer = new ReactQueryAnalyzer(sourceFile, this.program.getTypeChecker());
     const hookName = reactQueryAnalyzer.isReactQueryHook(node);
 
     if (hookName) {
-      this.analyzeReactQueryHook(node, sourceFile, hookName, reactQueryAnalyzer);
+      this.analyzeReactQueryHook(node, sourceFile, hookName, reactQueryAnalyzer, globalHandlers);
       return;
     }
 
@@ -246,9 +258,10 @@ export class Analyzer {
    */
   private analyzeReactQueryHook(
     node: ts.CallExpression,
-    _sourceFile: ts.SourceFile,
+    sourceFile: ts.SourceFile,
     hookName: string,
-    reactQueryAnalyzer: ReactQueryAnalyzer
+    reactQueryAnalyzer: ReactQueryAnalyzer,
+    globalHandlers: { hasQueryCacheOnError: boolean; hasMutationCacheOnError: boolean }
   ): void {
     // Check if we have a contract for React Query
     const contract = this.contracts.get('@tanstack/react-query');
@@ -266,8 +279,34 @@ export class Analyzer {
     const componentNode = reactQueryAnalyzer.findContainingComponent(node);
     if (!componentNode) return;
 
+    // Check for deferred error handling (mutateAsync with try-catch)
+    let hasDeferredErrorHandling = false;
+    if (hookName === 'useMutation') {
+      // Check if this mutation is assigned to a variable and later used with try-catch
+      const parent = node.parent;
+      if (parent && ts.isVariableDeclaration(parent) && ts.isIdentifier(parent.name)) {
+        const mutationVarName = parent.name.text;
+        hasDeferredErrorHandling = this.checkMutateAsyncInTryCatch(
+          mutationVarName,
+          componentNode,
+          sourceFile
+        );
+      }
+    }
+
     // Analyze error handling
     const errorHandling = reactQueryAnalyzer.analyzeHookErrorHandling(hookCall, componentNode);
+
+    // Credit global handlers if they exist
+    if (hookName === 'useQuery' || hookName === 'useInfiniteQuery') {
+      if (globalHandlers.hasQueryCacheOnError) {
+        errorHandling.hasGlobalHandler = true;
+      }
+    } else if (hookName === 'useMutation') {
+      if (globalHandlers.hasMutationCacheOnError) {
+        errorHandling.hasGlobalHandler = true;
+      }
+    }
 
     // Check postconditions
     for (const postcondition of functionContract.postconditions || []) {
@@ -276,13 +315,47 @@ export class Analyzer {
         errorHandling,
         postcondition,
         contract.package,
-        functionContract.name
+        functionContract.name,
+        hasDeferredErrorHandling
       );
 
       if (violation) {
         this.violations.push(violation);
       }
     }
+  }
+
+  /**
+   * Checks if a mutation variable is used with mutateAsync in a try-catch block
+   */
+  private checkMutateAsyncInTryCatch(
+    mutationVarName: string,
+    componentNode: ts.Node,
+    sourceFile: ts.SourceFile
+  ): boolean {
+    let foundInTryCatch = false;
+
+    const visit = (node: ts.Node): void => {
+      // Look for: mutation.mutateAsync(...) or await mutation.mutateAsync(...)
+      if (ts.isCallExpression(node)) {
+        if (ts.isPropertyAccessExpression(node.expression)) {
+          const objName = node.expression.expression.getText(sourceFile);
+          const methodName = node.expression.name.text;
+
+          if (objName === mutationVarName && methodName === 'mutateAsync') {
+            // Check if this call is inside a try-catch
+            if (this.isInTryCatch(node)) {
+              foundInTryCatch = true;
+            }
+          }
+        }
+      }
+
+      ts.forEachChild(node, visit);
+    };
+
+    visit(componentNode);
+    return foundInTryCatch;
   }
 
   /**
@@ -293,7 +366,8 @@ export class Analyzer {
     errorHandling: any,
     postcondition: Postcondition,
     packageName: string,
-    functionName: string
+    functionName: string,
+    hasDeferredErrorHandling: boolean = false
   ): Violation | null {
     // Only check error severity postconditions
     if (postcondition.severity !== 'error') return null;
@@ -308,8 +382,12 @@ export class Analyzer {
       // Error is handled if ANY of these are true:
       // 1. Error state is checked (isError, error)
       // 2. onError callback is provided
-      // 3. Global error handler is configured (future: detect this)
-      if (errorHandling.hasErrorStateCheck || errorHandling.hasOnErrorCallback) {
+      // 3. Global error handler is configured
+      // 4. Deferred error handling (mutateAsync + try-catch)
+      if (errorHandling.hasErrorStateCheck ||
+          errorHandling.hasOnErrorCallback ||
+          errorHandling.hasGlobalHandler ||
+          hasDeferredErrorHandling) {
         return null; // No violation
       }
 
