@@ -64,8 +64,9 @@ export class Analyzer {
 
     // Track variables that are AxiosInstance objects
     const axiosInstances = new Map<string, string>(); // variableName -> packageName
+    const instancesWithInterceptors = new Set<string>(); // variableName
 
-    // First pass: find all axios instance declarations
+    // First pass: find all axios instance declarations and interceptors
     function findAxiosInstances(node: ts.Node): void {
       // Look for: const instance = axios.create(...)
       if (ts.isVariableDeclaration(node) && node.initializer) {
@@ -101,6 +102,22 @@ export class Analyzer {
         }
       }
 
+      // Look for: instance.interceptors.response.use(...)
+      if (ts.isCallExpression(node) &&
+          ts.isPropertyAccessExpression(node.expression)) {
+        const callText = node.expression.getText(sourceFile);
+        // Match patterns like: axiosInstance.interceptors.response.use or instance.interceptors.request.use
+        if (callText.includes('.interceptors.response.use') ||
+            callText.includes('.interceptors.request.use')) {
+          // Extract the instance variable name (first part before .interceptors)
+          const parts = callText.split('.');
+          if (parts.length >= 4) {
+            const instanceVar = parts[0];
+            instancesWithInterceptors.add(instanceVar);
+          }
+        }
+      }
+
       ts.forEachChild(node, findAxiosInstances);
     }
 
@@ -114,7 +131,7 @@ export class Analyzer {
 
       // Look for call expressions
       if (ts.isCallExpression(node)) {
-        self.analyzeCallExpression(node, sourceFile, axiosInstances);
+        self.analyzeCallExpression(node, sourceFile, axiosInstances, instancesWithInterceptors);
       }
 
       // Recursively visit children, passing current node as parent
@@ -130,7 +147,8 @@ export class Analyzer {
   private analyzeCallExpression(
     node: ts.CallExpression,
     sourceFile: ts.SourceFile,
-    axiosInstances: Map<string, string>
+    axiosInstances: Map<string, string>,
+    instancesWithInterceptors: Set<string>
   ): void {
     const callSite = this.extractCallSite(node, sourceFile, axiosInstances);
     if (!callSite) return;
@@ -141,8 +159,12 @@ export class Analyzer {
     const functionContract = contract.functions.find(f => f.name === callSite.functionName);
     if (!functionContract) return;
 
+    // Check if this call is on an instance with error interceptors
+    const instanceVar = this.extractInstanceVariable(node, sourceFile);
+    const hasGlobalInterceptor = instanceVar ? instancesWithInterceptors.has(instanceVar) : false;
+
     // Analyze what error handling exists at this call site
-    const analysis = this.analyzeErrorHandling(node, sourceFile);
+    const analysis = this.analyzeErrorHandling(node, sourceFile, hasGlobalInterceptor);
 
     // Check each postcondition
     for (const postcondition of functionContract.postconditions || []) {
@@ -222,6 +244,23 @@ export class Analyzer {
       functionName,
       packageName,
     };
+  }
+
+  /**
+   * Extracts the instance variable name from a call expression
+   * e.g., for "axiosInstance.get(...)" returns "axiosInstance"
+   */
+  private extractInstanceVariable(node: ts.CallExpression, _sourceFile: ts.SourceFile): string | null {
+    if (ts.isPropertyAccessExpression(node.expression)) {
+      if (ts.isIdentifier(node.expression.expression)) {
+        // Pattern: instance.get(...) - direct identifier
+        return node.expression.expression.text;
+      } else if (ts.isPropertyAccessExpression(node.expression.expression)) {
+        // Pattern: this._axios.get(...) or obj.instance.get(...)
+        return node.expression.expression.name.text;
+      }
+    }
+    return null;
   }
 
   /**
@@ -323,7 +362,11 @@ export class Analyzer {
   /**
    * Analyzes what error handling exists around a call site
    */
-  private analyzeErrorHandling(node: ts.CallExpression, sourceFile: ts.SourceFile): CallSiteAnalysis {
+  private analyzeErrorHandling(
+    node: ts.CallExpression,
+    sourceFile: ts.SourceFile,
+    hasGlobalInterceptor: boolean = false
+  ): CallSiteAnalysis {
     const analysis: CallSiteAnalysis = {
       callSite: {
         file: sourceFile.fileName,
@@ -340,8 +383,15 @@ export class Analyzer {
       hasRetryLogic: false,
     };
 
+    // If instance has global error interceptor, consider it handled
+    if (hasGlobalInterceptor) {
+      analysis.hasTryCatch = true; // Treat global interceptor as equivalent to try-catch
+    }
+
     // Check if call is inside a try-catch block
-    analysis.hasTryCatch = this.isInTryCatch(node);
+    if (!analysis.hasTryCatch) {
+      analysis.hasTryCatch = this.isInTryCatch(node);
+    }
 
     // Check if there's a .catch() handler
     const parent = node.parent;
