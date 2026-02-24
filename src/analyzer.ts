@@ -12,6 +12,7 @@ import type {
   AnalyzerConfig,
   Postcondition,
 } from './types.js';
+import { ReactQueryAnalyzer } from './analyzers/react-query-analyzer.js';
 
 /**
  * Main analyzer that coordinates the verification process
@@ -196,6 +197,15 @@ export class Analyzer {
     axiosInstances: Map<string, string>,
     instancesWithInterceptors: Set<string>
   ): void {
+    // Check if this is a React Query hook
+    const reactQueryAnalyzer = new ReactQueryAnalyzer(sourceFile, this.program.getTypeChecker());
+    const hookName = reactQueryAnalyzer.isReactQueryHook(node);
+
+    if (hookName) {
+      this.analyzeReactQueryHook(node, sourceFile, hookName, reactQueryAnalyzer);
+      return;
+    }
+
     const callSite = this.extractCallSite(node, sourceFile, axiosInstances);
     if (!callSite) return;
 
@@ -229,6 +239,116 @@ export class Analyzer {
         this.violations.push(violation);
       }
     }
+  }
+
+  /**
+   * Analyzes React Query hooks for error handling
+   */
+  private analyzeReactQueryHook(
+    node: ts.CallExpression,
+    _sourceFile: ts.SourceFile,
+    hookName: string,
+    reactQueryAnalyzer: ReactQueryAnalyzer
+  ): void {
+    // Check if we have a contract for React Query
+    const contract = this.contracts.get('@tanstack/react-query');
+    if (!contract) return;
+
+    // Find the function contract for this hook
+    const functionContract = contract.functions.find(f => f.name === hookName);
+    if (!functionContract) return;
+
+    // Extract hook call information
+    const hookCall = reactQueryAnalyzer.extractHookCall(node, hookName);
+    if (!hookCall) return;
+
+    // Find the containing component
+    const componentNode = reactQueryAnalyzer.findContainingComponent(node);
+    if (!componentNode) return;
+
+    // Analyze error handling
+    const errorHandling = reactQueryAnalyzer.analyzeHookErrorHandling(hookCall, componentNode);
+
+    // Check postconditions
+    for (const postcondition of functionContract.postconditions || []) {
+      const violation = this.checkReactQueryPostcondition(
+        hookCall,
+        errorHandling,
+        postcondition,
+        contract.package,
+        functionContract.name
+      );
+
+      if (violation) {
+        this.violations.push(violation);
+      }
+    }
+  }
+
+  /**
+   * Checks a React Query postcondition and returns a violation if not met
+   */
+  private checkReactQueryPostcondition(
+    hookCall: any,
+    errorHandling: any,
+    postcondition: Postcondition,
+    packageName: string,
+    functionName: string
+  ): Violation | null {
+    // Only check error severity postconditions
+    if (postcondition.severity !== 'error') return null;
+
+    const clauseId = postcondition.id;
+
+    // Check query-error-unhandled
+    if (clauseId === 'query-error-unhandled' ||
+        clauseId === 'mutation-error-unhandled' ||
+        clauseId === 'infinite-query-error-unhandled') {
+
+      // Error is handled if ANY of these are true:
+      // 1. Error state is checked (isError, error)
+      // 2. onError callback is provided
+      // 3. Global error handler is configured (future: detect this)
+      if (errorHandling.hasErrorStateCheck || errorHandling.hasOnErrorCallback) {
+        return null; // No violation
+      }
+
+      // Create violation
+      return {
+        id: `${packageName}-${clauseId}`,
+        severity: postcondition.severity,
+        file: hookCall.location.file,
+        line: hookCall.location.line,
+        column: hookCall.location.column,
+        package: packageName,
+        function: functionName,
+        contract_clause: clauseId,
+        description: 'No error handling found. Errors will crash the application.',
+        source_doc: postcondition.source,
+        suggested_fix: postcondition.required_handling,
+      };
+    }
+
+    // Check mutation-optimistic-update-rollback
+    if (clauseId === 'mutation-optimistic-update-rollback') {
+      if (hookCall.options.onMutate && !hookCall.options.onError) {
+        return {
+          id: `${packageName}-${clauseId}`,
+          severity: postcondition.severity,
+          file: hookCall.location.file,
+          line: hookCall.location.line,
+          column: hookCall.location.column,
+          package: packageName,
+          function: functionName,
+          contract_clause: clauseId,
+          description: 'Optimistic update without rollback. UI will show incorrect data on error.',
+          source_doc: postcondition.source,
+          suggested_fix: postcondition.required_handling,
+        };
+      }
+    }
+
+    return null;
   }
 
   /**

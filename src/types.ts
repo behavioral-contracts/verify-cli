@@ -193,3 +193,73 @@ export interface EnhancedAuditRecord extends AuditRecord {
     violations: Violation[];
   }>;
 }
+
+/**
+ * A positive pattern (best practice) detected in code
+ */
+export interface PositivePattern {
+  id: string;
+  name: string;
+  description: string;
+  file: string;
+  line: number;
+  column: number;
+  category: 'configuration' | 'error-handling' | 'performance' | 'consistency';
+  benefit: string;
+  code_snippet?: {
+    startLine: number;
+    endLine: number;
+    lines: Array<{ line: number; content: string; highlighted: boolean }>;
+  };
+}
+
+/**
+ * React Query hook call detection
+ */
+export interface HookCall {
+  hookName: 'useQuery' | 'useMutation' | 'useInfiniteQuery' | 'QueryClient';
+  location: {
+    file: string;
+    line: number;
+    column: number;
+  };
+  returnValues: Map<string, string>; // variableName -> property (error, isError, data, etc.)
+  options: {
+    onError?: boolean;
+    onMutate?: boolean;
+    onSuccess?: boolean;
+    retry?: 'default' | 'number' | 'boolean' | 'function';
+  };
+}
+
+/**
+ * Variable usage tracking for hook return values
+ */
+export interface VariableUsage {
+  variableName: string;
+  propertyName: string; // 'error', 'isError', 'data', etc.
+  declaredAt: {
+    file: string;
+    line: number;
+  };
+  usedIn: {
+    conditionals: number; // Count of if/ternary checks
+    jsxExpressions: number; // Count of JSX usage
+    callbacks: number; // Count of callback usage
+  };
+}
+
+/**
+ * Analysis of error handling in React Query hooks
+ */
+export interface HookErrorHandling {
+  hasErrorStateCheck: boolean; // Checks isError or error
+  hasOnErrorCallback: boolean; // Has onError in options
+  hasGlobalHandler: boolean; // QueryCache/MutationCache configured
+  errorCheckedBeforeDataAccess: boolean; // Proper order
+  hasOptimisticUpdateRollback?: boolean; // For mutations with onMutate
+  retryAnalysis?: {
+    type: 'default' | 'number' | 'boolean' | 'function';
+    avoidsClientErrors: boolean; // Checks for 4xx before retrying
+  };
+}
