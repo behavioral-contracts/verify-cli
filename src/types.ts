@@ -79,6 +79,11 @@ export interface Violation {
   description: string;
   source_doc: string;
   suggested_fix?: string;
+  code_snippet?: {
+    startLine: number;
+    endLine: number;
+    lines: Array<{ line: number; content: string; highlighted: boolean }>;
+  };
 }
 
 /**

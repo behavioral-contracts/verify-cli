@@ -110,7 +110,7 @@ async function main() {
 
   // Generate audit record
   const packagesAnalyzed = Array.from(corpusResult.contracts.keys());
-  const auditRecord = generateAuditRecord(violations, {
+  const auditRecord = await generateAuditRecord(violations, {
     tsconfigPath: options.tsconfig,
     packagesAnalyzed,
     contractsApplied: stats.contractsApplied,

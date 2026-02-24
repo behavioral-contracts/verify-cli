@@ -7,14 +7,39 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 import chalk from 'chalk';
 import type { AuditRecord, Violation, VerificationSummary, EnhancedAuditRecord, PackageDiscoveryResult } from './types.js';
+import { extractCodeSnippet, formatSnippetForJSON, formatSnippetForTerminal } from './code-snippet.js';
 
 const TOOL_NAME = '@behavioral-contracts/verify-cli';
 const TOOL_VERSION = '0.1.0'; // Should match package.json
 
 /**
+ * Enriches violations with code snippets
+ */
+export async function enrichViolationsWithSnippets(
+  violations: Violation[]
+): Promise<Violation[]> {
+  const enrichedViolations: Violation[] = [];
+
+  for (const violation of violations) {
+    const snippet = await extractCodeSnippet(violation.file, violation.line, 2);
+
+    if (snippet) {
+      enrichedViolations.push({
+        ...violation,
+        code_snippet: formatSnippetForJSON(snippet),
+      });
+    } else {
+      enrichedViolations.push(violation);
+    }
+  }
+
+  return enrichedViolations;
+}
+
+/**
  * Generates an audit record from violations
  */
-export function generateAuditRecord(
+export async function generateAuditRecord(
   violations: Violation[],
   config: {
     tsconfigPath: string;
@@ -23,8 +48,11 @@ export function generateAuditRecord(
     filesAnalyzed: number;
     corpusVersion: string;
   }
-): AuditRecord {
-  const summary = generateSummary(violations);
+): Promise<AuditRecord> {
+  // Enrich violations with code snippets
+  const enrichedViolations = await enrichViolationsWithSnippets(violations);
+
+  const summary = generateSummary(enrichedViolations);
 
   const record: AuditRecord = {
     tool: TOOL_NAME,
@@ -37,7 +65,7 @@ export function generateAuditRecord(
     packages_analyzed: config.packagesAnalyzed,
     contracts_applied: config.contractsApplied,
     files_analyzed: config.filesAnalyzed,
-    violations,
+    violations: enrichedViolations,
     summary,
   };
 
@@ -168,6 +196,28 @@ function printViolation(violation: Violation): void {
   console.log(`    ${chalk.bold(violation.description)}`);
   console.log(`    Package: ${violation.package}.${violation.function}()`);
   console.log(`    Contract: ${violation.contract_clause}`);
+
+  // Show code snippet if available
+  if (violation.code_snippet) {
+    console.log('');
+    const snippet = {
+      startLine: violation.code_snippet.startLine,
+      endLine: violation.code_snippet.endLine,
+      lines: violation.code_snippet.lines.map(l => ({
+        lineNumber: l.line,
+        content: l.content,
+        isViolation: l.highlighted,
+      })),
+    };
+    const formattedLines = formatSnippetForTerminal(snippet, 100);
+    for (const line of formattedLines) {
+      if (line.startsWith('>')) {
+        console.log(`    ${chalk.red(line)}`);
+      } else {
+        console.log(`    ${chalk.dim(line)}`);
+      }
+    }
+  }
 
   if (violation.suggested_fix) {
     console.log(`    ${chalk.dim('Fix:')} ${violation.suggested_fix.split('\n')[0]}`);

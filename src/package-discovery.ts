@@ -11,6 +11,8 @@ import * as ts from 'typescript';
 import { DiscoveredPackage, PackageDiscoveryResult, PackageContract } from './types.js';
 
 export class PackageDiscovery {
+  private pathAliases: Set<string> = new Set();
+
   constructor(
     private corpusContracts: Map<string, PackageContract>
   ) {}
@@ -82,6 +84,9 @@ export class PackageDiscovery {
         path.dirname(tsconfigPath)
       );
 
+      // Extract path aliases to filter them out
+      this.extractPathAliases(configFile.config, tsconfigPath);
+
       // Create program
       const program = ts.createProgram(parsedConfig.fileNames, parsedConfig.options);
 
@@ -97,6 +102,41 @@ export class PackageDiscovery {
     }
 
     return imports;
+  }
+
+  /**
+   * Extract path aliases from tsconfig to filter them out
+   *
+   * Examples:
+   * - "@/*" -> "@"
+   * - "@/components/*" -> "@/components"
+   * - "~/*" -> "~"
+   */
+  private extractPathAliases(config: any, tsconfigPath: string): void {
+    this.pathAliases.clear();
+
+    // Check current config
+    const paths = config.compilerOptions?.paths;
+    if (paths) {
+      for (const alias of Object.keys(paths)) {
+        // Extract the base alias (remove /* suffix)
+        const baseAlias = alias.replace(/\/\*$/, '');
+        this.pathAliases.add(baseAlias);
+      }
+    }
+
+    // Check extends (recursively load parent tsconfig)
+    if (config.extends) {
+      try {
+        const extendsPath = path.resolve(path.dirname(tsconfigPath), config.extends);
+        const parentConfig = ts.readConfigFile(extendsPath, ts.sys.readFile);
+        if (parentConfig.config) {
+          this.extractPathAliases(parentConfig.config, extendsPath);
+        }
+      } catch {
+        // Ignore errors loading parent config
+      }
+    }
   }
 
   /**
@@ -155,11 +195,19 @@ export class PackageDiscovery {
    * - 'axios/lib/core' -> 'axios'
    * - './local' -> null
    * - '../relative' -> null
+   * - '@/components' -> null (path alias)
    */
   private extractPackageName(importPath: string): string | null {
     // Ignore relative imports
     if (importPath.startsWith('.')) {
       return null;
+    }
+
+    // Ignore path aliases (e.g., @/*, ~/* from tsconfig.json)
+    for (const alias of this.pathAliases) {
+      if (importPath === alias || importPath.startsWith(alias + '/')) {
+        return null;
+      }
     }
 
     // Ignore Node.js built-ins
