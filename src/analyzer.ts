@@ -62,6 +62,50 @@ export class Analyzer {
   private analyzeFile(sourceFile: ts.SourceFile): void {
     const self = this;
 
+    // Track variables that are AxiosInstance objects
+    const axiosInstances = new Map<string, string>(); // variableName -> packageName
+
+    // First pass: find all axios instance declarations
+    function findAxiosInstances(node: ts.Node): void {
+      // Look for: const instance = axios.create(...)
+      if (ts.isVariableDeclaration(node) && node.initializer) {
+        const varName = node.name.getText(sourceFile);
+        const packageName = self.extractPackageFromAxiosCreate(node.initializer, sourceFile);
+        if (packageName) {
+          axiosInstances.set(varName, packageName);
+        }
+      }
+
+      // Look for: this._axios = axios.create(...)
+      if (ts.isBinaryExpression(node) &&
+          node.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+          ts.isPropertyAccessExpression(node.left)) {
+        const varName = node.left.name.text;
+        const packageName = self.extractPackageFromAxiosCreate(node.right, sourceFile);
+        if (packageName) {
+          axiosInstances.set(varName, packageName);
+        }
+      }
+
+      // Look for: private _axios: AxiosInstance
+      if (ts.isPropertyDeclaration(node) && node.type) {
+        const varName = node.name.getText(sourceFile);
+        if (ts.isTypeReferenceNode(node.type) &&
+            ts.isIdentifier(node.type.typeName) &&
+            node.type.typeName.text === 'AxiosInstance') {
+          // Check if axios is imported in this file
+          const axiosPackage = self.findAxiosImportInFile(sourceFile);
+          if (axiosPackage) {
+            axiosInstances.set(varName, axiosPackage);
+          }
+        }
+      }
+
+      ts.forEachChild(node, findAxiosInstances);
+    }
+
+    findAxiosInstances(sourceFile);
+
     function visit(node: ts.Node, parent?: ts.Node): void {
       // Set parent pointer if not already set
       if (parent && !(node as any).parent) {
@@ -70,7 +114,7 @@ export class Analyzer {
 
       // Look for call expressions
       if (ts.isCallExpression(node)) {
-        self.analyzeCallExpression(node, sourceFile);
+        self.analyzeCallExpression(node, sourceFile, axiosInstances);
       }
 
       // Recursively visit children, passing current node as parent
@@ -83,8 +127,12 @@ export class Analyzer {
   /**
    * Analyzes a call expression to see if it violates any contracts
    */
-  private analyzeCallExpression(node: ts.CallExpression, sourceFile: ts.SourceFile): void {
-    const callSite = this.extractCallSite(node, sourceFile);
+  private analyzeCallExpression(
+    node: ts.CallExpression,
+    sourceFile: ts.SourceFile,
+    axiosInstances: Map<string, string>
+  ): void {
+    const callSite = this.extractCallSite(node, sourceFile, axiosInstances);
     if (!callSite) return;
 
     const contract = this.contracts.get(callSite.packageName);
@@ -118,7 +166,11 @@ export class Analyzer {
   /**
    * Extracts call site information from a call expression
    */
-  private extractCallSite(node: ts.CallExpression, sourceFile: ts.SourceFile): CallSite | null {
+  private extractCallSite(
+    node: ts.CallExpression,
+    sourceFile: ts.SourceFile,
+    axiosInstances: Map<string, string>
+  ): CallSite | null {
     const { line, character } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
 
     // Try to determine the function and package being called
@@ -126,11 +178,26 @@ export class Analyzer {
     let packageName: string | null = null;
 
     if (ts.isPropertyAccessExpression(node.expression)) {
-      // axios.get(...) pattern
+      // Pattern: something.method(...)
       functionName = node.expression.name.text;
 
       if (ts.isIdentifier(node.expression.expression)) {
-        packageName = node.expression.expression.text;
+        // Pattern: axios.get(...) - direct identifier
+        const identifierName = node.expression.expression.text;
+        packageName = identifierName;
+
+        // Check if this identifier is a known axios instance variable
+        if (axiosInstances.has(identifierName)) {
+          packageName = axiosInstances.get(identifierName)!;
+        }
+      } else if (ts.isPropertyAccessExpression(node.expression.expression)) {
+        // Pattern: this._axios.request(...) or obj.instance.get(...)
+        const propertyName = node.expression.expression.name.text;
+
+        // Check if this property is a known axios instance
+        if (axiosInstances.has(propertyName)) {
+          packageName = axiosInstances.get(propertyName)!;
+        }
       }
     } else if (ts.isIdentifier(node.expression)) {
       // get(...) pattern after import
@@ -192,6 +259,59 @@ export class Analyzer {
           if (importClause.namedBindings && ts.isNamespaceImport(importClause.namedBindings)) {
             // This would require tracking property access - simplified for MVP
             continue;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Extracts package name from axios.create() call
+   * Returns the package name if this is an axios.create() or similar factory call
+   */
+  private extractPackageFromAxiosCreate(node: ts.Expression, sourceFile: ts.SourceFile): string | null {
+    // Check for: axios.create(...)
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+      const methodName = node.expression.name.text;
+
+      // Check if this is a factory method (create, default, etc.)
+      if (methodName === 'create' || methodName === 'default') {
+        if (ts.isIdentifier(node.expression.expression)) {
+          const objectName = node.expression.expression.text;
+
+          // Check if this is from a package we track
+          const packageName = this.resolvePackageFromImports(objectName, sourceFile);
+          if (packageName) {
+            return packageName;
+          }
+
+          // Direct match (e.g., axios.create where axios is imported as 'axios')
+          if (this.contracts.has(objectName)) {
+            return objectName;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Finds if axios is imported in the given source file
+   */
+  private findAxiosImportInFile(sourceFile: ts.SourceFile): string | null {
+    for (const statement of sourceFile.statements) {
+      if (ts.isImportDeclaration(statement)) {
+        const moduleSpecifier = statement.moduleSpecifier;
+
+        if (ts.isStringLiteral(moduleSpecifier)) {
+          const packageName = moduleSpecifier.text;
+
+          // Check if this is a package we have contracts for
+          if (this.contracts.has(packageName)) {
+            return packageName;
           }
         }
       }

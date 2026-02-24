@@ -2,7 +2,12 @@ node_modules/
 dist/
 *.log
 .DS_Store
-behavioral-audit.json
 coverage/
 .vscode/
 .idea/
+
+# CLI output (all output files gitignored)
+output/
+*-audit.json
+*-output.txt
+*.tmp

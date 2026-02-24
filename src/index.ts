@@ -17,6 +17,7 @@ import {
   printTerminalReport,
   printCorpusErrors,
 } from './reporter.js';
+import { ensureTsconfig } from './tsconfig-generator.js';
 import type { AnalyzerConfig } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -45,11 +46,8 @@ const options = program.opts();
 async function main() {
   console.log(chalk.bold('\nBehavioral Contract Verification\n'));
 
-  // Validate tsconfig exists
-  if (!fs.existsSync(options.tsconfig)) {
-    console.error(chalk.red(`Error: tsconfig.json not found at ${options.tsconfig}`));
-    process.exit(1);
-  }
+  // Ensure tsconfig exists (generate if missing)
+  ensureTsconfig(options.tsconfig);
 
   // Validate corpus exists
   if (!fs.existsSync(options.corpus)) {
