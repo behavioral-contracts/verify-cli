@@ -1359,6 +1359,20 @@ export class Analyzer {
       return null;
     }
 
+    // Twilio-specific: Hardcoded credentials check
+    if (postcondition.id === 'hardcoded-credentials') {
+      const hasHardcodedCredentials = this.checkHardcodedCredentials(node);
+
+      if (hasHardcodedCredentials) {
+        const description = postcondition.throws ||
+          'Hardcoded credentials detected. Use environment variables (process.env) to avoid security risks.';
+        return this.createViolation(callSite, postcondition, packageName, functionName, description, 'error');
+      } else {
+        // Credentials are from environment variables - no violation
+        return null;
+      }
+    }
+
     // NEW: Generic check for any postcondition requiring error handling
     // If the postcondition specifies required_handling and has severity='error',
     // it means the call MUST have error handling
@@ -1581,6 +1595,136 @@ export class Analyzer {
       }
       current = current.parent;
     }
+    return null;
+  }
+
+  /**
+   * Checks if a function call has hardcoded credentials (string literals)
+   * vs environment variables (process.env.*)
+   *
+   * Returns true if hardcoded credentials are detected (violation)
+   * Returns false if credentials come from environment variables (valid)
+   */
+  private checkHardcodedCredentials(callNode: ts.CallExpression): boolean {
+    // Check each argument to the function call
+    for (const arg of callNode.arguments) {
+      // Check if argument is a string literal (hardcoded)
+      if (ts.isStringLiteral(arg)) {
+        // String literal = hardcoded credential = violation
+        return true;
+      }
+
+      // Check if argument is a template expression (could be hardcoded)
+      if (ts.isTemplateExpression(arg) || ts.isNoSubstitutionTemplateLiteral(arg)) {
+        // Template literal without substitutions = hardcoded = violation
+        if (ts.isNoSubstitutionTemplateLiteral(arg)) {
+          return true;
+        }
+        // Template with substitutions = could be dynamic, check the spans
+        // For safety, we'll flag any template literal as hardcoded
+        return true;
+      }
+
+      // Check if argument is an identifier (variable)
+      if (ts.isIdentifier(arg)) {
+        // Need to trace back to see where this variable is defined
+        // If it's from process.env, it's safe
+        // For now, we'll trace variable declarations in the current scope
+        const varDeclaration = this.findVariableDeclaration(arg.text, callNode);
+        if (varDeclaration && varDeclaration.initializer) {
+          // Check if initializer is process.env.*
+          if (ts.isPropertyAccessExpression(varDeclaration.initializer)) {
+            const expr = varDeclaration.initializer.expression;
+            if (ts.isPropertyAccessExpression(expr) &&
+                ts.isIdentifier(expr.expression) &&
+                expr.expression.text === 'process' &&
+                ts.isIdentifier(expr.name) &&
+                expr.name.text === 'env') {
+              // This is process.env.SOMETHING - safe!
+              continue;
+            }
+          }
+          // Check if initializer is a string literal
+          if (ts.isStringLiteral(varDeclaration.initializer)) {
+            // Variable assigned from string literal = hardcoded
+            return true;
+          }
+        }
+      }
+
+      // Check if argument is process.env.* directly
+      if (ts.isPropertyAccessExpression(arg)) {
+        const expr = arg.expression;
+        if (ts.isPropertyAccessExpression(expr) &&
+            ts.isIdentifier(expr.expression) &&
+            expr.expression.text === 'process' &&
+            ts.isIdentifier(expr.name) &&
+            expr.name.text === 'env') {
+          // Direct process.env.* usage - safe!
+          continue;
+        }
+        // Some other property access - could be config.apiKey, etc.
+        // For safety, we'll flag it as potentially hardcoded
+        // TODO: Could enhance to trace config objects
+        return true;
+      }
+
+      // Check for element access: process.env['VARIABLE']
+      if (ts.isElementAccessExpression(arg)) {
+        const expr = arg.expression;
+        if (ts.isPropertyAccessExpression(expr) &&
+            ts.isIdentifier(expr.expression) &&
+            expr.expression.text === 'process' &&
+            ts.isIdentifier(expr.name) &&
+            expr.name.text === 'env') {
+          // process.env['VARIABLE'] - safe!
+          continue;
+        }
+        // Some other element access - potentially hardcoded
+        return true;
+      }
+    }
+
+    // All arguments checked, no hardcoded credentials found
+    return false;
+  }
+
+  /**
+   * Finds a variable declaration in the scope of the given node
+   */
+  private findVariableDeclaration(variableName: string, node: ts.Node): ts.VariableDeclaration | null {
+    let current: ts.Node | undefined = node;
+
+    while (current) {
+      // Check variable statements in this scope
+      if (ts.isSourceFile(current) || ts.isBlock(current) || ts.isFunctionLike(current)) {
+        let foundDeclaration: ts.VariableDeclaration | null = null;
+
+        const visitNode = (node: ts.Node): void => {
+          if (foundDeclaration) return;
+
+          if (ts.isVariableDeclaration(node) &&
+              ts.isIdentifier(node.name) &&
+              node.name.text === variableName) {
+            foundDeclaration = node;
+            return;
+          }
+
+          // Don't recurse into nested functions/blocks
+          if (node === current || ts.isVariableStatement(node) || ts.isVariableDeclarationList(node)) {
+            ts.forEachChild(node, visitNode);
+          }
+        };
+
+        visitNode(current);
+        if (foundDeclaration) {
+          return foundDeclaration;
+        }
+      }
+
+      current = current.parent;
+    }
+
     return null;
   }
 
