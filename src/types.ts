@@ -62,6 +62,12 @@ export interface DetectionRules {
   factory_methods?: string[];
   /** Patterns to match in await expressions (e.g., [".repos.", ".pulls."]) */
   await_patterns?: string[];
+  /**
+   * If true, ONLY detect violations on tracked instances (no pattern fallback)
+   * Use this for packages with generic method names (mongoose, Prisma, TypeORM)
+   * to eliminate false positives from pattern matching
+   */
+  require_instance_tracking?: boolean;
 }
 
 /**

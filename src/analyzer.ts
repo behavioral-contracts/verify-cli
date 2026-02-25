@@ -137,6 +137,12 @@ export class Analyzer {
           axiosInstances.set(varName, packageName);
         }
 
+        // Check for generic factory methods from detection rules (mongoose.model, etc.)
+        const genericFactoryPackage = self.extractPackageFromGenericFactory(node.initializer, sourceFile);
+        if (genericFactoryPackage) {
+          axiosInstances.set(varName, genericFactoryPackage);
+        }
+
         // Check for new expressions (new PrismaClient(), new Stripe(), etc.)
         const newPackageName = self.extractPackageFromNewExpression(node.initializer, sourceFile);
         if (newPackageName) {
@@ -161,6 +167,12 @@ export class Analyzer {
         const packageName = self.extractPackageFromAxiosCreate(node.right, sourceFile);
         if (packageName) {
           axiosInstances.set(varName, packageName);
+        }
+
+        // Check for generic factory methods from detection rules
+        const genericFactoryPackage = self.extractPackageFromGenericFactory(node.right, sourceFile);
+        if (genericFactoryPackage) {
+          axiosInstances.set(varName, genericFactoryPackage);
         }
 
         // Check for new expressions
@@ -233,7 +245,7 @@ export class Analyzer {
 
     // Async error detection pass
     const asyncErrorAnalyzer = new AsyncErrorAnalyzer(sourceFile);
-    this.detectAsyncErrors(sourceFile, asyncErrorAnalyzer);
+    this.detectAsyncErrors(sourceFile, asyncErrorAnalyzer, axiosInstances);
 
     function visit(node: ts.Node, parent?: ts.Node): void {
       // Set parent pointer if not already set
@@ -263,7 +275,11 @@ export class Analyzer {
   /**
    * Detects async functions with unprotected await expressions
    */
-  private detectAsyncErrors(sourceFile: ts.SourceFile, asyncErrorAnalyzer: AsyncErrorAnalyzer): void {
+  private detectAsyncErrors(
+    sourceFile: ts.SourceFile,
+    asyncErrorAnalyzer: AsyncErrorAnalyzer,
+    trackedInstances: Map<string, string>
+  ): void {
     const self = this;
 
     function visitForAsyncFunctions(node: ts.Node): void {
@@ -279,7 +295,8 @@ export class Analyzer {
           const violation = self.createAsyncErrorViolation(
             sourceFile,
             detection,
-            node
+            node,
+            trackedInstances
           );
 
           if (violation) {
@@ -319,51 +336,120 @@ export class Analyzer {
   private createAsyncErrorViolation(
     sourceFile: ts.SourceFile,
     detection: { line: number; column: number; awaitText: string; functionName: string },
-    _functionNode: ts.Node
+    _functionNode: ts.Node,
+    trackedInstances: Map<string, string>
   ): Violation | null {
-    // PRIORITY 1: Check data-driven detection patterns from contracts
+    // PRIORITY 1: Check if this await is on a tracked instance (most accurate)
+    // Extract instance name from await expression (e.g., "this.catModel" from "await this.catModel.find()")
+    const instancePackage = this.detectPackageFromTrackedInstance(detection.awaitText, trackedInstances);
+
+    if (instancePackage) {
+      // Found a tracked instance - this is high-confidence detection
+      return this.createViolationForPackage(sourceFile, detection, instancePackage);
+    }
+
+    // PRIORITY 2: Check data-driven detection patterns from contracts
     // This allows contracts to define their own detection rules without analyzer changes
     const detectedPackage = this.detectPackageFromAwaitText(detection.awaitText);
 
     if (!detectedPackage) {
-      // FALLBACK: If no contract-based detection, check legacy hardcoded patterns
-      const awaitText = detection.awaitText.toLowerCase();
-
-      const likelyApiCall =
-        awaitText.includes('fetch') ||
-        awaitText.includes('api') ||
-        awaitText.includes('.get') ||
-        awaitText.includes('.post') ||
-        awaitText.includes('.put') ||
-        awaitText.includes('.delete') ||
-        awaitText.includes('.patch') ||
-        awaitText.includes('axios') ||
-        awaitText.includes('prisma') ||
-        awaitText.includes('supabase') ||
-        awaitText.includes('stripe') ||
-        awaitText.includes('octokit') ||
-        awaitText.includes('.repos.') ||
-        awaitText.includes('.pulls.') ||
-        awaitText.includes('.issues.') ||
-        awaitText.includes('.git.') ||
-        awaitText.includes('.create') ||
-        awaitText.includes('.update') ||
-        awaitText.includes('.query') ||
-        awaitText.includes('.mutate');
-
-      if (!likelyApiCall) {
-        return null; // Not recognized by either detection method
-      }
-
-      // Legacy pattern matched but no package detected
-      // This can happen for generic patterns like .create that aren't in contracts
+      // No package detected by patterns and no tracked instance
+      // Don't check legacy patterns to avoid false positives
+      // Instance tracking is the primary method for ORM packages
       return null;
     }
 
-    // Package detected via contract patterns - proceed with validation
+    // Check if this package requires instance tracking
     const contract = this.contracts.get(detectedPackage);
+    if (contract?.detection?.require_instance_tracking) {
+      // This package requires instance tracking to avoid false positives
+      // Pattern-based detection matched, but we didn't find a tracked instance
+      // This is likely a false positive (e.g., .validate() on a non-mongoose object)
+      return null;
+    }
+
+    // Package detected via contract patterns - create violation
+    // NOTE: Pattern-based detection is less accurate than instance tracking
+    // and may produce false positives for packages with generic method names
+    return this.createViolationForPackage(sourceFile, detection, detectedPackage);
+  }
+
+  /**
+   * Detects which package is being called from the await expression text
+   * Uses dynamic pattern matching from contract detection rules
+   */
+  private detectPackageFromAwaitText(awaitText: string): string | null {
+    const lowerText = awaitText.toLowerCase();
+
+    // Check against all registered await patterns from contracts
+    for (const [pattern, packageName] of this.awaitPatternToPackage.entries()) {
+      if (lowerText.includes(pattern)) {
+        return packageName;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Detects package from tracked instance (most accurate method)
+   * Extracts instance name from await expression and checks if it's tracked
+   *
+   * Examples:
+   *   "await this.catModel.find()" → extracts "catModel" → checks if tracked
+   *   "await user.save()" → extracts "user" → checks if tracked
+   *   "await Model.create()" → extracts "Model" → checks if tracked
+   */
+  private detectPackageFromTrackedInstance(
+    awaitText: string,
+    trackedInstances: Map<string, string>
+  ): string | null {
+    // Remove "await " prefix if present
+    const text = awaitText.replace(/^await\s+/, '');
+
+    // Extract instance name patterns:
+    // 1. "this.instanceName.method()" → "instanceName"
+    // 2. "instanceName.method()" → "instanceName"
+    // 3. "ClassName.staticMethod()" → "ClassName"
+
+    const patterns = [
+      // Match: this.instanceName.anything
+      /^this\.(\w+)\./,
+      // Match: instanceName.anything
+      /^(\w+)\./,
+      // Match: standalone identifier (for direct calls)
+      /^(\w+)\(/,
+    ];
+
+    for (const pattern of patterns) {
+      const match = text.match(pattern);
+      if (match && match[1]) {
+        const instanceName = match[1];
+        const packageName = trackedInstances.get(instanceName);
+
+        if (packageName) {
+          // Found a tracked instance - high confidence detection
+          return packageName;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Creates a violation for a detected package
+   * Extracted from createAsyncErrorViolation to reduce duplication
+   */
+  private createViolationForPackage(
+    sourceFile: ts.SourceFile,
+    detection: { line: number; column: number; awaitText: string; functionName: string },
+    packageName: string
+  ): Violation | null {
+    // Get the contract for this package
+    const contract = this.contracts.get(packageName);
     if (!contract) {
-      return null; // No contract for this package (shouldn't happen if detection worked)
+      return null; // No contract for this package
     }
 
     // Find the matching function and postcondition
@@ -390,35 +476,18 @@ export class Analyzer {
       const description = `Async function '${detection.functionName}' contains unprotected await expression. ${detection.awaitText.substring(0, 50)}... may throw unhandled errors.`;
 
       return {
-        id: `${detectedPackage}-${matchingPostcondition.id}`,
+        id: `${packageName}-${matchingPostcondition.id}`,
         severity: matchingPostcondition.severity || 'error',
         file: sourceFile.fileName,
         line: detection.line,
         column: detection.column,
-        package: detectedPackage,
+        package: packageName,
         function: matchingFunctionName,
         contract_clause: matchingPostcondition.id,
         description,
         source_doc: matchingPostcondition.source,
         suggested_fix: matchingPostcondition.required_handling,
       };
-    }
-
-    return null;
-  }
-
-  /**
-   * Detects which package is being called from the await expression text
-   * Uses dynamic pattern matching from contract detection rules
-   */
-  private detectPackageFromAwaitText(awaitText: string): string | null {
-    const lowerText = awaitText.toLowerCase();
-
-    // Check against all registered await patterns from contracts
-    for (const [pattern, packageName] of this.awaitPatternToPackage.entries()) {
-      if (lowerText.includes(pattern)) {
-        return packageName;
-      }
     }
 
     return null;
@@ -1043,6 +1112,37 @@ export class Analyzer {
       const packageName = this.resolvePackageFromImports(functionName, sourceFile);
       if (packageName && this.contracts.has(packageName)) {
         return packageName;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Extracts package name from generic factory methods defined in detection rules
+   * Examples:
+   *   mongoose.model('User', schema) → "mongoose" (if factory_methods includes "model")
+   *   prisma.client() → "prisma" (if factory_methods includes "client")
+   */
+  private extractPackageFromGenericFactory(node: ts.Expression, sourceFile: ts.SourceFile): string | null {
+    // Pattern: objectName.methodName(...)
+    // Example: mongoose.model('User', schema)
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+      const methodName = node.expression.name.text;
+
+      // Check if this method is registered as a factory method for any package
+      const packageName = this.factoryToPackage.get(methodName);
+      if (packageName) {
+        // Verify the object name matches the package (or is imported from it)
+        if (ts.isIdentifier(node.expression.expression)) {
+          const objectName = node.expression.expression.text;
+
+          // Check if this object is the package itself or imported from it
+          const resolvedPackage = this.resolvePackageFromImports(objectName, sourceFile);
+          if (resolvedPackage === packageName || objectName === packageName) {
+            return packageName;
+          }
+        }
       }
     }
 
