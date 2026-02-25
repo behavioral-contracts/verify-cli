@@ -1412,6 +1412,9 @@ export class Analyzer {
       }
     }
 
+    // HTTP client packages (axios, node-fetch, etc.) - check for HTTP-specific error handling
+    const isHttpClient = ['axios', 'node-fetch', 'got', 'superagent', 'request'].includes(packageName);
+
     if (postcondition.id.includes('network')) {
       // Network failure check
       if (!hasAnyErrorHandling) {
@@ -1419,8 +1422,8 @@ export class Analyzer {
           'No try-catch block found. Network failures will crash the application.', 'error');
       }
 
-      // WARNING: Has error handling but doesn't check response.exists
-      if (hasAnyErrorHandling && !analysis.checksResponseExists) {
+      // WARNING: Only for HTTP clients - check if response.exists is checked
+      if (isHttpClient && hasAnyErrorHandling && !analysis.checksResponseExists) {
         return this.createViolation(callSite, postcondition, packageName, functionName,
           'Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.', 'warning');
       }
@@ -1433,8 +1436,8 @@ export class Analyzer {
           'No error handling found. Errors will crash the application.', 'error');
       }
 
-      // WARNING: Has generic error handling but doesn't inspect status codes
-      if (hasAnyErrorHandling && !analysis.checksStatusCode) {
+      // WARNING: Only for HTTP clients - check if status codes are inspected
+      if (isHttpClient && hasAnyErrorHandling && !analysis.checksStatusCode) {
         return this.createViolation(callSite, postcondition, packageName, functionName,
           'Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.', 'warning');
       }
