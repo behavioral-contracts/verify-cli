@@ -24,8 +24,21 @@ export class Analyzer {
   private violations: Violation[] = [];
   private projectRoot: string;
 
+  // Detection maps built dynamically from contract definitions
+  private typeToPackage: Map<string, string>;
+  private classToPackage: Map<string, string>;
+  private factoryToPackage: Map<string, string>;
+  private awaitPatternToPackage: Map<string, string>;
+
   constructor(config: AnalyzerConfig, contracts: Map<string, PackageContract>) {
     this.contracts = contracts;
+
+    // Build detection maps from contract definitions
+    this.typeToPackage = new Map();
+    this.classToPackage = new Map();
+    this.factoryToPackage = new Map();
+    this.awaitPatternToPackage = new Map();
+    this.buildDetectionMaps();
 
     // Create TypeScript program
     const configFile = ts.readConfigFile(config.tsconfigPath, ts.sys.readFile);
@@ -42,6 +55,37 @@ export class Analyzer {
       rootNames: parsedConfig.fileNames,
       options: parsedConfig.options,
     });
+  }
+
+  /**
+   * Builds detection maps from contract definitions
+   * This replaces hardcoded mappings with data-driven approach
+   */
+  private buildDetectionMaps(): void {
+    for (const [packageName, contract] of this.contracts.entries()) {
+      const detection = contract.detection;
+      if (!detection) continue;
+
+      // Map class names for new expressions (e.g., new Octokit())
+      for (const className of detection.class_names || []) {
+        this.classToPackage.set(className, packageName);
+      }
+
+      // Map type names for type declarations (e.g., client: Octokit)
+      for (const typeName of detection.type_names || []) {
+        this.typeToPackage.set(typeName, packageName);
+      }
+
+      // Map factory methods (e.g., createClient())
+      for (const factoryMethod of detection.factory_methods || []) {
+        this.factoryToPackage.set(factoryMethod, packageName);
+      }
+
+      // Map await patterns (e.g., .repos., .pulls.)
+      for (const pattern of detection.await_patterns || []) {
+        this.awaitPatternToPackage.set(pattern.toLowerCase(), packageName);
+      }
+    }
   }
 
   /**
@@ -138,18 +182,10 @@ export class Analyzer {
             ts.isIdentifier(node.type.typeName)) {
           const typeName = node.type.typeName.text;
 
-          // Map type names to package names
-          const typeToPackage: Record<string, string> = {
-            'AxiosInstance': 'axios',
-            'PrismaClient': '@prisma/client',
-            'PrismaService': '@prisma/client',
-            'Twilio': 'twilio',
-            'S3Client': '@aws-sdk/client-s3',
-            'Octokit': '@octokit/rest',
-          };
-
-          if (typeToPackage[typeName]) {
-            axiosInstances.set(varName, typeToPackage[typeName]);
+          // Look up package name from detection rules
+          const packageName = self.typeToPackage.get(typeName);
+          if (packageName) {
+            axiosInstances.set(varName, packageName);
           }
         }
       }
@@ -165,17 +201,10 @@ export class Analyzer {
             ts.isIdentifier(node.type.typeName)) {
           const typeName = node.type.typeName.text;
 
-          // Map type names to package names
-          const typeToPackage: Record<string, string> = {
-            'AxiosInstance': 'axios',
-            'PrismaClient': '@prisma/client',
-            'PrismaService': '@prisma/client',
-            'Twilio': 'twilio',
-            'Octokit': '@octokit/rest',
-          };
-
-          if (typeToPackage[typeName]) {
-            axiosInstances.set(varName, typeToPackage[typeName]);
+          // Look up package name from detection rules
+          const packageName = self.typeToPackage.get(typeName);
+          if (packageName) {
+            axiosInstances.set(varName, packageName);
           }
         }
       }
@@ -378,59 +407,16 @@ export class Analyzer {
 
   /**
    * Detects which package is being called from the await expression text
+   * Uses dynamic pattern matching from contract detection rules
    */
   private detectPackageFromAwaitText(awaitText: string): string | null {
     const lowerText = awaitText.toLowerCase();
 
-    // Check for specific package patterns
-    // @octokit/rest: client.repos.get(), octokit.pulls.create(), instance.issues.update()
-    if (lowerText.includes('.repos.') ||
-        lowerText.includes('.pulls.') ||
-        lowerText.includes('.issues.') ||
-        lowerText.includes('.git.getref') ||
-        lowerText.includes('.git.createref')) {
-      return '@octokit/rest';
-    }
-
-    // Prisma: prisma.user.create(), client.post.findMany()
-    if (lowerText.includes('prisma.') ||
-        (lowerText.match(/\.(user|post|comment|product|order|customer)\.(create|find|update|delete)/))) {
-      return '@prisma/client';
-    }
-
-    // Stripe: stripe.charges.create(), stripe.customers.retrieve()
-    if (lowerText.includes('stripe.')) {
-      return 'stripe';
-    }
-
-    // Axios: axios.get(), axios.post(), axiosInstance.get()
-    if (lowerText.includes('axios.') || lowerText.includes('axios(')) {
-      return 'axios';
-    }
-
-    // Supabase: supabase.from().select()
-    if (lowerText.includes('supabase.')) {
-      return '@supabase/supabase-js';
-    }
-
-    // Twilio: client.messages.create(), twilio.calls.create()
-    if (lowerText.includes('twilio.') || lowerText.includes('.messages.create')) {
-      return 'twilio';
-    }
-
-    // OpenAI: openai.chat.completions.create()
-    if (lowerText.includes('openai.')) {
-      return 'openai';
-    }
-
-    // AWS S3: s3Client.send(), client.send(new GetObjectCommand())
-    if (lowerText.includes('s3client.') || lowerText.includes('s3.send')) {
-      return '@aws-sdk/client-s3';
-    }
-
-    // Zod: schema.parseAsync(), userSchema.parseAsync()
-    if (lowerText.includes('.parseasync(')) {
-      return 'zod';
+    // Check against all registered await patterns from contracts
+    for (const [pattern, packageName] of this.awaitPatternToPackage.entries()) {
+      if (lowerText.includes(pattern)) {
+        return packageName;
+      }
     }
 
     return null;
@@ -995,19 +981,10 @@ export class Analyzer {
 
     const className = node.expression.getText(sourceFile);
 
-    // Map class names to package names
-    const classToPackage: Record<string, string> = {
-      'PrismaClient': '@prisma/client',
-      'PrismaService': '@prisma/client', // NestJS wrapper around PrismaClient
-      'Stripe': 'stripe',
-      'OpenAI': 'openai',
-      'Twilio': 'twilio',
-      'S3Client': '@aws-sdk/client-s3',
-      'Octokit': '@octokit/rest',
-    };
-
-    if (classToPackage[className]) {
-      return classToPackage[className];
+    // Look up package name from detection rules
+    const packageName = this.classToPackage.get(className);
+    if (packageName) {
+      return packageName;
     }
 
     // Fallback: resolve from imports

@@ -51,6 +51,20 @@ export interface FunctionContract {
 }
 
 /**
+ * Detection rules for identifying package usage in code
+ */
+export interface DetectionRules {
+  /** Class names used for instantiation (e.g., ["Octokit", "PrismaClient"]) */
+  class_names?: string[];
+  /** TypeScript type names used in declarations (e.g., ["Octokit", "AxiosInstance"]) */
+  type_names?: string[];
+  /** Factory method names (e.g., ["createClient", "create"]) */
+  factory_methods?: string[];
+  /** Patterns to match in await expressions (e.g., [".repos.", ".pulls."]) */
+  await_patterns?: string[];
+}
+
+/**
  * A complete package contract
  */
 export interface PackageContract {
@@ -62,6 +76,8 @@ export interface PackageContract {
   deprecated?: boolean;
   deprecated_reason?: string;
   deprecated_date?: string;
+  /** Detection rules for analyzer integration */
+  detection?: DetectionRules;
   functions: FunctionContract[];
 }
 
