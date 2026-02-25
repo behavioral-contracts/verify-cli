@@ -22,6 +22,7 @@ export class Analyzer {
   private program: ts.Program;
   private contracts: Map<string, PackageContract>;
   private violations: Violation[] = [];
+  private projectRoot: string;
 
   constructor(config: AnalyzerConfig, contracts: Map<string, PackageContract>) {
     this.contracts = contracts;
@@ -33,6 +34,9 @@ export class Analyzer {
       ts.sys,
       path.dirname(config.tsconfigPath)
     );
+
+    // Store project root for file system operations
+    this.projectRoot = path.dirname(config.tsconfigPath);
 
     this.program = ts.createProgram({
       rootNames: parsedConfig.fileNames,
@@ -1290,6 +1294,59 @@ export class Analyzer {
       }
     }
 
+    // Clerk-specific: Middleware file system check
+    // Check this BEFORE generic try-catch because it requires file inspection, not try-catch
+    if (postcondition.id === 'middleware-not-exported') {
+      const middlewareExists = this.checkClerkMiddlewareExists();
+
+      if (!middlewareExists) {
+        const description = postcondition.throws ||
+          'Middleware file not found or clerkMiddleware not properly exported. auth() calls will fail at runtime.';
+        return this.createViolation(callSite, postcondition, packageName, functionName, description, 'error');
+      } else {
+        // Middleware is properly configured - no violation
+        return null;
+      }
+    }
+
+    // Clerk-specific: Check for middleware matcher configuration
+    if (postcondition.id === 'middleware-matcher-missing') {
+      const middlewarePath = this.checkFileExists('middleware.ts', ['middleware.ts', 'middleware.js']);
+
+      if (middlewarePath) {
+        // Check if the middleware file exports a config with matcher
+        const sourceFile = this.program.getSourceFile(middlewarePath);
+        let hasMatcherConfig = false;
+
+        if (sourceFile) {
+          ts.forEachChild(sourceFile, (node) => {
+            // Look for: export const config = { matcher: ... }
+            if (ts.isVariableStatement(node)) {
+              const modifiers = ts.getCombinedModifierFlags(node.declarationList.declarations[0]);
+              if (modifiers & ts.ModifierFlags.Export) {
+                for (const declaration of node.declarationList.declarations) {
+                  if (ts.isVariableDeclaration(declaration) &&
+                      ts.isIdentifier(declaration.name) &&
+                      declaration.name.text === 'config') {
+                    hasMatcherConfig = true;
+                    break;
+                  }
+                }
+              }
+            }
+          });
+
+          if (!hasMatcherConfig) {
+            const description = postcondition.throws ||
+              'Middleware missing matcher configuration. Will run on all routes including static assets.';
+            return this.createViolation(callSite, postcondition, packageName, functionName, description, 'warning');
+          }
+        }
+      }
+
+      return null;
+    }
+
     // NEW: Generic check for any postcondition requiring error handling
     // If the postcondition specifies required_handling and has severity='error',
     // it means the call MUST have error handling
@@ -1513,6 +1570,147 @@ export class Analyzer {
       current = current.parent;
     }
     return null;
+  }
+
+  /**
+   * Checks if a specific file exists in the project
+   * Tries multiple possible locations (root, src/, etc.)
+   *
+   * @param fileName - The file name to search for (e.g., 'middleware.ts')
+   * @param variations - Optional variations of the file name (e.g., ['middleware.ts', 'middleware.js'])
+   * @returns The full path if found, null otherwise
+   */
+  private checkFileExists(fileName: string, variations?: string[]): string | null {
+    const filesToCheck = variations || [fileName];
+    const locationsToCheck = [
+      '', // Root directory
+      'src', // src/ directory
+      'app', // app/ directory (Next.js App Router)
+    ];
+
+    for (const location of locationsToCheck) {
+      for (const file of filesToCheck) {
+        const fullPath = path.join(this.projectRoot, location, file);
+        if (ts.sys.fileExists(fullPath)) {
+          return fullPath;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Checks if a file imports and exports specific patterns
+   *
+   * @param filePath - Absolute path to the file to check
+   * @param importPattern - Object specifying what to look for in imports
+   * @param exportPattern - Object specifying what to look for in exports
+   * @returns Object with hasImport and hasExport booleans
+   */
+  private checkFileImportsAndExports(
+    filePath: string,
+    importPattern: { packageName: string; importName?: string },
+    exportPattern: { type: 'default' | 'named'; exportName?: string }
+  ): { hasImport: boolean; hasExport: boolean } {
+    const sourceFile = this.program.getSourceFile(filePath);
+    if (!sourceFile) {
+      return { hasImport: false, hasExport: false };
+    }
+
+    let hasImport = false;
+    let hasExport = false;
+    let importedName: string | null = null;
+
+    // Check imports
+    ts.forEachChild(sourceFile, (node) => {
+      if (ts.isImportDeclaration(node)) {
+        const moduleSpecifier = node.moduleSpecifier;
+        if (ts.isStringLiteral(moduleSpecifier)) {
+          const importPath = moduleSpecifier.text;
+
+          // Check if this import matches the package pattern
+          if (importPath.includes(importPattern.packageName)) {
+            // If specific import name is required, check for it
+            if (importPattern.importName) {
+              if (node.importClause?.namedBindings &&
+                  ts.isNamedImports(node.importClause.namedBindings)) {
+                for (const element of node.importClause.namedBindings.elements) {
+                  if (element.name.text === importPattern.importName) {
+                    hasImport = true;
+                    importedName = importPattern.importName;
+                    break;
+                  }
+                }
+              }
+            } else {
+              // No specific import name required, just check package
+              hasImport = true;
+            }
+          }
+        }
+      }
+
+      // Check exports
+      if (exportPattern.type === 'default' && ts.isExportAssignment(node)) {
+        // export default ...
+        if (node.expression) {
+          // Check if it's a call expression: export default clerkMiddleware()
+          if (ts.isCallExpression(node.expression)) {
+            const expr = node.expression.expression;
+            if (ts.isIdentifier(expr)) {
+              if (importedName && expr.text === importedName) {
+                hasExport = true;
+              } else if (!importPattern.importName) {
+                // If no specific import name, just check if it's exported
+                hasExport = true;
+              }
+            }
+          }
+        }
+      }
+
+      if (exportPattern.type === 'named' && ts.isExportDeclaration(node)) {
+        // export { ... }
+        if (node.exportClause && ts.isNamedExports(node.exportClause)) {
+          for (const element of node.exportClause.elements) {
+            if (exportPattern.exportName && element.name.text === exportPattern.exportName) {
+              hasExport = true;
+              break;
+            }
+          }
+        }
+      }
+    });
+
+    return { hasImport, hasExport };
+  }
+
+  /**
+   * Checks if middleware.ts exists and properly exports clerkMiddleware
+   * This is specific to @clerk/nextjs middleware setup
+   *
+   * @returns true if middleware is properly configured, false otherwise
+   */
+  private checkClerkMiddlewareExists(): boolean {
+    // Check if middleware.ts or middleware.js exists
+    const middlewarePath = this.checkFileExists('middleware.ts', [
+      'middleware.ts',
+      'middleware.js'
+    ]);
+
+    if (!middlewarePath) {
+      return false;
+    }
+
+    // Check if the middleware file imports and exports clerkMiddleware
+    const { hasImport, hasExport } = this.checkFileImportsAndExports(
+      middlewarePath,
+      { packageName: '@clerk/nextjs', importName: 'clerkMiddleware' },
+      { type: 'default' }
+    );
+
+    return hasImport && hasExport;
   }
 
   /**
