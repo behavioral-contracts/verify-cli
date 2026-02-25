@@ -145,6 +145,7 @@ export class Analyzer {
             'PrismaService': '@prisma/client',
             'Twilio': 'twilio',
             'S3Client': '@aws-sdk/client-s3',
+            'Octokit': '@octokit/rest',
           };
 
           if (typeToPackage[typeName]) {
@@ -170,6 +171,7 @@ export class Analyzer {
             'PrismaClient': '@prisma/client',
             'PrismaService': '@prisma/client',
             'Twilio': 'twilio',
+            'Octokit': '@octokit/rest',
           };
 
           if (typeToPackage[typeName]) {
@@ -289,9 +291,6 @@ export class Analyzer {
     detection: { line: number; column: number; awaitText: string; functionName: string },
     _functionNode: ts.Node
   ): Violation | null {
-    // Look for contracts that have async-related postconditions
-    // For now, we'll check react-hook-form as it has the async-submit-unhandled-error postcondition
-
     // Extract the await expression to see what's being called
     const awaitText = detection.awaitText.toLowerCase();
 
@@ -309,6 +308,11 @@ export class Analyzer {
       awaitText.includes('prisma') ||
       awaitText.includes('supabase') ||
       awaitText.includes('stripe') ||
+      awaitText.includes('octokit') ||
+      awaitText.includes('.repos.') ||
+      awaitText.includes('.pulls.') ||
+      awaitText.includes('.issues.') ||
+      awaitText.includes('.git.') ||
       awaitText.includes('.create') ||
       awaitText.includes('.update') ||
       awaitText.includes('.query') ||
@@ -318,45 +322,115 @@ export class Analyzer {
       return null;
     }
 
-    // Try to find a matching contract with async error postconditions
-    let matchingPostcondition: Postcondition | undefined;
-    let matchingPackageName: string | undefined;
-    let matchingFunctionName: string | undefined;
+    // Determine which package is being called
+    const detectedPackage = this.detectPackageFromAwaitText(detection.awaitText);
 
-    for (const [packageName, contract] of this.contracts.entries()) {
-      for (const func of contract.functions) {
-        // Check if any postcondition mentions async errors
-        const asyncErrorPostcondition = func.postconditions?.find(
-          pc => pc.id?.includes('async') || pc.id?.includes('unhandled')
-        );
-
-        if (asyncErrorPostcondition) {
-          matchingPostcondition = asyncErrorPostcondition;
-          matchingPackageName = packageName;
-          matchingFunctionName = func.name;
-          break;
-        }
-      }
-      if (matchingPostcondition) break;
+    if (!detectedPackage) {
+      return null; // Can't determine package, skip
     }
 
-    // If we found a matching contract, create a violation
-    if (matchingPostcondition && matchingPackageName && matchingFunctionName) {
+    // Look for a matching contract for this specific package
+    const contract = this.contracts.get(detectedPackage);
+    if (!contract) {
+      return null; // No contract for this package
+    }
+
+    // Find the matching function and postcondition
+    let matchingPostcondition: Postcondition | undefined;
+    let matchingFunctionName: string | undefined;
+
+    for (const func of contract.functions) {
+      // Check if any postcondition mentions async errors or matches the pattern
+      const asyncErrorPostcondition = func.postconditions?.find(
+        pc => pc.id?.includes('no-try-catch') ||
+              pc.id?.includes('async') ||
+              pc.id?.includes('unhandled')
+      );
+
+      if (asyncErrorPostcondition) {
+        matchingPostcondition = asyncErrorPostcondition;
+        matchingFunctionName = func.name;
+        break;
+      }
+    }
+
+    // If we found a matching postcondition, create a violation
+    if (matchingPostcondition && matchingFunctionName) {
       const description = `Async function '${detection.functionName}' contains unprotected await expression. ${detection.awaitText.substring(0, 50)}... may throw unhandled errors.`;
 
       return {
-        id: `${matchingPackageName}-${matchingPostcondition.id}`,
-        severity: 'error',
+        id: `${detectedPackage}-${matchingPostcondition.id}`,
+        severity: matchingPostcondition.severity || 'error',
         file: sourceFile.fileName,
         line: detection.line,
         column: detection.column,
-        package: matchingPackageName,
+        package: detectedPackage,
         function: matchingFunctionName,
         contract_clause: matchingPostcondition.id,
         description,
         source_doc: matchingPostcondition.source,
         suggested_fix: matchingPostcondition.required_handling,
       };
+    }
+
+    return null;
+  }
+
+  /**
+   * Detects which package is being called from the await expression text
+   */
+  private detectPackageFromAwaitText(awaitText: string): string | null {
+    const lowerText = awaitText.toLowerCase();
+
+    // Check for specific package patterns
+    // @octokit/rest: client.repos.get(), octokit.pulls.create(), instance.issues.update()
+    if (lowerText.includes('.repos.') ||
+        lowerText.includes('.pulls.') ||
+        lowerText.includes('.issues.') ||
+        lowerText.includes('.git.getref') ||
+        lowerText.includes('.git.createref')) {
+      return '@octokit/rest';
+    }
+
+    // Prisma: prisma.user.create(), client.post.findMany()
+    if (lowerText.includes('prisma.') ||
+        (lowerText.match(/\.(user|post|comment|product|order|customer)\.(create|find|update|delete)/))) {
+      return '@prisma/client';
+    }
+
+    // Stripe: stripe.charges.create(), stripe.customers.retrieve()
+    if (lowerText.includes('stripe.')) {
+      return 'stripe';
+    }
+
+    // Axios: axios.get(), axios.post(), axiosInstance.get()
+    if (lowerText.includes('axios.') || lowerText.includes('axios(')) {
+      return 'axios';
+    }
+
+    // Supabase: supabase.from().select()
+    if (lowerText.includes('supabase.')) {
+      return '@supabase/supabase-js';
+    }
+
+    // Twilio: client.messages.create(), twilio.calls.create()
+    if (lowerText.includes('twilio.') || lowerText.includes('.messages.create')) {
+      return 'twilio';
+    }
+
+    // OpenAI: openai.chat.completions.create()
+    if (lowerText.includes('openai.')) {
+      return 'openai';
+    }
+
+    // AWS S3: s3Client.send(), client.send(new GetObjectCommand())
+    if (lowerText.includes('s3client.') || lowerText.includes('s3.send')) {
+      return '@aws-sdk/client-s3';
+    }
+
+    // Zod: schema.parseAsync(), userSchema.parseAsync()
+    if (lowerText.includes('.parseasync(')) {
+      return 'zod';
     }
 
     return null;
@@ -929,6 +1003,7 @@ export class Analyzer {
       'OpenAI': 'openai',
       'Twilio': 'twilio',
       'S3Client': '@aws-sdk/client-s3',
+      'Octokit': '@octokit/rest',
     };
 
     if (classToPackage[className]) {
