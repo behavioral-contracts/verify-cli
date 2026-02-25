@@ -1433,6 +1433,16 @@ export class Analyzer {
       analysis.hasPromiseCatch = true;
     }
 
+    // Check if there's a .then(success, error) handler (2-argument form)
+    // Pattern: promise.then(successCallback, errorCallback)
+    if (parent && ts.isPropertyAccessExpression(parent) && parent.name.text === 'then') {
+      // Check if the .then() call has 2 arguments (success and error callbacks)
+      const thenCall = parent.parent;
+      if (thenCall && ts.isCallExpression(thenCall) && thenCall.arguments.length === 2) {
+        analysis.hasPromiseCatch = true;
+      }
+    }
+
     // Look for error.response checks in surrounding catch blocks
     const catchClause = this.findEnclosingCatchClause(node);
     if (catchClause) {
