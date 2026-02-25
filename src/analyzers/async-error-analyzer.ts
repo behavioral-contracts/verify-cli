@@ -18,6 +18,8 @@ export interface AsyncErrorDetection {
   awaitText: string;
   /** The function containing this await */
   functionName: string;
+  /** The AST node for type-aware detection (added for Phase 1) */
+  node?: ts.CallExpression;
 }
 
 export class AsyncErrorAnalyzer {
@@ -74,12 +76,16 @@ export class AsyncErrorAnalyzer {
       if (ts.isAwaitExpression(node) && !insideTryBlock) {
         const location = this.sourceFile.getLineAndCharacterOfPosition(node.getStart());
 
+        // Extract the call expression for type-aware detection
+        const callNode = ts.isCallExpression(node.expression) ? node.expression : undefined;
+
         unprotectedAwaits.push({
           isProtected: false,
           line: location.line + 1,
           column: location.character + 1,
           awaitText: node.getText(this.sourceFile).substring(0, 100), // Limit length
           functionName,
+          node: callNode,  // Include AST node for type-aware detection
         });
       }
 
