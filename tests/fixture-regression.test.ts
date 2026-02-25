@@ -36,7 +36,8 @@ describe('Fixture Regression Tests', () => {
     { name: 'pg', fixtures: ['proper-error-handling', 'missing-error-handling', 'instance-usage'] },
     { name: 'openai', fixtures: ['proper-error-handling', 'missing-error-handling', 'instance-usage'] },
     { name: 'express', fixtures: ['proper-error-handling', 'missing-error-handling', 'instance-usage'] },
-    { name: 'zod', fixtures: ['proper-error-handling', 'missing-error-handling', 'instance-usage'] }
+    { name: 'zod', fixtures: ['proper-error-handling', 'missing-error-handling', 'instance-usage'] },
+    { name: 'firebase-admin', fixtures: ['proper-error-handling', 'missing-error-handling', 'instance-usage'] }
   ];
 
   for (const pkg of packages) {
