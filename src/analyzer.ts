@@ -459,26 +459,11 @@ export class Analyzer {
 
       // Get the type of the object
       const type = this.typeChecker.getTypeAtLocation(objectExpr);
-      const symbol = type.getSymbol();
 
-      if (symbol) {
-        // Get the type name (e.g., "TextChannel", "Model")
-        const typeName = symbol.getName();
-
-        // Look up which package owns this type
-        const packageName = this.typeToPackage.get(typeName);
-        if (packageName) {
-          return packageName;
-        }
-
-        // Handle generic types: Model<User> → extract "Model"
-        if (type.aliasSymbol) {
-          const aliasName = type.aliasSymbol.getName();
-          const aliasPackage = this.typeToPackage.get(aliasName);
-          if (aliasPackage) {
-            return aliasPackage;
-          }
-        }
+      // Try multiple strategies to extract the package
+      const packageName = this.extractPackageFromType(type);
+      if (packageName) {
+        return packageName;
       }
 
       // Handle: ClassName.staticMethod() - e.g., Model.create()
@@ -487,6 +472,79 @@ export class Analyzer {
         const packageName = this.classToPackage.get(className);
         if (packageName) {
           return packageName;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Extracts package name from a TypeScript type
+   * Handles edge cases: generics, aliases, unions, intersections
+   *
+   * Edge cases:
+   * 1. Type aliases: import { Client as Bot } from 'discord.js' → resolve "Bot" to "Client"
+   * 2. Generic types: Model<User> → extract base type "Model"
+   * 3. Union types: TextChannel | VoiceChannel → try all types in union
+   * 4. Intersection types: A & B → try all types in intersection
+   *
+   * @param type The TypeScript type to analyze
+   * @returns Package name if recognized, null otherwise
+   */
+  private extractPackageFromType(type: ts.Type): string | null {
+    // Strategy 1: Direct symbol lookup
+    const symbol = type.getSymbol();
+    if (symbol) {
+      const typeName = symbol.getName();
+      const packageName = this.typeToPackage.get(typeName);
+      if (packageName) {
+        return packageName;
+      }
+
+      // EDGE CASE 1: Type aliases (e.g., import { Client as DiscordClient })
+      // Check if this symbol is an alias and resolve it
+      // Note: getAliasedSymbol should only be called on alias symbols
+      if ((symbol.flags & ts.SymbolFlags.Alias) !== 0) {
+        const aliasedSymbol = this.typeChecker.getAliasedSymbol(symbol);
+        if (aliasedSymbol && aliasedSymbol !== symbol) {
+          const aliasedName = aliasedSymbol.getName();
+          const aliasedPackage = this.typeToPackage.get(aliasedName);
+          if (aliasedPackage) {
+            return aliasedPackage;
+          }
+        }
+      }
+    }
+
+    // EDGE CASE 2: Generic types (e.g., Model<User>)
+    // Check if this is a type reference with type arguments
+    if (type.aliasSymbol) {
+      const aliasName = type.aliasSymbol.getName();
+      const aliasPackage = this.typeToPackage.get(aliasName);
+      if (aliasPackage) {
+        return aliasPackage;
+      }
+    }
+
+    // EDGE CASE 3: Union types (e.g., TextChannel | VoiceChannel)
+    // If multiple types, try each one and return first match
+    if (type.isUnion()) {
+      for (const unionType of type.types) {
+        const packageName = this.extractPackageFromType(unionType);
+        if (packageName) {
+          return packageName; // Return first matching type in union
+        }
+      }
+    }
+
+    // EDGE CASE 4: Intersection types (e.g., A & B)
+    // Less common but worth handling
+    if (type.isIntersection && type.isIntersection()) {
+      for (const intersectionType of type.types) {
+        const packageName = this.extractPackageFromType(intersectionType);
+        if (packageName) {
+          return packageName; // Return first matching type in intersection
         }
       }
     }
