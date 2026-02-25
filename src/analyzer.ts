@@ -144,6 +144,7 @@ export class Analyzer {
             'PrismaClient': '@prisma/client',
             'PrismaService': '@prisma/client',
             'Twilio': 'twilio',
+            'S3Client': '@aws-sdk/client-s3',
           };
 
           if (typeToPackage[typeName]) {
@@ -431,6 +432,14 @@ export class Analyzer {
 
     if (hookName) {
       this.analyzeReactQueryHook(node, sourceFile, hookName, reactQueryAnalyzer, globalHandlers);
+      return;
+    }
+
+    // Special handling for AWS SDK S3 send() method
+    // Pattern: s3Client.send(new GetObjectCommand(...))
+    const s3Analysis = this.analyzeS3SendCall(node, sourceFile, axiosInstances);
+    if (s3Analysis) {
+      this.analyzeS3Command(s3Analysis, node, sourceFile);
       return;
     }
 
@@ -919,6 +928,7 @@ export class Analyzer {
       'Stripe': 'stripe',
       'OpenAI': 'openai',
       'Twilio': 'twilio',
+      'S3Client': '@aws-sdk/client-s3',
     };
 
     if (classToPackage[className]) {
@@ -1378,7 +1388,7 @@ export class Analyzer {
     // it means the call MUST have error handling
     if (postcondition.required_handling && postcondition.severity === 'error') {
       if (!hasAnyErrorHandling) {
-        // Generate a violation with a generic message based on the postcondition description
+        // Generate a violation with a generic message based on the postcondition.condition
         const description = postcondition.throws
           ? `No try-catch block found. ${postcondition.throws} - this will crash the application.`
           : 'No error handling found. This operation can throw errors that will crash the application.';
@@ -1909,4 +1919,171 @@ export class Analyzer {
       ),
     };
   }
+  /**
+   * Analyzes S3 send() calls to detect command type
+   * Pattern: s3Client.send(new GetObjectCommand(...))
+   */
+  private analyzeS3SendCall(
+    node: ts.CallExpression,
+    sourceFile: ts.SourceFile,
+    s3ClientInstances: Map<string, string>
+  ): { client: string; command: string; packageName: string } | null {
+    // Check if this is a .send() call
+    if (!ts.isPropertyAccessExpression(node.expression)) return null;
+    if (node.expression.name.text !== 'send') return null;
+
+    // Get the object being called (should be s3Client)
+    let clientIdentifier: string | null = null;
+    
+    if (ts.isIdentifier(node.expression.expression)) {
+      clientIdentifier = node.expression.expression.text;
+    } else if (ts.isPropertyAccessExpression(node.expression.expression)) {
+      // Handle this.s3Client.send() pattern
+      clientIdentifier = node.expression.expression.name.text;
+    }
+
+    if (!clientIdentifier) return null;
+
+    // Check if this identifier is a tracked S3Client instance
+    const packageName = s3ClientInstances.get(clientIdentifier) || 
+                       this.resolvePackageFromImports(clientIdentifier, sourceFile);
+    
+    if (packageName !== '@aws-sdk/client-s3') return null;
+
+    // Extract the command type from the argument
+    // Pattern: send(new GetObjectCommand(...))
+    if (node.arguments.length === 0) return null;
+    
+    const firstArg = node.arguments[0];
+    if (!ts.isNewExpression(firstArg)) return null;
+    
+    const commandName = firstArg.expression.getText(sourceFile);
+    
+    return {
+      client: clientIdentifier,
+      command: commandName,
+      packageName: '@aws-sdk/client-s3'
+    };
+  }
+
+  /**
+   * Analyzes an S3 command call and creates violations if needed
+   */
+  private analyzeS3Command(
+    s3Analysis: { client: string; command: string; packageName: string },
+    node: ts.CallExpression,
+    sourceFile: ts.SourceFile
+  ): void {
+    const contract = this.contracts.get(s3Analysis.packageName);
+    if (!contract) return;
+
+    // Find the send() function contract
+    const sendContract = contract.functions.find(f => f.name === 'send');
+    if (!sendContract) return;
+
+    // Map command type to postcondition ID
+    const commandToPostcondition = this.mapS3CommandToPostcondition(s3Analysis.command);
+    if (!commandToPostcondition) return;
+
+    // Find the matching postcondition
+    const postcondition = sendContract.postconditions?.find(p => p.id === commandToPostcondition);
+    if (!postcondition) return;
+
+    // Check if this is wrapped in try-catch
+    const asyncErrorAnalyzer = new AsyncErrorAnalyzer(sourceFile);
+    
+    // Find the await expression that wraps this call
+    let awaitNode: ts.AwaitExpression | null = null;
+    let current: ts.Node | undefined = node;
+    
+    while (current) {
+      if (ts.isAwaitExpression(current) && current.expression === node) {
+        awaitNode = current;
+        break;
+      }
+      current = current.parent;
+    }
+
+    // Check if await is protected by try-catch
+    let isProtected = false;
+    if (awaitNode) {
+      const functionNode = this.findContainingFunction(awaitNode);
+      if (functionNode) {
+        isProtected = asyncErrorAnalyzer.isAwaitProtected(awaitNode, functionNode);
+      }
+    }
+
+    // Create violation if not protected (for error severity postconditions)
+    if (!isProtected && postcondition.severity === 'error') {
+      const { line, character } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+      
+      const violation: Violation = {
+        id: `${s3Analysis.packageName}-${postcondition.id}`,
+        severity: postcondition.severity,
+        file: sourceFile.fileName,
+        line: line + 1,
+        column: character + 1,
+        package: s3Analysis.packageName,
+        function: 'send',
+        contract_clause: postcondition.id,
+        description: `${s3Analysis.command} called without try-catch. ${postcondition.condition}`,
+        source_doc: postcondition.source || '',
+        suggested_fix: postcondition.required_handling || '',
+      };
+
+      this.violations.push(violation);
+    }
+  }
+
+  /**
+   * Maps S3 command types to their corresponding postcondition IDs
+   */
+  private mapS3CommandToPostcondition(commandName: string): string | null {
+    // Object operations
+    const objectOps = [
+      'GetObjectCommand',
+      'PutObjectCommand', 
+      'DeleteObjectCommand',
+      'HeadObjectCommand',
+      'CopyObjectCommand'
+    ];
+    if (objectOps.includes(commandName)) {
+      return 's3-object-operation-no-try-catch';
+    }
+
+    // Multipart operations
+    const multipartOps = [
+      'CreateMultipartUploadCommand',
+      'UploadPartCommand',
+      'CompleteMultipartUploadCommand',
+      'AbortMultipartUploadCommand'
+    ];
+    if (multipartOps.includes(commandName)) {
+      return 's3-multipart-no-try-catch';
+    }
+
+    // Bucket operations
+    const bucketOps = [
+      'CreateBucketCommand',
+      'DeleteBucketCommand',
+      'HeadBucketCommand'
+    ];
+    if (bucketOps.includes(commandName)) {
+      return 's3-bucket-operation-no-try-catch';
+    }
+
+    // List operations
+    const listOps = [
+      'ListObjectsV2Command',
+      'ListObjectsCommand',
+      'ListBucketsCommand'
+    ];
+    if (listOps.includes(commandName)) {
+      return 's3-list-operation-no-try-catch';
+    }
+
+    return null;
+  }
+
+
 }
