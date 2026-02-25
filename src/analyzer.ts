@@ -20,6 +20,7 @@ import { AsyncErrorAnalyzer } from './analyzers/async-error-analyzer.js';
  */
 export class Analyzer {
   private program: ts.Program;
+  // private _typeChecker: ts.TypeChecker;  // Reserved for future type-aware detection (TODO)
   private contracts: Map<string, PackageContract>;
   private violations: Violation[] = [];
   private projectRoot: string;
@@ -55,6 +56,9 @@ export class Analyzer {
       rootNames: parsedConfig.fileNames,
       options: parsedConfig.options,
     });
+
+    // Initialize type checker for future type-aware detection
+    // this._typeChecker = this.program.getTypeChecker();  // TODO: Uncomment when implementing type-aware detection
   }
 
   /**
@@ -381,15 +385,47 @@ export class Analyzer {
   private detectPackageFromAwaitText(awaitText: string): string | null {
     const lowerText = awaitText.toLowerCase();
 
-    // Check against all registered await patterns from contracts
+    // Collect all matching patterns with their specificity (length)
+    const matches: Array<{ pattern: string; packageName: string; specificity: number }> = [];
+
     for (const [pattern, packageName] of this.awaitPatternToPackage.entries()) {
       if (lowerText.includes(pattern)) {
-        return packageName;
+        matches.push({
+          pattern,
+          packageName,
+          specificity: pattern.length,  // Longer patterns are more specific
+        });
       }
     }
 
-    return null;
+    // If no matches, return null
+    if (matches.length === 0) {
+      return null;
+    }
+
+    // If only one match, return it
+    if (matches.length === 1) {
+      return matches[0].packageName;
+    }
+
+    // Multiple matches - return the most specific (longest) pattern
+    // This prevents false positives from broad patterns like ".create"
+    // matching more specific patterns like ".createInvite"
+    matches.sort((a, b) => b.specificity - a.specificity);
+    return matches[0].packageName;
   }
+
+  /*
+   * TODO: Type-aware detection (future enhancement)
+   *
+   * Detects package using TypeScript's type system (most accurate method)
+   * This method uses TypeScript's type checker to determine which package
+   * a variable belongs to based on its type, rather than pattern matching.
+   *
+   * Implementation documented in: /dev-notes/analyzer-enhancement-type-aware-detection.md
+   *
+   * For now, pattern specificity (longest match wins) handles most overlap cases.
+   */
 
   /**
    * Detects package from tracked instance (most accurate method)
