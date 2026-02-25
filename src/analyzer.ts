@@ -143,6 +143,7 @@ export class Analyzer {
             'AxiosInstance': 'axios',
             'PrismaClient': '@prisma/client',
             'PrismaService': '@prisma/client',
+            'Twilio': 'twilio',
           };
 
           if (typeToPackage[typeName]) {
@@ -167,6 +168,7 @@ export class Analyzer {
             'AxiosInstance': 'axios',
             'PrismaClient': '@prisma/client',
             'PrismaService': '@prisma/client',
+            'Twilio': 'twilio',
           };
 
           if (typeToPackage[typeName]) {
@@ -916,6 +918,7 @@ export class Analyzer {
       'PrismaService': '@prisma/client', // NestJS wrapper around PrismaClient
       'Stripe': 'stripe',
       'OpenAI': 'openai',
+      'Twilio': 'twilio',
     };
 
     if (classToPackage[className]) {
@@ -967,6 +970,15 @@ export class Analyzer {
         if (packageName && this.contracts.has(packageName)) {
           return packageName;
         }
+      }
+
+      // Pattern 3: Direct package function calls
+      // Example: import twilio from 'twilio'
+      //          const client = twilio(accountSid, authToken)
+      // This handles packages where the default export is a function that creates a client instance
+      const packageName = this.resolvePackageFromImports(functionName, sourceFile);
+      if (packageName && this.contracts.has(packageName)) {
+        return packageName;
       }
     }
 
