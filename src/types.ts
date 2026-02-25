@@ -44,6 +44,7 @@ export interface FunctionContract {
   name: string;
   import_path: string;
   description: string;
+  namespace?: string; // For namespace methods like ts.sys.readFile() where namespace="sys"
   preconditions?: Precondition[];
   postconditions?: Postcondition[];
   edge_cases?: EdgeCase[];

@@ -434,7 +434,20 @@ export class Analyzer {
     const contract = this.contracts.get(callSite.packageName);
     if (!contract) return;
 
-    const functionContract = contract.functions.find(f => f.name === callSite.functionName);
+    // NEW: Handle namespace methods
+    // Check if this call has a namespace (e.g., ts.sys.readFile())
+    const namespace = (node as any).__namespace;
+
+    // Match function contract, considering namespace if present
+    const functionContract = contract.functions.find(f => {
+      // If the call has a namespace, match both namespace and function name
+      if (namespace) {
+        return f.namespace === namespace && f.name === callSite.functionName;
+      }
+      // Otherwise, match function name only (and ensure it's not a namespaced function)
+      return f.name === callSite.functionName && !f.namespace;
+    });
+
     if (!functionContract) return;
 
     // Check if this call is on an instance with error interceptors
@@ -711,6 +724,7 @@ export class Analyzer {
       // Simple: axios.get() → { root: 'axios', chain: [], method: 'get' }
       // Chained: prisma.user.create() → { root: 'prisma', chain: ['user'], method: 'create' }
       // Property: this.prisma.user.create() → { root: 'this', chain: ['prisma', 'user'], method: 'create' }
+      // Namespace: ts.sys.readFile() → { root: 'ts', chain: ['sys'], method: 'readFile' }
       const chainInfo = this.walkPropertyAccessChain(node.expression, sourceFile);
 
       if (chainInfo) {
@@ -740,6 +754,33 @@ export class Analyzer {
         // Fallback: resolve from imports
         else {
           packageName = this.resolvePackageFromImports(rootIdentifier, sourceFile);
+        }
+
+        // NEW: Handle namespace methods
+        // For patterns like ts.sys.readFile() where:
+        // - root = 'ts' (namespace import alias)
+        // - chain = ['sys'] (namespace within the package)
+        // - method = 'readFile' (function name)
+        // We need to check if there's a contract for this namespace method
+        if (packageName && chainInfo.chain.length > 0) {
+          const namespace = chainInfo.chain[0];
+          const contract = this.contracts.get(packageName);
+
+          if (contract) {
+            // Check if any function in this contract has a matching namespace
+            const namespacedFunction = contract.functions.find(
+              f => f.namespace === namespace && f.name === functionName
+            );
+
+            // If we found a namespaced function, we'll use it
+            // The functionName stays as the method (e.g., 'readFile')
+            // The chain info will help us match it later
+            if (namespacedFunction) {
+              // Store the namespace info for later matching
+              // We'll use this in analyzeCallExpression
+              (node as any).__namespace = namespace;
+            }
+          }
         }
       }
     } else if (ts.isIdentifier(node.expression)) {
@@ -815,10 +856,13 @@ export class Analyzer {
             }
           }
 
-          // Handle: import * as axios from 'axios'
+          // Handle: import * as ts from 'typescript'
+          // NEW: Namespace imports support for packages with namespace methods
           if (importClause.namedBindings && ts.isNamespaceImport(importClause.namedBindings)) {
-            // This would require tracking property access - simplified for MVP
-            continue;
+            const namespaceAlias = importClause.namedBindings.name.text;
+            if (namespaceAlias === functionName) {
+              return packageName;
+            }
           }
         }
       }
@@ -1205,7 +1249,21 @@ export class Analyzer {
   ): Violation | null {
     const hasAnyErrorHandling = analysis.hasTryCatch || analysis.hasPromiseCatch;
 
-    // Specific violation checks based on postcondition ID
+    // NEW: Generic check for any postcondition requiring error handling
+    // If the postcondition specifies required_handling and has severity='error',
+    // it means the call MUST have error handling
+    if (postcondition.required_handling && postcondition.severity === 'error') {
+      if (!hasAnyErrorHandling) {
+        // Generate a violation with a generic message based on the postcondition description
+        const description = postcondition.throws
+          ? `No try-catch block found. ${postcondition.throws} - this will crash the application.`
+          : 'No error handling found. This operation can throw errors that will crash the application.';
+
+        return this.createViolation(callSite, postcondition, packageName, functionName, description, 'error');
+      }
+    }
+
+    // Specific violation checks based on postcondition ID (for more detailed analysis)
     if (postcondition.id.includes('429') || postcondition.id.includes('rate-limit')) {
       // Rate limiting check
       if (!hasAnyErrorHandling) {
