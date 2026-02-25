@@ -467,7 +467,9 @@ export class Analyzer {
         postcondition,
         analysis,
         contract.package,
-        functionContract.name
+        functionContract.name,
+        node,
+        sourceFile
       );
 
       if (violation) {
@@ -834,7 +836,26 @@ export class Analyzer {
         const moduleSpecifier = statement.moduleSpecifier;
 
         if (ts.isStringLiteral(moduleSpecifier)) {
-          const packageName = moduleSpecifier.text;
+          const importPath = moduleSpecifier.text;
+          let packageName = importPath;
+
+          // Handle subpath exports: @clerk/nextjs/server -> @clerk/nextjs
+          // Check if the import path has a contract, if not try the parent package
+          if (!this.contracts.has(packageName)) {
+            // Try removing subpath to find parent package
+            // e.g., "@clerk/nextjs/server" -> "@clerk/nextjs"
+            const lastSlash = importPath.lastIndexOf('/');
+            if (lastSlash > 0 && importPath.startsWith('@')) {
+              // For scoped packages, only remove after the package name
+              const firstSlash = importPath.indexOf('/');
+              if (lastSlash > firstSlash) {
+                const parentPackage = importPath.substring(0, lastSlash);
+                if (this.contracts.has(parentPackage)) {
+                  packageName = parentPackage;
+                }
+              }
+            }
+          }
 
           if (!this.contracts.has(packageName)) continue;
 
@@ -1245,9 +1266,29 @@ export class Analyzer {
     postcondition: Postcondition,
     analysis: CallSiteAnalysis,
     packageName: string,
-    functionName: string
+    functionName: string,
+    node: ts.CallExpression,
+    sourceFile: ts.SourceFile
   ): Violation | null {
     const hasAnyErrorHandling = analysis.hasTryCatch || analysis.hasPromiseCatch;
+
+    // Clerk-specific: Null check detection for auth(), currentUser(), getToken()
+    // Check this BEFORE generic try-catch check because these functions use null checks, not try-catch
+    if (postcondition.id === 'auth-null-not-checked' ||
+        postcondition.id === 'current-user-null-not-handled' ||
+        postcondition.id === 'get-token-null-not-handled') {
+
+      const hasNullCheck = this.checkNullHandling(node, sourceFile);
+
+      if (!hasNullCheck) {
+        const description = postcondition.throws ||
+          `${functionName}() result used without null check - will crash if user not authenticated.`;
+        return this.createViolation(callSite, postcondition, packageName, functionName, description, 'error');
+      } else {
+        // Has null check, so this is handled correctly - don't flag as violation
+        return null;
+      }
+    }
 
     // NEW: Generic check for any postcondition requiring error handling
     // If the postcondition specifies required_handling and has severity='error',
@@ -1306,6 +1347,171 @@ export class Analyzer {
       }
     }
 
+    return null;
+  }
+
+  /**
+   * Checks if a function call result has proper null handling
+   * Used for Clerk functions that return null when not authenticated
+   */
+  private checkNullHandling(callNode: ts.CallExpression, sourceFile: ts.SourceFile): boolean {
+
+    // Find the parent statement containing this call
+    let currentNode: ts.Node = callNode;
+    while (currentNode && !ts.isStatement(currentNode)) {
+      currentNode = currentNode.parent;
+    }
+
+    if (!currentNode) return false;
+
+    // Find the containing function/method
+    const containingFunction = this.findContainingFunction(callNode);
+    if (!containingFunction) return false;
+
+    // Look for variable declaration or destructuring
+    let variableNames: string[] = [];
+
+    // Check if the call is assigned to a variable
+    const parent = callNode.parent;
+
+    // Case 1: await auth() directly in variable declaration
+    if (ts.isAwaitExpression(parent)) {
+      const awaitParent = parent.parent;
+      if (ts.isVariableDeclaration(awaitParent) && awaitParent.name) {
+        if (ts.isIdentifier(awaitParent.name)) {
+          variableNames.push(awaitParent.name.text);
+        } else if (ts.isObjectBindingPattern(awaitParent.name)) {
+          // Destructured: const { userId } = await auth()
+          awaitParent.name.elements.forEach(element => {
+            if (ts.isBindingElement(element) && ts.isIdentifier(element.name)) {
+              variableNames.push(element.name.text);
+            }
+          });
+        }
+      }
+    }
+
+    // Case 2: Direct variable declaration
+    if (ts.isVariableDeclaration(parent) && parent.name) {
+      if (ts.isIdentifier(parent.name)) {
+        variableNames.push(parent.name.text);
+      } else if (ts.isObjectBindingPattern(parent.name)) {
+        parent.name.elements.forEach(element => {
+          if (ts.isBindingElement(element) && ts.isIdentifier(element.name)) {
+            variableNames.push(element.name.text);
+          }
+        });
+      }
+    }
+
+    if (variableNames.length === 0) {
+      // No variable captured, assume used directly (would be flagged)
+      return false;
+    }
+
+    // Now check if any of these variables are null-checked before use
+    let hasNullCheck = false;
+
+    const checkForNullHandling = (node: ts.Node): void => {
+      // Check for if statements with null checks
+      if (ts.isIfStatement(node)) {
+        const condition = node.expression;
+        if (this.isNullCheckCondition(condition, variableNames, sourceFile)) {
+          hasNullCheck = true;
+        }
+      }
+
+      // Check for optional chaining on the variable
+      if (ts.isPropertyAccessExpression(node) && node.questionDotToken) {
+        const exprText = node.expression.getText(sourceFile);
+        if (variableNames.includes(exprText)) {
+          hasNullCheck = true;
+        }
+      }
+
+      // Check for early return with null check
+      if (ts.isReturnStatement(node) || ts.isExpressionStatement(node)) {
+        const parent = node.parent;
+        if (parent && ts.isIfStatement(parent)) {
+          if (this.isNullCheckCondition(parent.expression, variableNames, sourceFile)) {
+            hasNullCheck = true;
+          }
+        }
+      }
+
+      ts.forEachChild(node, checkForNullHandling);
+    };
+
+    ts.forEachChild(containingFunction, checkForNullHandling);
+
+    return hasNullCheck;
+  }
+
+  /**
+   * Checks if a condition is a null check for the given variables
+   */
+  private isNullCheckCondition(condition: ts.Expression, variableNames: string[], sourceFile: ts.SourceFile): boolean {
+    const conditionText = condition.getText(sourceFile);
+
+    // Check if any of our variables are mentioned in the condition
+    const mentionsVariable = variableNames.some(varName => conditionText.includes(varName));
+    if (!mentionsVariable) return false;
+
+    // Pattern: !variable or !userId
+    if (ts.isPrefixUnaryExpression(condition) && condition.operator === ts.SyntaxKind.ExclamationToken) {
+      const operandText = condition.operand.getText(sourceFile);
+      return variableNames.includes(operandText);
+    }
+
+    // Pattern: variable === null, variable !== null, etc.
+    if (ts.isBinaryExpression(condition)) {
+      const operator = condition.operatorToken.kind;
+
+      // Handle || and && by recursively checking both sides
+      if (operator === ts.SyntaxKind.BarBarToken || operator === ts.SyntaxKind.AmpersandAmpersandToken) {
+        return this.isNullCheckCondition(condition.left, variableNames, sourceFile) ||
+               this.isNullCheckCondition(condition.right, variableNames, sourceFile);
+      }
+
+      const leftText = condition.left.getText(sourceFile);
+      const rightText = condition.right.getText(sourceFile);
+
+      const hasVariable = variableNames.some(v => leftText.includes(v) || rightText.includes(v));
+      const hasNullCheck = conditionText.includes('null') || conditionText.includes('undefined');
+
+      const isComparisonOperator =
+        operator === ts.SyntaxKind.EqualsEqualsToken ||
+        operator === ts.SyntaxKind.EqualsEqualsEqualsToken ||
+        operator === ts.SyntaxKind.ExclamationEqualsToken ||
+        operator === ts.SyntaxKind.ExclamationEqualsEqualsToken;
+
+      if (hasVariable && hasNullCheck && isComparisonOperator) {
+        return true;
+      }
+    }
+
+    // Pattern: isAuthenticated or similar boolean check
+    if (ts.isIdentifier(condition)) {
+      return variableNames.includes(condition.text);
+    }
+
+    return false;
+  }
+
+  /**
+   * Finds the containing function/method for a node
+   */
+  private findContainingFunction(node: ts.Node): ts.FunctionDeclaration | ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | null {
+    let current: ts.Node | undefined = node.parent;
+    while (current) {
+      if (ts.isFunctionDeclaration(current) ||
+          ts.isArrowFunction(current) ||
+          ts.isFunctionExpression(current) ||
+          ts.isMethodDeclaration(current)) {
+        return current;
+      }
+      current = current.parent;
+    }
     return null;
   }
 
