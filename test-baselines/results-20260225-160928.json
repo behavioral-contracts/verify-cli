@@ -1,0 +1,12 @@
+{
+  "timestamp": "20260225-160928",
+  "mode": "baseline",
+  "packages": {
+  },
+  "summary": {
+    "total_packages": 1,
+    "total_violations": 0,
+    "packages_with_violations": 0,
+    "packages_clean": 0
+  }
+}
