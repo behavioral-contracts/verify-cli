@@ -85,6 +85,7 @@ export class Analyzer {
       for (const pattern of detection.await_patterns || []) {
         this.awaitPatternToPackage.set(pattern.toLowerCase(), packageName);
       }
+
     }
   }
 
@@ -320,48 +321,49 @@ export class Analyzer {
     detection: { line: number; column: number; awaitText: string; functionName: string },
     _functionNode: ts.Node
   ): Violation | null {
-    // Extract the await expression to see what's being called
-    const awaitText = detection.awaitText.toLowerCase();
-
-    // Check if this looks like it could be a contract violation
-    // (API call, database operation, etc.)
-    const likelyApiCall =
-      awaitText.includes('fetch') ||
-      awaitText.includes('api') ||
-      awaitText.includes('.get') ||
-      awaitText.includes('.post') ||
-      awaitText.includes('.put') ||
-      awaitText.includes('.delete') ||
-      awaitText.includes('.patch') ||
-      awaitText.includes('axios') ||
-      awaitText.includes('prisma') ||
-      awaitText.includes('supabase') ||
-      awaitText.includes('stripe') ||
-      awaitText.includes('octokit') ||
-      awaitText.includes('.repos.') ||
-      awaitText.includes('.pulls.') ||
-      awaitText.includes('.issues.') ||
-      awaitText.includes('.git.') ||
-      awaitText.includes('.create') ||
-      awaitText.includes('.update') ||
-      awaitText.includes('.query') ||
-      awaitText.includes('.mutate');
-
-    if (!likelyApiCall) {
-      return null;
-    }
-
-    // Determine which package is being called
+    // PRIORITY 1: Check data-driven detection patterns from contracts
+    // This allows contracts to define their own detection rules without analyzer changes
     const detectedPackage = this.detectPackageFromAwaitText(detection.awaitText);
 
     if (!detectedPackage) {
-      return null; // Can't determine package, skip
+      // FALLBACK: If no contract-based detection, check legacy hardcoded patterns
+      const awaitText = detection.awaitText.toLowerCase();
+
+      const likelyApiCall =
+        awaitText.includes('fetch') ||
+        awaitText.includes('api') ||
+        awaitText.includes('.get') ||
+        awaitText.includes('.post') ||
+        awaitText.includes('.put') ||
+        awaitText.includes('.delete') ||
+        awaitText.includes('.patch') ||
+        awaitText.includes('axios') ||
+        awaitText.includes('prisma') ||
+        awaitText.includes('supabase') ||
+        awaitText.includes('stripe') ||
+        awaitText.includes('octokit') ||
+        awaitText.includes('.repos.') ||
+        awaitText.includes('.pulls.') ||
+        awaitText.includes('.issues.') ||
+        awaitText.includes('.git.') ||
+        awaitText.includes('.create') ||
+        awaitText.includes('.update') ||
+        awaitText.includes('.query') ||
+        awaitText.includes('.mutate');
+
+      if (!likelyApiCall) {
+        return null; // Not recognized by either detection method
+      }
+
+      // Legacy pattern matched but no package detected
+      // This can happen for generic patterns like .create that aren't in contracts
+      return null;
     }
 
-    // Look for a matching contract for this specific package
+    // Package detected via contract patterns - proceed with validation
     const contract = this.contracts.get(detectedPackage);
     if (!contract) {
-      return null; // No contract for this package
+      return null; // No contract for this package (shouldn't happen if detection worked)
     }
 
     // Find the matching function and postcondition
