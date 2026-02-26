@@ -112,10 +112,48 @@ export class Analyzer {
   }
 
   /**
+   * Extracts all package imports from a source file
+   */
+  private extractImports(sourceFile: ts.SourceFile): Set<string> {
+    const imports = new Set<string>();
+
+    for (const statement of sourceFile.statements) {
+      if (ts.isImportDeclaration(statement)) {
+        const moduleSpecifier = statement.moduleSpecifier;
+        if (ts.isStringLiteral(moduleSpecifier)) {
+          const packageName = moduleSpecifier.text;
+          // Add the package name (handle scoped packages like @prisma/client)
+          imports.add(packageName);
+        }
+      }
+
+      // Also check for require() calls
+      if (ts.isVariableStatement(statement)) {
+        for (const declaration of statement.declarationList.declarations) {
+          if (declaration.initializer && ts.isCallExpression(declaration.initializer)) {
+            const callExpr = declaration.initializer;
+            if (ts.isIdentifier(callExpr.expression) && callExpr.expression.text === 'require') {
+              const arg = callExpr.arguments[0];
+              if (arg && ts.isStringLiteral(arg)) {
+                imports.add(arg.text);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return imports;
+  }
+
+  /**
    * Analyzes a single source file
    */
   private analyzeFile(sourceFile: ts.SourceFile): void {
     const self = this;
+
+    // Extract all imports from this file for context-aware contract application
+    const fileImports = this.extractImports(sourceFile);
 
     // Track variables that are AxiosInstance objects
     const axiosInstances = new Map<string, string>(); // variableName -> packageName
@@ -249,7 +287,7 @@ export class Analyzer {
 
     // Async error detection pass
     const asyncErrorAnalyzer = new AsyncErrorAnalyzer(sourceFile);
-    this.detectAsyncErrors(sourceFile, asyncErrorAnalyzer, axiosInstances);
+    this.detectAsyncErrors(sourceFile, asyncErrorAnalyzer, axiosInstances, fileImports);
 
     function visit(node: ts.Node, parent?: ts.Node): void {
       // Set parent pointer if not already set
@@ -265,7 +303,8 @@ export class Analyzer {
           axiosInstances,
           instancesWithInterceptors,
           globalHandlers,
-          schemaInstances
+          schemaInstances,
+          fileImports
         );
       }
 
@@ -282,7 +321,8 @@ export class Analyzer {
   private detectAsyncErrors(
     sourceFile: ts.SourceFile,
     asyncErrorAnalyzer: AsyncErrorAnalyzer,
-    trackedInstances: Map<string, string>
+    trackedInstances: Map<string, string>,
+    fileImports: Set<string>
   ): void {
     const self = this;
 
@@ -324,7 +364,8 @@ export class Analyzer {
         const violation = this.createEmptyCatchViolation(
           sourceFile,
           catchBlock,
-          effectiveness
+          effectiveness,
+          fileImports
         );
 
         if (violation) {
@@ -660,7 +701,8 @@ export class Analyzer {
   private createEmptyCatchViolation(
     sourceFile: ts.SourceFile,
     catchBlock: ts.CatchClause,
-    effectiveness: { isEmpty: boolean; hasConsoleOnly: boolean; hasCommentOnly: boolean; hasUserFeedback: boolean }
+    effectiveness: { isEmpty: boolean; hasConsoleOnly: boolean; hasCommentOnly: boolean; hasUserFeedback: boolean },
+    fileImports: Set<string>
   ): Violation | null {
     // Look for contracts with empty-catch-block postconditions
     let matchingPostcondition: Postcondition | undefined;
@@ -668,6 +710,11 @@ export class Analyzer {
     let matchingFunctionName: string | undefined;
 
     for (const [packageName, contract] of this.contracts.entries()) {
+      // Context-aware contract application: only apply if package is imported
+      if (!fileImports.has(packageName)) {
+        continue;
+      }
+
       for (const func of contract.functions) {
         const emptyCatchPostcondition = func.postconditions?.find(
           pc => pc.id?.includes('empty-catch') || pc.id?.includes('silent-failure')
@@ -716,7 +763,8 @@ export class Analyzer {
     axiosInstances: Map<string, string>,
     instancesWithInterceptors: Set<string>,
     globalHandlers: { hasQueryCacheOnError: boolean; hasMutationCacheOnError: boolean },
-    schemaInstances: Map<string, string>
+    schemaInstances: Map<string, string>,
+    fileImports: Set<string>
   ): void {
     // Check if this is a React Query hook
     const reactQueryAnalyzer = new ReactQueryAnalyzer(sourceFile, this.program.getTypeChecker());
@@ -740,6 +788,11 @@ export class Analyzer {
 
     const contract = this.contracts.get(callSite.packageName);
     if (!contract) return;
+
+    // Context-aware contract application: only apply if package is imported
+    if (!fileImports.has(callSite.packageName)) {
+      return;
+    }
 
     // NEW: Handle namespace methods
     // Check if this call has a namespace (e.g., ts.sys.readFile())
