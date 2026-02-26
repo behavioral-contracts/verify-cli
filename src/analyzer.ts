@@ -1644,9 +1644,33 @@ export class Analyzer {
       }
     }
 
+    // For route handlers (fastify, express), check if the handler callback has try-catch
+    // Pattern: app.get('/route', async (req, res) => { try { ... } catch { ... } })
+    if (!analysis.hasTryCatch) {
+      if (this.isRouteHandlerWithTryCatch(node)) {
+        analysis.hasTryCatch = true;
+      }
+    }
+
     // Check if call is inside a try-catch block
     if (!analysis.hasTryCatch) {
       analysis.hasTryCatch = this.isInTryCatch(node);
+    }
+
+    // Check for callback-based error handling (e.g., cloudinary)
+    // Pattern: callback((error, result) => { if (error) return reject(error); })
+    if (!analysis.hasTryCatch) {
+      if (this.hasCallbackErrorHandling(node)) {
+        analysis.hasTryCatch = true;
+      }
+    }
+
+    // Check for resource cleanup patterns (e.g., @vercel/postgres)
+    // Pattern: const client = await pool.connect(); ... finally { client.release(); }
+    if (!analysis.hasTryCatch) {
+      if (this.hasFinallyCleanup(node)) {
+        analysis.hasTryCatch = true;
+      }
     }
 
     // Check if there's a .catch() handler
@@ -1690,7 +1714,314 @@ export class Analyzer {
       current = current.parent;
     }
 
+    // Check if this is inside a callback/arrow function that contains try-catch
+    // Handles patterns like: app.get('/route', async (req, res) => { try { ... } catch { ... } })
+    if (this.isInsideCallbackWithTryCatch(node)) {
+      return true;
+    }
+
     return false;
+  }
+
+  /**
+   * Checks if a node is inside a callback/arrow function that contains a try-catch block
+   * Handles fastify routes, socket.io event handlers, etc.
+   */
+  private isInsideCallbackWithTryCatch(node: ts.Node): boolean {
+    let current: ts.Node | undefined = node;
+
+    // Walk up to find arrow functions or function expressions
+    while (current) {
+      if (ts.isArrowFunction(current) || ts.isFunctionExpression(current)) {
+        // Check if this function contains a try-catch
+        if (this.functionContainsTryCatch(current)) {
+          // Make sure the node is actually inside the try block, not just anywhere in the function
+          // We want: async (req, res) => { try { await call() } catch {} }
+          // Not: async (req, res) => { await call(); try { other() } catch {} }
+          return this.isNodeInsideTryBlock(node, current);
+        }
+      }
+      current = current.parent;
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if a node is inside a try block within a function
+   */
+  private isNodeInsideTryBlock(node: ts.Node, func: ts.ArrowFunction | ts.FunctionExpression): boolean {
+    if (!func.body || !ts.isBlock(func.body)) {
+      return false;
+    }
+
+    let nodeIsInside = false;
+
+    const findTry = (n: ts.Node) => {
+      if (ts.isTryStatement(n)) {
+        // Check if our target node is inside this try block
+        const checkInside = (child: ts.Node): boolean => {
+          if (child === node) {
+            nodeIsInside = true;
+            return true;
+          }
+          let found = false;
+          ts.forEachChild(child, (c) => {
+            if (checkInside(c)) {
+              found = true;
+            }
+          });
+          return found;
+        };
+        checkInside(n.tryBlock);
+        if (nodeIsInside) return;
+      }
+      ts.forEachChild(n, findTry);
+    };
+
+    findTry(func.body);
+    return nodeIsInside;
+  }
+
+  /**
+   * Checks if a function contains a try-catch block in its body
+   */
+  private functionContainsTryCatch(func: ts.ArrowFunction | ts.FunctionExpression | ts.FunctionDeclaration): boolean {
+    if (!func.body) {
+      return false;
+    }
+
+    // For arrow functions with block bodies and regular functions
+    if (ts.isBlock(func.body)) {
+      let hasTryCatch = false;
+
+      const visit = (node: ts.Node) => {
+        if (ts.isTryStatement(node)) {
+          hasTryCatch = true;
+          return;
+        }
+        ts.forEachChild(node, visit);
+      };
+
+      visit(func.body);
+      return hasTryCatch;
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if this is a route/event handler registration with try-catch in the handler
+   * Handles: fastify routes (app.get, app.post), socket.io events (io.on, socket.on)
+   * Pattern: app.get('/route', async (req, res) => { try { ... } catch { ... } })
+   */
+  private isRouteHandlerWithTryCatch(node: ts.CallExpression): boolean {
+    if (!ts.isPropertyAccessExpression(node.expression)) {
+      return false;
+    }
+
+    const methodName = node.expression.name.text;
+
+    // Check if this looks like a route/event handler registration
+    const isRouteOrEventHandler =
+      ['get', 'post', 'put', 'patch', 'delete', 'all', 'use', 'on'].includes(methodName);
+
+    if (!isRouteOrEventHandler) {
+      return false;
+    }
+
+    // Find the handler callback (usually last argument, or second for routes with path)
+    // Route: app.get('/path', handler)
+    // Event: io.on('event', handler)
+    for (const arg of node.arguments) {
+      if (ts.isArrowFunction(arg) || ts.isFunctionExpression(arg)) {
+        // Check if this handler is async (has async keyword or contains await)
+        const isAsync = !!(arg.modifiers?.some(m => m.kind === ts.SyntaxKind.AsyncKeyword));
+
+        if (isAsync || this.functionContainsAwait(arg)) {
+          // For async handlers, check if they have try-catch
+          return this.functionContainsTryCatch(arg);
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if a function contains await expressions
+   */
+  private functionContainsAwait(func: ts.ArrowFunction | ts.FunctionExpression): boolean {
+    if (!func.body) {
+      return false;
+    }
+
+    let hasAwait = false;
+
+    const visit = (node: ts.Node) => {
+      if (ts.isAwaitExpression(node)) {
+        hasAwait = true;
+        return;
+      }
+      ts.forEachChild(node, visit);
+    };
+
+    visit(func.body);
+    return hasAwait;
+  }
+
+  /**
+   * Checks if there's a finally block that cleans up resources
+   * Pattern: const client = await pool.connect(); ... finally { client.release(); }
+   */
+  private hasFinallyCleanup(node: ts.CallExpression): boolean {
+    // Find the containing function
+    const containingFunction = this.findContainingFunction(node);
+    if (!containingFunction || !containingFunction.body) {
+      return false;
+    }
+
+    // Check if the result of this call is assigned to a variable
+    const parent = node.parent;
+    let variableName: string | undefined;
+
+    if (parent && ts.isVariableDeclaration(parent) && ts.isIdentifier(parent.name)) {
+      variableName = parent.name.text;
+    } else if (parent && ts.isAwaitExpression(parent)) {
+      const awaitParent = parent.parent;
+      if (awaitParent && ts.isVariableDeclaration(awaitParent) && ts.isIdentifier(awaitParent.name)) {
+        variableName = awaitParent.name.text;
+      }
+    }
+
+    if (!variableName) {
+      return false;
+    }
+
+    // Look for a finally block in the function that calls a cleanup method on this variable
+    if (!ts.isBlock(containingFunction.body)) {
+      return false;
+    }
+
+    let hasFinallyWithCleanup = false;
+
+    const visit = (n: ts.Node) => {
+      if (ts.isTryStatement(n) && n.finallyBlock) {
+        // Check if the finally block calls a cleanup method on our variable
+        // Common patterns: client.release(), connection.close(), stream.end()
+        if (this.finallyBlockCallsCleanup(n.finallyBlock, variableName!)) {
+          hasFinallyWithCleanup = true;
+          return;
+        }
+      }
+      ts.forEachChild(n, visit);
+    };
+
+    visit(containingFunction.body);
+    return hasFinallyWithCleanup;
+  }
+
+  /**
+   * Checks if a finally block calls a cleanup method on a variable
+   */
+  private finallyBlockCallsCleanup(finallyBlock: ts.Block, variableName: string): boolean {
+    let hasCleanup = false;
+
+    const visit = (node: ts.Node) => {
+      // Look for: variable.release(), variable.close(), variable.end(), variable.destroy()
+      if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+        const object = node.expression.expression;
+        const method = node.expression.name.text;
+
+        if (ts.isIdentifier(object) && object.text === variableName) {
+          const cleanupMethods = ['release', 'close', 'end', 'destroy', 'disconnect', 'dispose'];
+          if (cleanupMethods.includes(method.toLowerCase())) {
+            hasCleanup = true;
+            return;
+          }
+        }
+      }
+      ts.forEachChild(node, visit);
+    };
+
+    visit(finallyBlock);
+    return hasCleanup;
+  }
+
+  /**
+   * Checks if a call uses callback-based error handling
+   * Pattern: callback((error, result) => { if (error) return reject(error); })
+   */
+  private hasCallbackErrorHandling(node: ts.CallExpression): boolean {
+    // Check if any argument is a callback with error parameter
+    for (const arg of node.arguments) {
+      if (ts.isArrowFunction(arg) || ts.isFunctionExpression(arg)) {
+        // Check if first parameter is named 'error', 'err', or 'e'
+        if (arg.parameters.length >= 1) {
+          const firstParam = arg.parameters[0];
+          if (ts.isIdentifier(firstParam.name)) {
+            const paramName = firstParam.name.text.toLowerCase();
+            if (paramName === 'error' || paramName === 'err' || paramName === 'e') {
+              // Check if the function body checks this error parameter
+              if (arg.body && this.callbackChecksErrorParam(arg.body, firstParam.name.text)) {
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if a callback function body checks the error parameter
+   * Looks for patterns like: if (error) or if (err)
+   */
+  private callbackChecksErrorParam(body: ts.ConciseBody, errorParamName: string): boolean {
+    let checksError = false;
+
+    const visit = (node: ts.Node) => {
+      // Look for if statements that check the error parameter
+      if (ts.isIfStatement(node)) {
+        const condition = node.expression;
+
+        // Direct check: if (error)
+        if (ts.isIdentifier(condition) && condition.text === errorParamName) {
+          checksError = true;
+          return;
+        }
+
+        // Negated check: if (!error) or if (error == null)
+        if (ts.isPrefixUnaryExpression(condition)) {
+          if (ts.isIdentifier(condition.operand) && condition.operand.text === errorParamName) {
+            checksError = true;
+            return;
+          }
+        }
+
+        // Binary check: if (error !== null) or if (error)
+        if (ts.isBinaryExpression(condition)) {
+          if (ts.isIdentifier(condition.left) && condition.left.text === errorParamName) {
+            checksError = true;
+            return;
+          }
+          if (ts.isIdentifier(condition.right) && condition.right.text === errorParamName) {
+            checksError = true;
+            return;
+          }
+        }
+      }
+
+      ts.forEachChild(node, visit);
+    };
+
+    if (ts.isBlock(body)) {
+      visit(body);
+    }
+
+    return checksError;
   }
 
   /**
