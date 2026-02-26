@@ -1,0 +1,142 @@
+{
+  "timestamp": "20260225-163110",
+  "mode": "baseline",
+  "packages": {
+    "@anthropic-ai\/sdk": {
+      "violations": 21,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@anthropic-ai/sdk/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@aws-sdk\/client-s3": {
+      "violations": 27,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@aws-sdk/client-s3/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@clerk\/nextjs": {
+      "violations": 36,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@clerk/nextjs/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@octokit\/rest": {
+      "violations": 32,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@octokit/rest/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@prisma\/client": {
+      "violations": 54,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@prisma/client/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@sendgrid\/mail": {
+      "violations": 10,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@sendgrid/mail/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@slack\/web-api": {
+      "violations": 0,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@slack/web-api/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@supabase\/supabase-js": {
+      "violations": 18,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@supabase/supabase-js/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "@tanstack\/react-query": {
+      "violations": 13,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/@tanstack/react-query/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "axios": {
+      "violations": 34,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/axios/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "cloudinary": {
+      "violations": 6,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/cloudinary/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "discord.js": {
+      "violations": 101,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/discord.js/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "express": {
+      "violations": 0,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/express/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "firebase-admin": {
+      "violations": 34,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/firebase-admin/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "ioredis": {
+      "violations": 22,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/ioredis/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "mongodb": {
+      "violations": 15,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/mongodb/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "mongoose": {
+      "violations": 120,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/mongoose/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "openai": {
+      "violations": 53,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/openai/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "pg": {
+      "violations": 66,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/pg/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "react-hook-form": {
+      "violations": 0,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/react-hook-form/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "redis": {
+      "violations": 52,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/redis/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "square": {
+      "violations": 16,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/square/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "stripe": {
+      "violations": 37,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/stripe/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "twilio": {
+      "violations": 24,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/twilio/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "typescript": {
+      "violations": 63,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/typescript/fixtures/tsconfig.json   corpus: ../corpus "
+    },
+    "zod": {
+      "violations": 24,
+      "has_fixtures": true,
+      "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/zod/fixtures/tsconfig.json   corpus: ../corpus "
+    }
+  },
+  "summary": {
+    "total_packages": 26,
+    "total_violations": 878,
+    "packages_with_violations": 23,
+    "packages_clean": 3
+  }
+}
