@@ -1449,6 +1449,154 @@ export class Analyzer {
   /**
    * Analyzes what error handling exists around a call site
    */
+  /**
+   * Checks if a call is within an Express route that has error middleware
+   * Pattern: app.post('/route', middleware, errorHandler)
+   * where errorHandler has 4 parameters (err, req, res, next)
+   */
+  private isWithinExpressErrorMiddleware(node: ts.CallExpression, sourceFile: ts.SourceFile): boolean {
+    // Walk up to find if this call is an argument to an Express route method
+    let current: ts.Node | undefined = node;
+
+    while (current) {
+      // Check if this is an argument to app.get/post/put/delete/etc
+      if (ts.isCallExpression(current)) {
+        const expr = current.expression;
+
+        // Pattern: app.post(...) or router.post(...)
+        if (ts.isPropertyAccessExpression(expr)) {
+          const methodName = expr.name.text;
+          const objectName = ts.isIdentifier(expr.expression) ? expr.expression.text : '';
+
+          // Check if this looks like an Express route registration
+          const isExpressRoute = ['get', 'post', 'put', 'delete', 'patch', 'all', 'use'].includes(methodName) &&
+                                 (objectName === 'app' || objectName === 'router' || objectName.includes('app') || objectName.includes('router'));
+
+          if (isExpressRoute && current.arguments.length >= 2) {
+            // Check the arguments - look for error handler middleware
+            // Error handler has signature: (err, req, res, next)
+            for (let i = 1; i < current.arguments.length; i++) {
+              const arg = current.arguments[i];
+
+              // Check if this argument is a function with 4 parameters
+              if (ts.isFunctionExpression(arg) || ts.isArrowFunction(arg)) {
+                if (arg.parameters.length === 4) {
+                  // This looks like an error handler middleware
+                  return true;
+                }
+              }
+
+              // Check if this is an identifier referencing a function
+              if (ts.isIdentifier(arg)) {
+                const funcName = arg.text;
+                // Common patterns: handleError, errorHandler, handleMulterError
+                if (funcName.toLowerCase().includes('error') || funcName.toLowerCase().includes('handler')) {
+                  // Check if we can find the function definition
+                  const funcDef = this.findFunctionDefinition(funcName, sourceFile);
+                  if (funcDef && funcDef.parameters.length === 4) {
+                    return true;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      current = current.parent;
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if a call is within a NestJS controller method
+   * NestJS controllers use exception filters to handle errors globally
+   */
+  private isWithinNestJSController(node: ts.CallExpression): boolean {
+    let current: ts.Node | undefined = node;
+
+    while (current) {
+      // Check if we're inside a class with @Controller decorator
+      if (ts.isClassDeclaration(current)) {
+        if (this.hasDecorator(current, 'Controller')) {
+          return true;
+        }
+      }
+
+      // Check if we're inside a method with a route decorator
+      // @Get(), @Post(), @Put(), @Delete(), @Patch()
+      if (ts.isMethodDeclaration(current)) {
+        const routeDecorators = ['Get', 'Post', 'Put', 'Delete', 'Patch', 'All'];
+        for (const decoratorName of routeDecorators) {
+          if (this.hasDecorator(current, decoratorName)) {
+            return true;
+          }
+        }
+      }
+
+      current = current.parent;
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if a node has a specific decorator
+   */
+  private hasDecorator(node: ts.ClassDeclaration | ts.MethodDeclaration, decoratorName: string): boolean {
+    if (!node.modifiers) return false;
+
+    for (const modifier of node.modifiers) {
+      if (ts.isDecorator(modifier)) {
+        const expr = modifier.expression;
+
+        // @Controller or @Controller('users')
+        if (ts.isCallExpression(expr) && ts.isIdentifier(expr.expression)) {
+          if (expr.expression.text === decoratorName) {
+            return true;
+          }
+        } else if (ts.isIdentifier(expr)) {
+          if (expr.text === decoratorName) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Finds a function definition by name in the source file
+   */
+  private findFunctionDefinition(name: string, sourceFile: ts.SourceFile): ts.FunctionDeclaration | ts.ArrowFunction | null {
+    let foundFunction: ts.FunctionDeclaration | ts.ArrowFunction | null = null;
+
+    const visit = (node: ts.Node) => {
+      // Function declaration: function handleError(...)
+      if (ts.isFunctionDeclaration(node) && node.name && node.name.text === name) {
+        foundFunction = node;
+        return;
+      }
+
+      // Variable with arrow function: const handleError = (...) => {}
+      if (ts.isVariableDeclaration(node) &&
+          ts.isIdentifier(node.name) &&
+          node.name.text === name &&
+          node.initializer &&
+          ts.isArrowFunction(node.initializer)) {
+        foundFunction = node.initializer;
+        return;
+      }
+
+      ts.forEachChild(node, visit);
+    };
+
+    visit(sourceFile);
+    return foundFunction;
+  }
+
   private analyzeErrorHandling(
     node: ts.CallExpression,
     sourceFile: ts.SourceFile,
@@ -1473,6 +1621,19 @@ export class Analyzer {
     // If instance has global error interceptor, consider it handled
     if (hasGlobalInterceptor) {
       analysis.hasTryCatch = true; // Treat global interceptor as equivalent to try-catch
+    }
+
+    // Check for framework error handler patterns (Priority 2)
+    if (!analysis.hasTryCatch) {
+      // Check if within Express error middleware chain
+      if (this.isWithinExpressErrorMiddleware(node, sourceFile)) {
+        analysis.hasTryCatch = true;
+      }
+
+      // Check if within NestJS controller with exception filters
+      if (this.isWithinNestJSController(node)) {
+        analysis.hasTryCatch = true;
+      }
     }
 
     // Check if call is inside a try-catch block
