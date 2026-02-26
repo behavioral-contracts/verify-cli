@@ -1089,8 +1089,16 @@ export class Analyzer {
           current = current.expression;
         }
       } else {
-        // Call expression but not on a property access
-        break;
+        // Handle factory function pattern: sharp().toFile()
+        // Check if the call expression is on a simple identifier (e.g., sharp)
+        if (ts.isIdentifier(current.expression)) {
+          // Found root identifier, use it as the root
+          current = current.expression;
+          break;  // Exit with the identifier
+        } else {
+          // Unsupported pattern (e.g., complex expression)
+          break;
+        }
       }
     }
 
