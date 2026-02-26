@@ -41,6 +41,7 @@ program
   .option('--no-terminal', 'Disable terminal output (JSON only)')
   .option('--fail-on-warnings', 'Exit with error code if warnings are found')
   .option('--discover-packages', 'Enable package discovery and coverage reporting', true)
+  .option('--include-tests', 'Include test files in analysis (default: excludes test files)', false)
   .parse(process.argv);
 
 const options = program.opts();
@@ -97,6 +98,7 @@ async function main() {
   const config: AnalyzerConfig = {
     tsconfigPath: path.resolve(options.tsconfig),
     corpusPath: path.resolve(options.corpus),
+    includeTests: options.includeTests,
   };
 
   console.log(chalk.dim('Analyzing TypeScript code...'));

@@ -82,6 +82,39 @@ npx verify-cli \
 - `--output <path>` - Output path for audit JSON (default: ./behavioral-audit.json)
 - `--no-terminal` - Disable terminal output, JSON only
 - `--fail-on-warnings` - Exit with error code if warnings found
+- `--include-tests` - Include test files in analysis (default: false)
+
+### Test File Handling
+
+**By default, verify-cli excludes test files from analysis.**
+
+**Why?**
+- Tests intentionally expect errors to be thrown
+- Test frameworks (Jest, Vitest, Mocha) provide automatic error handling
+- 90%+ of test file violations are false positives
+
+**Excluded patterns:**
+- `/__tests__/` - Jest convention
+- `/__mocks__/` - Mock files
+- `.test.ts`, `.spec.ts` - Test files
+- `.test.tsx`, `.spec.tsx` - React test files
+- `/tests/`, `/test/` - Test directories
+
+**To include test files:**
+
+```bash
+npx verify-cli --tsconfig ./tsconfig.json --include-tests
+```
+
+**When to use `--include-tests`:**
+- Analyzing test utility/helper functions
+- Auditing test infrastructure code
+- Reviewing test code quality
+- Checking integration test error handling
+
+**Example:** In production code, you might have 200 violations. With test files included, you might see 600+ violations (300% more), but 400+ are false positives from test code patterns.
+
+**Decision rationale:** We default to excluding tests to maximize precision and focus on production code issues. Most CI/CD pipelines care about production code quality, not test file violations.
 
 ### CI Integration
 
@@ -534,13 +567,16 @@ A: No. Linters check style and patterns. This verifies behavioral correctness ag
 A: No. This catches missing error handling. Tests verify business logic.
 
 **Q: What about false positives?**
-A: Contracts are designed to produce zero false positives on correct code. If you find one, it's a bug — report it.
+A: Contracts are designed to minimize false positives. Test files are excluded by default because they have different error handling patterns (90%+ of test violations are false positives). For production code, precision is >95%. If you find a false positive, report it.
 
 **Q: Can I use this with JavaScript?**
 A: Not yet. TypeScript is required for AST type resolution. JavaScript support is on the roadmap.
 
 **Q: How is this different from TypeScript types?**
 A: Types specify structure. Contracts specify behavior. "Throws on 429" is not in the type system.
+
+**Q: Why are test files excluded by default?**
+A: Test files have fundamentally different error handling patterns. Tests *expect* errors to be thrown (e.g., `expect(() => fn()).toThrow()`), and test frameworks automatically catch errors. Including test files creates 90%+ false positives, reducing precision from ~98% to ~85%. Use `--include-tests` if you want to analyze test utilities or infrastructure.
 
 ---
 

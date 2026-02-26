@@ -171,6 +171,8 @@ export interface AnalyzerConfig {
   includePaths?: string[];
   excludePaths?: string[];
   severityThreshold?: Severity;
+  /** Whether to include test files in analysis (default: false) */
+  includeTests?: boolean;
 }
 
 /**

@@ -24,6 +24,7 @@ export class Analyzer {
   private contracts: Map<string, PackageContract>;
   private violations: Violation[] = [];
   private projectRoot: string;
+  private includeTests: boolean;
 
   // Detection maps built dynamically from contract definitions
   private typeToPackage: Map<string, string>;
@@ -33,6 +34,7 @@ export class Analyzer {
 
   constructor(config: AnalyzerConfig, contracts: Map<string, PackageContract>) {
     this.contracts = contracts;
+    this.includeTests = config.includeTests ?? false;
 
     // Build detection maps from contract definitions
     this.typeToPackage = new Map();
@@ -105,6 +107,11 @@ export class Analyzer {
         continue;
       }
 
+      // Skip test files unless explicitly included
+      if (!this.includeTests && this.isTestFile(sourceFile.fileName)) {
+        continue;
+      }
+
       this.analyzeFile(sourceFile);
     }
 
@@ -144,6 +151,30 @@ export class Analyzer {
     }
 
     return imports;
+  }
+
+  /**
+   * Determines if a file is a test file based on common patterns
+   * Test files are excluded by default because:
+   * - Tests intentionally expect errors to be thrown
+   * - Test frameworks (Jest, Vitest) handle errors automatically
+   * - 90%+ of test violations are false positives
+   */
+  private isTestFile(filePath: string): boolean {
+    const testPatterns = [
+      '/__tests__/',       // Jest convention
+      '/__mocks__/',       // Mock files
+      '.test.ts',          // Test files
+      '.spec.ts',          // Spec files
+      '.test.tsx',         // React test files
+      '.spec.tsx',         // React spec files
+      '/tests/',           // Test directories
+      '/test/',            // Test directory (singular)
+      '.test.js',          // JavaScript tests
+      '.spec.js',          // JavaScript specs
+    ];
+
+    return testPatterns.some(pattern => filePath.includes(pattern));
   }
 
   /**

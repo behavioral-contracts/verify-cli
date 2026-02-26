@@ -1,5 +1,5 @@
 {
-  "timestamp": "20260225-161054",
+  "timestamp": "20260225-163110",
   "mode": "baseline",
   "packages": {
     "@anthropic-ai\/sdk": {
@@ -98,7 +98,7 @@
       "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/pg/fixtures/tsconfig.json   corpus: ../corpus "
     },
     "react-hook-form": {
-      "violations": 38,
+      "violations": 0,
       "has_fixtures": true,
       "output_sample": " Behavioral Contract Verification    tsconfig: ../corpus/packages/react-hook-form/fixtures/tsconfig.json   corpus: ../corpus "
     },
@@ -135,8 +135,8 @@
   },
   "summary": {
     "total_packages": 26,
-    "total_violations": 916,
-    "packages_with_violations": 24,
-    "packages_clean": 2
+    "total_violations": 878,
+    "packages_with_violations": 23,
+    "packages_clean": 3
   }
 }
