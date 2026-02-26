@@ -340,7 +340,8 @@ export class Analyzer {
             sourceFile,
             detection,
             node,
-            trackedInstances
+            trackedInstances,
+            fileImports
           );
 
           if (violation) {
@@ -382,14 +383,15 @@ export class Analyzer {
     sourceFile: ts.SourceFile,
     detection: { line: number; column: number; awaitText: string; functionName: string; node?: ts.CallExpression },
     _functionNode: ts.Node,
-    trackedInstances: Map<string, string>
+    trackedInstances: Map<string, string>,
+    fileImports: Set<string>
   ): Violation | null {
     // PRIORITY 1: Type-aware detection (most accurate - uses TypeScript's type system)
     // This eliminates false positives from pattern overlap (e.g., mongoose ".create" vs discord.js ".createInvite")
     if (detection.node) {
       const typeBasedPackage = this.detectPackageFromType(detection.node);
       if (typeBasedPackage) {
-        return this.createViolationForPackage(sourceFile, detection, typeBasedPackage);
+        return this.createViolationForPackage(sourceFile, detection, typeBasedPackage, fileImports);
       }
     }
 
@@ -399,7 +401,7 @@ export class Analyzer {
 
     if (instancePackage) {
       // Found a tracked instance - this is high-confidence detection
-      return this.createViolationForPackage(sourceFile, detection, instancePackage);
+      return this.createViolationForPackage(sourceFile, detection, instancePackage, fileImports);
     }
 
     // PRIORITY 3: Check data-driven detection patterns from contracts (fallback)
@@ -425,7 +427,7 @@ export class Analyzer {
     // Package detected via contract patterns - create violation
     // NOTE: Pattern-based detection is less accurate than type-aware or instance tracking
     // and may produce false positives for packages with generic method names
-    return this.createViolationForPackage(sourceFile, detection, detectedPackage);
+    return this.createViolationForPackage(sourceFile, detection, detectedPackage, fileImports);
   }
 
   /**
@@ -646,8 +648,14 @@ export class Analyzer {
   private createViolationForPackage(
     sourceFile: ts.SourceFile,
     detection: { line: number; column: number; awaitText: string; functionName: string },
-    packageName: string
+    packageName: string,
+    fileImports: Set<string>
   ): Violation | null {
+    // Context-aware contract application: only apply if package is imported
+    if (!fileImports.has(packageName)) {
+      return null;
+    }
+
     // Get the contract for this package
     const contract = this.contracts.get(packageName);
     if (!contract) {
