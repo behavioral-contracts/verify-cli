@@ -104,23 +104,30 @@ export class EventListenerAnalyzer {
    * Find all instance declarations from contracts with required event listeners
    *
    * Patterns detected:
-   * - const ws = new WebSocket(url)
-   * - const queue = new Queue('tasks')
-   * - this.client = axios.create()
+   * - const ws = new WebSocket(url)  ← Constructor pattern
+   * - const queue = new Queue('tasks')  ← Constructor pattern
+   * - const archive = archiver('zip')  ← Factory pattern (NEW)
+   * - const socket = io(url)  ← Factory pattern (NEW)
+   * - const client = createClient()  ← Factory pattern (NEW)
+   * - this.client = axios.create()  ← Property assignment
    */
   private findInstanceDeclarations(node: ts.Node): void {
     const self = this;
 
     function visit(node: ts.Node): void {
-      // Pattern: const ws = new WebSocket(url)
+      // Pattern: const ws = new WebSocket(url) OR const archive = archiver('zip')
       if (ts.isVariableDeclaration(node) && node.initializer) {
         self.checkNewExpression(node);
+        self.checkFactoryMethodCall(node);
       }
 
-      // Pattern: this.ws = new WebSocket(url)
+      // Pattern: this.ws = new WebSocket(url) OR this.archive = archiver('zip')
       if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
         if (ts.isNewExpression(node.right)) {
           self.checkNewExpressionForAssignment(node);
+        }
+        if (ts.isCallExpression(node.right)) {
+          self.checkFactoryMethodCallForAssignment(node);
         }
       }
 
@@ -219,6 +226,93 @@ export class EventListenerAnalyzer {
       return expr.text;
     }
 
+    if (ts.isPropertyAccessExpression(expr)) {
+      return expr.name.text;
+    }
+
+    return null;
+  }
+
+  /**
+   * Check if a factory method call creates an instance requiring event listeners
+   *
+   * Patterns:
+   * - const archive = archiver('zip')
+   * - const socket = io(url)
+   * - const client = createClient()
+   */
+  private checkFactoryMethodCall(declaration: ts.VariableDeclaration): void {
+    if (!declaration.initializer || !ts.isCallExpression(declaration.initializer)) {
+      return;
+    }
+
+    const callExpr = declaration.initializer;
+    const functionName = this.getFunctionName(callExpr);
+    if (!functionName) return;
+
+    // Check if any contract declares this factory method with required event listeners
+    for (const [packageName, contract] of this.contracts.entries()) {
+      if (!contract.detection?.required_event_listeners) continue;
+      if (!contract.detection.factory_methods?.includes(functionName)) continue;
+
+      // This factory method creates instances requiring event listeners - track it
+      const varName = declaration.name.getText(this.sourceFile);
+      this.trackedInstances.set(varName, {
+        packageName,
+        className: functionName,  // Use factory method name as "className"
+        requiredListeners: contract.detection.required_event_listeners,
+        declarationNode: declaration,
+        attachedEvents: new Set(),
+      });
+    }
+  }
+
+  /**
+   * Check factory method call in assignment: this.archive = archiver('zip')
+   */
+  private checkFactoryMethodCallForAssignment(assignment: ts.BinaryExpression): void {
+    if (!ts.isCallExpression(assignment.right)) return;
+
+    const callExpr = assignment.right;
+    const functionName = this.getFunctionName(callExpr);
+    if (!functionName) return;
+
+    // Check if any contract declares this factory method with required event listeners
+    for (const [packageName, contract] of this.contracts.entries()) {
+      if (!contract.detection?.required_event_listeners) continue;
+      if (!contract.detection.factory_methods?.includes(functionName)) continue;
+
+      // Extract variable name from left side (e.g., "archive" from "this.archive")
+      const varName = this.getVariableNameFromExpression(assignment.left);
+      if (!varName) return;
+
+      this.trackedInstances.set(varName, {
+        packageName,
+        className: functionName,  // Use factory method name as "className"
+        requiredListeners: contract.detection.required_event_listeners,
+        declarationNode: assignment,
+        attachedEvents: new Set(),
+      });
+    }
+  }
+
+  /**
+   * Extract function name from call expression
+   *
+   * Examples:
+   * - archiver('zip') → "archiver"
+   * - io(url) → "io"
+   * - redis.createClient() → "createClient"
+   */
+  private getFunctionName(callExpr: ts.CallExpression): string | null {
+    const expr = callExpr.expression;
+
+    // Direct function call: archiver('zip')
+    if (ts.isIdentifier(expr)) {
+      return expr.text;
+    }
+
+    // Property access: redis.createClient()
     if (ts.isPropertyAccessExpression(expr)) {
       return expr.name.text;
     }
