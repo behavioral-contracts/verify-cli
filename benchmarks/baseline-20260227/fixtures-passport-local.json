@@ -1,0 +1,213 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:45.569Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport-local/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "winston",
+    "validator",
+    "ws",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "supertest",
+    "superagent",
+    "square",
+    "stripe",
+    "socket.io-client",
+    "sqlite3",
+    "socket.io",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "puppeteer",
+    "react-hook-form",
+    "pino",
+    "pg",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "mocha",
+    "lodash",
+    "luxon",
+    "knex",
+    "jsonwebtoken",
+    "joi",
+    "ioredis",
+    "helmet",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "archiver",
+    "ajv",
+    "@vercel/postgres",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk",
+    "@tanstack/react-query"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [],
+  "summary": {
+    "total_violations": 0,
+    "error_count": 0,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": true
+  },
+  "package_discovery": {
+    "total": 14,
+    "withContracts": 3,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "passport",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport-local/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport-local/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "passport-local",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": false,
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport-local/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport-local/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {}
+}

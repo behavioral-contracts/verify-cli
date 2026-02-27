@@ -1,0 +1,16 @@
+{
+  "calculated_at": "2026-02-26T18:02:41.938Z",
+  "sample_size": 282,
+  "avg_violations_per_repo": 28.75886524822695,
+  "avg_violations_per_kloc": 0,
+  "avg_compliance_percent": 37.68723854077637,
+  "percentiles": {
+    "p25": 0,
+    "p50": 0,
+    "p75": 2,
+    "p90": 38,
+    "p95": 148
+  },
+  "total_checks_performed": 46648,
+  "total_violations_found": 8110
+}

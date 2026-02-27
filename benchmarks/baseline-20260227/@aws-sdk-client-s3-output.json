@@ -1,0 +1,3658 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:31.839Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "twilio",
+    "typeorm",
+    "tedious",
+    "square",
+    "superagent",
+    "stripe",
+    "sqlite3",
+    "socket.io-client",
+    "sinon",
+    "socket.io",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "react-hook-form",
+    "puppeteer",
+    "pg",
+    "passport",
+    "openai",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "knex",
+    "mocha",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "drizzle-orm",
+    "discord.js",
+    "ethers",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "chai",
+    "cassandra-driver",
+    "cloudinary",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@supabase/supabase-js",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3",
+    "@clerk/nextjs"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+      "line": 45,
+      "column": 22,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'getObject' contains unprotected await expression. await this.client.send(new GetObjectCommand({ Buck... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  async getObject(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "    // VIOLATION: No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "    const response = await this.client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "    return response.Body;",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+      "line": 51,
+      "column": 5,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'putObject' contains unprotected await expression. await this.client.send(new PutObjectCommand({ Buck... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    // VIOLATION: No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "    await this.client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  async listObjects(bucket: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    // VIOLATION: No try-catch (WARNING level)",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+      "line": 56,
+      "column": 22,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'listObjects' contains unprotected await expression. await this.client.send(new ListObjectsV2Command({ ... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 52,
+        "endLine": 60,
+        "lines": [
+          {
+            "line": 52,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  async listObjects(bucket: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    // VIOLATION: No try-catch (WARNING level)",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "    const response = await this.client.send(new ListObjectsV2Command({ Bucket: bucket }));",
+            "highlighted": true
+          },
+          {
+            "line": 57,
+            "content": "    return response.Contents || [];",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+      "line": 45,
+      "column": 28,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "GetObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  async getObject(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "    // VIOLATION: No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "    const response = await this.client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "    return response.Body;",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+      "line": 51,
+      "column": 11,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "PutObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    // VIOLATION: No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "    await this.client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  async listObjects(bucket: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    // VIOLATION: No try-catch (WARNING level)",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 20,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'getObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new GetObjectCommand({ Bucket:... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " * VIOLATION: GetObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "async function getObjectMissingErrorHandling(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  return response.Body;",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 17,
+      "column": 3,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'putObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new PutObjectCommand({ Bucket:... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 13,
+        "endLine": 21,
+        "lines": [
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " * VIOLATION: PutObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "async function putObjectMissingErrorHandling(bucket: string, key: string, body: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  await s3Client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+            "highlighted": true
+          },
+          {
+            "line": 18,
+            "content": "  console.log('Object uploaded');",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 3,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'deleteObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new DeleteObjectCommand({ Buck... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " * VIOLATION: DeleteObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function deleteObjectMissingErrorHandling(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  await s3Client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * VIOLATION: HeadObject without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 32,
+      "column": 20,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'headObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new HeadObjectCommand({ Bucket... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * VIOLATION: HeadObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "async function headObjectMissingErrorHandling(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  const response = await s3Client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "  return response.Metadata;",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 40,
+      "column": 3,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'copyObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CopyObjectCommand({\n    Bu... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 36,
+        "endLine": 44,
+        "lines": [
+          {
+            "line": 36,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": " * VIOLATION: CopyObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "async function copyObjectMissingErrorHandling(sourceBucket: string, sourceKey: string, destBucket: string, destKey: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  await s3Client.send(new CopyObjectCommand({",
+            "highlighted": true
+          },
+          {
+            "line": 41,
+            "content": "    Bucket: destBucket,",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "    Key: destKey,",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "    CopySource: `${sourceBucket}/${sourceKey}`",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  }));",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 51,
+      "column": 3,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'createBucketMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CreateBucketCommand({ Buck... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": " * VIOLATION: CreateBucket without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "async function createBucketMissingErrorHandling(bucketName: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  await s3Client.send(new CreateBucketCommand({ Bucket: bucketName }));",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * VIOLATION: ListObjectsV2 without error handling (WARNING level)",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 20,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'listObjectsMissingErrorHandling' contains unprotected await expression. await s3Client.send(new ListObjectsV2Command({ Buc... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * VIOLATION: ListObjectsV2 without error handling (WARNING level)",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "async function listObjectsMissingErrorHandling(bucket: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const response = await s3Client.send(new ListObjectsV2Command({ Bucket: bucket }));",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "  return response.Contents || [];",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 66,
+      "column": 20,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'listBucketsMissingErrorHandling' contains unprotected await expression. await s3Client.send(new ListBucketsCommand({}))... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 62,
+        "endLine": 70,
+        "lines": [
+          {
+            "line": 62,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": " * VIOLATION: ListBuckets without error handling (WARNING level)",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "async function listBucketsMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  const response = await s3Client.send(new ListBucketsCommand({}));",
+            "highlighted": true
+          },
+          {
+            "line": 67,
+            "content": "  return response.Buckets || [];",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 74,
+      "column": 26,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'multipartUploadMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CreateMultipartUploadComma... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 70,
+        "endLine": 78,
+        "lines": [
+          {
+            "line": 70,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " * VIOLATION: Multipart upload without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "async function multipartUploadMissingErrorHandling(bucket: string, key: string, parts: Buffer[]) {",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 75,
+            "content": "  const uploadId = createResponse.UploadId\\!;",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  const uploadPromises = parts.map((part, index) =>",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "    s3Client.send(new UploadPartCommand({",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 89,
+      "column": 3,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'multipartUploadMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CompleteMultipartUploadCom... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 85,
+        "endLine": 93,
+        "lines": [
+          {
+            "line": 85,
+            "content": "  );",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  const uploadResults = await Promise.all(uploadPromises);",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "  await s3Client.send(new CompleteMultipartUploadCommand({",
+            "highlighted": true
+          },
+          {
+            "line": 90,
+            "content": "    Bucket: bucket,",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "    Key: key,",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "    UploadId: uploadId,",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "    MultipartUpload: {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 26,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "GetObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " * VIOLATION: GetObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "async function getObjectMissingErrorHandling(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  return response.Body;",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 17,
+      "column": 9,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "PutObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 13,
+        "endLine": 21,
+        "lines": [
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " * VIOLATION: PutObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "async function putObjectMissingErrorHandling(bucket: string, key: string, body: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  await s3Client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+            "highlighted": true
+          },
+          {
+            "line": 18,
+            "content": "  console.log('Object uploaded');",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 9,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "DeleteObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " * VIOLATION: DeleteObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function deleteObjectMissingErrorHandling(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  await s3Client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * VIOLATION: HeadObject without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 32,
+      "column": 26,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "HeadObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * VIOLATION: HeadObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "async function headObjectMissingErrorHandling(bucket: string, key: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  const response = await s3Client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "  return response.Metadata;",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 40,
+      "column": 9,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "CopyObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 36,
+        "endLine": 44,
+        "lines": [
+          {
+            "line": 36,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": " * VIOLATION: CopyObject without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "async function copyObjectMissingErrorHandling(sourceBucket: string, sourceKey: string, destBucket: string, destKey: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  await s3Client.send(new CopyObjectCommand({",
+            "highlighted": true
+          },
+          {
+            "line": 41,
+            "content": "    Bucket: destBucket,",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "    Key: destKey,",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "    CopySource: `${sourceBucket}/${sourceKey}`",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  }));",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-bucket-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 51,
+      "column": 9,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-bucket-operation-no-try-catch",
+      "description": "CreateBucketCommand called without try-catch. s3Client.send() called with bucket operations without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html",
+      "suggested_fix": "MUST wrap bucket operations in try-catch block. Handle BucketAlreadyExists/BucketAlreadyOwnedByYou gracefully (may be acceptable), check BucketNotEmpty before deletion, validate permissions.\n",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": " * VIOLATION: CreateBucket without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "async function createBucketMissingErrorHandling(bucketName: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  await s3Client.send(new CreateBucketCommand({ Bucket: bucketName }));",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * VIOLATION: ListObjectsV2 without error handling (WARNING level)",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 74,
+      "column": 32,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-multipart-no-try-catch",
+      "description": "CreateMultipartUploadCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+      "code_snippet": {
+        "startLine": 70,
+        "endLine": 78,
+        "lines": [
+          {
+            "line": 70,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " * VIOLATION: Multipart upload without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "async function multipartUploadMissingErrorHandling(bucket: string, key: string, parts: Buffer[]) {",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": true
+          },
+          {
+            "line": 75,
+            "content": "  const uploadId = createResponse.UploadId\\!;",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  const uploadPromises = parts.map((part, index) =>",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "    s3Client.send(new UploadPartCommand({",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 78,
+      "column": 5,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-multipart-no-try-catch",
+      "description": "UploadPartCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+      "code_snippet": {
+        "startLine": 74,
+        "endLine": 82,
+        "lines": [
+          {
+            "line": 74,
+            "content": "  const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const uploadId = createResponse.UploadId\\!;",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  const uploadPromises = parts.map((part, index) =>",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "    s3Client.send(new UploadPartCommand({",
+            "highlighted": true
+          },
+          {
+            "line": 79,
+            "content": "      Bucket: bucket,",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "      Key: key,",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "      UploadId: uploadId,",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "      PartNumber: index + 1,",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+      "line": 89,
+      "column": 9,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-multipart-no-try-catch",
+      "description": "CompleteMultipartUploadCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+      "code_snippet": {
+        "startLine": 85,
+        "endLine": 93,
+        "lines": [
+          {
+            "line": 85,
+            "content": "  );",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  const uploadResults = await Promise.all(uploadPromises);",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "  await s3Client.send(new CompleteMultipartUploadCommand({",
+            "highlighted": true
+          },
+          {
+            "line": 90,
+            "content": "    Bucket: bucket,",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "    Key: key,",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "    UploadId: uploadId,",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "    MultipartUpload: {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/proper-error-handling.ts",
+      "line": 99,
+      "column": 7,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-object-operation-no-try-catch",
+      "description": "Async function 'multipartUploadWithErrorHandling' contains unprotected await expression. await s3Client.send(new AbortMultipartUploadComman... may throw unhandled errors.",
+      "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+      "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+      "code_snippet": {
+        "startLine": 95,
+        "endLine": 103,
+        "lines": [
+          {
+            "line": 95,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "    console.error('Multipart upload failed:', error.message);",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "    // Cleanup: abort multipart upload",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "    if (uploadId) {",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "      await s3Client.send(new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId: uploadId }));",
+            "highlighted": true
+          },
+          {
+            "line": 100,
+            "content": "    }",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "    throw error;",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/proper-error-handling.ts",
+      "line": 71,
+      "column": 7,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-multipart-no-try-catch",
+      "description": "UploadPartCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+      "code_snippet": {
+        "startLine": 67,
+        "endLine": 75,
+        "lines": [
+          {
+            "line": 67,
+            "content": "    const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "    uploadId = createResponse.UploadId;",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "    const uploadPromises = parts.map((part, index) =>",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "      s3Client.send(new UploadPartCommand({",
+            "highlighted": true
+          },
+          {
+            "line": 72,
+            "content": "        Bucket: bucket,",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "        Key: key,",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "        UploadId: uploadId,",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "        PartNumber: index + 1,",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/proper-error-handling.ts",
+      "line": 99,
+      "column": 13,
+      "package": "@aws-sdk/client-s3",
+      "function": "send",
+      "contract_clause": "s3-multipart-no-try-catch",
+      "description": "AbortMultipartUploadCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+      "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+      "code_snippet": {
+        "startLine": 95,
+        "endLine": 103,
+        "lines": [
+          {
+            "line": 95,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "    console.error('Multipart upload failed:', error.message);",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "    // Cleanup: abort multipart upload",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "    if (uploadId) {",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "      await s3Client.send(new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId: uploadId }));",
+            "highlighted": true
+          },
+          {
+            "line": 100,
+            "content": "    }",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "    throw error;",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 27,
+    "error_count": 27,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "@aws-sdk/client-s3",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "@aws-sdk/client-s3": {
+      "total": 27,
+      "errors": 27,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+          "line": 45,
+          "column": 22,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'getObject' contains unprotected await expression. await this.client.send(new GetObjectCommand({ Buck... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  async getObject(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "    // VIOLATION: No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "    const response = await this.client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "    return response.Body;",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+          "line": 51,
+          "column": 5,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'putObject' contains unprotected await expression. await this.client.send(new PutObjectCommand({ Buck... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    // VIOLATION: No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "    await this.client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  async listObjects(bucket: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    // VIOLATION: No try-catch (WARNING level)",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+          "line": 56,
+          "column": 22,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'listObjects' contains unprotected await expression. await this.client.send(new ListObjectsV2Command({ ... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 52,
+            "endLine": 60,
+            "lines": [
+              {
+                "line": 52,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  async listObjects(bucket: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    // VIOLATION: No try-catch (WARNING level)",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "    const response = await this.client.send(new ListObjectsV2Command({ Bucket: bucket }));",
+                "highlighted": true
+              },
+              {
+                "line": 57,
+                "content": "    return response.Contents || [];",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+          "line": 45,
+          "column": 28,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "GetObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  async getObject(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "    // VIOLATION: No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "    const response = await this.client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "    return response.Body;",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/instance-usage.ts",
+          "line": 51,
+          "column": 11,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "PutObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  async putObject(bucket: string, key: string, body: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    // VIOLATION: No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "    await this.client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  async listObjects(bucket: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    // VIOLATION: No try-catch (WARNING level)",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 20,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'getObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new GetObjectCommand({ Bucket:... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " * VIOLATION: GetObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "async function getObjectMissingErrorHandling(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  return response.Body;",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 17,
+          "column": 3,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'putObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new PutObjectCommand({ Bucket:... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 13,
+            "endLine": 21,
+            "lines": [
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " * VIOLATION: PutObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "async function putObjectMissingErrorHandling(bucket: string, key: string, body: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  await s3Client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+                "highlighted": true
+              },
+              {
+                "line": 18,
+                "content": "  console.log('Object uploaded');",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 3,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'deleteObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new DeleteObjectCommand({ Buck... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " * VIOLATION: DeleteObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function deleteObjectMissingErrorHandling(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  await s3Client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * VIOLATION: HeadObject without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 32,
+          "column": 20,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'headObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new HeadObjectCommand({ Bucket... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * VIOLATION: HeadObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "async function headObjectMissingErrorHandling(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  const response = await s3Client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "  return response.Metadata;",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 40,
+          "column": 3,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'copyObjectMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CopyObjectCommand({\n    Bu... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 36,
+            "endLine": 44,
+            "lines": [
+              {
+                "line": 36,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": " * VIOLATION: CopyObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "async function copyObjectMissingErrorHandling(sourceBucket: string, sourceKey: string, destBucket: string, destKey: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  await s3Client.send(new CopyObjectCommand({",
+                "highlighted": true
+              },
+              {
+                "line": 41,
+                "content": "    Bucket: destBucket,",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "    Key: destKey,",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "    CopySource: `${sourceBucket}/${sourceKey}`",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  }));",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 51,
+          "column": 3,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'createBucketMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CreateBucketCommand({ Buck... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": " * VIOLATION: CreateBucket without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "async function createBucketMissingErrorHandling(bucketName: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  await s3Client.send(new CreateBucketCommand({ Bucket: bucketName }));",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * VIOLATION: ListObjectsV2 without error handling (WARNING level)",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 20,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'listObjectsMissingErrorHandling' contains unprotected await expression. await s3Client.send(new ListObjectsV2Command({ Buc... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * VIOLATION: ListObjectsV2 without error handling (WARNING level)",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "async function listObjectsMissingErrorHandling(bucket: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const response = await s3Client.send(new ListObjectsV2Command({ Bucket: bucket }));",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "  return response.Contents || [];",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 66,
+          "column": 20,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'listBucketsMissingErrorHandling' contains unprotected await expression. await s3Client.send(new ListBucketsCommand({}))... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 62,
+            "endLine": 70,
+            "lines": [
+              {
+                "line": 62,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": " * VIOLATION: ListBuckets without error handling (WARNING level)",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "async function listBucketsMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  const response = await s3Client.send(new ListBucketsCommand({}));",
+                "highlighted": true
+              },
+              {
+                "line": 67,
+                "content": "  return response.Buckets || [];",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 74,
+          "column": 26,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'multipartUploadMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CreateMultipartUploadComma... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 70,
+            "endLine": 78,
+            "lines": [
+              {
+                "line": 70,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " * VIOLATION: Multipart upload without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "async function multipartUploadMissingErrorHandling(bucket: string, key: string, parts: Buffer[]) {",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 75,
+                "content": "  const uploadId = createResponse.UploadId\\!;",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  const uploadPromises = parts.map((part, index) =>",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "    s3Client.send(new UploadPartCommand({",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 89,
+          "column": 3,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'multipartUploadMissingErrorHandling' contains unprotected await expression. await s3Client.send(new CompleteMultipartUploadCom... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 85,
+            "endLine": 93,
+            "lines": [
+              {
+                "line": 85,
+                "content": "  );",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  const uploadResults = await Promise.all(uploadPromises);",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "  await s3Client.send(new CompleteMultipartUploadCommand({",
+                "highlighted": true
+              },
+              {
+                "line": 90,
+                "content": "    Bucket: bucket,",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "    Key: key,",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "    UploadId: uploadId,",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "    MultipartUpload: {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 26,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "GetObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " * VIOLATION: GetObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "async function getObjectMissingErrorHandling(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  return response.Body;",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 17,
+          "column": 9,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "PutObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 13,
+            "endLine": 21,
+            "lines": [
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " * VIOLATION: PutObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "async function putObjectMissingErrorHandling(bucket: string, key: string, body: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  await s3Client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }));",
+                "highlighted": true
+              },
+              {
+                "line": 18,
+                "content": "  console.log('Object uploaded');",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 9,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "DeleteObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " * VIOLATION: DeleteObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function deleteObjectMissingErrorHandling(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  await s3Client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * VIOLATION: HeadObject without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 32,
+          "column": 26,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "HeadObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * VIOLATION: HeadObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "async function headObjectMissingErrorHandling(bucket: string, key: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  const response = await s3Client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "  return response.Metadata;",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 40,
+          "column": 9,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "CopyObjectCommand called without try-catch. s3Client.send() called with object operation commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 36,
+            "endLine": 44,
+            "lines": [
+              {
+                "line": 36,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": " * VIOLATION: CopyObject without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "async function copyObjectMissingErrorHandling(sourceBucket: string, sourceKey: string, destBucket: string, destKey: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  await s3Client.send(new CopyObjectCommand({",
+                "highlighted": true
+              },
+              {
+                "line": 41,
+                "content": "    Bucket: destBucket,",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "    Key: destKey,",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "    CopySource: `${sourceBucket}/${sourceKey}`",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  }));",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-bucket-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 51,
+          "column": 9,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-bucket-operation-no-try-catch",
+          "description": "CreateBucketCommand called without try-catch. s3Client.send() called with bucket operations without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html",
+          "suggested_fix": "MUST wrap bucket operations in try-catch block. Handle BucketAlreadyExists/BucketAlreadyOwnedByYou gracefully (may be acceptable), check BucketNotEmpty before deletion, validate permissions.\n",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": " * VIOLATION: CreateBucket without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "async function createBucketMissingErrorHandling(bucketName: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  await s3Client.send(new CreateBucketCommand({ Bucket: bucketName }));",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * VIOLATION: ListObjectsV2 without error handling (WARNING level)",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 74,
+          "column": 32,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-multipart-no-try-catch",
+          "description": "CreateMultipartUploadCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+          "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+          "code_snippet": {
+            "startLine": 70,
+            "endLine": 78,
+            "lines": [
+              {
+                "line": 70,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " * VIOLATION: Multipart upload without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "async function multipartUploadMissingErrorHandling(bucket: string, key: string, parts: Buffer[]) {",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": true
+              },
+              {
+                "line": 75,
+                "content": "  const uploadId = createResponse.UploadId\\!;",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  const uploadPromises = parts.map((part, index) =>",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "    s3Client.send(new UploadPartCommand({",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 78,
+          "column": 5,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-multipart-no-try-catch",
+          "description": "UploadPartCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+          "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+          "code_snippet": {
+            "startLine": 74,
+            "endLine": 82,
+            "lines": [
+              {
+                "line": 74,
+                "content": "  const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const uploadId = createResponse.UploadId\\!;",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  const uploadPromises = parts.map((part, index) =>",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "    s3Client.send(new UploadPartCommand({",
+                "highlighted": true
+              },
+              {
+                "line": 79,
+                "content": "      Bucket: bucket,",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "      Key: key,",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "      UploadId: uploadId,",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "      PartNumber: index + 1,",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/missing-error-handling.ts",
+          "line": 89,
+          "column": 9,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-multipart-no-try-catch",
+          "description": "CompleteMultipartUploadCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+          "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+          "code_snippet": {
+            "startLine": 85,
+            "endLine": 93,
+            "lines": [
+              {
+                "line": 85,
+                "content": "  );",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  const uploadResults = await Promise.all(uploadPromises);",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "  await s3Client.send(new CompleteMultipartUploadCommand({",
+                "highlighted": true
+              },
+              {
+                "line": 90,
+                "content": "    Bucket: bucket,",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "    Key: key,",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "    UploadId: uploadId,",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "    MultipartUpload: {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-object-operation-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/proper-error-handling.ts",
+          "line": 99,
+          "column": 7,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-object-operation-no-try-catch",
+          "description": "Async function 'multipartUploadWithErrorHandling' contains unprotected await expression. await s3Client.send(new AbortMultipartUploadComman... may throw unhandled errors.",
+          "source_doc": "https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/",
+          "suggested_fix": "MUST wrap await s3Client.send() in try-catch block when using GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand, or CopyObjectCommand. Catch block should check error.name for specific error types (NoSuchKey, AccessDenied, NoSuchBucket) and handle appropriately.\n",
+          "code_snippet": {
+            "startLine": 95,
+            "endLine": 103,
+            "lines": [
+              {
+                "line": 95,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "    console.error('Multipart upload failed:', error.message);",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "    // Cleanup: abort multipart upload",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "    if (uploadId) {",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "      await s3Client.send(new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId: uploadId }));",
+                "highlighted": true
+              },
+              {
+                "line": 100,
+                "content": "    }",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "    throw error;",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/proper-error-handling.ts",
+          "line": 71,
+          "column": 7,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-multipart-no-try-catch",
+          "description": "UploadPartCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+          "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+          "code_snippet": {
+            "startLine": 67,
+            "endLine": 75,
+            "lines": [
+              {
+                "line": 67,
+                "content": "    const createResponse = await s3Client.send(new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }));",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "    uploadId = createResponse.UploadId;",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "    const uploadPromises = parts.map((part, index) =>",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "      s3Client.send(new UploadPartCommand({",
+                "highlighted": true
+              },
+              {
+                "line": 72,
+                "content": "        Bucket: bucket,",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "        Key: key,",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "        UploadId: uploadId,",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "        PartNumber: index + 1,",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@aws-sdk/client-s3-s3-multipart-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@aws-sdk/client-s3/fixtures/proper-error-handling.ts",
+          "line": 99,
+          "column": 13,
+          "package": "@aws-sdk/client-s3",
+          "function": "send",
+          "contract_clause": "s3-multipart-no-try-catch",
+          "description": "AbortMultipartUploadCommand called without try-catch. s3Client.send() called with multipart commands without try-catch",
+          "source_doc": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+          "suggested_fix": "MUST wrap multipart upload operations in try-catch block. Catch block MUST call AbortMultipartUploadCommand with the uploadId to clean up orphaned parts. This prevents storage charges for incomplete uploads.\n",
+          "code_snippet": {
+            "startLine": 95,
+            "endLine": 103,
+            "lines": [
+              {
+                "line": 95,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "    console.error('Multipart upload failed:', error.message);",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "    // Cleanup: abort multipart upload",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "    if (uploadId) {",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "      await s3Client.send(new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId: uploadId }));",
+                "highlighted": true
+              },
+              {
+                "line": 100,
+                "content": "    }",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "    throw error;",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

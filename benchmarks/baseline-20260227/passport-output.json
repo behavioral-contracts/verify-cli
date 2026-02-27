@@ -1,0 +1,992 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:45.365Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "square",
+    "sqlite3",
+    "stripe",
+    "socket.io-client",
+    "superagent",
+    "socket.io",
+    "sequelize",
+    "sharp",
+    "sinon",
+    "puppeteer",
+    "redis",
+    "react-hook-form",
+    "request-promise",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "moment",
+    "mongoose",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "drizzle-orm",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@tanstack/react-query",
+    "@prisma/client",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@aws-sdk/client-s3",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "passport-authenticate-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/instance-usage.ts",
+      "line": 16,
+      "column": 24,
+      "package": "passport",
+      "function": "authenticate",
+      "contract_clause": "authenticate-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://www.passportjs.org/docs/authenticate/",
+      "suggested_fix": "Caller MUST handle authentication failures in callback or error middleware. Use custom callback (req, res, next) => passport.authenticate('strategy', (err, user, info) => {...}) to handle errors, missing users, and validation failures.",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 20,
+        "lines": [
+          {
+            "line": 12,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  authenticate(app: express.Application) {",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "    // ❌ No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "    app.post('/login', passport.authenticate('local'));",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "export { AuthService };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "passport-authenticate-strategy-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/instance-usage.ts",
+      "line": 16,
+      "column": 24,
+      "package": "passport",
+      "function": "authenticate",
+      "contract_clause": "authenticate-strategy-error",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://www.passportjs.org/docs/authenticate/",
+      "suggested_fix": "Caller MUST handle strategy errors in callback or Express error handler. Check if (err) in custom callback and forward to next(err) for centralized error handling.",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 20,
+        "lines": [
+          {
+            "line": 12,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  authenticate(app: express.Application) {",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "    // ❌ No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "    app.post('/login', passport.authenticate('local'));",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "export { AuthService };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "passport-authenticate-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+      "line": 21,
+      "column": 3,
+      "package": "passport",
+      "function": "authenticate",
+      "contract_clause": "authenticate-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://www.passportjs.org/docs/authenticate/",
+      "suggested_fix": "Caller MUST handle authentication failures in callback or error middleware. Use custom callback (req, res, next) => passport.authenticate('strategy', (err, user, info) => {...}) to handle errors, missing users, and validation failures.",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "// ❌ No error handling in authenticate",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "const app = express();",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "app.post('/login',",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  passport.authenticate('local'),",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "  (req, res) => {",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    res.json({ user: req.user });",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": ");",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "passport-authenticate-strategy-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+      "line": 21,
+      "column": 3,
+      "package": "passport",
+      "function": "authenticate",
+      "contract_clause": "authenticate-strategy-error",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://www.passportjs.org/docs/authenticate/",
+      "suggested_fix": "Caller MUST handle strategy errors in callback or Express error handler. Check if (err) in custom callback and forward to next(err) for centralized error handling.",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "// ❌ No error handling in authenticate",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "const app = express();",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "app.post('/login',",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  passport.authenticate('local'),",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "  (req, res) => {",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    res.json({ user: req.user });",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": ");",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "passport-authenticate-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+      "line": 30,
+      "column": 5,
+      "package": "passport",
+      "function": "authenticate",
+      "contract_clause": "authenticate-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://www.passportjs.org/docs/authenticate/",
+      "suggested_fix": "Caller MUST handle authentication failures in callback or error middleware. Use custom callback (req, res, next) => passport.authenticate('strategy', (err, user, info) => {...}) to handle errors, missing users, and validation failures.",
+      "code_snippet": {
+        "startLine": 26,
+        "endLine": 34,
+        "lines": [
+          {
+            "line": 26,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "// ❌ No callback error handling",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "app.post('/auth',",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  (req, res, next) => {",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "    passport.authenticate('local', (err, user, info) => {",
+            "highlighted": true
+          },
+          {
+            "line": 31,
+            "content": "      // ❌ Not checking err",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "      res.json({ user });",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "    })(req, res, next);",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "passport-authenticate-strategy-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+      "line": 30,
+      "column": 5,
+      "package": "passport",
+      "function": "authenticate",
+      "contract_clause": "authenticate-strategy-error",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://www.passportjs.org/docs/authenticate/",
+      "suggested_fix": "Caller MUST handle strategy errors in callback or Express error handler. Check if (err) in custom callback and forward to next(err) for centralized error handling.",
+      "code_snippet": {
+        "startLine": 26,
+        "endLine": 34,
+        "lines": [
+          {
+            "line": 26,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "// ❌ No callback error handling",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "app.post('/auth',",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  (req, res, next) => {",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "    passport.authenticate('local', (err, user, info) => {",
+            "highlighted": true
+          },
+          {
+            "line": 31,
+            "content": "      // ❌ Not checking err",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "      res.json({ user });",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "    })(req, res, next);",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 6,
+    "error_count": 6,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 15,
+    "withContracts": 3,
+    "withoutContracts": 12,
+    "packages": [
+      {
+        "name": "express",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "passport",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "passport-local",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": false,
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "passport": {
+      "total": 6,
+      "errors": 6,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "passport-authenticate-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/instance-usage.ts",
+          "line": 16,
+          "column": 24,
+          "package": "passport",
+          "function": "authenticate",
+          "contract_clause": "authenticate-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://www.passportjs.org/docs/authenticate/",
+          "suggested_fix": "Caller MUST handle authentication failures in callback or error middleware. Use custom callback (req, res, next) => passport.authenticate('strategy', (err, user, info) => {...}) to handle errors, missing users, and validation failures.",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 20,
+            "lines": [
+              {
+                "line": 12,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  authenticate(app: express.Application) {",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "    // ❌ No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "    app.post('/login', passport.authenticate('local'));",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "export { AuthService };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "passport-authenticate-strategy-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/instance-usage.ts",
+          "line": 16,
+          "column": 24,
+          "package": "passport",
+          "function": "authenticate",
+          "contract_clause": "authenticate-strategy-error",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://www.passportjs.org/docs/authenticate/",
+          "suggested_fix": "Caller MUST handle strategy errors in callback or Express error handler. Check if (err) in custom callback and forward to next(err) for centralized error handling.",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 20,
+            "lines": [
+              {
+                "line": 12,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  authenticate(app: express.Application) {",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "    // ❌ No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "    app.post('/login', passport.authenticate('local'));",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "export { AuthService };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "passport-authenticate-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+          "line": 21,
+          "column": 3,
+          "package": "passport",
+          "function": "authenticate",
+          "contract_clause": "authenticate-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://www.passportjs.org/docs/authenticate/",
+          "suggested_fix": "Caller MUST handle authentication failures in callback or error middleware. Use custom callback (req, res, next) => passport.authenticate('strategy', (err, user, info) => {...}) to handle errors, missing users, and validation failures.",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "// ❌ No error handling in authenticate",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "const app = express();",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "app.post('/login',",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  passport.authenticate('local'),",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "  (req, res) => {",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    res.json({ user: req.user });",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": ");",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "passport-authenticate-strategy-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+          "line": 21,
+          "column": 3,
+          "package": "passport",
+          "function": "authenticate",
+          "contract_clause": "authenticate-strategy-error",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://www.passportjs.org/docs/authenticate/",
+          "suggested_fix": "Caller MUST handle strategy errors in callback or Express error handler. Check if (err) in custom callback and forward to next(err) for centralized error handling.",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "// ❌ No error handling in authenticate",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "const app = express();",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "app.post('/login',",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  passport.authenticate('local'),",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "  (req, res) => {",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    res.json({ user: req.user });",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": ");",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "passport-authenticate-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+          "line": 30,
+          "column": 5,
+          "package": "passport",
+          "function": "authenticate",
+          "contract_clause": "authenticate-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://www.passportjs.org/docs/authenticate/",
+          "suggested_fix": "Caller MUST handle authentication failures in callback or error middleware. Use custom callback (req, res, next) => passport.authenticate('strategy', (err, user, info) => {...}) to handle errors, missing users, and validation failures.",
+          "code_snippet": {
+            "startLine": 26,
+            "endLine": 34,
+            "lines": [
+              {
+                "line": 26,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "// ❌ No callback error handling",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "app.post('/auth',",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  (req, res, next) => {",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "    passport.authenticate('local', (err, user, info) => {",
+                "highlighted": true
+              },
+              {
+                "line": 31,
+                "content": "      // ❌ Not checking err",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "      res.json({ user });",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "    })(req, res, next);",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "passport-authenticate-strategy-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/passport/fixtures/missing-error-handling.ts",
+          "line": 30,
+          "column": 5,
+          "package": "passport",
+          "function": "authenticate",
+          "contract_clause": "authenticate-strategy-error",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://www.passportjs.org/docs/authenticate/",
+          "suggested_fix": "Caller MUST handle strategy errors in callback or Express error handler. Check if (err) in custom callback and forward to next(err) for centralized error handling.",
+          "code_snippet": {
+            "startLine": 26,
+            "endLine": 34,
+            "lines": [
+              {
+                "line": 26,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "// ❌ No callback error handling",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "app.post('/auth',",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  (req, res, next) => {",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "    passport.authenticate('local', (err, user, info) => {",
+                "highlighted": true
+              },
+              {
+                "line": 31,
+                "content": "      // ❌ Not checking err",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "      res.json({ user });",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "    })(req, res, next);",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:39.347Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/express-rate-limit/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "uuid",
+    "validator",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "supertest",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "stripe",
+    "socket.io",
+    "superagent",
+    "sinon",
+    "sharp",
+    "simple-oauth2",
+    "sequelize",
+    "request-promise",
+    "redis",
+    "pino",
+    "pg",
+    "puppeteer",
+    "react-hook-form",
+    "openai",
+    "node-fetch",
+    "passport",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "lodash",
+    "jsonwebtoken",
+    "joi",
+    "helmet",
+    "graphql",
+    "ioredis",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "bull",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@prisma/client",
+    "@supabase/supabase-js",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3",
+    "@clerk/nextjs"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [],
+  "summary": {
+    "total_violations": 0,
+    "error_count": 0,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": true
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "express-rate-limit",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": false,
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/express-rate-limit/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/express-rate-limit/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {}
+}

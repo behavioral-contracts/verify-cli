@@ -1,0 +1,4950 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:57:30.185Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "undici",
+    "unzipper",
+    "uuid",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "square",
+    "supertest",
+    "socket.io-client",
+    "sqlite3",
+    "stripe",
+    "superagent",
+    "socket.io",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "react-hook-form",
+    "pino",
+    "pg",
+    "puppeteer",
+    "passport",
+    "openai",
+    "node-fetch",
+    "next",
+    "nodemailer",
+    "multer",
+    "mysql2",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "lodash",
+    "jsonwebtoken",
+    "ioredis",
+    "graphql",
+    "helmet",
+    "joi",
+    "got",
+    "fastify",
+    "firebase-admin",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "chai",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@slack/web-api",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@vercel/postgres",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "stripe-card-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+      "line": 130,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "card-error",
+      "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+      "code_snippet": {
+        "startLine": 126,
+        "endLine": 134,
+        "lines": [
+          {
+            "line": 126,
+            "content": " * ❌ Missing try-catch on module-level instance",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "async function processPaymentWithModuleInstance(amount: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 131,
+            "content": "    amount,",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+      "line": 130,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 126,
+        "endLine": 134,
+        "lines": [
+          {
+            "line": 126,
+            "content": " * ❌ Missing try-catch on module-level instance",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "async function processPaymentWithModuleInstance(amount: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 131,
+            "content": "    amount,",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+      "line": 130,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+      "code_snippet": {
+        "startLine": 126,
+        "endLine": 134,
+        "lines": [
+          {
+            "line": 126,
+            "content": " * ❌ Missing try-catch on module-level instance",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "async function processPaymentWithModuleInstance(amount: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 131,
+            "content": "    amount,",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+      "line": 130,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+      "code_snippet": {
+        "startLine": 126,
+        "endLine": 134,
+        "lines": [
+          {
+            "line": 126,
+            "content": " * ❌ Missing try-catch on module-level instance",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "async function processPaymentWithModuleInstance(amount: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 131,
+            "content": "    amount,",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-card-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "card-error",
+      "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * ❌ Missing try-catch for charge creation",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "async function createChargeWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const charge = await stripe.charges.create({",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "    amount: 2000,",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    source: 'tok_visa',",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * ❌ Missing try-catch for charge creation",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "async function createChargeWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const charge = await stripe.charges.create({",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "    amount: 2000,",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    source: 'tok_visa',",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * ❌ Missing try-catch for charge creation",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "async function createChargeWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const charge = await stripe.charges.create({",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "    amount: 2000,",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    source: 'tok_visa',",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * ❌ Missing try-catch for charge creation",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "async function createChargeWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const charge = await stripe.charges.create({",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "    amount: 2000,",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    source: 'tok_visa',",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-card-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 32,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "card-error",
+      "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": " * ❌ Missing try-catch for PaymentIntent creation",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "async function createPaymentIntentWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "    amount: 1999,",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 32,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": " * ❌ Missing try-catch for PaymentIntent creation",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "async function createPaymentIntentWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "    amount: 1999,",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 32,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": " * ❌ Missing try-catch for PaymentIntent creation",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "async function createPaymentIntentWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "    amount: 1999,",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 32,
+      "column": 31,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": " * ❌ Missing try-catch for PaymentIntent creation",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "async function createPaymentIntentWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "    amount: 1999,",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-card-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 44,
+      "column": 26,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "card-error",
+      "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+      "code_snippet": {
+        "startLine": 40,
+        "endLine": 48,
+        "lines": [
+          {
+            "line": 40,
+            "content": " * ❌ Missing try-catch for customer creation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  const customer = await stripe.customers.create({",
+            "highlighted": true
+          },
+          {
+            "line": 45,
+            "content": "    email,",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  return customer;",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 44,
+      "column": 26,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 40,
+        "endLine": 48,
+        "lines": [
+          {
+            "line": 40,
+            "content": " * ❌ Missing try-catch for customer creation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  const customer = await stripe.customers.create({",
+            "highlighted": true
+          },
+          {
+            "line": 45,
+            "content": "    email,",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  return customer;",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 44,
+      "column": 26,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+      "code_snippet": {
+        "startLine": 40,
+        "endLine": 48,
+        "lines": [
+          {
+            "line": 40,
+            "content": " * ❌ Missing try-catch for customer creation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  const customer = await stripe.customers.create({",
+            "highlighted": true
+          },
+          {
+            "line": 45,
+            "content": "    email,",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  return customer;",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 44,
+      "column": 26,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+      "code_snippet": {
+        "startLine": 40,
+        "endLine": 48,
+        "lines": [
+          {
+            "line": 40,
+            "content": " * ❌ Missing try-catch for customer creation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  const customer = await stripe.customers.create({",
+            "highlighted": true
+          },
+          {
+            "line": 45,
+            "content": "    email,",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  return customer;",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-card-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 55,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "card-error",
+      "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+      "code_snippet": {
+        "startLine": 51,
+        "endLine": 59,
+        "lines": [
+          {
+            "line": 51,
+            "content": " * ❌ Missing try-catch for refund creation",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "  const refund = await stripe.refunds.create({",
+            "highlighted": true
+          },
+          {
+            "line": 56,
+            "content": "    charge: chargeId,",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  return refund;",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 55,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 51,
+        "endLine": 59,
+        "lines": [
+          {
+            "line": 51,
+            "content": " * ❌ Missing try-catch for refund creation",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "  const refund = await stripe.refunds.create({",
+            "highlighted": true
+          },
+          {
+            "line": 56,
+            "content": "    charge: chargeId,",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  return refund;",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 55,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+      "code_snippet": {
+        "startLine": 51,
+        "endLine": 59,
+        "lines": [
+          {
+            "line": 51,
+            "content": " * ❌ Missing try-catch for refund creation",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "  const refund = await stripe.refunds.create({",
+            "highlighted": true
+          },
+          {
+            "line": 56,
+            "content": "    charge: chargeId,",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  return refund;",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 55,
+      "column": 24,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+      "code_snippet": {
+        "startLine": 51,
+        "endLine": 59,
+        "lines": [
+          {
+            "line": 51,
+            "content": " * ❌ Missing try-catch for refund creation",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "  const refund = await stripe.refunds.create({",
+            "highlighted": true
+          },
+          {
+            "line": 56,
+            "content": "    charge: chargeId,",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  return refund;",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-signature-verification-failed",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 66,
+      "column": 17,
+      "package": "stripe",
+      "function": "constructEvent",
+      "contract_clause": "signature-verification-failed",
+      "description": "No try-catch block found. StripeSignatureVerificationError - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/webhooks/signatures",
+      "suggested_fix": "Return 400 Bad Request immediately. DO NOT process the webhook. Log the error for security monitoring (possible attack).\n",
+      "code_snippet": {
+        "startLine": 62,
+        "endLine": 70,
+        "lines": [
+          {
+            "line": 62,
+            "content": " * ❌ Missing try-catch for webhook verification",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "function verifyWebhookWithoutErrorHandling(payload: string, signature: string, secret: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  const event = stripe.webhooks.constructEvent(payload, signature, secret);",
+            "highlighted": true
+          },
+          {
+            "line": 67,
+            "content": "  return event;",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-timestamp-too-old",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 66,
+      "column": 17,
+      "package": "stripe",
+      "function": "constructEvent",
+      "contract_clause": "timestamp-too-old",
+      "description": "No try-catch block found. StripeSignatureVerificationError with 'Timestamp outside the tolerance zone' message - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/webhooks/signatures",
+      "suggested_fix": "Return 400. This prevents replay attacks.",
+      "code_snippet": {
+        "startLine": 62,
+        "endLine": 70,
+        "lines": [
+          {
+            "line": 62,
+            "content": " * ❌ Missing try-catch for webhook verification",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "function verifyWebhookWithoutErrorHandling(payload: string, signature: string, secret: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  const event = stripe.webhooks.constructEvent(payload, signature, secret);",
+            "highlighted": true
+          },
+          {
+            "line": 67,
+            "content": "  return event;",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-card-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 75,
+      "column": 31,
+      "package": "stripe",
+      "function": "confirm",
+      "contract_clause": "card-error",
+      "description": "No try-catch block found. StripeCardError - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Return to payment form, allow user to update payment method",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": " * ❌ Missing try-catch for payment confirmation",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 75,
+      "column": 31,
+      "package": "stripe",
+      "function": "confirm",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Implement exponential backoff",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": " * ❌ Missing try-catch for payment confirmation",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 75,
+      "column": 31,
+      "package": "stripe",
+      "function": "confirm",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "DO NOT retry, alert operations",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": " * ❌ Missing try-catch for payment confirmation",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 75,
+      "column": 31,
+      "package": "stripe",
+      "function": "confirm",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Network error - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Retry with idempotency key. Query payment status before creating new PaymentIntent.",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": " * ❌ Missing try-catch for payment confirmation",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "  return paymentIntent;",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-resource-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 84,
+      "column": 24,
+      "package": "stripe",
+      "function": "retrieve",
+      "contract_clause": "resource-not-found",
+      "description": "No try-catch block found. StripeInvalidRequestError with code 'resource_missing' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/api/errors",
+      "suggested_fix": "Handle missing resource gracefully. DO NOT retry.",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": " * ❌ Missing try-catch for resource retrieval",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "  return charge;",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 84,
+      "column": 24,
+      "package": "stripe",
+      "function": "retrieve",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Implement exponential backoff",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": " * ❌ Missing try-catch for resource retrieval",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "  return charge;",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 84,
+      "column": 24,
+      "package": "stripe",
+      "function": "retrieve",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "DO NOT retry, alert operations",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": " * ❌ Missing try-catch for resource retrieval",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "  return charge;",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 84,
+      "column": 24,
+      "package": "stripe",
+      "function": "retrieve",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Network error - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Retry with exponential backoff",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": " * ❌ Missing try-catch for resource retrieval",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "  return charge;",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-card-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 93,
+      "column": 30,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "card-error",
+      "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+      "code_snippet": {
+        "startLine": 89,
+        "endLine": 97,
+        "lines": [
+          {
+            "line": 89,
+            "content": " * ❌ Missing try-catch for subscription creation",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  const subscription = await stripe.subscriptions.create({",
+            "highlighted": true
+          },
+          {
+            "line": 94,
+            "content": "    customer: customerId,",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    items: [{ price: priceId }],",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  return subscription;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 93,
+      "column": 30,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 89,
+        "endLine": 97,
+        "lines": [
+          {
+            "line": 89,
+            "content": " * ❌ Missing try-catch for subscription creation",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  const subscription = await stripe.subscriptions.create({",
+            "highlighted": true
+          },
+          {
+            "line": 94,
+            "content": "    customer: customerId,",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    items: [{ price: priceId }],",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  return subscription;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-authentication-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 93,
+      "column": 30,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "authentication-error",
+      "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+      "code_snippet": {
+        "startLine": 89,
+        "endLine": 97,
+        "lines": [
+          {
+            "line": 89,
+            "content": " * ❌ Missing try-catch for subscription creation",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  const subscription = await stripe.subscriptions.create({",
+            "highlighted": true
+          },
+          {
+            "line": 94,
+            "content": "    customer: customerId,",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    items: [{ price: priceId }],",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  return subscription;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+      "line": 93,
+      "column": 30,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+      "source_doc": "https://stripe.com/docs/error-handling",
+      "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+      "code_snippet": {
+        "startLine": 89,
+        "endLine": 97,
+        "lines": [
+          {
+            "line": 89,
+            "content": " * ❌ Missing try-catch for subscription creation",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  const subscription = await stripe.subscriptions.create({",
+            "highlighted": true
+          },
+          {
+            "line": 94,
+            "content": "    customer: customerId,",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    items: [{ price: priceId }],",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  return subscription;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/proper-error-handling.ts",
+      "line": 52,
+      "column": 33,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 48,
+        "endLine": 56,
+        "lines": [
+          {
+            "line": 48,
+            "content": " * Proper error handling for PaymentIntent creation",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "async function createPaymentIntentWithProperErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "    const paymentIntent = await stripe.paymentIntents.create({",
+            "highlighted": true
+          },
+          {
+            "line": 53,
+            "content": "      amount: 1999,",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "      currency: 'usd',",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "      payment_method_types: ['card'],",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/proper-error-handling.ts",
+      "line": 75,
+      "column": 28,
+      "package": "stripe",
+      "function": "create",
+      "contract_clause": "rate-limit-error",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": " * Proper error handling for customer creation",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "async function createCustomerWithProperErrorHandling(email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "    const customer = await stripe.customers.create({",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "      email,",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "      description: 'Test customer',",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "    });",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "    return customer;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe-rate-limit-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/proper-error-handling.ts",
+      "line": 130,
+      "column": 26,
+      "package": "stripe",
+      "function": "retrieve",
+      "contract_clause": "rate-limit-error",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://stripe.com/docs/rate-limits",
+      "suggested_fix": "Implement exponential backoff",
+      "code_snippet": {
+        "startLine": 126,
+        "endLine": 134,
+        "lines": [
+          {
+            "line": 126,
+            "content": " * Proper error handling for resource retrieval",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "async function retrieveChargeWithProperErrorHandling(chargeId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "    const charge = await stripe.charges.retrieve(chargeId);",
+            "highlighted": true
+          },
+          {
+            "line": 131,
+            "content": "    return charge;",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "    if (error instanceof Stripe.errors.StripeInvalidRequestError) {",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "      // Resource not found",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 37,
+    "error_count": 34,
+    "warning_count": 3,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "stripe",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "stripe": {
+      "total": 37,
+      "errors": 34,
+      "warnings": 3,
+      "info": 0,
+      "violations": [
+        {
+          "id": "stripe-card-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+          "line": 130,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "card-error",
+          "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+          "code_snippet": {
+            "startLine": 126,
+            "endLine": 134,
+            "lines": [
+              {
+                "line": 126,
+                "content": " * ❌ Missing try-catch on module-level instance",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "async function processPaymentWithModuleInstance(amount: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 131,
+                "content": "    amount,",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+          "line": 130,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 126,
+            "endLine": 134,
+            "lines": [
+              {
+                "line": 126,
+                "content": " * ❌ Missing try-catch on module-level instance",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "async function processPaymentWithModuleInstance(amount: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 131,
+                "content": "    amount,",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+          "line": 130,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+          "code_snippet": {
+            "startLine": 126,
+            "endLine": 134,
+            "lines": [
+              {
+                "line": 126,
+                "content": " * ❌ Missing try-catch on module-level instance",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "async function processPaymentWithModuleInstance(amount: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 131,
+                "content": "    amount,",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/instance-usage.ts",
+          "line": 130,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+          "code_snippet": {
+            "startLine": 126,
+            "endLine": 134,
+            "lines": [
+              {
+                "line": 126,
+                "content": " * ❌ Missing try-catch on module-level instance",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "async function processPaymentWithModuleInstance(amount: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  const paymentIntent = await stripeClient.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 131,
+                "content": "    amount,",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-card-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "card-error",
+          "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * ❌ Missing try-catch for charge creation",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "async function createChargeWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const charge = await stripe.charges.create({",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "    amount: 2000,",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    source: 'tok_visa',",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * ❌ Missing try-catch for charge creation",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "async function createChargeWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const charge = await stripe.charges.create({",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "    amount: 2000,",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    source: 'tok_visa',",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * ❌ Missing try-catch for charge creation",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "async function createChargeWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const charge = await stripe.charges.create({",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "    amount: 2000,",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    source: 'tok_visa',",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * ❌ Missing try-catch for charge creation",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "async function createChargeWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const charge = await stripe.charges.create({",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "    amount: 2000,",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    source: 'tok_visa',",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-card-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 32,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "card-error",
+          "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": " * ❌ Missing try-catch for PaymentIntent creation",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "async function createPaymentIntentWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "    amount: 1999,",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 32,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": " * ❌ Missing try-catch for PaymentIntent creation",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "async function createPaymentIntentWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "    amount: 1999,",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 32,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": " * ❌ Missing try-catch for PaymentIntent creation",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "async function createPaymentIntentWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "    amount: 1999,",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 32,
+          "column": 31,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": " * ❌ Missing try-catch for PaymentIntent creation",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "async function createPaymentIntentWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  const paymentIntent = await stripe.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "    amount: 1999,",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-card-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 44,
+          "column": 26,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "card-error",
+          "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+          "code_snippet": {
+            "startLine": 40,
+            "endLine": 48,
+            "lines": [
+              {
+                "line": 40,
+                "content": " * ❌ Missing try-catch for customer creation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  const customer = await stripe.customers.create({",
+                "highlighted": true
+              },
+              {
+                "line": 45,
+                "content": "    email,",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  return customer;",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 44,
+          "column": 26,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 40,
+            "endLine": 48,
+            "lines": [
+              {
+                "line": 40,
+                "content": " * ❌ Missing try-catch for customer creation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  const customer = await stripe.customers.create({",
+                "highlighted": true
+              },
+              {
+                "line": 45,
+                "content": "    email,",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  return customer;",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 44,
+          "column": 26,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+          "code_snippet": {
+            "startLine": 40,
+            "endLine": 48,
+            "lines": [
+              {
+                "line": 40,
+                "content": " * ❌ Missing try-catch for customer creation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  const customer = await stripe.customers.create({",
+                "highlighted": true
+              },
+              {
+                "line": 45,
+                "content": "    email,",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  return customer;",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 44,
+          "column": 26,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+          "code_snippet": {
+            "startLine": 40,
+            "endLine": 48,
+            "lines": [
+              {
+                "line": 40,
+                "content": " * ❌ Missing try-catch for customer creation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "async function createCustomerWithoutErrorHandling(email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  const customer = await stripe.customers.create({",
+                "highlighted": true
+              },
+              {
+                "line": 45,
+                "content": "    email,",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  return customer;",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-card-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 55,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "card-error",
+          "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+          "code_snippet": {
+            "startLine": 51,
+            "endLine": 59,
+            "lines": [
+              {
+                "line": 51,
+                "content": " * ❌ Missing try-catch for refund creation",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "  const refund = await stripe.refunds.create({",
+                "highlighted": true
+              },
+              {
+                "line": 56,
+                "content": "    charge: chargeId,",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  return refund;",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 55,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 51,
+            "endLine": 59,
+            "lines": [
+              {
+                "line": 51,
+                "content": " * ❌ Missing try-catch for refund creation",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "  const refund = await stripe.refunds.create({",
+                "highlighted": true
+              },
+              {
+                "line": 56,
+                "content": "    charge: chargeId,",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  return refund;",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 55,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+          "code_snippet": {
+            "startLine": 51,
+            "endLine": 59,
+            "lines": [
+              {
+                "line": 51,
+                "content": " * ❌ Missing try-catch for refund creation",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "  const refund = await stripe.refunds.create({",
+                "highlighted": true
+              },
+              {
+                "line": 56,
+                "content": "    charge: chargeId,",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  return refund;",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 55,
+          "column": 24,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+          "code_snippet": {
+            "startLine": 51,
+            "endLine": 59,
+            "lines": [
+              {
+                "line": 51,
+                "content": " * ❌ Missing try-catch for refund creation",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "async function createRefundWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "  const refund = await stripe.refunds.create({",
+                "highlighted": true
+              },
+              {
+                "line": 56,
+                "content": "    charge: chargeId,",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  return refund;",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-signature-verification-failed",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 66,
+          "column": 17,
+          "package": "stripe",
+          "function": "constructEvent",
+          "contract_clause": "signature-verification-failed",
+          "description": "No try-catch block found. StripeSignatureVerificationError - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/webhooks/signatures",
+          "suggested_fix": "Return 400 Bad Request immediately. DO NOT process the webhook. Log the error for security monitoring (possible attack).\n",
+          "code_snippet": {
+            "startLine": 62,
+            "endLine": 70,
+            "lines": [
+              {
+                "line": 62,
+                "content": " * ❌ Missing try-catch for webhook verification",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "function verifyWebhookWithoutErrorHandling(payload: string, signature: string, secret: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  const event = stripe.webhooks.constructEvent(payload, signature, secret);",
+                "highlighted": true
+              },
+              {
+                "line": 67,
+                "content": "  return event;",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-timestamp-too-old",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 66,
+          "column": 17,
+          "package": "stripe",
+          "function": "constructEvent",
+          "contract_clause": "timestamp-too-old",
+          "description": "No try-catch block found. StripeSignatureVerificationError with 'Timestamp outside the tolerance zone' message - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/webhooks/signatures",
+          "suggested_fix": "Return 400. This prevents replay attacks.",
+          "code_snippet": {
+            "startLine": 62,
+            "endLine": 70,
+            "lines": [
+              {
+                "line": 62,
+                "content": " * ❌ Missing try-catch for webhook verification",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "function verifyWebhookWithoutErrorHandling(payload: string, signature: string, secret: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  const event = stripe.webhooks.constructEvent(payload, signature, secret);",
+                "highlighted": true
+              },
+              {
+                "line": 67,
+                "content": "  return event;",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-card-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 75,
+          "column": 31,
+          "package": "stripe",
+          "function": "confirm",
+          "contract_clause": "card-error",
+          "description": "No try-catch block found. StripeCardError - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Return to payment form, allow user to update payment method",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": " * ❌ Missing try-catch for payment confirmation",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 75,
+          "column": 31,
+          "package": "stripe",
+          "function": "confirm",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Implement exponential backoff",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": " * ❌ Missing try-catch for payment confirmation",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 75,
+          "column": 31,
+          "package": "stripe",
+          "function": "confirm",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "DO NOT retry, alert operations",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": " * ❌ Missing try-catch for payment confirmation",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 75,
+          "column": 31,
+          "package": "stripe",
+          "function": "confirm",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Network error - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Retry with idempotency key. Query payment status before creating new PaymentIntent.",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": " * ❌ Missing try-catch for payment confirmation",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "async function confirmPaymentWithoutErrorHandling(paymentIntentId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "  return paymentIntent;",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-resource-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 84,
+          "column": 24,
+          "package": "stripe",
+          "function": "retrieve",
+          "contract_clause": "resource-not-found",
+          "description": "No try-catch block found. StripeInvalidRequestError with code 'resource_missing' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/api/errors",
+          "suggested_fix": "Handle missing resource gracefully. DO NOT retry.",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": " * ❌ Missing try-catch for resource retrieval",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "  return charge;",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 84,
+          "column": 24,
+          "package": "stripe",
+          "function": "retrieve",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Implement exponential backoff",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": " * ❌ Missing try-catch for resource retrieval",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "  return charge;",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 84,
+          "column": 24,
+          "package": "stripe",
+          "function": "retrieve",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "DO NOT retry, alert operations",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": " * ❌ Missing try-catch for resource retrieval",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "  return charge;",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 84,
+          "column": 24,
+          "package": "stripe",
+          "function": "retrieve",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Network error - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Retry with exponential backoff",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": " * ❌ Missing try-catch for resource retrieval",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "async function retrieveChargeWithoutErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  const charge = await stripe.charges.retrieve(chargeId);",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "  return charge;",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-card-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 93,
+          "column": 30,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "card-error",
+          "description": "No try-catch block found. StripeCardError with error.type === 'card_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST catch StripeCardError and handle gracefully. Display user-friendly message based on error.decline_code. DO NOT retry card_error without user intervention.\n",
+          "code_snippet": {
+            "startLine": 89,
+            "endLine": 97,
+            "lines": [
+              {
+                "line": 89,
+                "content": " * ❌ Missing try-catch for subscription creation",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  const subscription = await stripe.subscriptions.create({",
+                "highlighted": true
+              },
+              {
+                "line": 94,
+                "content": "    customer: customerId,",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    items: [{ price: priceId }],",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  return subscription;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 93,
+          "column": 30,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "No try-catch block found. StripeRateLimitError with error.type === 'rate_limit_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 89,
+            "endLine": 97,
+            "lines": [
+              {
+                "line": 89,
+                "content": " * ❌ Missing try-catch for subscription creation",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  const subscription = await stripe.subscriptions.create({",
+                "highlighted": true
+              },
+              {
+                "line": 94,
+                "content": "    customer: customerId,",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    items: [{ price: priceId }],",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  return subscription;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-authentication-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 93,
+          "column": 30,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "authentication-error",
+          "description": "No try-catch block found. StripeAuthenticationError with error.type === 'authentication_error' - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST NOT retry. This indicates configuration error. Log error and alert operations team immediately.\n",
+          "code_snippet": {
+            "startLine": 89,
+            "endLine": 97,
+            "lines": [
+              {
+                "line": 89,
+                "content": " * ❌ Missing try-catch for subscription creation",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  const subscription = await stripe.subscriptions.create({",
+                "highlighted": true
+              },
+              {
+                "line": 94,
+                "content": "    customer: customerId,",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    items: [{ price: priceId }],",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  return subscription;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/missing-error-handling.ts",
+          "line": 93,
+          "column": 30,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Error with no error.type (connection error) - this will crash the application.",
+          "source_doc": "https://stripe.com/docs/error-handling",
+          "suggested_fix": "Caller MUST handle network errors separately from Stripe API errors. Implement retry with exponential backoff (max 3 attempts).\n",
+          "code_snippet": {
+            "startLine": 89,
+            "endLine": 97,
+            "lines": [
+              {
+                "line": 89,
+                "content": " * ❌ Missing try-catch for subscription creation",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "async function createSubscriptionWithoutErrorHandling(customerId: string, priceId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  const subscription = await stripe.subscriptions.create({",
+                "highlighted": true
+              },
+              {
+                "line": 94,
+                "content": "    customer: customerId,",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    items: [{ price: priceId }],",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  return subscription;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/proper-error-handling.ts",
+          "line": 52,
+          "column": 33,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 48,
+            "endLine": 56,
+            "lines": [
+              {
+                "line": 48,
+                "content": " * Proper error handling for PaymentIntent creation",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "async function createPaymentIntentWithProperErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "    const paymentIntent = await stripe.paymentIntents.create({",
+                "highlighted": true
+              },
+              {
+                "line": 53,
+                "content": "      amount: 1999,",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "      currency: 'usd',",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "      payment_method_types: ['card'],",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/proper-error-handling.ts",
+          "line": 75,
+          "column": 28,
+          "package": "stripe",
+          "function": "create",
+          "contract_clause": "rate-limit-error",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Caller MUST implement exponential backoff retry logic. Stripe rate limits are per-account, not per-key.\n",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": " * Proper error handling for customer creation",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "async function createCustomerWithProperErrorHandling(email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "    const customer = await stripe.customers.create({",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "      email,",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "      description: 'Test customer',",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "    });",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "    return customer;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "stripe-rate-limit-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/stripe/fixtures/proper-error-handling.ts",
+          "line": 130,
+          "column": 26,
+          "package": "stripe",
+          "function": "retrieve",
+          "contract_clause": "rate-limit-error",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://stripe.com/docs/rate-limits",
+          "suggested_fix": "Implement exponential backoff",
+          "code_snippet": {
+            "startLine": 126,
+            "endLine": 134,
+            "lines": [
+              {
+                "line": 126,
+                "content": " * Proper error handling for resource retrieval",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "async function retrieveChargeWithProperErrorHandling(chargeId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "    const charge = await stripe.charges.retrieve(chargeId);",
+                "highlighted": true
+              },
+              {
+                "line": 131,
+                "content": "    return charge;",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "    if (error instanceof Stripe.errors.StripeInvalidRequestError) {",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "      // Resource not found",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

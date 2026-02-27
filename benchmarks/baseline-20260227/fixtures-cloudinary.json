@@ -1,0 +1,726 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:07.833Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "superagent",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "stripe",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "supertest",
+    "react-hook-form",
+    "puppeteer",
+    "pino",
+    "pg",
+    "openai",
+    "passport",
+    "nodemailer",
+    "mysql2",
+    "node-fetch",
+    "multer",
+    "mongoose",
+    "moment",
+    "next",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "lodash",
+    "jsonwebtoken",
+    "joi",
+    "ioredis",
+    "graphql",
+    "helmet",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@aws-sdk/client-s3",
+    "@prisma/client",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "cloudinary-upload-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 7,
+      "column": 24,
+      "package": "cloudinary",
+      "function": "upload",
+      "contract_clause": "upload-missing-error-handling",
+      "description": "No try-catch block found. Error with network/validation/auth details - this will crash the application.",
+      "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+      "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload() in try-catch (for async/await) OR check error parameter in callback: (error, result) => { if (error) ... }\n",
+      "code_snippet": {
+        "startLine": 3,
+        "endLine": 11,
+        "lines": [
+          {
+            "line": 3,
+            "content": "cloudinary.config({ cloud_name: 'demo', api_key: 'key', api_secret: 'secret' });",
+            "highlighted": false
+          },
+          {
+            "line": 4,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": "// ❌ VIOLATION: upload-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": "async function uploadWithoutTryCatch(file: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "  const result = await cloudinary.uploader.upload(file);",
+            "highlighted": true
+          },
+          {
+            "line": 8,
+            "content": "  return result;",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-upload-large-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 13,
+      "column": 24,
+      "package": "cloudinary",
+      "function": "upload_large",
+      "contract_clause": "upload-large-missing-error-handling",
+      "description": "No try-catch block found. Error with 413 Request Entity Too Large or network error details - this will crash the application.",
+      "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+      "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload_large() in try-catch OR check error parameter in callback. Files >100MB require this method.\n",
+      "code_snippet": {
+        "startLine": 9,
+        "endLine": 17,
+        "lines": [
+          {
+            "line": 9,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "async function uploadLargeWithoutTryCatch(file: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  const result = await cloudinary.uploader.upload_large(file, { chunk_size: 6000000 });",
+            "highlighted": true
+          },
+          {
+            "line": 14,
+            "content": "  return result;",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-upload-stream-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 18,
+      "package": "cloudinary",
+      "function": "upload_stream",
+      "contract_clause": "upload-stream-missing-error-handling",
+      "description": "No try-catch block found. Error with stream or network details - this will crash the application.",
+      "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+      "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "function uploadStreamWithoutCallback(buffer: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const stream = cloudinary.uploader.upload_stream();",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  stream.end(buffer);",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-destroy-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 24,
+      "package": "cloudinary",
+      "function": "destroy",
+      "contract_clause": "destroy-missing-error-handling",
+      "description": "No try-catch block found. Error with resource not found or authentication details - this will crash the application.",
+      "source_doc": "https://cloudinary.com/documentation/image_upload_api_reference",
+      "suggested_fix": "MUST wrap cloudinary.v2.uploader.destroy() in try-catch OR check error parameter in callback. Asset may not exist.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function destroyWithoutTryCatch(publicId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const result = await cloudinary.uploader.destroy(publicId);",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  return result;",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "export { uploadWithoutTryCatch, uploadLargeWithoutTryCatch, uploadStreamWithoutCallback, destroyWithoutTryCatch };",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 4,
+    "error_count": 4,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "cloudinary",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "cloudinary": {
+      "total": 4,
+      "errors": 4,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "cloudinary-upload-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 7,
+          "column": 24,
+          "package": "cloudinary",
+          "function": "upload",
+          "contract_clause": "upload-missing-error-handling",
+          "description": "No try-catch block found. Error with network/validation/auth details - this will crash the application.",
+          "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+          "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload() in try-catch (for async/await) OR check error parameter in callback: (error, result) => { if (error) ... }\n",
+          "code_snippet": {
+            "startLine": 3,
+            "endLine": 11,
+            "lines": [
+              {
+                "line": 3,
+                "content": "cloudinary.config({ cloud_name: 'demo', api_key: 'key', api_secret: 'secret' });",
+                "highlighted": false
+              },
+              {
+                "line": 4,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": "// ❌ VIOLATION: upload-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": "async function uploadWithoutTryCatch(file: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "  const result = await cloudinary.uploader.upload(file);",
+                "highlighted": true
+              },
+              {
+                "line": 8,
+                "content": "  return result;",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-upload-large-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 13,
+          "column": 24,
+          "package": "cloudinary",
+          "function": "upload_large",
+          "contract_clause": "upload-large-missing-error-handling",
+          "description": "No try-catch block found. Error with 413 Request Entity Too Large or network error details - this will crash the application.",
+          "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+          "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload_large() in try-catch OR check error parameter in callback. Files >100MB require this method.\n",
+          "code_snippet": {
+            "startLine": 9,
+            "endLine": 17,
+            "lines": [
+              {
+                "line": 9,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "async function uploadLargeWithoutTryCatch(file: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  const result = await cloudinary.uploader.upload_large(file, { chunk_size: 6000000 });",
+                "highlighted": true
+              },
+              {
+                "line": 14,
+                "content": "  return result;",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-upload-stream-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 18,
+          "package": "cloudinary",
+          "function": "upload_stream",
+          "contract_clause": "upload-stream-missing-error-handling",
+          "description": "No try-catch block found. Error with stream or network details - this will crash the application.",
+          "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+          "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "function uploadStreamWithoutCallback(buffer: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const stream = cloudinary.uploader.upload_stream();",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  stream.end(buffer);",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-destroy-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 24,
+          "package": "cloudinary",
+          "function": "destroy",
+          "contract_clause": "destroy-missing-error-handling",
+          "description": "No try-catch block found. Error with resource not found or authentication details - this will crash the application.",
+          "source_doc": "https://cloudinary.com/documentation/image_upload_api_reference",
+          "suggested_fix": "MUST wrap cloudinary.v2.uploader.destroy() in try-catch OR check error parameter in callback. Asset may not exist.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function destroyWithoutTryCatch(publicId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const result = await cloudinary.uploader.destroy(publicId);",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  return result;",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "export { uploadWithoutTryCatch, uploadLargeWithoutTryCatch, uploadStreamWithoutCallback, destroyWithoutTryCatch };",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

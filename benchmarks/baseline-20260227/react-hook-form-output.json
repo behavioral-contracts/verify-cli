@@ -1,0 +1,180 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:35.928Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/react-hook-form/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "sqlite3",
+    "square",
+    "superagent",
+    "socket.io-client",
+    "stripe",
+    "socket.io",
+    "sharp",
+    "sinon",
+    "sequelize",
+    "redis",
+    "puppeteer",
+    "request-promise",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "mocha",
+    "luxon",
+    "knex",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "ethers",
+    "express",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "date-fns",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@tanstack/react-query",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@slack/web-api",
+    "@hapi/hapi",
+    "@supabase/supabase-js",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3",
+    "@clerk/nextjs"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 0,
+  "violations": [],
+  "summary": {
+    "total_violations": 0,
+    "error_count": 0,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": true
+  },
+  "package_discovery": {
+    "total": 12,
+    "withContracts": 1,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {}
+}

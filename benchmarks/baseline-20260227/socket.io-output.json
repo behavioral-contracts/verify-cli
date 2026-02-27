@@ -1,0 +1,330 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:51.436Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typeorm",
+    "twilio",
+    "typescript",
+    "tedious",
+    "superagent",
+    "square",
+    "stripe",
+    "sqlite3",
+    "socket.io-client",
+    "sinon",
+    "socket.io",
+    "sharp",
+    "sequelize",
+    "request-promise",
+    "redis",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "next",
+    "nodemailer",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "knex",
+    "mocha",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "socket.io-on-handler-no-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io/fixtures/missing-error-handling.ts",
+      "line": 6,
+      "column": 1,
+      "package": "socket.io",
+      "function": "on",
+      "contract_clause": "on-handler-no-error-handling",
+      "description": "No try-catch block found. Unhandled promise rejection crashes server - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/listening-to-events/",
+      "suggested_fix": "Wrap all async operations inside event handlers with try-catch blocks",
+      "code_snippet": {
+        "startLine": 2,
+        "endLine": 10,
+        "lines": [
+          {
+            "line": 2,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 3,
+            "content": "const io = new Server();",
+            "highlighted": false
+          },
+          {
+            "line": 4,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": "// ❌ Missing error handling in async event handler",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": "io.on('connection', (socket) => {",
+            "highlighted": true
+          },
+          {
+            "line": 7,
+            "content": "  socket.on('message', async (data) => {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "    await processMessage(data);",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "    socket.emit('success', { status: 'ok' });",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 1,
+    "error_count": 1,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "socket.io",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "socket.io": {
+      "total": 1,
+      "errors": 1,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "socket.io-on-handler-no-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io/fixtures/missing-error-handling.ts",
+          "line": 6,
+          "column": 1,
+          "package": "socket.io",
+          "function": "on",
+          "contract_clause": "on-handler-no-error-handling",
+          "description": "No try-catch block found. Unhandled promise rejection crashes server - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/listening-to-events/",
+          "suggested_fix": "Wrap all async operations inside event handlers with try-catch blocks",
+          "code_snippet": {
+            "startLine": 2,
+            "endLine": 10,
+            "lines": [
+              {
+                "line": 2,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 3,
+                "content": "const io = new Server();",
+                "highlighted": false
+              },
+              {
+                "line": 4,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": "// ❌ Missing error handling in async event handler",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": "io.on('connection', (socket) => {",
+                "highlighted": true
+              },
+              {
+                "line": 7,
+                "content": "  socket.on('message', async (data) => {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "    await processMessage(data);",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "    socket.emit('success', { status: 'ok' });",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

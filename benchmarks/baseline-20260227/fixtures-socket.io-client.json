@@ -1,0 +1,2903 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:03.124Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "validator",
+    "winston",
+    "unzipper",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "supertest",
+    "superagent",
+    "square",
+    "socket.io-client",
+    "sqlite3",
+    "socket.io",
+    "stripe",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "redis",
+    "request-promise",
+    "sequelize",
+    "pino",
+    "react-hook-form",
+    "puppeteer",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "knex",
+    "mocha",
+    "lodash",
+    "jsonwebtoken",
+    "joi",
+    "helmet",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "archiver",
+    "ajv",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@slack/web-api",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 4,
+  "violations": [
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 9,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "// PROPER - Event listeners registered outside connect",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "function properEventRegistration() {",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const socket = io('http://localhost:3000');",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  // Register error handlers first",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "  socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "    console.error('Connection error:', error);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 42,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 38,
+        "endLine": 46,
+        "lines": [
+          {
+            "line": 38,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "// WRONG - Memory leak: Event listeners inside connect",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "function memoryLeakPattern() {",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "  const socket = io('http://localhost:3000');",
+            "highlighted": true
+          },
+          {
+            "line": 43,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "    console.error('Connection error:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 67,
+      "column": 23,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 63,
+        "endLine": 71,
+        "lines": [
+          {
+            "line": 63,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "// PROPER - Namespace usage with error handling",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "function namespaceUsage() {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  const adminSocket = io('http://localhost:3000/admin');",
+            "highlighted": true
+          },
+          {
+            "line": 68,
+            "content": "  const chatSocket = io('http://localhost:3000/chat');",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  // Each namespace needs its own error handlers",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  adminSocket.on('connect_error', (error) => {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 68,
+      "column": 22,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 64,
+        "endLine": 72,
+        "lines": [
+          {
+            "line": 64,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "// PROPER - Namespace usage with error handling",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "function namespaceUsage() {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  const adminSocket = io('http://localhost:3000/admin');",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  const chatSocket = io('http://localhost:3000/chat');",
+            "highlighted": true
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  // Each namespace needs its own error handlers",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  adminSocket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "    console.error('Admin connection error:', error);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 90,
+      "column": 23,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 86,
+        "endLine": 94,
+        "lines": [
+          {
+            "line": 86,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "// WRONG - Multiple namespaces without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "function namespaceWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "  const adminSocket = io('http://localhost:3000/admin');",
+            "highlighted": true
+          },
+          {
+            "line": 91,
+            "content": "  const chatSocket = io('http://localhost:3000/chat');",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  // ❌ No error handlers on either socket",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "  adminSocket.on('admin-event', (data) => {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 91,
+      "column": 22,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 87,
+        "endLine": 95,
+        "lines": [
+          {
+            "line": 87,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "// WRONG - Multiple namespaces without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "function namespaceWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "  const adminSocket = io('http://localhost:3000/admin');",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "  const chatSocket = io('http://localhost:3000/chat');",
+            "highlighted": true
+          },
+          {
+            "line": 92,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  // ❌ No error handlers on either socket",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "  adminSocket.on('admin-event', (data) => {",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    console.log('Admin:', data);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 105,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 101,
+        "endLine": 109,
+        "lines": [
+          {
+            "line": 101,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "// PROPER - Binary data with error handling",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "function binaryDataHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  const socket = io('http://localhost:3000');",
+            "highlighted": true
+          },
+          {
+            "line": 106,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "  socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "    console.error('Connection error:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 135,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 131,
+        "endLine": 139,
+        "lines": [
+          {
+            "line": 131,
+            "content": "// PROPER - Authentication with reconnection",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "async function authenticationWithReconnection() {",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  let authToken = await fetchAuthToken();",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  const socket = io('http://localhost:3000', {",
+            "highlighted": true
+          },
+          {
+            "line": 136,
+            "content": "    auth: { token: authToken }",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "  socket.on('connect_error', (error) => {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 166,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 162,
+        "endLine": 170,
+        "lines": [
+          {
+            "line": 162,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "// PROPER - Multiple socket.active checks",
+            "highlighted": false
+          },
+          {
+            "line": 165,
+            "content": "function socketActiveChecks() {",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "  const socket = io('http://localhost:3000');",
+            "highlighted": true
+          },
+          {
+            "line": 167,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "  socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "    if (socket.active) {",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "      // Temporary failure, will auto-reconnect",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 207,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 203,
+        "endLine": 211,
+        "lines": [
+          {
+            "line": 203,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 204,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "// PROPER - Forced WebSocket transport with error handling",
+            "highlighted": false
+          },
+          {
+            "line": 206,
+            "content": "function forcedWebSocketTransport() {",
+            "highlighted": false
+          },
+          {
+            "line": 207,
+            "content": "  const socket = io('http://localhost:3000', {",
+            "highlighted": true
+          },
+          {
+            "line": 208,
+            "content": "    transports: ['websocket'],",
+            "highlighted": false
+          },
+          {
+            "line": 209,
+            "content": "    upgrade: false",
+            "highlighted": false
+          },
+          {
+            "line": 210,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 211,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 228,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 224,
+        "endLine": 232,
+        "lines": [
+          {
+            "line": 224,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "// WRONG - Forced transport without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "function forcedTransportWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 228,
+            "content": "  const socket = io('http://localhost:3000', {",
+            "highlighted": true
+          },
+          {
+            "line": 229,
+            "content": "    transports: ['websocket'],",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": "    upgrade: false",
+            "highlighted": false
+          },
+          {
+            "line": 231,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 245,
+      "column": 19,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 241,
+        "endLine": 249,
+        "lines": [
+          {
+            "line": 241,
+            "content": "  private socket: Socket;",
+            "highlighted": false
+          },
+          {
+            "line": 242,
+            "content": "  private reconnectAttempts = 0;",
+            "highlighted": false
+          },
+          {
+            "line": 243,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 244,
+            "content": "  constructor(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 245,
+            "content": "    this.socket = io(url, {",
+            "highlighted": true
+          },
+          {
+            "line": 246,
+            "content": "      reconnection: true,",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": "      reconnectionAttempts: 10,",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "      reconnectionDelay: 1000,",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "      reconnectionDelayMax: 5000",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+      "line": 285,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 281,
+        "endLine": 289,
+        "lines": [
+          {
+            "line": 281,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 282,
+            "content": "// PROPER - Cleanup on component unmount (React pattern)",
+            "highlighted": false
+          },
+          {
+            "line": 283,
+            "content": "function reactComponentPattern() {",
+            "highlighted": false
+          },
+          {
+            "line": 284,
+            "content": "  // In a React component:",
+            "highlighted": false
+          },
+          {
+            "line": 285,
+            "content": "  const socket = io('http://localhost:3000');",
+            "highlighted": true
+          },
+          {
+            "line": 286,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 287,
+            "content": "  socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 288,
+            "content": "    console.error('Connection error:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 289,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+      "line": 13,
+      "column": 19,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 9,
+        "endLine": 17,
+        "lines": [
+          {
+            "line": 9,
+            "content": "class ChatClient {",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "  private socket: Socket;",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "  constructor(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "    this.socket = io(url);",
+            "highlighted": true
+          },
+          {
+            "line": 14,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "    // Proper error handling",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "    this.socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "      console.error('Connection error:', error);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+      "line": 46,
+      "column": 19,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 42,
+        "endLine": 50,
+        "lines": [
+          {
+            "line": 42,
+            "content": "class DashboardClient {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  private socket: Socket;",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  constructor(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "    this.socket = io(url);",
+            "highlighted": true
+          },
+          {
+            "line": 47,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "    // ❌ No connect_error handler",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "    // ❌ No disconnect handler",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    this.socket.on('metrics', (data) => {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+      "line": 65,
+      "column": 19,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 61,
+        "endLine": 69,
+        "lines": [
+          {
+            "line": 61,
+            "content": "class NotificationClient {",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  private socket: Socket;",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "  constructor(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "    this.socket = io(url);",
+            "highlighted": true
+          },
+          {
+            "line": 66,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "    this.socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "      console.error('Connection error:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+      "line": 92,
+      "column": 19,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 88,
+        "endLine": 96,
+        "lines": [
+          {
+            "line": 88,
+            "content": "  private reconnectAttempts = 0;",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "  private maxReconnectAttempts = 5;",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "  constructor(url: string, authToken: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "    this.socket = io(url, {",
+            "highlighted": true
+          },
+          {
+            "line": 93,
+            "content": "      auth: { token: authToken },",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "      reconnection: true,",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "      reconnectionAttempts: this.maxReconnectAttempts,",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "      timeout: 20000",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+      "line": 162,
+      "column": 19,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 158,
+        "endLine": 166,
+        "lines": [
+          {
+            "line": 158,
+            "content": "class TimeoutMissingClient {",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "  private socket: Socket;",
+            "highlighted": false
+          },
+          {
+            "line": 160,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "  constructor(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "    this.socket = io(url);",
+            "highlighted": true
+          },
+          {
+            "line": 163,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "    this.socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 165,
+            "content": "      console.error(error);",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+      "line": 183,
+      "column": 19,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 179,
+        "endLine": 187,
+        "lines": [
+          {
+            "line": 179,
+            "content": "class TimeoutProperClient {",
+            "highlighted": false
+          },
+          {
+            "line": 180,
+            "content": "  private socket: Socket;",
+            "highlighted": false
+          },
+          {
+            "line": 181,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 182,
+            "content": "  constructor(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 183,
+            "content": "    this.socket = io(url);",
+            "highlighted": true
+          },
+          {
+            "line": 184,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 185,
+            "content": "    this.socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 186,
+            "content": "      console.error(error);",
+            "highlighted": false
+          },
+          {
+            "line": 187,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/missing-error-handling.ts",
+      "line": 8,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 4,
+        "endLine": 12,
+        "lines": [
+          {
+            "line": 4,
+            "content": " * Missing error handling for Socket.IO client",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "function connectWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  const socket = io('http://localhost:3000');",
+            "highlighted": true
+          },
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "  // ❌ No error listeners",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  socket.on('connect', () => {",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "    socket.emit('message', 'Hello Server!');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "socket.io-client-connect-error-event",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/proper-error-handling.ts",
+      "line": 8,
+      "column": 18,
+      "package": "socket.io-client",
+      "function": "io",
+      "contract_clause": "connect-error-event",
+      "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+      "source_doc": "https://socket.io/docs/v4/client-api/",
+      "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+      "code_snippet": {
+        "startLine": 4,
+        "endLine": 12,
+        "lines": [
+          {
+            "line": 4,
+            "content": " * Proper error handling for Socket.IO client",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": " * Should NOT trigger violations.",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "function connectWithErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  const socket = io('http://localhost:3000');",
+            "highlighted": true
+          },
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "  socket.on('connect_error', (error) => {",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "    console.error('Connection error:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 21,
+    "error_count": 21,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "socket.io-client",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "socket.io-client": {
+      "total": 21,
+      "errors": 21,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 9,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "// PROPER - Event listeners registered outside connect",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "function properEventRegistration() {",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const socket = io('http://localhost:3000');",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  // Register error handlers first",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "  socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "    console.error('Connection error:', error);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 42,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 38,
+            "endLine": 46,
+            "lines": [
+              {
+                "line": 38,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "// WRONG - Memory leak: Event listeners inside connect",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "function memoryLeakPattern() {",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "  const socket = io('http://localhost:3000');",
+                "highlighted": true
+              },
+              {
+                "line": 43,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "    console.error('Connection error:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 67,
+          "column": 23,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 63,
+            "endLine": 71,
+            "lines": [
+              {
+                "line": 63,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "// PROPER - Namespace usage with error handling",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "function namespaceUsage() {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  const adminSocket = io('http://localhost:3000/admin');",
+                "highlighted": true
+              },
+              {
+                "line": 68,
+                "content": "  const chatSocket = io('http://localhost:3000/chat');",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  // Each namespace needs its own error handlers",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  adminSocket.on('connect_error', (error) => {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 68,
+          "column": 22,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 64,
+            "endLine": 72,
+            "lines": [
+              {
+                "line": 64,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "// PROPER - Namespace usage with error handling",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "function namespaceUsage() {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  const adminSocket = io('http://localhost:3000/admin');",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  const chatSocket = io('http://localhost:3000/chat');",
+                "highlighted": true
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  // Each namespace needs its own error handlers",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  adminSocket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "    console.error('Admin connection error:', error);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 90,
+          "column": 23,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 86,
+            "endLine": 94,
+            "lines": [
+              {
+                "line": 86,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "// WRONG - Multiple namespaces without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "function namespaceWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "  const adminSocket = io('http://localhost:3000/admin');",
+                "highlighted": true
+              },
+              {
+                "line": 91,
+                "content": "  const chatSocket = io('http://localhost:3000/chat');",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  // ❌ No error handlers on either socket",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "  adminSocket.on('admin-event', (data) => {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 91,
+          "column": 22,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 87,
+            "endLine": 95,
+            "lines": [
+              {
+                "line": 87,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "// WRONG - Multiple namespaces without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "function namespaceWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "  const adminSocket = io('http://localhost:3000/admin');",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "  const chatSocket = io('http://localhost:3000/chat');",
+                "highlighted": true
+              },
+              {
+                "line": 92,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  // ❌ No error handlers on either socket",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "  adminSocket.on('admin-event', (data) => {",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    console.log('Admin:', data);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 105,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 101,
+            "endLine": 109,
+            "lines": [
+              {
+                "line": 101,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "// PROPER - Binary data with error handling",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "function binaryDataHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  const socket = io('http://localhost:3000');",
+                "highlighted": true
+              },
+              {
+                "line": 106,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "  socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "    console.error('Connection error:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 135,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 131,
+            "endLine": 139,
+            "lines": [
+              {
+                "line": 131,
+                "content": "// PROPER - Authentication with reconnection",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "async function authenticationWithReconnection() {",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  let authToken = await fetchAuthToken();",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  const socket = io('http://localhost:3000', {",
+                "highlighted": true
+              },
+              {
+                "line": 136,
+                "content": "    auth: { token: authToken }",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "  socket.on('connect_error', (error) => {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 166,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 162,
+            "endLine": 170,
+            "lines": [
+              {
+                "line": 162,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "// PROPER - Multiple socket.active checks",
+                "highlighted": false
+              },
+              {
+                "line": 165,
+                "content": "function socketActiveChecks() {",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "  const socket = io('http://localhost:3000');",
+                "highlighted": true
+              },
+              {
+                "line": 167,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "  socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "    if (socket.active) {",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "      // Temporary failure, will auto-reconnect",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 207,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 203,
+            "endLine": 211,
+            "lines": [
+              {
+                "line": 203,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 204,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "// PROPER - Forced WebSocket transport with error handling",
+                "highlighted": false
+              },
+              {
+                "line": 206,
+                "content": "function forcedWebSocketTransport() {",
+                "highlighted": false
+              },
+              {
+                "line": 207,
+                "content": "  const socket = io('http://localhost:3000', {",
+                "highlighted": true
+              },
+              {
+                "line": 208,
+                "content": "    transports: ['websocket'],",
+                "highlighted": false
+              },
+              {
+                "line": 209,
+                "content": "    upgrade: false",
+                "highlighted": false
+              },
+              {
+                "line": 210,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 211,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 228,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 224,
+            "endLine": 232,
+            "lines": [
+              {
+                "line": 224,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "// WRONG - Forced transport without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "function forcedTransportWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 228,
+                "content": "  const socket = io('http://localhost:3000', {",
+                "highlighted": true
+              },
+              {
+                "line": 229,
+                "content": "    transports: ['websocket'],",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": "    upgrade: false",
+                "highlighted": false
+              },
+              {
+                "line": 231,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 245,
+          "column": 19,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 241,
+            "endLine": 249,
+            "lines": [
+              {
+                "line": 241,
+                "content": "  private socket: Socket;",
+                "highlighted": false
+              },
+              {
+                "line": 242,
+                "content": "  private reconnectAttempts = 0;",
+                "highlighted": false
+              },
+              {
+                "line": 243,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 244,
+                "content": "  constructor(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 245,
+                "content": "    this.socket = io(url, {",
+                "highlighted": true
+              },
+              {
+                "line": 246,
+                "content": "      reconnection: true,",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": "      reconnectionAttempts: 10,",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "      reconnectionDelay: 1000,",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "      reconnectionDelayMax: 5000",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/edge-cases.ts",
+          "line": 285,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 281,
+            "endLine": 289,
+            "lines": [
+              {
+                "line": 281,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 282,
+                "content": "// PROPER - Cleanup on component unmount (React pattern)",
+                "highlighted": false
+              },
+              {
+                "line": 283,
+                "content": "function reactComponentPattern() {",
+                "highlighted": false
+              },
+              {
+                "line": 284,
+                "content": "  // In a React component:",
+                "highlighted": false
+              },
+              {
+                "line": 285,
+                "content": "  const socket = io('http://localhost:3000');",
+                "highlighted": true
+              },
+              {
+                "line": 286,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 287,
+                "content": "  socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 288,
+                "content": "    console.error('Connection error:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 289,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+          "line": 13,
+          "column": 19,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 9,
+            "endLine": 17,
+            "lines": [
+              {
+                "line": 9,
+                "content": "class ChatClient {",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "  private socket: Socket;",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "  constructor(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "    this.socket = io(url);",
+                "highlighted": true
+              },
+              {
+                "line": 14,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "    // Proper error handling",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "    this.socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "      console.error('Connection error:', error);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+          "line": 46,
+          "column": 19,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 42,
+            "endLine": 50,
+            "lines": [
+              {
+                "line": 42,
+                "content": "class DashboardClient {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  private socket: Socket;",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  constructor(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "    this.socket = io(url);",
+                "highlighted": true
+              },
+              {
+                "line": 47,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "    // ❌ No connect_error handler",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "    // ❌ No disconnect handler",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    this.socket.on('metrics', (data) => {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+          "line": 65,
+          "column": 19,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 61,
+            "endLine": 69,
+            "lines": [
+              {
+                "line": 61,
+                "content": "class NotificationClient {",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  private socket: Socket;",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "  constructor(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "    this.socket = io(url);",
+                "highlighted": true
+              },
+              {
+                "line": 66,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "    this.socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "      console.error('Connection error:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+          "line": 92,
+          "column": 19,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 88,
+            "endLine": 96,
+            "lines": [
+              {
+                "line": 88,
+                "content": "  private reconnectAttempts = 0;",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "  private maxReconnectAttempts = 5;",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "  constructor(url: string, authToken: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "    this.socket = io(url, {",
+                "highlighted": true
+              },
+              {
+                "line": 93,
+                "content": "      auth: { token: authToken },",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "      reconnection: true,",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "      reconnectionAttempts: this.maxReconnectAttempts,",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "      timeout: 20000",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+          "line": 162,
+          "column": 19,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 158,
+            "endLine": 166,
+            "lines": [
+              {
+                "line": 158,
+                "content": "class TimeoutMissingClient {",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "  private socket: Socket;",
+                "highlighted": false
+              },
+              {
+                "line": 160,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "  constructor(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "    this.socket = io(url);",
+                "highlighted": true
+              },
+              {
+                "line": 163,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "    this.socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 165,
+                "content": "      console.error(error);",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/instance-usage.ts",
+          "line": 183,
+          "column": 19,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 179,
+            "endLine": 187,
+            "lines": [
+              {
+                "line": 179,
+                "content": "class TimeoutProperClient {",
+                "highlighted": false
+              },
+              {
+                "line": 180,
+                "content": "  private socket: Socket;",
+                "highlighted": false
+              },
+              {
+                "line": 181,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 182,
+                "content": "  constructor(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 183,
+                "content": "    this.socket = io(url);",
+                "highlighted": true
+              },
+              {
+                "line": 184,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 185,
+                "content": "    this.socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 186,
+                "content": "      console.error(error);",
+                "highlighted": false
+              },
+              {
+                "line": 187,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/missing-error-handling.ts",
+          "line": 8,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 4,
+            "endLine": 12,
+            "lines": [
+              {
+                "line": 4,
+                "content": " * Missing error handling for Socket.IO client",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "function connectWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  const socket = io('http://localhost:3000');",
+                "highlighted": true
+              },
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "  // ❌ No error listeners",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  socket.on('connect', () => {",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "    socket.emit('message', 'Hello Server!');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "socket.io-client-connect-error-event",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/socket.io-client/fixtures/proper-error-handling.ts",
+          "line": 8,
+          "column": 18,
+          "package": "socket.io-client",
+          "function": "io",
+          "contract_clause": "connect-error-event",
+          "description": "No try-catch block found. emits 'connect_error' event - this will crash the application.",
+          "source_doc": "https://socket.io/docs/v4/client-api/",
+          "suggested_fix": "Caller MUST attach connect_error event listener to handle connection failures.\n\nWithout error handling:\n- Applications crash with uncaught exceptions (Node.js)\n- Silent failures confuse users (browser)\n- Stale data displayed without indication\n- Operations attempted while disconnected\n\nsocket.active attribute indicates whether automatic reconnection will occur:\n- socket.active = true: Temporary failure, auto-reconnect enabled\n- socket.active = false: Server rejected (auth failure), manual reconnect required\n",
+          "code_snippet": {
+            "startLine": 4,
+            "endLine": 12,
+            "lines": [
+              {
+                "line": 4,
+                "content": " * Proper error handling for Socket.IO client",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": " * Should NOT trigger violations.",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "function connectWithErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  const socket = io('http://localhost:3000');",
+                "highlighted": true
+              },
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "  socket.on('connect_error', (error) => {",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "    console.error('Connection error:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

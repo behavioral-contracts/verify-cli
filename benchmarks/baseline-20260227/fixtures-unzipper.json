@@ -1,0 +1,203 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:36.841Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/unzipper/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "square",
+    "stripe",
+    "sqlite3",
+    "supertest",
+    "superagent",
+    "socket.io-client",
+    "sinon",
+    "socket.io",
+    "sharp",
+    "simple-oauth2",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "pino",
+    "pg",
+    "react-hook-form",
+    "puppeteer",
+    "openai",
+    "passport",
+    "node-fetch",
+    "next",
+    "nodemailer",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "knex",
+    "mocha",
+    "lodash",
+    "jsonwebtoken",
+    "ioredis",
+    "helmet",
+    "joi",
+    "got",
+    "graphql",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "cors",
+    "dayjs",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@prisma/client",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@sendgrid/mail",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [],
+  "summary": {
+    "total_violations": 0,
+    "error_count": 0,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": true
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "unzipper",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/unzipper/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/unzipper/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {}
+}

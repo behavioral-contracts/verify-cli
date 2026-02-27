@@ -1,0 +1,14 @@
+Production Packages Baseline Benchmark
+Date: 2026-02-27 12:58:25
+Total Packages: 65
+
+Results saved to:
+- /Users/calebgates/WebstormProjects/behavioral-contracts/verify-cli/benchmarks/baseline-20260227/production-packages.json
+- Individual outputs: /Users/calebgates/WebstormProjects/behavioral-contracts/verify-cli/benchmarks/baseline-20260227/*-output.json
+
+Use this baseline to detect regressions after analyzer changes.
+
+To compare against a new run:
+  ./tools/benchmark/compare-results.sh \
+    /Users/calebgates/WebstormProjects/behavioral-contracts/verify-cli/benchmarks/baseline-20260227 \
+    verify-cli/benchmarks/after-enhancement-YYYYMMDD

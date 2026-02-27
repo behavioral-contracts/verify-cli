@@ -1,0 +1,4298 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:58:03.344Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "twilio",
+    "typeorm",
+    "tedious",
+    "superagent",
+    "stripe",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "mocha",
+    "luxon",
+    "knex",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "date-fns",
+    "dayjs",
+    "cors",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "axios",
+    "bcryptjs",
+    "@vercel/postgres",
+    "@supabase/supabase-js",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@nestjs/common",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 63,
+      "column": 22,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'getRepository' contains unprotected await expression. await this.client.repos.get({ owner, repo })... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 59,
+        "endLine": 67,
+        "lines": [
+          {
+            "line": 59,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  async getRepository(owner: string, repo: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "    const response = await this.client.repos.get({ owner, repo });",
+            "highlighted": true
+          },
+          {
+            "line": 64,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 69,
+      "column": 22,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createPullRequest' contains unprotected await expression. await this.client.pulls.create({\n      owner,\n    ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 65,
+        "endLine": 73,
+        "lines": [
+          {
+            "line": 65,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  async createPullRequest(owner: string, repo: string, title: string, head: string, base: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    const response = await this.client.pulls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 70,
+            "content": "      owner,",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "      repo,",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "      title,",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "      head,",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 81,
+      "column": 22,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'mergePullRequest' contains unprotected await expression. await this.client.pulls.merge({\n      owner,\n     ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 77,
+        "endLine": 85,
+        "lines": [
+          {
+            "line": 77,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "  async mergePullRequest(owner: string, repo: string, pullNumber: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "    const response = await this.client.pulls.merge({",
+            "highlighted": true
+          },
+          {
+            "line": 82,
+            "content": "      owner,",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "      repo,",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "      pull_number: pullNumber",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 119,
+      "column": 16,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'useFactoryMissingErrorHandling' contains unprotected await expression. await client.repos.get({\n    owner: 'octocat',\n   ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 115,
+        "endLine": 123,
+        "lines": [
+          {
+            "line": 115,
+            "content": "async function useFactoryMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "  const client = createGitHubClient('ghp_token');",
+            "highlighted": false
+          },
+          {
+            "line": 117,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 118,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 119,
+            "content": "  const repo = await client.repos.get({",
+            "highlighted": true
+          },
+          {
+            "line": 120,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 121,
+            "content": "    repo: 'hello-world'",
+            "highlighted": false
+          },
+          {
+            "line": 122,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 123,
+            "content": "  return repo.data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 151,
+      "column": 18,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'instanceInVariableMissingErrorHandling' contains unprotected await expression. await github.issues.list({\n    filter: 'assigned',... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 147,
+        "endLine": 155,
+        "lines": [
+          {
+            "line": 147,
+            "content": "async function instanceInVariableMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "  const github = new Octokit({ auth: 'ghp_token' });",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": "  const issues = await github.issues.list({",
+            "highlighted": true
+          },
+          {
+            "line": 152,
+            "content": "    filter: 'assigned',",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "    state: 'open'",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": "  return issues.data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 179,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'anonymousInstanceMissingErrorHandling' contains unprotected await expression. await new Octokit({ auth: 'ghp_token' }).repos.get... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 175,
+        "endLine": 183,
+        "lines": [
+          {
+            "line": 175,
+            "content": " * ❌ VIOLATION: Anonymous instance with missing error handling",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 177,
+            "content": "async function anonymousInstanceMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 178,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 179,
+            "content": "  const response = await new Octokit({ auth: 'ghp_token' }).repos.get({",
+            "highlighted": true
+          },
+          {
+            "line": 180,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 181,
+            "content": "    repo: 'hello-world'",
+            "highlighted": false
+          },
+          {
+            "line": 182,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 183,
+            "content": "  return response.data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 213,
+      "column": 17,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'multipleInstancesMissingErrorHandling' contains unprotected await expression. await client1.repos.get({ owner: 'org1', repo: 're... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 209,
+        "endLine": 217,
+        "lines": [
+          {
+            "line": 209,
+            "content": "  const client1 = new Octokit({ auth: 'token1' });",
+            "highlighted": false
+          },
+          {
+            "line": 210,
+            "content": "  const client2 = new Octokit({ auth: 'token2' });",
+            "highlighted": false
+          },
+          {
+            "line": 211,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 212,
+            "content": "  // Should trigger violations",
+            "highlighted": false
+          },
+          {
+            "line": 213,
+            "content": "  const repo1 = await client1.repos.get({ owner: 'org1', repo: 'repo1' });",
+            "highlighted": true
+          },
+          {
+            "line": 214,
+            "content": "  const repo2 = await client2.repos.get({ owner: 'org2', repo: 'repo2' });",
+            "highlighted": false
+          },
+          {
+            "line": 215,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 216,
+            "content": "  return [repo1.data, repo2.data];",
+            "highlighted": false
+          },
+          {
+            "line": 217,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 214,
+      "column": 17,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'multipleInstancesMissingErrorHandling' contains unprotected await expression. await client2.repos.get({ owner: 'org2', repo: 're... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 210,
+        "endLine": 218,
+        "lines": [
+          {
+            "line": 210,
+            "content": "  const client2 = new Octokit({ auth: 'token2' });",
+            "highlighted": false
+          },
+          {
+            "line": 211,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 212,
+            "content": "  // Should trigger violations",
+            "highlighted": false
+          },
+          {
+            "line": 213,
+            "content": "  const repo1 = await client1.repos.get({ owner: 'org1', repo: 'repo1' });",
+            "highlighted": false
+          },
+          {
+            "line": 214,
+            "content": "  const repo2 = await client2.repos.get({ owner: 'org2', repo: 'repo2' });",
+            "highlighted": true
+          },
+          {
+            "line": 215,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 216,
+            "content": "  return [repo1.data, repo2.data];",
+            "highlighted": false
+          },
+          {
+            "line": 217,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 218,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 247,
+      "column": 22,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'processRepositoryMissingErrorHandling' contains unprotected await expression. await client.repos.get({ owner, repo })... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 243,
+        "endLine": 251,
+        "lines": [
+          {
+            "line": 243,
+            "content": " * ❌ VIOLATION: Instance as function parameter with missing error handling",
+            "highlighted": false
+          },
+          {
+            "line": 244,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 245,
+            "content": "async function processRepositoryMissingErrorHandling(client: Octokit, owner: string, repo: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": "  // Should trigger violations",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": "  const repository = await client.repos.get({ owner, repo });",
+            "highlighted": true
+          },
+          {
+            "line": 248,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "  const issues = await client.issues.listForRepo({",
+            "highlighted": false
+          },
+          {
+            "line": 250,
+            "content": "    owner,",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "    repo,",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 249,
+      "column": 18,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'processRepositoryMissingErrorHandling' contains unprotected await expression. await client.issues.listForRepo({\n    owner,\n    r... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 245,
+        "endLine": 253,
+        "lines": [
+          {
+            "line": 245,
+            "content": "async function processRepositoryMissingErrorHandling(client: Octokit, owner: string, repo: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": "  // Should trigger violations",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": "  const repository = await client.repos.get({ owner, repo });",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "  const issues = await client.issues.listForRepo({",
+            "highlighted": true
+          },
+          {
+            "line": 250,
+            "content": "    owner,",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "    repo,",
+            "highlighted": false
+          },
+          {
+            "line": 252,
+            "content": "    state: 'open'",
+            "highlighted": false
+          },
+          {
+            "line": 253,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+      "line": 292,
+      "column": 16,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'conditionalUsageMissingErrorHandling' contains unprotected await expression. await client.repos.get({\n    owner: 'octocat',\n   ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 288,
+        "endLine": 296,
+        "lines": [
+          {
+            "line": 288,
+            "content": "    ? new Octokit({ auth: 'ghp_token' })",
+            "highlighted": false
+          },
+          {
+            "line": 289,
+            "content": "    : new Octokit();",
+            "highlighted": false
+          },
+          {
+            "line": 290,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 291,
+            "content": "  // Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 292,
+            "content": "  const repo = await client.repos.get({",
+            "highlighted": true
+          },
+          {
+            "line": 293,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 294,
+            "content": "    repo: 'hello-world'",
+            "highlighted": false
+          },
+          {
+            "line": 295,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 296,
+            "content": "  return repo.data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'getRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.get({\n    owner: 'octocat',\n  ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " * ❌ VIOLATION: Repository get without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " * Should trigger: github-repo-get-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function getRepositoryMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  const response = await octokit.repos.get({",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    repo: 'hello-world'",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  return response.data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 32,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.create({\n    name: 'my-new-rep... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": " * ❌ VIOLATION: Create repository without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " * Should trigger: github-repo-create-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "async function createRepositoryMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  const response = await octokit.repos.create({",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "    name: 'my-new-repo',",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    description: 'A test repository',",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "    private: false",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'updateRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.update({\n    owner: 'octocat',... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": " * ❌ VIOLATION: Update repository without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " * Should trigger: github-repo-update-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "async function updateRepositoryMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const response = await octokit.repos.update({",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "    description: 'Updated description',",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "    private: true",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 59,
+      "column": 3,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'deleteRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.delete({\n    owner: 'octocat',... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 55,
+        "endLine": 63,
+        "lines": [
+          {
+            "line": 55,
+            "content": " * ❌ VIOLATION: Delete repository without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " * Should trigger: github-repo-delete-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "async function deleteRepositoryMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  await octokit.repos.delete({",
+            "highlighted": true
+          },
+          {
+            "line": 60,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "    repo: 'hello-world'",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 70,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'getGitReferenceMissingErrorHandling' contains unprotected await expression. await octokit.git.getRef({\n    owner: 'octocat',\n ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 66,
+        "endLine": 74,
+        "lines": [
+          {
+            "line": 66,
+            "content": " * ❌ VIOLATION: Get git reference without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": " * Should trigger: github-git-getref-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "async function getGitReferenceMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  const response = await octokit.git.getRef({",
+            "highlighted": true
+          },
+          {
+            "line": 71,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "    ref: 'heads/main'",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 83,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createGitReferenceMissingErrorHandling' contains unprotected await expression. await octokit.git.createRef({\n    owner: 'octocat'... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 79,
+        "endLine": 87,
+        "lines": [
+          {
+            "line": 79,
+            "content": " * ❌ VIOLATION: Create git reference without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": " * Should trigger: github-git-createref-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "async function createGitReferenceMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "  const response = await octokit.git.createRef({",
+            "highlighted": true
+          },
+          {
+            "line": 84,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "    ref: 'refs/heads/feature-branch',",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "    sha: 'abc123def456'",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 97,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.pulls.create({\n    owner: 'octocat',... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 93,
+        "endLine": 101,
+        "lines": [
+          {
+            "line": 93,
+            "content": " * ❌ VIOLATION: Create pull request without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": " * Should trigger: github-pull-create-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "async function createPullRequestMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  const response = await octokit.pulls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 98,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "    title: 'Amazing new feature',",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "    head: 'feature-branch',",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 113,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'mergePullRequestMissingErrorHandling' contains unprotected await expression. await octokit.pulls.merge({\n    owner: 'octocat',\n... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 109,
+        "endLine": 117,
+        "lines": [
+          {
+            "line": 109,
+            "content": " * ❌ VIOLATION: Merge pull request without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": " * Should trigger: github-pull-merge-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "async function mergePullRequestMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "  const response = await octokit.pulls.merge({",
+            "highlighted": true
+          },
+          {
+            "line": 114,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "    pull_number: 42,",
+            "highlighted": false
+          },
+          {
+            "line": 117,
+            "content": "    commit_title: 'Merge feature branch',",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 128,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'listPullRequestsMissingErrorHandling' contains unprotected await expression. await octokit.pulls.list({\n    owner: 'octocat',\n ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 124,
+        "endLine": 132,
+        "lines": [
+          {
+            "line": 124,
+            "content": " * ❌ VIOLATION: List pull requests without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 125,
+            "content": " * Should trigger: github-pull-list-no-try-catch (warning level)",
+            "highlighted": false
+          },
+          {
+            "line": 126,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": "async function listPullRequestsMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "  const response = await octokit.pulls.list({",
+            "highlighted": true
+          },
+          {
+            "line": 129,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "    state: 'open',",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "    per_page: 50",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 142,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createIssueMissingErrorHandling' contains unprotected await expression. await octokit.issues.create({\n    owner: 'octocat'... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 138,
+        "endLine": 146,
+        "lines": [
+          {
+            "line": 138,
+            "content": " * ❌ VIOLATION: Create issue without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": " * Should trigger: github-issue-create-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "async function createIssueMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "  const response = await octokit.issues.create({",
+            "highlighted": true
+          },
+          {
+            "line": 143,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 144,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 145,
+            "content": "    title: 'Found a bug',",
+            "highlighted": false
+          },
+          {
+            "line": 146,
+            "content": "    body: 'There is a problem with...',",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 157,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'updateIssueMissingErrorHandling' contains unprotected await expression. await octokit.issues.update({\n    owner: 'octocat'... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 153,
+        "endLine": 161,
+        "lines": [
+          {
+            "line": 153,
+            "content": " * ❌ VIOLATION: Update issue without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": " * Should trigger: github-issue-update-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "async function updateIssueMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "  const response = await octokit.issues.update({",
+            "highlighted": true
+          },
+          {
+            "line": 158,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 160,
+            "content": "    issue_number: 42,",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "    state: 'closed',",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 172,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'listIssuesMissingErrorHandling' contains unprotected await expression. await octokit.issues.list({\n    filter: 'all',\n   ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 168,
+        "endLine": 176,
+        "lines": [
+          {
+            "line": 168,
+            "content": " * ❌ VIOLATION: List issues without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": " * Should trigger: github-issue-list-no-try-catch (warning level)",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "async function listIssuesMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 172,
+            "content": "  const response = await octokit.issues.list({",
+            "highlighted": true
+          },
+          {
+            "line": 173,
+            "content": "    filter: 'all',",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "    state: 'open',",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "    per_page: 50",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 185,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'updateFileMissingErrorHandling' contains unprotected await expression. await octokit.repos.createOrUpdateFileContents({\n ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 181,
+        "endLine": 189,
+        "lines": [
+          {
+            "line": 181,
+            "content": " * ❌ VIOLATION: Create or update file without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 182,
+            "content": " * Should trigger: github-file-update-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 183,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 184,
+            "content": "async function updateFileMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 185,
+            "content": "  const response = await octokit.repos.createOrUpdateFileContents({",
+            "highlighted": true
+          },
+          {
+            "line": 186,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 187,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 188,
+            "content": "    path: 'README.md',",
+            "highlighted": false
+          },
+          {
+            "line": 189,
+            "content": "    message: 'Update README',",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 201,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'getFileContentMissingErrorHandling' contains unprotected await expression. await octokit.repos.getContent({\n    owner: 'octoc... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 197,
+        "endLine": 205,
+        "lines": [
+          {
+            "line": 197,
+            "content": " * ❌ VIOLATION: Get file content without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 198,
+            "content": " * Should trigger: github-get-content-no-try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 199,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "async function getFileContentMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "  const response = await octokit.repos.getContent({",
+            "highlighted": true
+          },
+          {
+            "line": 202,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 203,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 204,
+            "content": "    path: 'README.md'",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 214,
+      "column": 25,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.repos.get({\n    owner: 'octocat',\n  ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 210,
+        "endLine": 218,
+        "lines": [
+          {
+            "line": 210,
+            "content": " * ❌ VIOLATION: Multiple operations without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 211,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 212,
+            "content": "async function createBranchAndPullRequestMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 213,
+            "content": "  // All of these should trigger violations",
+            "highlighted": false
+          },
+          {
+            "line": 214,
+            "content": "  const defaultBranch = await octokit.repos.get({",
+            "highlighted": true
+          },
+          {
+            "line": 215,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 216,
+            "content": "    repo: 'hello-world'",
+            "highlighted": false
+          },
+          {
+            "line": 217,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 218,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 219,
+      "column": 19,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.git.getRef({\n    owner: 'octocat',\n ... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 215,
+        "endLine": 223,
+        "lines": [
+          {
+            "line": 215,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 216,
+            "content": "    repo: 'hello-world'",
+            "highlighted": false
+          },
+          {
+            "line": 217,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 218,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 219,
+            "content": "  const baseRef = await octokit.git.getRef({",
+            "highlighted": true
+          },
+          {
+            "line": 220,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "    ref: `heads/${defaultBranch.data.default_branch}`",
+            "highlighted": false
+          },
+          {
+            "line": 223,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 225,
+      "column": 3,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.git.createRef({\n    owner: 'octocat'... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 221,
+        "endLine": 229,
+        "lines": [
+          {
+            "line": 221,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "    ref: `heads/${defaultBranch.data.default_branch}`",
+            "highlighted": false
+          },
+          {
+            "line": 223,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 224,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "  await octokit.git.createRef({",
+            "highlighted": true
+          },
+          {
+            "line": 226,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 228,
+            "content": "    ref: 'refs/heads/new-feature',",
+            "highlighted": false
+          },
+          {
+            "line": 229,
+            "content": "    sha: baseRef.data.object.sha",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 232,
+      "column": 14,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.pulls.create({\n    owner: 'octocat',... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 228,
+        "endLine": 236,
+        "lines": [
+          {
+            "line": 228,
+            "content": "    ref: 'refs/heads/new-feature',",
+            "highlighted": false
+          },
+          {
+            "line": 229,
+            "content": "    sha: baseRef.data.object.sha",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 231,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": "  const pr = await octokit.pulls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 233,
+            "content": "    owner: 'octocat',",
+            "highlighted": false
+          },
+          {
+            "line": 234,
+            "content": "    repo: 'hello-world',",
+            "highlighted": false
+          },
+          {
+            "line": 235,
+            "content": "    title: 'New feature',",
+            "highlighted": false
+          },
+          {
+            "line": 236,
+            "content": "    head: 'new-feature',",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 247,
+      "column": 17,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'nestedOperationsMissingErrorHandling' contains unprotected await expression. await octokit.repos.listForAuthenticatedUser()... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 243,
+        "endLine": 251,
+        "lines": [
+          {
+            "line": 243,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 244,
+            "content": " * ❌ VIOLATION: Nested async operations without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 245,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": "async function nestedOperationsMissingErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": "  const repos = await octokit.repos.listForAuthenticatedUser();",
+            "highlighted": true
+          },
+          {
+            "line": 248,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "  // Even nested calls should be caught",
+            "highlighted": false
+          },
+          {
+            "line": 250,
+            "content": "  for (const repo of repos.data) {",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "    const issues = await octokit.issues.listForRepo({",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 251,
+      "column": 20,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'nestedOperationsMissingErrorHandling' contains unprotected await expression. await octokit.issues.listForRepo({\n      owner: re... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 247,
+        "endLine": 255,
+        "lines": [
+          {
+            "line": 247,
+            "content": "  const repos = await octokit.repos.listForAuthenticatedUser();",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "  // Even nested calls should be caught",
+            "highlighted": false
+          },
+          {
+            "line": 250,
+            "content": "  for (const repo of repos.data) {",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "    const issues = await octokit.issues.listForRepo({",
+            "highlighted": true
+          },
+          {
+            "line": 252,
+            "content": "      owner: repo.owner.login,",
+            "highlighted": false
+          },
+          {
+            "line": 253,
+            "content": "      repo: repo.name",
+            "highlighted": false
+          },
+          {
+            "line": 254,
+            "content": "    });",
+            "highlighted": false
+          },
+          {
+            "line": 255,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@octokit/rest-github-repo-get-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+      "line": 257,
+      "column": 7,
+      "package": "@octokit/rest",
+      "function": "repos.get",
+      "contract_clause": "github-repo-get-no-try-catch",
+      "description": "Async function 'nestedOperationsMissingErrorHandling' contains unprotected await expression. await octokit.issues.update({\n        owner: repo.... may throw unhandled errors.",
+      "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+      "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+      "code_snippet": {
+        "startLine": 253,
+        "endLine": 261,
+        "lines": [
+          {
+            "line": 253,
+            "content": "      repo: repo.name",
+            "highlighted": false
+          },
+          {
+            "line": 254,
+            "content": "    });",
+            "highlighted": false
+          },
+          {
+            "line": 255,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 256,
+            "content": "    for (const issue of issues.data) {",
+            "highlighted": false
+          },
+          {
+            "line": 257,
+            "content": "      await octokit.issues.update({",
+            "highlighted": true
+          },
+          {
+            "line": 258,
+            "content": "        owner: repo.owner.login,",
+            "highlighted": false
+          },
+          {
+            "line": 259,
+            "content": "        repo: repo.name,",
+            "highlighted": false
+          },
+          {
+            "line": 260,
+            "content": "        issue_number: issue.number,",
+            "highlighted": false
+          },
+          {
+            "line": 261,
+            "content": "        labels: ['processed']",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 32,
+    "error_count": 32,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "@octokit/rest",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "@octokit/rest": {
+      "total": 32,
+      "errors": 32,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 63,
+          "column": 22,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'getRepository' contains unprotected await expression. await this.client.repos.get({ owner, repo })... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 59,
+            "endLine": 67,
+            "lines": [
+              {
+                "line": 59,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  async getRepository(owner: string, repo: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "    const response = await this.client.repos.get({ owner, repo });",
+                "highlighted": true
+              },
+              {
+                "line": 64,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 69,
+          "column": 22,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createPullRequest' contains unprotected await expression. await this.client.pulls.create({\n      owner,\n    ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 65,
+            "endLine": 73,
+            "lines": [
+              {
+                "line": 65,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  async createPullRequest(owner: string, repo: string, title: string, head: string, base: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    const response = await this.client.pulls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 70,
+                "content": "      owner,",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "      repo,",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "      title,",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "      head,",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 81,
+          "column": 22,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'mergePullRequest' contains unprotected await expression. await this.client.pulls.merge({\n      owner,\n     ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 77,
+            "endLine": 85,
+            "lines": [
+              {
+                "line": 77,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "  async mergePullRequest(owner: string, repo: string, pullNumber: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "    const response = await this.client.pulls.merge({",
+                "highlighted": true
+              },
+              {
+                "line": 82,
+                "content": "      owner,",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "      repo,",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "      pull_number: pullNumber",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 119,
+          "column": 16,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'useFactoryMissingErrorHandling' contains unprotected await expression. await client.repos.get({\n    owner: 'octocat',\n   ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 115,
+            "endLine": 123,
+            "lines": [
+              {
+                "line": 115,
+                "content": "async function useFactoryMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "  const client = createGitHubClient('ghp_token');",
+                "highlighted": false
+              },
+              {
+                "line": 117,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 118,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 119,
+                "content": "  const repo = await client.repos.get({",
+                "highlighted": true
+              },
+              {
+                "line": 120,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 121,
+                "content": "    repo: 'hello-world'",
+                "highlighted": false
+              },
+              {
+                "line": 122,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 123,
+                "content": "  return repo.data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 151,
+          "column": 18,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'instanceInVariableMissingErrorHandling' contains unprotected await expression. await github.issues.list({\n    filter: 'assigned',... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 147,
+            "endLine": 155,
+            "lines": [
+              {
+                "line": 147,
+                "content": "async function instanceInVariableMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "  const github = new Octokit({ auth: 'ghp_token' });",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": "  const issues = await github.issues.list({",
+                "highlighted": true
+              },
+              {
+                "line": 152,
+                "content": "    filter: 'assigned',",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "    state: 'open'",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": "  return issues.data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 179,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'anonymousInstanceMissingErrorHandling' contains unprotected await expression. await new Octokit({ auth: 'ghp_token' }).repos.get... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 175,
+            "endLine": 183,
+            "lines": [
+              {
+                "line": 175,
+                "content": " * ❌ VIOLATION: Anonymous instance with missing error handling",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 177,
+                "content": "async function anonymousInstanceMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 178,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 179,
+                "content": "  const response = await new Octokit({ auth: 'ghp_token' }).repos.get({",
+                "highlighted": true
+              },
+              {
+                "line": 180,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 181,
+                "content": "    repo: 'hello-world'",
+                "highlighted": false
+              },
+              {
+                "line": 182,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 183,
+                "content": "  return response.data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 213,
+          "column": 17,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'multipleInstancesMissingErrorHandling' contains unprotected await expression. await client1.repos.get({ owner: 'org1', repo: 're... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 209,
+            "endLine": 217,
+            "lines": [
+              {
+                "line": 209,
+                "content": "  const client1 = new Octokit({ auth: 'token1' });",
+                "highlighted": false
+              },
+              {
+                "line": 210,
+                "content": "  const client2 = new Octokit({ auth: 'token2' });",
+                "highlighted": false
+              },
+              {
+                "line": 211,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 212,
+                "content": "  // Should trigger violations",
+                "highlighted": false
+              },
+              {
+                "line": 213,
+                "content": "  const repo1 = await client1.repos.get({ owner: 'org1', repo: 'repo1' });",
+                "highlighted": true
+              },
+              {
+                "line": 214,
+                "content": "  const repo2 = await client2.repos.get({ owner: 'org2', repo: 'repo2' });",
+                "highlighted": false
+              },
+              {
+                "line": 215,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 216,
+                "content": "  return [repo1.data, repo2.data];",
+                "highlighted": false
+              },
+              {
+                "line": 217,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 214,
+          "column": 17,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'multipleInstancesMissingErrorHandling' contains unprotected await expression. await client2.repos.get({ owner: 'org2', repo: 're... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 210,
+            "endLine": 218,
+            "lines": [
+              {
+                "line": 210,
+                "content": "  const client2 = new Octokit({ auth: 'token2' });",
+                "highlighted": false
+              },
+              {
+                "line": 211,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 212,
+                "content": "  // Should trigger violations",
+                "highlighted": false
+              },
+              {
+                "line": 213,
+                "content": "  const repo1 = await client1.repos.get({ owner: 'org1', repo: 'repo1' });",
+                "highlighted": false
+              },
+              {
+                "line": 214,
+                "content": "  const repo2 = await client2.repos.get({ owner: 'org2', repo: 'repo2' });",
+                "highlighted": true
+              },
+              {
+                "line": 215,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 216,
+                "content": "  return [repo1.data, repo2.data];",
+                "highlighted": false
+              },
+              {
+                "line": 217,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 218,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 247,
+          "column": 22,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'processRepositoryMissingErrorHandling' contains unprotected await expression. await client.repos.get({ owner, repo })... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 243,
+            "endLine": 251,
+            "lines": [
+              {
+                "line": 243,
+                "content": " * ❌ VIOLATION: Instance as function parameter with missing error handling",
+                "highlighted": false
+              },
+              {
+                "line": 244,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 245,
+                "content": "async function processRepositoryMissingErrorHandling(client: Octokit, owner: string, repo: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": "  // Should trigger violations",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": "  const repository = await client.repos.get({ owner, repo });",
+                "highlighted": true
+              },
+              {
+                "line": 248,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "  const issues = await client.issues.listForRepo({",
+                "highlighted": false
+              },
+              {
+                "line": 250,
+                "content": "    owner,",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "    repo,",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 249,
+          "column": 18,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'processRepositoryMissingErrorHandling' contains unprotected await expression. await client.issues.listForRepo({\n    owner,\n    r... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 245,
+            "endLine": 253,
+            "lines": [
+              {
+                "line": 245,
+                "content": "async function processRepositoryMissingErrorHandling(client: Octokit, owner: string, repo: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": "  // Should trigger violations",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": "  const repository = await client.repos.get({ owner, repo });",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "  const issues = await client.issues.listForRepo({",
+                "highlighted": true
+              },
+              {
+                "line": 250,
+                "content": "    owner,",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "    repo,",
+                "highlighted": false
+              },
+              {
+                "line": 252,
+                "content": "    state: 'open'",
+                "highlighted": false
+              },
+              {
+                "line": 253,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/instance-usage.ts",
+          "line": 292,
+          "column": 16,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'conditionalUsageMissingErrorHandling' contains unprotected await expression. await client.repos.get({\n    owner: 'octocat',\n   ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 288,
+            "endLine": 296,
+            "lines": [
+              {
+                "line": 288,
+                "content": "    ? new Octokit({ auth: 'ghp_token' })",
+                "highlighted": false
+              },
+              {
+                "line": 289,
+                "content": "    : new Octokit();",
+                "highlighted": false
+              },
+              {
+                "line": 290,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 291,
+                "content": "  // Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 292,
+                "content": "  const repo = await client.repos.get({",
+                "highlighted": true
+              },
+              {
+                "line": 293,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 294,
+                "content": "    repo: 'hello-world'",
+                "highlighted": false
+              },
+              {
+                "line": 295,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 296,
+                "content": "  return repo.data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'getRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.get({\n    owner: 'octocat',\n  ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " * ❌ VIOLATION: Repository get without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " * Should trigger: github-repo-get-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function getRepositoryMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  const response = await octokit.repos.get({",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    repo: 'hello-world'",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  return response.data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 32,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.create({\n    name: 'my-new-rep... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": " * ❌ VIOLATION: Create repository without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " * Should trigger: github-repo-create-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "async function createRepositoryMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  const response = await octokit.repos.create({",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "    name: 'my-new-repo',",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    description: 'A test repository',",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "    private: false",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'updateRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.update({\n    owner: 'octocat',... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": " * ❌ VIOLATION: Update repository without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " * Should trigger: github-repo-update-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "async function updateRepositoryMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const response = await octokit.repos.update({",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "    description: 'Updated description',",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "    private: true",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 59,
+          "column": 3,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'deleteRepositoryMissingErrorHandling' contains unprotected await expression. await octokit.repos.delete({\n    owner: 'octocat',... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 55,
+            "endLine": 63,
+            "lines": [
+              {
+                "line": 55,
+                "content": " * ❌ VIOLATION: Delete repository without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " * Should trigger: github-repo-delete-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "async function deleteRepositoryMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  await octokit.repos.delete({",
+                "highlighted": true
+              },
+              {
+                "line": 60,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "    repo: 'hello-world'",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 70,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'getGitReferenceMissingErrorHandling' contains unprotected await expression. await octokit.git.getRef({\n    owner: 'octocat',\n ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 66,
+            "endLine": 74,
+            "lines": [
+              {
+                "line": 66,
+                "content": " * ❌ VIOLATION: Get git reference without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": " * Should trigger: github-git-getref-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "async function getGitReferenceMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  const response = await octokit.git.getRef({",
+                "highlighted": true
+              },
+              {
+                "line": 71,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "    ref: 'heads/main'",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 83,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createGitReferenceMissingErrorHandling' contains unprotected await expression. await octokit.git.createRef({\n    owner: 'octocat'... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 79,
+            "endLine": 87,
+            "lines": [
+              {
+                "line": 79,
+                "content": " * ❌ VIOLATION: Create git reference without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": " * Should trigger: github-git-createref-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "async function createGitReferenceMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "  const response = await octokit.git.createRef({",
+                "highlighted": true
+              },
+              {
+                "line": 84,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "    ref: 'refs/heads/feature-branch',",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "    sha: 'abc123def456'",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 97,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.pulls.create({\n    owner: 'octocat',... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 93,
+            "endLine": 101,
+            "lines": [
+              {
+                "line": 93,
+                "content": " * ❌ VIOLATION: Create pull request without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": " * Should trigger: github-pull-create-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "async function createPullRequestMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  const response = await octokit.pulls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 98,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "    title: 'Amazing new feature',",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "    head: 'feature-branch',",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 113,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'mergePullRequestMissingErrorHandling' contains unprotected await expression. await octokit.pulls.merge({\n    owner: 'octocat',\n... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 109,
+            "endLine": 117,
+            "lines": [
+              {
+                "line": 109,
+                "content": " * ❌ VIOLATION: Merge pull request without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": " * Should trigger: github-pull-merge-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "async function mergePullRequestMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "  const response = await octokit.pulls.merge({",
+                "highlighted": true
+              },
+              {
+                "line": 114,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "    pull_number: 42,",
+                "highlighted": false
+              },
+              {
+                "line": 117,
+                "content": "    commit_title: 'Merge feature branch',",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 128,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'listPullRequestsMissingErrorHandling' contains unprotected await expression. await octokit.pulls.list({\n    owner: 'octocat',\n ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 124,
+            "endLine": 132,
+            "lines": [
+              {
+                "line": 124,
+                "content": " * ❌ VIOLATION: List pull requests without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 125,
+                "content": " * Should trigger: github-pull-list-no-try-catch (warning level)",
+                "highlighted": false
+              },
+              {
+                "line": 126,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": "async function listPullRequestsMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "  const response = await octokit.pulls.list({",
+                "highlighted": true
+              },
+              {
+                "line": 129,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "    state: 'open',",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "    per_page: 50",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 142,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createIssueMissingErrorHandling' contains unprotected await expression. await octokit.issues.create({\n    owner: 'octocat'... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 138,
+            "endLine": 146,
+            "lines": [
+              {
+                "line": 138,
+                "content": " * ❌ VIOLATION: Create issue without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": " * Should trigger: github-issue-create-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "async function createIssueMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "  const response = await octokit.issues.create({",
+                "highlighted": true
+              },
+              {
+                "line": 143,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 144,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 145,
+                "content": "    title: 'Found a bug',",
+                "highlighted": false
+              },
+              {
+                "line": 146,
+                "content": "    body: 'There is a problem with...',",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 157,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'updateIssueMissingErrorHandling' contains unprotected await expression. await octokit.issues.update({\n    owner: 'octocat'... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 153,
+            "endLine": 161,
+            "lines": [
+              {
+                "line": 153,
+                "content": " * ❌ VIOLATION: Update issue without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": " * Should trigger: github-issue-update-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "async function updateIssueMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "  const response = await octokit.issues.update({",
+                "highlighted": true
+              },
+              {
+                "line": 158,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 160,
+                "content": "    issue_number: 42,",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "    state: 'closed',",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 172,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'listIssuesMissingErrorHandling' contains unprotected await expression. await octokit.issues.list({\n    filter: 'all',\n   ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 168,
+            "endLine": 176,
+            "lines": [
+              {
+                "line": 168,
+                "content": " * ❌ VIOLATION: List issues without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": " * Should trigger: github-issue-list-no-try-catch (warning level)",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "async function listIssuesMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 172,
+                "content": "  const response = await octokit.issues.list({",
+                "highlighted": true
+              },
+              {
+                "line": 173,
+                "content": "    filter: 'all',",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "    state: 'open',",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "    per_page: 50",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 185,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'updateFileMissingErrorHandling' contains unprotected await expression. await octokit.repos.createOrUpdateFileContents({\n ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 181,
+            "endLine": 189,
+            "lines": [
+              {
+                "line": 181,
+                "content": " * ❌ VIOLATION: Create or update file without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 182,
+                "content": " * Should trigger: github-file-update-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 183,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 184,
+                "content": "async function updateFileMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 185,
+                "content": "  const response = await octokit.repos.createOrUpdateFileContents({",
+                "highlighted": true
+              },
+              {
+                "line": 186,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 187,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 188,
+                "content": "    path: 'README.md',",
+                "highlighted": false
+              },
+              {
+                "line": 189,
+                "content": "    message: 'Update README',",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 201,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'getFileContentMissingErrorHandling' contains unprotected await expression. await octokit.repos.getContent({\n    owner: 'octoc... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 197,
+            "endLine": 205,
+            "lines": [
+              {
+                "line": 197,
+                "content": " * ❌ VIOLATION: Get file content without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 198,
+                "content": " * Should trigger: github-get-content-no-try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 199,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "async function getFileContentMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "  const response = await octokit.repos.getContent({",
+                "highlighted": true
+              },
+              {
+                "line": 202,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 203,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 204,
+                "content": "    path: 'README.md'",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 214,
+          "column": 25,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.repos.get({\n    owner: 'octocat',\n  ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 210,
+            "endLine": 218,
+            "lines": [
+              {
+                "line": 210,
+                "content": " * ❌ VIOLATION: Multiple operations without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 211,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 212,
+                "content": "async function createBranchAndPullRequestMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 213,
+                "content": "  // All of these should trigger violations",
+                "highlighted": false
+              },
+              {
+                "line": 214,
+                "content": "  const defaultBranch = await octokit.repos.get({",
+                "highlighted": true
+              },
+              {
+                "line": 215,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 216,
+                "content": "    repo: 'hello-world'",
+                "highlighted": false
+              },
+              {
+                "line": 217,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 218,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 219,
+          "column": 19,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.git.getRef({\n    owner: 'octocat',\n ... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 215,
+            "endLine": 223,
+            "lines": [
+              {
+                "line": 215,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 216,
+                "content": "    repo: 'hello-world'",
+                "highlighted": false
+              },
+              {
+                "line": 217,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 218,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 219,
+                "content": "  const baseRef = await octokit.git.getRef({",
+                "highlighted": true
+              },
+              {
+                "line": 220,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "    ref: `heads/${defaultBranch.data.default_branch}`",
+                "highlighted": false
+              },
+              {
+                "line": 223,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 225,
+          "column": 3,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.git.createRef({\n    owner: 'octocat'... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 221,
+            "endLine": 229,
+            "lines": [
+              {
+                "line": 221,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "    ref: `heads/${defaultBranch.data.default_branch}`",
+                "highlighted": false
+              },
+              {
+                "line": 223,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 224,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "  await octokit.git.createRef({",
+                "highlighted": true
+              },
+              {
+                "line": 226,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 228,
+                "content": "    ref: 'refs/heads/new-feature',",
+                "highlighted": false
+              },
+              {
+                "line": 229,
+                "content": "    sha: baseRef.data.object.sha",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 232,
+          "column": 14,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'createBranchAndPullRequestMissingErrorHandling' contains unprotected await expression. await octokit.pulls.create({\n    owner: 'octocat',... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 228,
+            "endLine": 236,
+            "lines": [
+              {
+                "line": 228,
+                "content": "    ref: 'refs/heads/new-feature',",
+                "highlighted": false
+              },
+              {
+                "line": 229,
+                "content": "    sha: baseRef.data.object.sha",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 231,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": "  const pr = await octokit.pulls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 233,
+                "content": "    owner: 'octocat',",
+                "highlighted": false
+              },
+              {
+                "line": 234,
+                "content": "    repo: 'hello-world',",
+                "highlighted": false
+              },
+              {
+                "line": 235,
+                "content": "    title: 'New feature',",
+                "highlighted": false
+              },
+              {
+                "line": 236,
+                "content": "    head: 'new-feature',",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 247,
+          "column": 17,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'nestedOperationsMissingErrorHandling' contains unprotected await expression. await octokit.repos.listForAuthenticatedUser()... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 243,
+            "endLine": 251,
+            "lines": [
+              {
+                "line": 243,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 244,
+                "content": " * ❌ VIOLATION: Nested async operations without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 245,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": "async function nestedOperationsMissingErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": "  const repos = await octokit.repos.listForAuthenticatedUser();",
+                "highlighted": true
+              },
+              {
+                "line": 248,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "  // Even nested calls should be caught",
+                "highlighted": false
+              },
+              {
+                "line": 250,
+                "content": "  for (const repo of repos.data) {",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "    const issues = await octokit.issues.listForRepo({",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 251,
+          "column": 20,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'nestedOperationsMissingErrorHandling' contains unprotected await expression. await octokit.issues.listForRepo({\n      owner: re... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 247,
+            "endLine": 255,
+            "lines": [
+              {
+                "line": 247,
+                "content": "  const repos = await octokit.repos.listForAuthenticatedUser();",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "  // Even nested calls should be caught",
+                "highlighted": false
+              },
+              {
+                "line": 250,
+                "content": "  for (const repo of repos.data) {",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "    const issues = await octokit.issues.listForRepo({",
+                "highlighted": true
+              },
+              {
+                "line": 252,
+                "content": "      owner: repo.owner.login,",
+                "highlighted": false
+              },
+              {
+                "line": 253,
+                "content": "      repo: repo.name",
+                "highlighted": false
+              },
+              {
+                "line": 254,
+                "content": "    });",
+                "highlighted": false
+              },
+              {
+                "line": 255,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@octokit/rest-github-repo-get-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@octokit/rest/fixtures/missing-error-handling.ts",
+          "line": 257,
+          "column": 7,
+          "package": "@octokit/rest",
+          "function": "repos.get",
+          "contract_clause": "github-repo-get-no-try-catch",
+          "description": "Async function 'nestedOperationsMissingErrorHandling' contains unprotected await expression. await octokit.issues.update({\n        owner: repo.... may throw unhandled errors.",
+          "source_doc": "https://github.com/octokit/octokit.js/discussions/2039",
+          "suggested_fix": "MUST wrap await octokit.repos.get() in try-catch block. Catch block should check error.status for specific error codes: 404 (repo not found/private), 403 (rate limit or permission denied), 401 (auth failed). Handle each case appropriately.\n",
+          "code_snippet": {
+            "startLine": 253,
+            "endLine": 261,
+            "lines": [
+              {
+                "line": 253,
+                "content": "      repo: repo.name",
+                "highlighted": false
+              },
+              {
+                "line": 254,
+                "content": "    });",
+                "highlighted": false
+              },
+              {
+                "line": 255,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 256,
+                "content": "    for (const issue of issues.data) {",
+                "highlighted": false
+              },
+              {
+                "line": 257,
+                "content": "      await octokit.issues.update({",
+                "highlighted": true
+              },
+              {
+                "line": 258,
+                "content": "        owner: repo.owner.login,",
+                "highlighted": false
+              },
+              {
+                "line": 259,
+                "content": "        repo: repo.name,",
+                "highlighted": false
+              },
+              {
+                "line": 260,
+                "content": "        issue_number: issue.number,",
+                "highlighted": false
+              },
+              {
+                "line": 261,
+                "content": "        labels: ['processed']",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

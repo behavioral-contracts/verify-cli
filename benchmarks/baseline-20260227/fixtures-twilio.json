@@ -1,0 +1,3286 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:57:28.584Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "tedious",
+    "typeorm",
+    "twilio",
+    "supertest",
+    "superagent",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "stripe",
+    "socket.io",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "pino",
+    "pg",
+    "puppeteer",
+    "request-promise",
+    "react-hook-form",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "passport",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "jsonwebtoken",
+    "knex",
+    "lodash",
+    "helmet",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "dayjs",
+    "drizzle-orm",
+    "cors",
+    "date-fns",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@slack/web-api",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 32,
+      "column": 21,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'sendSms' contains unprotected await expression. await this.client.messages.create({\n      body,\n  ... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  async sendSms(to: string, body: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "    const message = await this.client.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "      body,",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "      to,",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "      from: process.env.TWILIO_PHONE_NUMBER",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 42,
+      "column": 18,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'makeCall' contains unprotected await expression. await this.client.calls.create({\n      url,\n      ... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 38,
+        "endLine": 46,
+        "lines": [
+          {
+            "line": 38,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  async makeCall(to: string, url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "    const call = await this.client.calls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 43,
+            "content": "      url,",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "      to,",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "      from: process.env.TWILIO_PHONE_NUMBER",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 62,
+      "column": 19,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'useStoredInstance' contains unprotected await expression. await twilioClient.messages.create({\n    body: 'Te... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 58,
+        "endLine": 66,
+        "lines": [
+          {
+            "line": 58,
+            "content": "    process.env.TWILIO_AUTH_TOKEN!",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  );",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  const message = await twilioClient.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 63,
+            "content": "    body: 'Test',",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "    to: '+12345678901',",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 79,
+      "column": 24,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'useMethodChaining' contains unprotected await expression. await client.verify\n    .services(serviceSid)\n    ... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 75,
+        "endLine": 83,
+        "lines": [
+          {
+            "line": 75,
+            "content": "async function useMethodChaining() {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID!;",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "  // ❌ No try-catch on chained method",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  const verification = await client.verify",
+            "highlighted": true
+          },
+          {
+            "line": 80,
+            "content": "    .services(serviceSid)",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "    .verifications",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "    .create({ to: '+12345678901', channel: 'sms' });",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 93,
+      "column": 19,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'sendViaParameter' contains unprotected await expression. await twilioClient.messages.create({\n    body: 'Pa... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 89,
+        "endLine": 97,
+        "lines": [
+          {
+            "line": 89,
+            "content": " * ❌ Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "async function sendViaParameter(twilioClient: Twilio, to: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  const message = await twilioClient.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 94,
+            "content": "    body: 'Parameter test',",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 144,
+      "column": 23,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'sendSms' contains unprotected await expression. await client.messages.create({\n        body,\n     ... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 140,
+        "endLine": 148,
+        "lines": [
+          {
+            "line": 140,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "  return {",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "    // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "    sendSms: async (to: string, body: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 144,
+            "content": "      const message = await client.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 145,
+            "content": "        body,",
+            "highlighted": false
+          },
+          {
+            "line": 146,
+            "content": "        to,",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": "        from: process.env.TWILIO_PHONE_NUMBER",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "      });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 165,
+      "column": 19,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'multipleOperationsWithoutHandling' contains unprotected await expression. await twilioClient.messages.create({\n    body: 'Fi... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 161,
+        "endLine": 169,
+        "lines": [
+          {
+            "line": 161,
+            "content": "    process.env.TWILIO_AUTH_TOKEN!",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "  );",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "  // ❌ Violation 1: No try-catch on messages.create",
+            "highlighted": false
+          },
+          {
+            "line": 165,
+            "content": "  const message = await twilioClient.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 166,
+            "content": "    body: 'First message',",
+            "highlighted": false
+          },
+          {
+            "line": 167,
+            "content": "    to: '+12345678901',",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 172,
+      "column": 16,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'multipleOperationsWithoutHandling' contains unprotected await expression. await twilioClient.calls.create({\n    url: 'http:/... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 168,
+        "endLine": 176,
+        "lines": [
+          {
+            "line": 168,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "  // ❌ Violation 2: No try-catch on calls.create",
+            "highlighted": false
+          },
+          {
+            "line": 172,
+            "content": "  const call = await twilioClient.calls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 173,
+            "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "    to: '+12345678901',",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 62,
+      "column": 25,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 58,
+        "endLine": 66,
+        "lines": [
+          {
+            "line": 58,
+            "content": "    process.env.TWILIO_AUTH_TOKEN!",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  );",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  const message = await twilioClient.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 63,
+            "content": "    body: 'Test',",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "    to: '+12345678901',",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 93,
+      "column": 25,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 89,
+        "endLine": 97,
+        "lines": [
+          {
+            "line": 89,
+            "content": " * ❌ Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "async function sendViaParameter(twilioClient: Twilio, to: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  const message = await twilioClient.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 94,
+            "content": "    body: 'Parameter test',",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 144,
+      "column": 29,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 140,
+        "endLine": 148,
+        "lines": [
+          {
+            "line": 140,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "  return {",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "    // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "    sendSms: async (to: string, body: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 144,
+            "content": "      const message = await client.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 145,
+            "content": "        body,",
+            "highlighted": false
+          },
+          {
+            "line": 146,
+            "content": "        to,",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": "        from: process.env.TWILIO_PHONE_NUMBER",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "      });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 165,
+      "column": 25,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 161,
+        "endLine": 169,
+        "lines": [
+          {
+            "line": 161,
+            "content": "    process.env.TWILIO_AUTH_TOKEN!",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "  );",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "  // ❌ Violation 1: No try-catch on messages.create",
+            "highlighted": false
+          },
+          {
+            "line": 165,
+            "content": "  const message = await twilioClient.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 166,
+            "content": "    body: 'First message',",
+            "highlighted": false
+          },
+          {
+            "line": 167,
+            "content": "    to: '+12345678901',",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-calls-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+      "line": 172,
+      "column": 22,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "calls-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.calls.create() in try-catch block. Catch block should check error instanceof RestException for detailed error information.\n",
+      "code_snippet": {
+        "startLine": 168,
+        "endLine": 176,
+        "lines": [
+          {
+            "line": 168,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "  // ❌ Violation 2: No try-catch on calls.create",
+            "highlighted": false
+          },
+          {
+            "line": 172,
+            "content": "  const call = await twilioClient.calls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 173,
+            "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "    to: '+12345678901',",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 21,
+      "column": 19,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'sendSmsWithoutErrorHandling' contains unprotected await expression. await client.messages.create({\n    body,\n    to,\n ... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": " * ❌ VIOLATION: No try-catch around messages.create (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function sendSmsWithoutErrorHandling(to: string, body: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  // Missing try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  const message = await client.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "    body,",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 36,
+      "column": 16,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'makeCallWithoutErrorHandling' contains unprotected await expression. await client.calls.create({\n    url: 'http://demo.... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 32,
+        "endLine": 40,
+        "lines": [
+          {
+            "line": 32,
+            "content": " * ❌ VIOLATION: No try-catch around calls.create (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function makeCallWithoutErrorHandling(to: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  // Missing try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  const call = await client.calls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 37,
+            "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 53,
+      "column": 24,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'sendVerificationWithoutErrorHandling' contains unprotected await expression. await client.verify\n    .services(serviceSid)\n    ... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 49,
+        "endLine": 57,
+        "lines": [
+          {
+            "line": 49,
+            "content": "async function sendVerificationWithoutErrorHandling(to: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  const serviceSid = 'VAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "  // Missing try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "  const verification = await client.verify",
+            "highlighted": true
+          },
+          {
+            "line": 54,
+            "content": "    .services(serviceSid)",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    .verifications",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "    .create({ to, channel: 'sms' });",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 155,
+      "column": 19,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'complexViolation' contains unprotected await expression. await client.messages.create({\n    body: 'Test mes... may throw unhandled errors.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 151,
+        "endLine": 159,
+        "lines": [
+          {
+            "line": 151,
+            "content": "async function complexViolation(to: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "  // 1. Hardcoded phone number",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "  // 2. No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "  // 3. No validation",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": "  const message = await client.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 156,
+            "content": "    body: 'Test message',",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "    from: '+10987654321'  // Hardcoded",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-hardcoded-credentials",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 11,
+      "column": 16,
+      "package": "twilio",
+      "function": "twilio",
+      "contract_clause": "hardcoded-credentials",
+      "description": "Hardcoded credentials detected. Use environment variables (process.env) to avoid security risks.",
+      "source_doc": "https://www.twilio.com/docs/usage/secure-credentials",
+      "suggested_fix": "MUST use environment variables for credentials. Use process.env.TWILIO_ACCOUNT_SID and process.env.TWILIO_AUTH_TOKEN. Never commit credentials to version control.\n",
+      "code_snippet": {
+        "startLine": 7,
+        "endLine": 15,
+        "lines": [
+          {
+            "line": 7,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "import twilio from 'twilio';",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "// ❌ VIOLATION: Hardcoded credentials (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "const client = twilio(",
+            "highlighted": true
+          },
+          {
+            "line": 12,
+            "content": "  'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  'your_auth_token_here'",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": ");",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 21,
+      "column": 25,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": " * ❌ VIOLATION: No try-catch around messages.create (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function sendSmsWithoutErrorHandling(to: string, body: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  // Missing try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  const message = await client.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "    body,",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-calls-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 36,
+      "column": 22,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "calls-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.calls.create() in try-catch block. Catch block should check error instanceof RestException for detailed error information.\n",
+      "code_snippet": {
+        "startLine": 32,
+        "endLine": 40,
+        "lines": [
+          {
+            "line": 32,
+            "content": " * ❌ VIOLATION: No try-catch around calls.create (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function makeCallWithoutErrorHandling(to: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  // Missing try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  const call = await client.calls.create({",
+            "highlighted": true
+          },
+          {
+            "line": 37,
+            "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    from: '+10987654321'",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 135,
+      "column": 10,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 131,
+        "endLine": 139,
+        "lines": [
+          {
+            "line": 131,
+            "content": " * ❌ VIOLATION: Promise without .catch() (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "function sendSmsWithoutCatch(to: string, body: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "  // No .catch() handler - unhandled promise rejection",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  return client.messages",
+            "highlighted": true
+          },
+          {
+            "line": 136,
+            "content": "    .create({",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "      body,",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "      to,",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "      from: '+10987654321'",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+      "line": 155,
+      "column": 25,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 151,
+        "endLine": 159,
+        "lines": [
+          {
+            "line": 151,
+            "content": "async function complexViolation(to: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "  // 1. Hardcoded phone number",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "  // 2. No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "  // 3. No validation",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": "  const message = await client.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 156,
+            "content": "    body: 'Test message',",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "    to,",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "    from: '+10987654321'  // Hardcoded",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/proper-error-handling.ts",
+      "line": 125,
+      "column": 10,
+      "package": "twilio",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+      "code_snippet": {
+        "startLine": 121,
+        "endLine": 129,
+        "lines": [
+          {
+            "line": 121,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 122,
+            "content": " * ✅ GOOD: Promise-based error handling (alternative pattern)",
+            "highlighted": false
+          },
+          {
+            "line": 123,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 124,
+            "content": "function sendSmsWithPromiseHandling(to: string, body: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 125,
+            "content": "  return client.messages",
+            "highlighted": true
+          },
+          {
+            "line": 126,
+            "content": "    .create({",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": "      body,",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "      to,",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "      from: process.env.TWILIO_PHONE_NUMBER",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "twilio-webhook-no-signature-validation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/proper-error-handling.ts",
+      "line": 153,
+      "column": 19,
+      "package": "twilio",
+      "function": "validateRequest",
+      "contract_clause": "webhook-no-signature-validation",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://www.twilio.com/docs/usage/webhooks/webhooks-security",
+      "suggested_fix": "MUST validate webhook signatures using twilio.validateRequest() or twilio.validateExpressRequest(). Reject requests with invalid signatures (return 403).\n",
+      "code_snippet": {
+        "startLine": 149,
+        "endLine": 157,
+        "lines": [
+          {
+            "line": 149,
+            "content": "): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "  const signature = req.headers['x-twilio-signature'];",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": "  const url = `https://example.com/twilio/webhook`;",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "  const isValid = twilio.validateRequest(",
+            "highlighted": true
+          },
+          {
+            "line": 154,
+            "content": "    authToken,",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": "    signature,",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "    url,",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "    req.body",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 24,
+    "error_count": 24,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "twilio",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "twilio": {
+      "total": 24,
+      "errors": 24,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 32,
+          "column": 21,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'sendSms' contains unprotected await expression. await this.client.messages.create({\n      body,\n  ... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  async sendSms(to: string, body: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "    const message = await this.client.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "      body,",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "      to,",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "      from: process.env.TWILIO_PHONE_NUMBER",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 42,
+          "column": 18,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'makeCall' contains unprotected await expression. await this.client.calls.create({\n      url,\n      ... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 38,
+            "endLine": 46,
+            "lines": [
+              {
+                "line": 38,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  async makeCall(to: string, url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "    const call = await this.client.calls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 43,
+                "content": "      url,",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "      to,",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "      from: process.env.TWILIO_PHONE_NUMBER",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 62,
+          "column": 19,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'useStoredInstance' contains unprotected await expression. await twilioClient.messages.create({\n    body: 'Te... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 58,
+            "endLine": 66,
+            "lines": [
+              {
+                "line": 58,
+                "content": "    process.env.TWILIO_AUTH_TOKEN!",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  );",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  const message = await twilioClient.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 63,
+                "content": "    body: 'Test',",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "    to: '+12345678901',",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 79,
+          "column": 24,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'useMethodChaining' contains unprotected await expression. await client.verify\n    .services(serviceSid)\n    ... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 75,
+            "endLine": 83,
+            "lines": [
+              {
+                "line": 75,
+                "content": "async function useMethodChaining() {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID!;",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "  // ❌ No try-catch on chained method",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  const verification = await client.verify",
+                "highlighted": true
+              },
+              {
+                "line": 80,
+                "content": "    .services(serviceSid)",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "    .verifications",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "    .create({ to: '+12345678901', channel: 'sms' });",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 93,
+          "column": 19,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'sendViaParameter' contains unprotected await expression. await twilioClient.messages.create({\n    body: 'Pa... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 89,
+            "endLine": 97,
+            "lines": [
+              {
+                "line": 89,
+                "content": " * ❌ Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "async function sendViaParameter(twilioClient: Twilio, to: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  const message = await twilioClient.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 94,
+                "content": "    body: 'Parameter test',",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 144,
+          "column": 23,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'sendSms' contains unprotected await expression. await client.messages.create({\n        body,\n     ... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 140,
+            "endLine": 148,
+            "lines": [
+              {
+                "line": 140,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "  return {",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "    // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "    sendSms: async (to: string, body: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 144,
+                "content": "      const message = await client.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 145,
+                "content": "        body,",
+                "highlighted": false
+              },
+              {
+                "line": 146,
+                "content": "        to,",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": "        from: process.env.TWILIO_PHONE_NUMBER",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "      });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 165,
+          "column": 19,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'multipleOperationsWithoutHandling' contains unprotected await expression. await twilioClient.messages.create({\n    body: 'Fi... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 161,
+            "endLine": 169,
+            "lines": [
+              {
+                "line": 161,
+                "content": "    process.env.TWILIO_AUTH_TOKEN!",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "  );",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "  // ❌ Violation 1: No try-catch on messages.create",
+                "highlighted": false
+              },
+              {
+                "line": 165,
+                "content": "  const message = await twilioClient.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 166,
+                "content": "    body: 'First message',",
+                "highlighted": false
+              },
+              {
+                "line": 167,
+                "content": "    to: '+12345678901',",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 172,
+          "column": 16,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'multipleOperationsWithoutHandling' contains unprotected await expression. await twilioClient.calls.create({\n    url: 'http:/... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 168,
+            "endLine": 176,
+            "lines": [
+              {
+                "line": 168,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "  // ❌ Violation 2: No try-catch on calls.create",
+                "highlighted": false
+              },
+              {
+                "line": 172,
+                "content": "  const call = await twilioClient.calls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 173,
+                "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "    to: '+12345678901',",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 62,
+          "column": 25,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 58,
+            "endLine": 66,
+            "lines": [
+              {
+                "line": 58,
+                "content": "    process.env.TWILIO_AUTH_TOKEN!",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  );",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  const message = await twilioClient.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 63,
+                "content": "    body: 'Test',",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "    to: '+12345678901',",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 93,
+          "column": 25,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 89,
+            "endLine": 97,
+            "lines": [
+              {
+                "line": 89,
+                "content": " * ❌ Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "async function sendViaParameter(twilioClient: Twilio, to: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  const message = await twilioClient.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 94,
+                "content": "    body: 'Parameter test',",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 144,
+          "column": 29,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 140,
+            "endLine": 148,
+            "lines": [
+              {
+                "line": 140,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "  return {",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "    // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "    sendSms: async (to: string, body: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 144,
+                "content": "      const message = await client.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 145,
+                "content": "        body,",
+                "highlighted": false
+              },
+              {
+                "line": 146,
+                "content": "        to,",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": "        from: process.env.TWILIO_PHONE_NUMBER",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "      });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 165,
+          "column": 25,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 161,
+            "endLine": 169,
+            "lines": [
+              {
+                "line": 161,
+                "content": "    process.env.TWILIO_AUTH_TOKEN!",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "  );",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "  // ❌ Violation 1: No try-catch on messages.create",
+                "highlighted": false
+              },
+              {
+                "line": 165,
+                "content": "  const message = await twilioClient.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 166,
+                "content": "    body: 'First message',",
+                "highlighted": false
+              },
+              {
+                "line": 167,
+                "content": "    to: '+12345678901',",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-calls-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/instance-usage.ts",
+          "line": 172,
+          "column": 22,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "calls-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.calls.create() in try-catch block. Catch block should check error instanceof RestException for detailed error information.\n",
+          "code_snippet": {
+            "startLine": 168,
+            "endLine": 176,
+            "lines": [
+              {
+                "line": 168,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "  // ❌ Violation 2: No try-catch on calls.create",
+                "highlighted": false
+              },
+              {
+                "line": 172,
+                "content": "  const call = await twilioClient.calls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 173,
+                "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "    to: '+12345678901',",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 21,
+          "column": 19,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'sendSmsWithoutErrorHandling' contains unprotected await expression. await client.messages.create({\n    body,\n    to,\n ... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": " * ❌ VIOLATION: No try-catch around messages.create (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function sendSmsWithoutErrorHandling(to: string, body: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  // Missing try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  const message = await client.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "    body,",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 36,
+          "column": 16,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'makeCallWithoutErrorHandling' contains unprotected await expression. await client.calls.create({\n    url: 'http://demo.... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 32,
+            "endLine": 40,
+            "lines": [
+              {
+                "line": 32,
+                "content": " * ❌ VIOLATION: No try-catch around calls.create (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function makeCallWithoutErrorHandling(to: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  // Missing try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  const call = await client.calls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 37,
+                "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 53,
+          "column": 24,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'sendVerificationWithoutErrorHandling' contains unprotected await expression. await client.verify\n    .services(serviceSid)\n    ... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 49,
+            "endLine": 57,
+            "lines": [
+              {
+                "line": 49,
+                "content": "async function sendVerificationWithoutErrorHandling(to: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  const serviceSid = 'VAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "  // Missing try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "  const verification = await client.verify",
+                "highlighted": true
+              },
+              {
+                "line": 54,
+                "content": "    .services(serviceSid)",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    .verifications",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "    .create({ to, channel: 'sms' });",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 155,
+          "column": 19,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'complexViolation' contains unprotected await expression. await client.messages.create({\n    body: 'Test mes... may throw unhandled errors.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 151,
+            "endLine": 159,
+            "lines": [
+              {
+                "line": 151,
+                "content": "async function complexViolation(to: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "  // 1. Hardcoded phone number",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "  // 2. No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "  // 3. No validation",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": "  const message = await client.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 156,
+                "content": "    body: 'Test message',",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "    from: '+10987654321'  // Hardcoded",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-hardcoded-credentials",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 11,
+          "column": 16,
+          "package": "twilio",
+          "function": "twilio",
+          "contract_clause": "hardcoded-credentials",
+          "description": "Hardcoded credentials detected. Use environment variables (process.env) to avoid security risks.",
+          "source_doc": "https://www.twilio.com/docs/usage/secure-credentials",
+          "suggested_fix": "MUST use environment variables for credentials. Use process.env.TWILIO_ACCOUNT_SID and process.env.TWILIO_AUTH_TOKEN. Never commit credentials to version control.\n",
+          "code_snippet": {
+            "startLine": 7,
+            "endLine": 15,
+            "lines": [
+              {
+                "line": 7,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "import twilio from 'twilio';",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "// ❌ VIOLATION: Hardcoded credentials (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "const client = twilio(",
+                "highlighted": true
+              },
+              {
+                "line": 12,
+                "content": "  'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  'your_auth_token_here'",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": ");",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 21,
+          "column": 25,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": " * ❌ VIOLATION: No try-catch around messages.create (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function sendSmsWithoutErrorHandling(to: string, body: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  // Missing try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  const message = await client.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "    body,",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-calls-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 36,
+          "column": 22,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "calls-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.calls.create() in try-catch block. Catch block should check error instanceof RestException for detailed error information.\n",
+          "code_snippet": {
+            "startLine": 32,
+            "endLine": 40,
+            "lines": [
+              {
+                "line": 32,
+                "content": " * ❌ VIOLATION: No try-catch around calls.create (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function makeCallWithoutErrorHandling(to: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  // Missing try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  const call = await client.calls.create({",
+                "highlighted": true
+              },
+              {
+                "line": 37,
+                "content": "    url: 'http://demo.twilio.com/docs/voice.xml',",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    from: '+10987654321'",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 135,
+          "column": 10,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 131,
+            "endLine": 139,
+            "lines": [
+              {
+                "line": 131,
+                "content": " * ❌ VIOLATION: Promise without .catch() (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "function sendSmsWithoutCatch(to: string, body: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "  // No .catch() handler - unhandled promise rejection",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  return client.messages",
+                "highlighted": true
+              },
+              {
+                "line": 136,
+                "content": "    .create({",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "      body,",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "      to,",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "      from: '+10987654321'",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/missing-error-handling.ts",
+          "line": 155,
+          "column": 25,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 151,
+            "endLine": 159,
+            "lines": [
+              {
+                "line": 151,
+                "content": "async function complexViolation(to: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "  // 1. Hardcoded phone number",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "  // 2. No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "  // 3. No validation",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": "  const message = await client.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 156,
+                "content": "    body: 'Test message',",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "    to,",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "    from: '+10987654321'  // Hardcoded",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/proper-error-handling.ts",
+          "line": 125,
+          "column": 10,
+          "package": "twilio",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. RestException with error.code, error.status, and error.message - this will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof RestException and handle specific error codes (14107 for rate limiting, 20003 for invalid credentials, 21211 for invalid phone numbers) appropriately.\n",
+          "code_snippet": {
+            "startLine": 121,
+            "endLine": 129,
+            "lines": [
+              {
+                "line": 121,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 122,
+                "content": " * ✅ GOOD: Promise-based error handling (alternative pattern)",
+                "highlighted": false
+              },
+              {
+                "line": 123,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 124,
+                "content": "function sendSmsWithPromiseHandling(to: string, body: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 125,
+                "content": "  return client.messages",
+                "highlighted": true
+              },
+              {
+                "line": 126,
+                "content": "    .create({",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": "      body,",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "      to,",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "      from: process.env.TWILIO_PHONE_NUMBER",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "twilio-webhook-no-signature-validation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/twilio/fixtures/proper-error-handling.ts",
+          "line": 153,
+          "column": 19,
+          "package": "twilio",
+          "function": "validateRequest",
+          "contract_clause": "webhook-no-signature-validation",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://www.twilio.com/docs/usage/webhooks/webhooks-security",
+          "suggested_fix": "MUST validate webhook signatures using twilio.validateRequest() or twilio.validateExpressRequest(). Reject requests with invalid signatures (return 403).\n",
+          "code_snippet": {
+            "startLine": 149,
+            "endLine": 157,
+            "lines": [
+              {
+                "line": 149,
+                "content": "): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "  const signature = req.headers['x-twilio-signature'];",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": "  const url = `https://example.com/twilio/webhook`;",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "  const isValid = twilio.validateRequest(",
+                "highlighted": true
+              },
+              {
+                "line": 154,
+                "content": "    authToken,",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": "    signature,",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "    url,",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "    req.body",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

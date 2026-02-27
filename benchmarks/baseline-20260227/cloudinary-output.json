@@ -1,0 +1,1098 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:40.151Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "typeorm",
+    "typescript",
+    "undici",
+    "tedious",
+    "superagent",
+    "square",
+    "stripe",
+    "socket.io-client",
+    "sqlite3",
+    "sinon",
+    "twilio",
+    "socket.io",
+    "sharp",
+    "sequelize",
+    "redis",
+    "react-hook-form",
+    "puppeteer",
+    "pg",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "request-promise",
+    "mysql2",
+    "next",
+    "multer",
+    "moment",
+    "mongoose",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "knex",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "fastify",
+    "firebase-admin",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "cors",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@octokit/rest",
+    "@prisma/client",
+    "@hapi/hapi",
+    "@nestjs/common",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "cloudinary-upload-stream-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 9,
+      "package": "cloudinary",
+      "function": "upload_stream",
+      "contract_clause": "upload-stream-missing-error-handling",
+      "description": "Variable 'stream' assigned from cloudinary.upload_stream() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+      "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "function uploadStreamWithoutCallback(buffer: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const stream = cloudinary.uploader.upload_stream();",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  stream.end(buffer);",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-upload-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 7,
+      "column": 24,
+      "package": "cloudinary",
+      "function": "upload",
+      "contract_clause": "upload-missing-error-handling",
+      "description": "No try-catch block found. Error with network/validation/auth details - this will crash the application.",
+      "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+      "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload() in try-catch (for async/await) OR check error parameter in callback: (error, result) => { if (error) ... }\n",
+      "code_snippet": {
+        "startLine": 3,
+        "endLine": 11,
+        "lines": [
+          {
+            "line": 3,
+            "content": "cloudinary.config({ cloud_name: 'demo', api_key: 'key', api_secret: 'secret' });",
+            "highlighted": false
+          },
+          {
+            "line": 4,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": "// ❌ VIOLATION: upload-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": "async function uploadWithoutTryCatch(file: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "  const result = await cloudinary.uploader.upload(file);",
+            "highlighted": true
+          },
+          {
+            "line": 8,
+            "content": "  return result;",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-upload-large-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 13,
+      "column": 24,
+      "package": "cloudinary",
+      "function": "upload_large",
+      "contract_clause": "upload-large-missing-error-handling",
+      "description": "No try-catch block found. Error with 413 Request Entity Too Large or network error details - this will crash the application.",
+      "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+      "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload_large() in try-catch OR check error parameter in callback. Files >100MB require this method.\n",
+      "code_snippet": {
+        "startLine": 9,
+        "endLine": 17,
+        "lines": [
+          {
+            "line": 9,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "async function uploadLargeWithoutTryCatch(file: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  const result = await cloudinary.uploader.upload_large(file, { chunk_size: 6000000 });",
+            "highlighted": true
+          },
+          {
+            "line": 14,
+            "content": "  return result;",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-upload-stream-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 18,
+      "package": "cloudinary",
+      "function": "upload_stream",
+      "contract_clause": "upload-stream-missing-error-handling",
+      "description": "No try-catch block found. Error with stream or network details - this will crash the application.",
+      "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+      "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "function uploadStreamWithoutCallback(buffer: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const stream = cloudinary.uploader.upload_stream();",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  stream.end(buffer);",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-destroy-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 24,
+      "package": "cloudinary",
+      "function": "destroy",
+      "contract_clause": "destroy-missing-error-handling",
+      "description": "No try-catch block found. Error with resource not found or authentication details - this will crash the application.",
+      "source_doc": "https://cloudinary.com/documentation/image_upload_api_reference",
+      "suggested_fix": "MUST wrap cloudinary.v2.uploader.destroy() in try-catch OR check error parameter in callback. Asset may not exist.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function destroyWithoutTryCatch(publicId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const result = await cloudinary.uploader.destroy(publicId);",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  return result;",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "export { uploadWithoutTryCatch, uploadLargeWithoutTryCatch, uploadStreamWithoutCallback, destroyWithoutTryCatch };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-upload-stream-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/proper-error-handling.ts",
+      "line": 30,
+      "column": 11,
+      "package": "cloudinary",
+      "function": "upload_stream",
+      "contract_clause": "upload-stream-missing-error-handling",
+      "description": "Variable 'stream' assigned from cloudinary.upload_stream() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+      "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+      "code_snippet": {
+        "startLine": 26,
+        "endLine": 34,
+        "lines": [
+          {
+            "line": 26,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "// ✅ CORRECT: upload_stream with error callback",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "function uploadStreamWithCallback(buffer: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  return new Promise((resolve, reject) => {",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "    const stream = cloudinary.uploader.upload_stream((error, result) => {",
+            "highlighted": true
+          },
+          {
+            "line": 31,
+            "content": "      if (error) return reject(error);",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "      resolve(result);",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "    });",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    stream.end(buffer);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudinary-upload-stream-missing-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/proper-error-handling.ts",
+      "line": 30,
+      "column": 11,
+      "package": "cloudinary",
+      "function": "upload_stream",
+      "contract_clause": "upload-stream-missing-error-handling",
+      "description": "Variable 'stream' assigned from cloudinary.upload_stream() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+      "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+      "code_snippet": {
+        "startLine": 26,
+        "endLine": 34,
+        "lines": [
+          {
+            "line": 26,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "// ✅ CORRECT: upload_stream with error callback",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "function uploadStreamWithCallback(buffer: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  return new Promise((resolve, reject) => {",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "    const stream = cloudinary.uploader.upload_stream((error, result) => {",
+            "highlighted": true
+          },
+          {
+            "line": 31,
+            "content": "      if (error) return reject(error);",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "      resolve(result);",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "    });",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    stream.end(buffer);",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 7,
+    "error_count": 7,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "cloudinary",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "cloudinary": {
+      "total": 7,
+      "errors": 7,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "cloudinary-upload-stream-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 9,
+          "package": "cloudinary",
+          "function": "upload_stream",
+          "contract_clause": "upload-stream-missing-error-handling",
+          "description": "Variable 'stream' assigned from cloudinary.upload_stream() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+          "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "function uploadStreamWithoutCallback(buffer: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const stream = cloudinary.uploader.upload_stream();",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  stream.end(buffer);",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-upload-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 7,
+          "column": 24,
+          "package": "cloudinary",
+          "function": "upload",
+          "contract_clause": "upload-missing-error-handling",
+          "description": "No try-catch block found. Error with network/validation/auth details - this will crash the application.",
+          "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+          "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload() in try-catch (for async/await) OR check error parameter in callback: (error, result) => { if (error) ... }\n",
+          "code_snippet": {
+            "startLine": 3,
+            "endLine": 11,
+            "lines": [
+              {
+                "line": 3,
+                "content": "cloudinary.config({ cloud_name: 'demo', api_key: 'key', api_secret: 'secret' });",
+                "highlighted": false
+              },
+              {
+                "line": 4,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": "// ❌ VIOLATION: upload-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": "async function uploadWithoutTryCatch(file: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "  const result = await cloudinary.uploader.upload(file);",
+                "highlighted": true
+              },
+              {
+                "line": 8,
+                "content": "  return result;",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-upload-large-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 13,
+          "column": 24,
+          "package": "cloudinary",
+          "function": "upload_large",
+          "contract_clause": "upload-large-missing-error-handling",
+          "description": "No try-catch block found. Error with 413 Request Entity Too Large or network error details - this will crash the application.",
+          "source_doc": "https://cloudinary.com/documentation/node_image_and_video_upload",
+          "suggested_fix": "MUST wrap cloudinary.v2.uploader.upload_large() in try-catch OR check error parameter in callback. Files >100MB require this method.\n",
+          "code_snippet": {
+            "startLine": 9,
+            "endLine": 17,
+            "lines": [
+              {
+                "line": 9,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// ❌ VIOLATION: upload-large-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "async function uploadLargeWithoutTryCatch(file: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  const result = await cloudinary.uploader.upload_large(file, { chunk_size: 6000000 });",
+                "highlighted": true
+              },
+              {
+                "line": 14,
+                "content": "  return result;",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-upload-stream-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 18,
+          "package": "cloudinary",
+          "function": "upload_stream",
+          "contract_clause": "upload-stream-missing-error-handling",
+          "description": "No try-catch block found. Error with stream or network details - this will crash the application.",
+          "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+          "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// ❌ VIOLATION: upload-stream-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "function uploadStreamWithoutCallback(buffer: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const stream = cloudinary.uploader.upload_stream();",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  stream.end(buffer);",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-destroy-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 24,
+          "package": "cloudinary",
+          "function": "destroy",
+          "contract_clause": "destroy-missing-error-handling",
+          "description": "No try-catch block found. Error with resource not found or authentication details - this will crash the application.",
+          "source_doc": "https://cloudinary.com/documentation/image_upload_api_reference",
+          "suggested_fix": "MUST wrap cloudinary.v2.uploader.destroy() in try-catch OR check error parameter in callback. Asset may not exist.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "// ❌ VIOLATION: destroy-missing-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function destroyWithoutTryCatch(publicId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const result = await cloudinary.uploader.destroy(publicId);",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  return result;",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "export { uploadWithoutTryCatch, uploadLargeWithoutTryCatch, uploadStreamWithoutCallback, destroyWithoutTryCatch };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-upload-stream-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/proper-error-handling.ts",
+          "line": 30,
+          "column": 11,
+          "package": "cloudinary",
+          "function": "upload_stream",
+          "contract_clause": "upload-stream-missing-error-handling",
+          "description": "Variable 'stream' assigned from cloudinary.upload_stream() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+          "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+          "code_snippet": {
+            "startLine": 26,
+            "endLine": 34,
+            "lines": [
+              {
+                "line": 26,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "// ✅ CORRECT: upload_stream with error callback",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "function uploadStreamWithCallback(buffer: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  return new Promise((resolve, reject) => {",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "    const stream = cloudinary.uploader.upload_stream((error, result) => {",
+                "highlighted": true
+              },
+              {
+                "line": 31,
+                "content": "      if (error) return reject(error);",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "      resolve(result);",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "    });",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    stream.end(buffer);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "cloudinary-upload-stream-missing-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/cloudinary/fixtures/proper-error-handling.ts",
+          "line": 30,
+          "column": 11,
+          "package": "cloudinary",
+          "function": "upload_stream",
+          "contract_clause": "upload-stream-missing-error-handling",
+          "description": "Variable 'stream' assigned from cloudinary.upload_stream() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://support.cloudinary.com/hc/en-us/community/posts/360026620212-stream-upload-catching-errors-NODE-JS-",
+          "suggested_fix": "MUST provide callback with error parameter: cloudinary.v2.uploader.upload_stream((error, result) => { if (error) ... }) Stream uploads REQUIRE callback-based error handling.\n",
+          "code_snippet": {
+            "startLine": 26,
+            "endLine": 34,
+            "lines": [
+              {
+                "line": 26,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "// ✅ CORRECT: upload_stream with error callback",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "function uploadStreamWithCallback(buffer: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  return new Promise((resolve, reject) => {",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "    const stream = cloudinary.uploader.upload_stream((error, result) => {",
+                "highlighted": true
+              },
+              {
+                "line": 31,
+                "content": "      if (error) return reject(error);",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "      resolve(result);",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "    });",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    stream.end(buffer);",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

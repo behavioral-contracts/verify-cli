@@ -1,0 +1,1976 @@
+[
+  {
+    "timestamp": "2026-02-26T16:48:31.481Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:29.974Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:28.093Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 43,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:26.880Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 14,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:24.170Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:25.496Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:21.523Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:18.545Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:20.065Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 17,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:16.472Z",
+    "violations": 8,
+    "contracts_applied": 258,
+    "files_analyzed": 124,
+    "compliance": 97
+  },
+  {
+    "timestamp": "2026-02-26T16:48:11.690Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 97,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:48:15.051Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:13.048Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:13.765Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:10.315Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:07.166Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 6,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:09.019Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 30,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:05.901Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 6,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:03.441Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:04.588Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 28,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:48:01.873Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 172,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:59.784Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 434,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:58.009Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 10,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:57.001Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:55.835Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:54.499Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:53.611Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 31,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:52.273Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:49.584Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 124,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:50.875Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:47.874Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 11,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:45.954Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:45.148Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:44.369Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 17,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:39.904Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:41.949Z",
+    "violations": 38,
+    "contracts_applied": 258,
+    "files_analyzed": 122,
+    "compliance": 85
+  },
+  {
+    "timestamp": "2026-02-26T16:47:33.619Z",
+    "violations": 38,
+    "contracts_applied": 258,
+    "files_analyzed": 54,
+    "compliance": 85
+  },
+  {
+    "timestamp": "2026-02-26T16:47:32.319Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 11,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:36.519Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 175,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:39.097Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 244,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:24.371Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 7,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:30.217Z",
+    "violations": 23,
+    "contracts_applied": 258,
+    "files_analyzed": 116,
+    "compliance": 91
+  },
+  {
+    "timestamp": "2026-02-26T16:47:22.756Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 211,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:47:18.246Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 91,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:16.800Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 48,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:20.112Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:15.123Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 82,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:10.532Z",
+    "violations": 44,
+    "contracts_applied": 258,
+    "files_analyzed": 444,
+    "compliance": 83
+  },
+  {
+    "timestamp": "2026-02-26T16:47:13.760Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:12.803Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 19,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:08.773Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:05.807Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 12,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:00.717Z",
+    "violations": 8,
+    "contracts_applied": 258,
+    "files_analyzed": 46,
+    "compliance": 97
+  },
+  {
+    "timestamp": "2026-02-26T16:47:03.926Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 69,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:59.589Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 33,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:47:02.394Z",
+    "violations": 9,
+    "contracts_applied": 258,
+    "files_analyzed": 83,
+    "compliance": 97
+  },
+  {
+    "timestamp": "2026-02-26T16:46:58.344Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 271,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:50.749Z",
+    "violations": 16,
+    "contracts_applied": 258,
+    "files_analyzed": 139,
+    "compliance": 94
+  },
+  {
+    "timestamp": "2026-02-26T16:46:56.496Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:55.007Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 471,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:52.921Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 82,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:47.999Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 649,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:46:44.466Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 51,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:42.091Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:43.234Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:45.970Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 15,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:37.317Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:35.932Z",
+    "violations": 1,
+    "contracts_applied": 258,
+    "files_analyzed": 11,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:40.486Z",
+    "violations": 15,
+    "contracts_applied": 258,
+    "files_analyzed": 257,
+    "compliance": 94
+  },
+  {
+    "timestamp": "2026-02-26T16:46:38.795Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:32.433Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:34.351Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 372,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:31.121Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 46,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:29.863Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:25.212Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:28.260Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1004,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:24.156Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 27,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:46:22.533Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1178,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:46:18.838Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:47:26.456Z",
+    "violations": 1,
+    "contracts_applied": 258,
+    "files_analyzed": 55,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:26.605Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:25.183Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:23.415Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 43,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:18.338Z",
+    "violations": 174,
+    "contracts_applied": 44,
+    "files_analyzed": 14,
+    "compliance": -295
+  },
+  {
+    "timestamp": "2026-02-24T22:09:17.079Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:13.371Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:15.872Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:11.819Z",
+    "violations": 10,
+    "contracts_applied": 44,
+    "files_analyzed": 17,
+    "compliance": 77
+  },
+  {
+    "timestamp": "2026-02-24T22:09:10.599Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:07.400Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:08.074Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:09.283Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:09:00.582Z",
+    "violations": 213,
+    "contracts_applied": 44,
+    "files_analyzed": 97,
+    "compliance": -384
+  },
+  {
+    "timestamp": "2026-02-24T22:08:59.258Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:57.890Z",
+    "violations": 8,
+    "contracts_applied": 44,
+    "files_analyzed": 30,
+    "compliance": 82
+  },
+  {
+    "timestamp": "2026-02-24T22:08:54.761Z",
+    "violations": 14,
+    "contracts_applied": 44,
+    "files_analyzed": 6,
+    "compliance": 68
+  },
+  {
+    "timestamp": "2026-02-24T22:08:56.135Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 6,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:45.737Z",
+    "violations": 6,
+    "contracts_applied": 44,
+    "files_analyzed": 434,
+    "compliance": 86
+  },
+  {
+    "timestamp": "2026-02-24T22:08:53.519Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 2,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:08:43.882Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:47.872Z",
+    "violations": 155,
+    "contracts_applied": 44,
+    "files_analyzed": 172,
+    "compliance": -252
+  },
+  {
+    "timestamp": "2026-02-24T22:08:42.600Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:41.848Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:37.384Z",
+    "violations": 8,
+    "contracts_applied": 44,
+    "files_analyzed": 11,
+    "compliance": 82
+  },
+  {
+    "timestamp": "2026-02-24T22:08:40.539Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:39.150Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 124,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:35.604Z",
+    "violations": 2,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 95
+  },
+  {
+    "timestamp": "2026-02-24T22:08:34.864Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:08:33.885Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:04:48.016Z",
+    "violations": 1706,
+    "contracts_applied": 44,
+    "files_analyzed": 244,
+    "compliance": -3777
+  },
+  {
+    "timestamp": "2026-02-24T22:04:45.428Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 175,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:04:42.974Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 7,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:04:36.562Z",
+    "violations": 173,
+    "contracts_applied": 44,
+    "files_analyzed": 211,
+    "compliance": -293
+  },
+  {
+    "timestamp": "2026-02-24T22:04:34.049Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:04:30.588Z",
+    "violations": 93,
+    "contracts_applied": 44,
+    "files_analyzed": 48,
+    "compliance": -111
+  },
+  {
+    "timestamp": "2026-02-24T22:04:27.817Z",
+    "violations": 57,
+    "contracts_applied": 44,
+    "files_analyzed": 82,
+    "compliance": -30
+  },
+  {
+    "timestamp": "2026-02-24T22:04:26.490Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:04:25.679Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 19,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:04:18.357Z",
+    "violations": 196,
+    "contracts_applied": 44,
+    "files_analyzed": 444,
+    "compliance": -345
+  },
+  {
+    "timestamp": "2026-02-24T22:04:16.820Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:04:13.875Z",
+    "violations": 5,
+    "contracts_applied": 44,
+    "files_analyzed": 12,
+    "compliance": 89
+  },
+  {
+    "timestamp": "2026-02-24T22:04:08.409Z",
+    "violations": 148,
+    "contracts_applied": 44,
+    "files_analyzed": 69,
+    "compliance": -236
+  },
+  {
+    "timestamp": "2026-02-24T22:04:06.362Z",
+    "violations": 44,
+    "contracts_applied": 44,
+    "files_analyzed": 83,
+    "compliance": 0
+  },
+  {
+    "timestamp": "2026-02-24T22:03:29.813Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:31.918Z",
+    "violations": 590,
+    "contracts_applied": 44,
+    "files_analyzed": 271,
+    "compliance": -1241
+  },
+  {
+    "timestamp": "2026-02-24T22:03:28.119Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 82,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:03:22.025Z",
+    "violations": 138,
+    "contracts_applied": 44,
+    "files_analyzed": 649,
+    "compliance": -214
+  },
+  {
+    "timestamp": "2026-02-24T22:03:20.094Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 15,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:03:18.684Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 51,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:17.546Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:16.827Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 5,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:03:15.527Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:14.273Z",
+    "violations": 4,
+    "contracts_applied": 44,
+    "files_analyzed": 11,
+    "compliance": 91
+  },
+  {
+    "timestamp": "2026-02-24T22:03:12.816Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 372,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:11.037Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:09.319Z",
+    "violations": 34,
+    "contracts_applied": 44,
+    "files_analyzed": 46,
+    "compliance": 23
+  },
+  {
+    "timestamp": "2026-02-24T22:03:08.210Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:03.366Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:03:06.435Z",
+    "violations": 29,
+    "contracts_applied": 44,
+    "files_analyzed": 1004,
+    "compliance": 34
+  },
+  {
+    "timestamp": "2026-02-26T16:13:22.589Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:03:01.400Z",
+    "violations": 15,
+    "contracts_applied": 44,
+    "files_analyzed": 1178,
+    "compliance": 66
+  },
+  {
+    "timestamp": "2026-02-24T22:02:57.725Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:21.074Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:19.134Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 43,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:18.039Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 14,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:16.581Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:14.942Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:12.236Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:10.778Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 17,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:09.258Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:07.155Z",
+    "violations": 8,
+    "contracts_applied": 258,
+    "files_analyzed": 124,
+    "compliance": 97
+  },
+  {
+    "timestamp": "2026-02-26T16:13:04.373Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:05.721Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:59.448Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 30,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:02.228Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 97,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:13:03.624Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:13:00.877Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:57.527Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 6,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:56.204Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 6,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:54.907Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 28,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:53.778Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:52.192Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 172,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:50.053Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 434,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:48.233Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 10,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:46.004Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:47.185Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:44.598Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:43.645Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 31,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:42.299Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:40.585Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:37.433Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 11,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:35.449Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:39.190Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 124,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:31.129Z",
+    "violations": 38,
+    "contracts_applied": 258,
+    "files_analyzed": 122,
+    "compliance": 85
+  },
+  {
+    "timestamp": "2026-02-26T16:12:28.017Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:34.669Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:33.942Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 17,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:26.181Z",
+    "violations": 14,
+    "contracts_applied": 258,
+    "files_analyzed": 244,
+    "compliance": 95
+  },
+  {
+    "timestamp": "2026-02-26T16:12:17.035Z",
+    "violations": 38,
+    "contracts_applied": 258,
+    "files_analyzed": 54,
+    "compliance": 85
+  },
+  {
+    "timestamp": "2026-02-26T16:12:14.874Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 11,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:21.241Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 175,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:01.987Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 7,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:10.744Z",
+    "violations": 43,
+    "contracts_applied": 258,
+    "files_analyzed": 116,
+    "compliance": 83
+  },
+  {
+    "timestamp": "2026-02-26T16:12:00.455Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 211,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:11:57.038Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:54.347Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 91,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:48.236Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 82,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:46.372Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:51.062Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 48,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:38.585Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:44.854Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 19,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:40.988Z",
+    "violations": 44,
+    "contracts_applied": 258,
+    "files_analyzed": 444,
+    "compliance": 83
+  },
+  {
+    "timestamp": "2026-02-26T16:11:34.069Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 12,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:30.207Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 69,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:28.421Z",
+    "violations": 9,
+    "contracts_applied": 258,
+    "files_analyzed": 83,
+    "compliance": 97
+  },
+  {
+    "timestamp": "2026-02-26T16:11:26.680Z",
+    "violations": 8,
+    "contracts_applied": 258,
+    "files_analyzed": 46,
+    "compliance": 97
+  },
+  {
+    "timestamp": "2026-02-26T16:11:25.562Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 33,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:11:24.186Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 271,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:19.973Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 471,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:21.510Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:17.893Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 82,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:15.748Z",
+    "violations": 16,
+    "contracts_applied": 258,
+    "files_analyzed": 139,
+    "compliance": 94
+  },
+  {
+    "timestamp": "2026-02-26T16:11:13.045Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 649,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:11:10.967Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 15,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:09.479Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 51,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:08.151Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:07.016Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:05.345Z",
+    "violations": 15,
+    "contracts_applied": 258,
+    "files_analyzed": 257,
+    "compliance": 94
+  },
+  {
+    "timestamp": "2026-02-26T16:11:03.303Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:01.844Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:11:00.543Z",
+    "violations": 1,
+    "contracts_applied": 258,
+    "files_analyzed": 11,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:58.897Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 372,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:55.673Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 46,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:56.934Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:48.361Z",
+    "violations": 2,
+    "contracts_applied": 258,
+    "files_analyzed": 27,
+    "compliance": 99
+  },
+  {
+    "timestamp": "2026-02-26T16:10:46.558Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1178,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:12:04.128Z",
+    "violations": 1,
+    "contracts_applied": 258,
+    "files_analyzed": 55,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:42.791Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:49.472Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:52.743Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 1004,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-26T16:10:54.427Z",
+    "violations": 0,
+    "contracts_applied": 258,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:26:05.370Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:57.049Z",
+    "violations": 174,
+    "contracts_applied": 44,
+    "files_analyzed": 14,
+    "compliance": -295
+  },
+  {
+    "timestamp": "2026-02-24T22:26:03.916Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:26:02.192Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 43,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:55.777Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:54.599Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:49.486Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:48.255Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:50.678Z",
+    "violations": 10,
+    "contracts_applied": 44,
+    "files_analyzed": 17,
+    "compliance": 77
+  },
+  {
+    "timestamp": "2026-02-24T22:25:52.159Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:47.020Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:39.481Z",
+    "violations": 213,
+    "contracts_applied": 44,
+    "files_analyzed": 97,
+    "compliance": -384
+  },
+  {
+    "timestamp": "2026-02-24T22:25:46.380Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 2,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:38.214Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:36.837Z",
+    "violations": 8,
+    "contracts_applied": 44,
+    "files_analyzed": 30,
+    "compliance": 82
+  },
+  {
+    "timestamp": "2026-02-24T22:25:33.610Z",
+    "violations": 14,
+    "contracts_applied": 44,
+    "files_analyzed": 6,
+    "compliance": 68
+  },
+  {
+    "timestamp": "2026-02-24T22:25:32.371Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 2,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:25:26.618Z",
+    "violations": 155,
+    "contracts_applied": 44,
+    "files_analyzed": 172,
+    "compliance": -252
+  },
+  {
+    "timestamp": "2026-02-24T22:25:35.037Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 6,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:24.521Z",
+    "violations": 6,
+    "contracts_applied": 44,
+    "files_analyzed": 434,
+    "compliance": 86
+  },
+  {
+    "timestamp": "2026-02-24T22:25:22.728Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:21.491Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:20.764Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:19.465Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:18.253Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 124,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:16.549Z",
+    "violations": 8,
+    "contracts_applied": 44,
+    "files_analyzed": 11,
+    "compliance": 82
+  },
+  {
+    "timestamp": "2026-02-24T22:25:14.825Z",
+    "violations": 2,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 95
+  },
+  {
+    "timestamp": "2026-02-24T22:25:13.200Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:25:14.113Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:21:28.072Z",
+    "violations": 1706,
+    "contracts_applied": 44,
+    "files_analyzed": 244,
+    "compliance": -3777
+  },
+  {
+    "timestamp": "2026-02-24T22:21:25.500Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 175,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:21:16.853Z",
+    "violations": 173,
+    "contracts_applied": 44,
+    "files_analyzed": 211,
+    "compliance": -293
+  },
+  {
+    "timestamp": "2026-02-24T22:21:23.064Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 7,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:21:14.320Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:21:08.242Z",
+    "violations": 57,
+    "contracts_applied": 44,
+    "files_analyzed": 82,
+    "compliance": -30
+  },
+  {
+    "timestamp": "2026-02-24T22:21:06.868Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:21:10.897Z",
+    "violations": 93,
+    "contracts_applied": 44,
+    "files_analyzed": 48,
+    "compliance": -111
+  },
+  {
+    "timestamp": "2026-02-24T22:21:05.977Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 19,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:20:56.942Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:20:53.969Z",
+    "violations": 5,
+    "contracts_applied": 44,
+    "files_analyzed": 12,
+    "compliance": 89
+  },
+  {
+    "timestamp": "2026-02-24T22:20:48.367Z",
+    "violations": 148,
+    "contracts_applied": 44,
+    "files_analyzed": 69,
+    "compliance": -236
+  },
+  {
+    "timestamp": "2026-02-24T22:20:58.547Z",
+    "violations": 196,
+    "contracts_applied": 44,
+    "files_analyzed": 444,
+    "compliance": -345
+  },
+  {
+    "timestamp": "2026-02-24T22:20:11.467Z",
+    "violations": 590,
+    "contracts_applied": 44,
+    "files_analyzed": 271,
+    "compliance": -1241
+  },
+  {
+    "timestamp": "2026-02-24T22:20:46.307Z",
+    "violations": 44,
+    "contracts_applied": 44,
+    "files_analyzed": 83,
+    "compliance": 0
+  },
+  {
+    "timestamp": "2026-02-24T22:20:09.475Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:20:07.663Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 82,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:20:01.469Z",
+    "violations": 138,
+    "contracts_applied": 44,
+    "files_analyzed": 649,
+    "compliance": -214
+  },
+  {
+    "timestamp": "2026-02-24T22:19:59.471Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 15,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:19:58.049Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 51,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:19:56.944Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 0,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:19:56.210Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 5,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:19:54.876Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:19:53.465Z",
+    "violations": 4,
+    "contracts_applied": 44,
+    "files_analyzed": 11,
+    "compliance": 91
+  },
+  {
+    "timestamp": "2026-02-24T22:19:52.004Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 372,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:19:50.145Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:19:47.224Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 3,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:19:48.401Z",
+    "violations": 34,
+    "contracts_applied": 44,
+    "files_analyzed": 46,
+    "compliance": 23
+  },
+  {
+    "timestamp": "2026-02-24T22:19:36.863Z",
+    "violations": 0,
+    "contracts_applied": 44,
+    "files_analyzed": 5,
+    "compliance": 100
+  },
+  {
+    "timestamp": "2026-02-24T22:19:45.262Z",
+    "violations": 29,
+    "contracts_applied": 44,
+    "files_analyzed": 1004,
+    "compliance": 34
+  },
+  {
+    "timestamp": "2026-02-24T22:19:42.267Z",
+    "violations": 1,
+    "contracts_applied": 44,
+    "files_analyzed": 1,
+    "compliance": 98
+  },
+  {
+    "timestamp": "2026-02-24T22:19:40.263Z",
+    "violations": 15,
+    "contracts_applied": 44,
+    "files_analyzed": 1178,
+    "compliance": 66
+  }
+]

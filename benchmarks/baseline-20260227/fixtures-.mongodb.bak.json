@@ -1,0 +1,1878 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:57:15.081Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "ws",
+    "yup",
+    "winston",
+    "validator",
+    "unzipper",
+    "uuid",
+    "undici",
+    "typeorm",
+    "typescript",
+    "twilio",
+    "tedious",
+    "supertest",
+    "superagent",
+    "square",
+    "stripe",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "sequelize",
+    "simple-oauth2",
+    "sharp",
+    "redis",
+    "pino",
+    "request-promise",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "node-fetch",
+    "mysql2",
+    "next",
+    "passport",
+    "nodemailer",
+    "mongoose",
+    "multer",
+    "moment",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "jsonwebtoken",
+    "lodash",
+    "helmet",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "cors",
+    "date-fns",
+    "dayjs",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "archiver",
+    "ajv",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@prisma/client",
+    "@tanstack/react-query",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 17,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 13,
+        "endLine": 21,
+        "lines": [
+          {
+            "line": 13,
+            "content": " * ❌ Instance pattern: Client assigned to variable, operations without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " * Should detect violations",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "async function clientInstanceWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 18,
+            "content": "  const db = client.db('testdb');",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const users = db.collection('users');",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  // These should be detected as violations",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 149,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 145,
+        "endLine": 153,
+        "lines": [
+          {
+            "line": 145,
+            "content": " * ❌ Database instance pattern without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 146,
+            "content": " * Should detect violations",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "async function dbInstancePattern() {",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 150,
+            "content": "  const db = client.db('myapp');",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "  // These db.collection() calls should be detected",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "  const users = db.collection('users');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 199,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 195,
+        "endLine": 203,
+        "lines": [
+          {
+            "line": 195,
+            "content": " * ❌ Multiple collection instances without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 196,
+            "content": " * Should detect multiple violations",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 198,
+            "content": "async function multipleCollectionInstances() {",
+            "highlighted": false
+          },
+          {
+            "line": 199,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 200,
+            "content": "  const db = client.db('testdb');",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 202,
+            "content": "  const collection1 = db.collection('users');",
+            "highlighted": false
+          },
+          {
+            "line": 203,
+            "content": "  const collection2 = db.collection('posts');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-query-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 222,
+      "column": 20,
+      "package": "mongodb",
+      "function": "find",
+      "contract_clause": "query-failure",
+      "description": "No try-catch block found. MongoServerError, MongoNetworkError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+      "suggested_fix": "Caller MUST catch query errors. Network errors (MongoNetworkError) may be transient and can be retried. Invalid query errors (MongoServerError) should not be retried.\n",
+      "code_snippet": {
+        "startLine": 218,
+        "endLine": 226,
+        "lines": [
+          {
+            "line": 218,
+            "content": "function createCollectionOperations(collection: Collection) {",
+            "highlighted": false
+          },
+          {
+            "line": 219,
+            "content": "  return {",
+            "highlighted": false
+          },
+          {
+            "line": 220,
+            "content": "    findAll: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "      // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "      return await collection.find({}).toArray();",
+            "highlighted": true
+          },
+          {
+            "line": 223,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 224,
+            "content": "    insert: async (doc: any) => {",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "      // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "      return await collection.insertOne(doc);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-duplicate-key",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 226,
+      "column": 20,
+      "package": "mongodb",
+      "function": "insertOne",
+      "contract_clause": "duplicate-key",
+      "description": "No try-catch block found. MongoServerError with error.code === 11000 - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+      "suggested_fix": "Caller MUST catch duplicate key errors (code 11000) and handle gracefully. Extract conflicting field from error message. DO NOT retry without changing the unique field value.\n",
+      "code_snippet": {
+        "startLine": 222,
+        "endLine": 230,
+        "lines": [
+          {
+            "line": 222,
+            "content": "      return await collection.find({}).toArray();",
+            "highlighted": false
+          },
+          {
+            "line": 223,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 224,
+            "content": "    insert: async (doc: any) => {",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "      // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "      return await collection.insertOne(doc);",
+            "highlighted": true
+          },
+          {
+            "line": 227,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 228,
+            "content": "    update: async (filter: any, update: any) => {",
+            "highlighted": false
+          },
+          {
+            "line": 229,
+            "content": "      // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": "      return await collection.updateOne(filter, update);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-update-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 230,
+      "column": 20,
+      "package": "mongodb",
+      "function": "updateOne",
+      "contract_clause": "update-failure",
+      "description": "No try-catch block found. MongoServerError, MongoWriteConcernError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+      "suggested_fix": "Caller MUST catch update errors. Network errors may be transient. Invalid update operators (MongoServerError) should not be retried.\n",
+      "code_snippet": {
+        "startLine": 226,
+        "endLine": 234,
+        "lines": [
+          {
+            "line": 226,
+            "content": "      return await collection.insertOne(doc);",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 228,
+            "content": "    update: async (filter: any, update: any) => {",
+            "highlighted": false
+          },
+          {
+            "line": 229,
+            "content": "      // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": "      return await collection.updateOne(filter, update);",
+            "highlighted": true
+          },
+          {
+            "line": 231,
+            "content": "    }",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 233,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 234,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-duplicate-key",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 281,
+      "column": 9,
+      "package": "mongodb",
+      "function": "insertOne",
+      "contract_clause": "duplicate-key",
+      "description": "No try-catch block found. MongoServerError with error.code === 11000 - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+      "suggested_fix": "Caller MUST catch duplicate key errors (code 11000) and handle gracefully. Extract conflicting field from error message. DO NOT retry without changing the unique field value.\n",
+      "code_snippet": {
+        "startLine": 277,
+        "endLine": 285,
+        "lines": [
+          {
+            "line": 277,
+            "content": "    console.error('Find failed:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 278,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 279,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 280,
+            "content": "  // ❌ This one doesn't - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 281,
+            "content": "  await collection.insertOne({ name: 'Test' });",
+            "highlighted": true
+          },
+          {
+            "line": 282,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 283,
+            "content": "  // ✅ This one has error handling",
+            "highlighted": false
+          },
+          {
+            "line": 284,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 285,
+            "content": "    await collection.updateOne({ name: 'Test' }, { $set: { status: 'active' } });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-delete-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 291,
+      "column": 9,
+      "package": "mongodb",
+      "function": "deleteOne",
+      "contract_clause": "delete-failure",
+      "description": "No try-catch block found. MongoServerError, MongoWriteConcernError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+      "suggested_fix": "Caller MUST catch delete errors. Deleting non-existent document is NOT an error (deletedCount = 0). Network errors may be transient and retriable.\n",
+      "code_snippet": {
+        "startLine": 287,
+        "endLine": 295,
+        "lines": [
+          {
+            "line": 287,
+            "content": "    console.error('Update failed:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 288,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 289,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 290,
+            "content": "  // ❌ This one doesn't - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 291,
+            "content": "  await collection.deleteOne({ name: 'Test' });",
+            "highlighted": true
+          },
+          {
+            "line": 292,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 293,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 294,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 295,
+            "content": " * ❌ Async function with instance tracking across multiple calls",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+      "line": 299,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 295,
+        "endLine": 303,
+        "lines": [
+          {
+            "line": 295,
+            "content": " * ❌ Async function with instance tracking across multiple calls",
+            "highlighted": false
+          },
+          {
+            "line": 296,
+            "content": " * Should detect violations",
+            "highlighted": false
+          },
+          {
+            "line": 297,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 298,
+            "content": "async function instanceTrackingAcrossCalls() {",
+            "highlighted": false
+          },
+          {
+            "line": 299,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 300,
+            "content": "  const db = client.db('testdb');",
+            "highlighted": false
+          },
+          {
+            "line": 301,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 302,
+            "content": "  // Get collection",
+            "highlighted": false
+          },
+          {
+            "line": 303,
+            "content": "  const users = db.collection('users');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+      "line": 18,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 14,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 14,
+            "content": " * ❌ Missing: Connection without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "async function connectWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 19,
+            "content": "  const db = client.db(dbName);",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  console.log('Connected');",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  return { client, db };",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+      "line": 162,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 158,
+        "endLine": 166,
+        "lines": [
+          {
+            "line": 158,
+            "content": " * ❌ Missing: Complete workflow without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": " * Should trigger multiple ERROR violations",
+            "highlighted": false
+          },
+          {
+            "line": 160,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "async function workflowWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 163,
+            "content": "  const db = client.db(dbName);",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "  const collection = db.collection('users');",
+            "highlighted": false
+          },
+          {
+            "line": 165,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "  await collection.insertOne({ name: 'Alice', email: 'alice@example.com' });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+      "line": 235,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 231,
+        "endLine": 239,
+        "lines": [
+          {
+            "line": 231,
+            "content": " * ❌ Missing: Connection with operations, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": " * Should trigger multiple ERROR violations",
+            "highlighted": false
+          },
+          {
+            "line": 233,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 234,
+            "content": "async function connectAndQueryWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 235,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 236,
+            "content": "  const db = client.db(dbName);",
+            "highlighted": false
+          },
+          {
+            "line": 237,
+            "content": "  const users = db.collection('users');",
+            "highlighted": false
+          },
+          {
+            "line": 238,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 239,
+            "content": "  // Multiple unhandled operations",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mongodb-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+      "line": 254,
+      "column": 24,
+      "package": "mongodb",
+      "function": "connect",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+      "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+      "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+      "code_snippet": {
+        "startLine": 250,
+        "endLine": 258,
+        "lines": [
+          {
+            "line": 250,
+            "content": " * ❌ Missing: Promise chaining without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": " * Should trigger ERROR violations",
+            "highlighted": false
+          },
+          {
+            "line": 252,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 253,
+            "content": "async function promiseChainingWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 254,
+            "content": "  const client = await MongoClient.connect(connectionString);",
+            "highlighted": true
+          },
+          {
+            "line": 255,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 256,
+            "content": "  return client",
+            "highlighted": false
+          },
+          {
+            "line": 257,
+            "content": "    .db(dbName)",
+            "highlighted": false
+          },
+          {
+            "line": 258,
+            "content": "    .collection('users')",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 13,
+    "error_count": 13,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "mongodb",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "mongodb": {
+      "total": 13,
+      "errors": 13,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 17,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 13,
+            "endLine": 21,
+            "lines": [
+              {
+                "line": 13,
+                "content": " * ❌ Instance pattern: Client assigned to variable, operations without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " * Should detect violations",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "async function clientInstanceWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 18,
+                "content": "  const db = client.db('testdb');",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const users = db.collection('users');",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  // These should be detected as violations",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 149,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 145,
+            "endLine": 153,
+            "lines": [
+              {
+                "line": 145,
+                "content": " * ❌ Database instance pattern without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 146,
+                "content": " * Should detect violations",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "async function dbInstancePattern() {",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 150,
+                "content": "  const db = client.db('myapp');",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "  // These db.collection() calls should be detected",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "  const users = db.collection('users');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 199,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 195,
+            "endLine": 203,
+            "lines": [
+              {
+                "line": 195,
+                "content": " * ❌ Multiple collection instances without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 196,
+                "content": " * Should detect multiple violations",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 198,
+                "content": "async function multipleCollectionInstances() {",
+                "highlighted": false
+              },
+              {
+                "line": 199,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 200,
+                "content": "  const db = client.db('testdb');",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 202,
+                "content": "  const collection1 = db.collection('users');",
+                "highlighted": false
+              },
+              {
+                "line": 203,
+                "content": "  const collection2 = db.collection('posts');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-query-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 222,
+          "column": 20,
+          "package": "mongodb",
+          "function": "find",
+          "contract_clause": "query-failure",
+          "description": "No try-catch block found. MongoServerError, MongoNetworkError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+          "suggested_fix": "Caller MUST catch query errors. Network errors (MongoNetworkError) may be transient and can be retried. Invalid query errors (MongoServerError) should not be retried.\n",
+          "code_snippet": {
+            "startLine": 218,
+            "endLine": 226,
+            "lines": [
+              {
+                "line": 218,
+                "content": "function createCollectionOperations(collection: Collection) {",
+                "highlighted": false
+              },
+              {
+                "line": 219,
+                "content": "  return {",
+                "highlighted": false
+              },
+              {
+                "line": 220,
+                "content": "    findAll: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "      // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "      return await collection.find({}).toArray();",
+                "highlighted": true
+              },
+              {
+                "line": 223,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 224,
+                "content": "    insert: async (doc: any) => {",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "      // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "      return await collection.insertOne(doc);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-duplicate-key",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 226,
+          "column": 20,
+          "package": "mongodb",
+          "function": "insertOne",
+          "contract_clause": "duplicate-key",
+          "description": "No try-catch block found. MongoServerError with error.code === 11000 - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+          "suggested_fix": "Caller MUST catch duplicate key errors (code 11000) and handle gracefully. Extract conflicting field from error message. DO NOT retry without changing the unique field value.\n",
+          "code_snippet": {
+            "startLine": 222,
+            "endLine": 230,
+            "lines": [
+              {
+                "line": 222,
+                "content": "      return await collection.find({}).toArray();",
+                "highlighted": false
+              },
+              {
+                "line": 223,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 224,
+                "content": "    insert: async (doc: any) => {",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "      // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "      return await collection.insertOne(doc);",
+                "highlighted": true
+              },
+              {
+                "line": 227,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 228,
+                "content": "    update: async (filter: any, update: any) => {",
+                "highlighted": false
+              },
+              {
+                "line": 229,
+                "content": "      // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": "      return await collection.updateOne(filter, update);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-update-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 230,
+          "column": 20,
+          "package": "mongodb",
+          "function": "updateOne",
+          "contract_clause": "update-failure",
+          "description": "No try-catch block found. MongoServerError, MongoWriteConcernError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+          "suggested_fix": "Caller MUST catch update errors. Network errors may be transient. Invalid update operators (MongoServerError) should not be retried.\n",
+          "code_snippet": {
+            "startLine": 226,
+            "endLine": 234,
+            "lines": [
+              {
+                "line": 226,
+                "content": "      return await collection.insertOne(doc);",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 228,
+                "content": "    update: async (filter: any, update: any) => {",
+                "highlighted": false
+              },
+              {
+                "line": 229,
+                "content": "      // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": "      return await collection.updateOne(filter, update);",
+                "highlighted": true
+              },
+              {
+                "line": 231,
+                "content": "    }",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 233,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 234,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-duplicate-key",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 281,
+          "column": 9,
+          "package": "mongodb",
+          "function": "insertOne",
+          "contract_clause": "duplicate-key",
+          "description": "No try-catch block found. MongoServerError with error.code === 11000 - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+          "suggested_fix": "Caller MUST catch duplicate key errors (code 11000) and handle gracefully. Extract conflicting field from error message. DO NOT retry without changing the unique field value.\n",
+          "code_snippet": {
+            "startLine": 277,
+            "endLine": 285,
+            "lines": [
+              {
+                "line": 277,
+                "content": "    console.error('Find failed:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 278,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 279,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 280,
+                "content": "  // ❌ This one doesn't - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 281,
+                "content": "  await collection.insertOne({ name: 'Test' });",
+                "highlighted": true
+              },
+              {
+                "line": 282,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 283,
+                "content": "  // ✅ This one has error handling",
+                "highlighted": false
+              },
+              {
+                "line": 284,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 285,
+                "content": "    await collection.updateOne({ name: 'Test' }, { $set: { status: 'active' } });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-delete-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 291,
+          "column": 9,
+          "package": "mongodb",
+          "function": "deleteOne",
+          "contract_clause": "delete-failure",
+          "description": "No try-catch block found. MongoServerError, MongoWriteConcernError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/",
+          "suggested_fix": "Caller MUST catch delete errors. Deleting non-existent document is NOT an error (deletedCount = 0). Network errors may be transient and retriable.\n",
+          "code_snippet": {
+            "startLine": 287,
+            "endLine": 295,
+            "lines": [
+              {
+                "line": 287,
+                "content": "    console.error('Update failed:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 288,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 289,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 290,
+                "content": "  // ❌ This one doesn't - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 291,
+                "content": "  await collection.deleteOne({ name: 'Test' });",
+                "highlighted": true
+              },
+              {
+                "line": 292,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 293,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 294,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 295,
+                "content": " * ❌ Async function with instance tracking across multiple calls",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/instance-usage.ts",
+          "line": 299,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 295,
+            "endLine": 303,
+            "lines": [
+              {
+                "line": 295,
+                "content": " * ❌ Async function with instance tracking across multiple calls",
+                "highlighted": false
+              },
+              {
+                "line": 296,
+                "content": " * Should detect violations",
+                "highlighted": false
+              },
+              {
+                "line": 297,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 298,
+                "content": "async function instanceTrackingAcrossCalls() {",
+                "highlighted": false
+              },
+              {
+                "line": 299,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 300,
+                "content": "  const db = client.db('testdb');",
+                "highlighted": false
+              },
+              {
+                "line": 301,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 302,
+                "content": "  // Get collection",
+                "highlighted": false
+              },
+              {
+                "line": 303,
+                "content": "  const users = db.collection('users');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+          "line": 18,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 14,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 14,
+                "content": " * ❌ Missing: Connection without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "async function connectWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 19,
+                "content": "  const db = client.db(dbName);",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  console.log('Connected');",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  return { client, db };",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+          "line": 162,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 158,
+            "endLine": 166,
+            "lines": [
+              {
+                "line": 158,
+                "content": " * ❌ Missing: Complete workflow without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": " * Should trigger multiple ERROR violations",
+                "highlighted": false
+              },
+              {
+                "line": 160,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "async function workflowWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 163,
+                "content": "  const db = client.db(dbName);",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "  const collection = db.collection('users');",
+                "highlighted": false
+              },
+              {
+                "line": 165,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "  await collection.insertOne({ name: 'Alice', email: 'alice@example.com' });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+          "line": 235,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 231,
+            "endLine": 239,
+            "lines": [
+              {
+                "line": 231,
+                "content": " * ❌ Missing: Connection with operations, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": " * Should trigger multiple ERROR violations",
+                "highlighted": false
+              },
+              {
+                "line": 233,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 234,
+                "content": "async function connectAndQueryWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 235,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 236,
+                "content": "  const db = client.db(dbName);",
+                "highlighted": false
+              },
+              {
+                "line": 237,
+                "content": "  const users = db.collection('users');",
+                "highlighted": false
+              },
+              {
+                "line": 238,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 239,
+                "content": "  // Multiple unhandled operations",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mongodb-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/.mongodb.bak/fixtures/missing-error-handling.ts",
+          "line": 254,
+          "column": 24,
+          "package": "mongodb",
+          "function": "connect",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. MongoNetworkError, MongoServerSelectionError, MongoNetworkTimeoutError, or MongoError - this will crash the application.",
+          "source_doc": "https://www.mongodb.com/docs/drivers/node/current/connection-troubleshooting/",
+          "suggested_fix": "Caller MUST catch connection errors and handle them separately from query errors. Implement retry logic with exponential backoff for transient connection issues. Log connection errors for operations monitoring.\n",
+          "code_snippet": {
+            "startLine": 250,
+            "endLine": 258,
+            "lines": [
+              {
+                "line": 250,
+                "content": " * ❌ Missing: Promise chaining without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": " * Should trigger ERROR violations",
+                "highlighted": false
+              },
+              {
+                "line": 252,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 253,
+                "content": "async function promiseChainingWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 254,
+                "content": "  const client = await MongoClient.connect(connectionString);",
+                "highlighted": true
+              },
+              {
+                "line": 255,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 256,
+                "content": "  return client",
+                "highlighted": false
+              },
+              {
+                "line": 257,
+                "content": "    .db(dbName)",
+                "highlighted": false
+              },
+              {
+                "line": 258,
+                "content": "    .collection('users')",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

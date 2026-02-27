@@ -1,0 +1,4330 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:58:17.928Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typeorm",
+    "twilio",
+    "typescript",
+    "tedious",
+    "superagent",
+    "square",
+    "stripe",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "request-promise",
+    "redis",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "knex",
+    "mocha",
+    "graphql",
+    "ioredis",
+    "got",
+    "joi",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@prisma/client",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 4,
+  "violations": [
+    {
+      "id": "@clerk/nextjs-use-signin-no-error-state",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 76,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useSignIn",
+      "contract_clause": "use-signin-no-error-state",
+      "description": "Variable '{ signIn, setActive }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+      "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+      "code_snippet": {
+        "startLine": 72,
+        "endLine": 80,
+        "lines": [
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "// ❌ VIOLATION: signIn.create() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "export function SignInForm_NoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  const { signIn, setActive } = useSignIn();",
+            "highlighted": true
+          },
+          {
+            "line": 77,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "  const handleSubmit = async (email: string, password: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "    // No try-catch - errors will be unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "    const result = await signIn?.create({",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-signin-no-error-state",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 96,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useSignIn",
+      "contract_clause": "use-signin-no-error-state",
+      "description": "Variable '{ signIn, setActive }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+      "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+      "code_snippet": {
+        "startLine": 92,
+        "endLine": 100,
+        "lines": [
+          {
+            "line": 92,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "// ❌ VIOLATION: signIn.create() catches error but doesn't display it to user",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "export function SignInForm_NoErrorDisplay() {",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  const { signIn, setActive } = useSignIn();",
+            "highlighted": true
+          },
+          {
+            "line": 97,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "  const handleSubmit = async (email: string, password: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "    try {",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "      const result = await signIn?.create({",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-signin-no-error-state",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 120,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useSignIn",
+      "contract_clause": "use-signin-no-error-state",
+      "description": "Variable '{ signIn, setActive }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+      "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+      "code_snippet": {
+        "startLine": 116,
+        "endLine": 124,
+        "lines": [
+          {
+            "line": 116,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 117,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 118,
+            "content": "// ❌ VIOLATION: user_locked error doesn't show lockout_expires_in_seconds",
+            "highlighted": false
+          },
+          {
+            "line": 119,
+            "content": "export function SignInForm_NoLockoutMeta() {",
+            "highlighted": false
+          },
+          {
+            "line": 120,
+            "content": "  const { signIn, setActive } = useSignIn();",
+            "highlighted": true
+          },
+          {
+            "line": 121,
+            "content": "  const [error, setError] = useState<string>('');",
+            "highlighted": false
+          },
+          {
+            "line": 122,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 123,
+            "content": "  const handleSubmit = async (email: string, password: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 124,
+            "content": "    try {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 203,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "Variable '{ setActive }' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 199,
+        "endLine": 207,
+        "lines": [
+          {
+            "line": 199,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "// ❌ VIOLATION: setActive() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 202,
+            "content": "export function SessionActivation_NoCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 203,
+            "content": "  const { setActive } = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 204,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "  const activateSession = async (sessionId: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 206,
+            "content": "    // No try-catch - will fail silently if session invalid",
+            "highlighted": false
+          },
+          {
+            "line": 207,
+            "content": "    await setActive({ session: sessionId });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 217,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "Variable 'clerk' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 213,
+        "endLine": 221,
+        "lines": [
+          {
+            "line": 213,
+            "content": "// ❌ VIOLATION: useClerk() potentially outside ClerkProvider",
+            "highlighted": false
+          },
+          {
+            "line": 214,
+            "content": "// (This is hard to detect statically, but represents the runtime error)",
+            "highlighted": false
+          },
+          {
+            "line": 215,
+            "content": "export function Component_NoProvider() {",
+            "highlighted": false
+          },
+          {
+            "line": 216,
+            "content": "  // If this component is rendered outside ClerkProvider, it will throw",
+            "highlighted": false
+          },
+          {
+            "line": 217,
+            "content": "  const clerk = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 218,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 219,
+            "content": "  return <div>{clerk.loaded ? 'Loaded' : 'Loading...'}</div>;",
+            "highlighted": false
+          },
+          {
+            "line": 220,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-missing-clerk-middleware",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 18,
+      "column": 28,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "missing-clerk-middleware",
+      "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+      "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+      "code_snippet": {
+        "startLine": 14,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 14,
+            "content": "// (In a real scenario, this would be detected by checking for src/middleware.ts)",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "// ❌ VIOLATION: auth() result used without null check",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "export async function GET_UnprotectedRoute(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  const { userId } = await auth();",
+            "highlighted": true
+          },
+          {
+            "line": 19,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  // No check for null/undefined - will crash if not authenticated",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-auth-null-not-checked",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 18,
+      "column": 28,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "auth-null-not-checked",
+      "description": "Runtime error when accessing properties of null/undefined user",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+      "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+      "code_snippet": {
+        "startLine": 14,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 14,
+            "content": "// (In a real scenario, this would be detected by checking for src/middleware.ts)",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "// ❌ VIOLATION: auth() result used without null check",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "export async function GET_UnprotectedRoute(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  const { userId } = await auth();",
+            "highlighted": true
+          },
+          {
+            "line": 19,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  // No check for null/undefined - will crash if not authenticated",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-missing-clerk-middleware",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 27,
+      "column": 16,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "missing-clerk-middleware",
+      "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+      "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+      "code_snippet": {
+        "startLine": 23,
+        "endLine": 31,
+        "lines": [
+          {
+            "line": 23,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "// ❌ VIOLATION: auth.protect() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  // This will throw if not authenticated, but no try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  await (await auth()).protect();",
+            "highlighted": true
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  const { userId } = await auth();",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-auth-null-not-checked",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 27,
+      "column": 16,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "auth-null-not-checked",
+      "description": "Runtime error when accessing properties of null/undefined user",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+      "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+      "code_snippet": {
+        "startLine": 23,
+        "endLine": 31,
+        "lines": [
+          {
+            "line": 23,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "// ❌ VIOLATION: auth.protect() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  // This will throw if not authenticated, but no try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  await (await auth()).protect();",
+            "highlighted": true
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  const { userId } = await auth();",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-missing-clerk-middleware",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 29,
+      "column": 28,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "missing-clerk-middleware",
+      "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+      "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+      "code_snippet": {
+        "startLine": 25,
+        "endLine": 33,
+        "lines": [
+          {
+            "line": 25,
+            "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  // This will throw if not authenticated, but no try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  await (await auth()).protect();",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  const { userId } = await auth();",
+            "highlighted": true
+          },
+          {
+            "line": 30,
+            "content": "  return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "// ❌ VIOLATION: currentUser() without null check",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-auth-null-not-checked",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 29,
+      "column": 28,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "auth-null-not-checked",
+      "description": "Runtime error when accessing properties of null/undefined user",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+      "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+      "code_snippet": {
+        "startLine": 25,
+        "endLine": 33,
+        "lines": [
+          {
+            "line": 25,
+            "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  // This will throw if not authenticated, but no try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  await (await auth()).protect();",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  const { userId } = await auth();",
+            "highlighted": true
+          },
+          {
+            "line": 30,
+            "content": "  return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "// ❌ VIOLATION: currentUser() without null check",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-current-user-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 22,
+      "package": "@clerk/nextjs",
+      "function": "currentUser",
+      "contract_clause": "current-user-null-not-handled",
+      "description": "Runtime error accessing properties of null",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+      "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "// ❌ VIOLATION: currentUser() without null check",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "export async function GET_CurrentUserNoCheck(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const user = await currentUser();",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  // Directly accessing properties without null check",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  return Response.json({",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    email: user.emailAddresses[0].emailAddress, // Will crash if user is null",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-current-user-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 23,
+      "package": "@clerk/nextjs",
+      "function": "currentUser",
+      "contract_clause": "current-user-null-not-handled",
+      "description": "Runtime error accessing properties of null",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+      "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "// ❌ VIOLATION: Multiple currentUser() calls without caching (Rate limit risk)",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "export async function Layout_MultipleCurrentUserCalls({ children }: { children: React.ReactNode }) {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const user1 = await currentUser(); // API call #1",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "  const user2 = await currentUser(); // API call #2 (duplicate!)",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  const user3 = await currentUser(); // API call #3 (duplicate!)",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  return (",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-current-user-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 46,
+      "column": 23,
+      "package": "@clerk/nextjs",
+      "function": "currentUser",
+      "contract_clause": "current-user-null-not-handled",
+      "description": "Runtime error accessing properties of null",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+      "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+      "code_snippet": {
+        "startLine": 42,
+        "endLine": 50,
+        "lines": [
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "// ❌ VIOLATION: Multiple currentUser() calls without caching (Rate limit risk)",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "export async function Layout_MultipleCurrentUserCalls({ children }: { children: React.ReactNode }) {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const user1 = await currentUser(); // API call #1",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  const user2 = await currentUser(); // API call #2 (duplicate!)",
+            "highlighted": true
+          },
+          {
+            "line": 47,
+            "content": "  const user3 = await currentUser(); // API call #3 (duplicate!)",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  return (",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    <html>",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-current-user-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 47,
+      "column": 23,
+      "package": "@clerk/nextjs",
+      "function": "currentUser",
+      "contract_clause": "current-user-null-not-handled",
+      "description": "Runtime error accessing properties of null",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+      "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+      "code_snippet": {
+        "startLine": 43,
+        "endLine": 51,
+        "lines": [
+          {
+            "line": 43,
+            "content": "// ❌ VIOLATION: Multiple currentUser() calls without caching (Rate limit risk)",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "export async function Layout_MultipleCurrentUserCalls({ children }: { children: React.ReactNode }) {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const user1 = await currentUser(); // API call #1",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  const user2 = await currentUser(); // API call #2 (duplicate!)",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  const user3 = await currentUser(); // API call #3 (duplicate!)",
+            "highlighted": true
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  return (",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    <html>",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "      <body>",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-get-token-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 68,
+      "column": 23,
+      "package": "@clerk/nextjs",
+      "function": "getToken",
+      "contract_clause": "get-token-null-not-handled",
+      "description": "Runtime error when user not authenticated (returns null)",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/get-token",
+      "suggested_fix": "MUST handle null case when getToken() is called. Returns null if user not authenticated or token invalid.\n",
+      "code_snippet": {
+        "startLine": 64,
+        "endLine": 72,
+        "lines": [
+          {
+            "line": 64,
+            "content": "function Footer({ user }: { user: any }) { return null; }",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "// ❌ VIOLATION: getToken() result used without null check",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "export async function GET_TokenNoCheck(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  const token = await getToken();",
+            "highlighted": true
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  // Using token without checking if null",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  return Response.json({ token: token.substring(0, 10) }); // Will crash if token is null",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 203,
+      "column": 25,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 199,
+        "endLine": 207,
+        "lines": [
+          {
+            "line": 199,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "// ❌ VIOLATION: setActive() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 202,
+            "content": "export function SessionActivation_NoCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 203,
+            "content": "  const { setActive } = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 204,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "  const activateSession = async (sessionId: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 206,
+            "content": "    // No try-catch - will fail silently if session invalid",
+            "highlighted": false
+          },
+          {
+            "line": 207,
+            "content": "    await setActive({ session: sessionId });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 217,
+      "column": 17,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 213,
+        "endLine": 221,
+        "lines": [
+          {
+            "line": 213,
+            "content": "// ❌ VIOLATION: useClerk() potentially outside ClerkProvider",
+            "highlighted": false
+          },
+          {
+            "line": 214,
+            "content": "// (This is hard to detect statically, but represents the runtime error)",
+            "highlighted": false
+          },
+          {
+            "line": 215,
+            "content": "export function Component_NoProvider() {",
+            "highlighted": false
+          },
+          {
+            "line": 216,
+            "content": "  // If this component is rendered outside ClerkProvider, it will throw",
+            "highlighted": false
+          },
+          {
+            "line": 217,
+            "content": "  const clerk = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 218,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 219,
+            "content": "  return <div>{clerk.loaded ? 'Loaded' : 'Loading...'}</div>;",
+            "highlighted": false
+          },
+          {
+            "line": 220,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-missing-clerk-middleware",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 225,
+      "column": 28,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "missing-clerk-middleware",
+      "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+      "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+      "code_snippet": {
+        "startLine": 221,
+        "endLine": 229,
+        "lines": [
+          {
+            "line": 221,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "// ❌ VIOLATION: Multiple issues combined",
+            "highlighted": false
+          },
+          {
+            "line": 223,
+            "content": "export async function API_MultipleViolations(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 224,
+            "content": "  // No auth check",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "  const { userId } = await auth(); // Missing null check",
+            "highlighted": true
+          },
+          {
+            "line": 226,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "  const user = await currentUser(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 228,
+            "content": "  const token = await getToken(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 229,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-auth-null-not-checked",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 225,
+      "column": 28,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "auth-null-not-checked",
+      "description": "Runtime error when accessing properties of null/undefined user",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+      "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+      "code_snippet": {
+        "startLine": 221,
+        "endLine": 229,
+        "lines": [
+          {
+            "line": 221,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "// ❌ VIOLATION: Multiple issues combined",
+            "highlighted": false
+          },
+          {
+            "line": 223,
+            "content": "export async function API_MultipleViolations(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 224,
+            "content": "  // No auth check",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "  const { userId } = await auth(); // Missing null check",
+            "highlighted": true
+          },
+          {
+            "line": 226,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "  const user = await currentUser(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 228,
+            "content": "  const token = await getToken(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 229,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-current-user-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 227,
+      "column": 22,
+      "package": "@clerk/nextjs",
+      "function": "currentUser",
+      "contract_clause": "current-user-null-not-handled",
+      "description": "Runtime error accessing properties of null",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+      "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+      "code_snippet": {
+        "startLine": 223,
+        "endLine": 231,
+        "lines": [
+          {
+            "line": 223,
+            "content": "export async function API_MultipleViolations(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 224,
+            "content": "  // No auth check",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "  const { userId } = await auth(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "  const user = await currentUser(); // Missing null check",
+            "highlighted": true
+          },
+          {
+            "line": 228,
+            "content": "  const token = await getToken(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 229,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": "  // Using all without null checks",
+            "highlighted": false
+          },
+          {
+            "line": 231,
+            "content": "  return Response.json({",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-get-token-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+      "line": 228,
+      "column": 23,
+      "package": "@clerk/nextjs",
+      "function": "getToken",
+      "contract_clause": "get-token-null-not-handled",
+      "description": "Runtime error when user not authenticated (returns null)",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/get-token",
+      "suggested_fix": "MUST handle null case when getToken() is called. Returns null if user not authenticated or token invalid.\n",
+      "code_snippet": {
+        "startLine": 224,
+        "endLine": 232,
+        "lines": [
+          {
+            "line": 224,
+            "content": "  // No auth check",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "  const { userId } = await auth(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "  const user = await currentUser(); // Missing null check",
+            "highlighted": false
+          },
+          {
+            "line": 228,
+            "content": "  const token = await getToken(); // Missing null check",
+            "highlighted": true
+          },
+          {
+            "line": 229,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": "  // Using all without null checks",
+            "highlighted": false
+          },
+          {
+            "line": 231,
+            "content": "  return Response.json({",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": "    userId,",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-signin-no-error-state",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 91,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useSignIn",
+      "contract_clause": "use-signin-no-error-state",
+      "description": "Variable '{ signIn, setActive, isLoaded }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+      "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+      "code_snippet": {
+        "startLine": 87,
+        "endLine": 95,
+        "lines": [
+          {
+            "line": 87,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "// ✅ CORRECT: signIn.create() with error handling",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "export function SignInForm_Proper() {",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "  const { signIn, setActive, isLoaded } = useSignIn();",
+            "highlighted": true
+          },
+          {
+            "line": 92,
+            "content": "  const [error, setError] = useState<string>('');",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "  const handleSubmit = async (email: string, password: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    if (!isLoaded || !signIn) return;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 202,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "Variable '{ setActive }' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 198,
+        "endLine": 206,
+        "lines": [
+          {
+            "line": 198,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 199,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "// ✅ CORRECT: setActive() with error handling",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "export function SessionActivation_Proper() {",
+            "highlighted": false
+          },
+          {
+            "line": 202,
+            "content": "  const { setActive } = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 203,
+            "content": "  const [error, setError] = useState<string>('');",
+            "highlighted": false
+          },
+          {
+            "line": 204,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "  const activateSession = async (sessionId: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 206,
+            "content": "    try {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 223,
+      "column": 9,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "Variable 'clerk' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 219,
+        "endLine": 227,
+        "lines": [
+          {
+            "line": 219,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 220,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "// ✅ CORRECT: useClerk() inside ClerkProvider context",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "export function Component_WithClerkProvider() {",
+            "highlighted": false
+          },
+          {
+            "line": 223,
+            "content": "  const clerk = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 224,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "  // This is safe because component is wrapped in ClerkProvider",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "  return <div>{clerk.loaded ? 'Clerk loaded' : 'Loading...'}</div>;",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-middleware-not-exported",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 16,
+      "column": 16,
+      "package": "@clerk/nextjs",
+      "function": "clerkMiddleware",
+      "contract_clause": "middleware-not-exported",
+      "description": "Middleware never runs, auth() calls fail",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+      "suggested_fix": "MUST export clerkMiddleware() as default export from src/middleware.ts. Pattern: `export default clerkMiddleware();`\n",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 20,
+        "lines": [
+          {
+            "line": 12,
+            "content": "import { useState } from 'react';",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "// ✅ CORRECT: Middleware properly configured",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "// File: src/middleware.ts",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "export default clerkMiddleware();",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "export const config = {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  matcher: ['/((?!.*\\\\..*|_next).*)', '/'],",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "};",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-missing-clerk-middleware",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 24,
+      "column": 45,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "missing-clerk-middleware",
+      "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+      "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+      "code_snippet": {
+        "startLine": 20,
+        "endLine": 28,
+        "lines": [
+          {
+            "line": 20,
+            "content": "};",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "// ✅ CORRECT: auth() with null check",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "export async function GET_ProtectedRoute(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  const { userId, isAuthenticated } = await auth();",
+            "highlighted": true
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  if (!isAuthenticated || !userId) {",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "    return Response.json({ error: 'Unauthorized' }, { status: 401 });",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-auth-null-not-checked",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 36,
+      "column": 18,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "auth-null-not-checked",
+      "description": "Runtime error when accessing properties of null/undefined user",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+      "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+      "code_snippet": {
+        "startLine": 32,
+        "endLine": 40,
+        "lines": [
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "// ✅ CORRECT: Using auth.protect() with try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "export async function POST_ProtectedWithProtect(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "    await (await auth()).protect();",
+            "highlighted": true
+          },
+          {
+            "line": 37,
+            "content": "    const { userId } = await auth();",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    return Response.json({ error: 'Unauthorized' }, { status: 401 });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-auth-null-not-checked",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 37,
+      "column": 30,
+      "package": "@clerk/nextjs",
+      "function": "auth",
+      "contract_clause": "auth-null-not-checked",
+      "description": "Runtime error when accessing properties of null/undefined user",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+      "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+      "code_snippet": {
+        "startLine": 33,
+        "endLine": 41,
+        "lines": [
+          {
+            "line": 33,
+            "content": "// ✅ CORRECT: Using auth.protect() with try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "export async function POST_ProtectedWithProtect(req: Request) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "    await (await auth()).protect();",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    const { userId } = await auth();",
+            "highlighted": true
+          },
+          {
+            "line": 38,
+            "content": "    return Response.json({ userId });",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    return Response.json({ error: 'Unauthorized' }, { status: 401 });",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-current-user-null-not-handled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 57,
+      "column": 16,
+      "package": "@clerk/nextjs",
+      "function": "currentUser",
+      "contract_clause": "current-user-null-not-handled",
+      "description": "Runtime error accessing properties of null",
+      "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+      "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+      "code_snippet": {
+        "startLine": 53,
+        "endLine": 61,
+        "lines": [
+          {
+            "line": 53,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "// ✅ CORRECT: Cached currentUser() to avoid rate limits",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "const getCachedUser = cache(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  return await currentUser();",
+            "highlighted": true
+          },
+          {
+            "line": 58,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "export async function Layout_WithCachedUser({ children }: { children: React.ReactNode }) {",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  const user = await getCachedUser();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 202,
+      "column": 25,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 198,
+        "endLine": 206,
+        "lines": [
+          {
+            "line": 198,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 199,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "// ✅ CORRECT: setActive() with error handling",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "export function SessionActivation_Proper() {",
+            "highlighted": false
+          },
+          {
+            "line": 202,
+            "content": "  const { setActive } = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 203,
+            "content": "  const [error, setError] = useState<string>('');",
+            "highlighted": false
+          },
+          {
+            "line": 204,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "  const activateSession = async (sessionId: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 206,
+            "content": "    try {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@clerk/nextjs-use-clerk-outside-provider",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+      "line": 223,
+      "column": 17,
+      "package": "@clerk/nextjs",
+      "function": "useClerk",
+      "contract_clause": "use-clerk-outside-provider",
+      "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+      "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+      "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+      "code_snippet": {
+        "startLine": 219,
+        "endLine": 227,
+        "lines": [
+          {
+            "line": 219,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 220,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "// ✅ CORRECT: useClerk() inside ClerkProvider context",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "export function Component_WithClerkProvider() {",
+            "highlighted": false
+          },
+          {
+            "line": 223,
+            "content": "  const clerk = useClerk();",
+            "highlighted": true
+          },
+          {
+            "line": 224,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "  // This is safe because component is wrapped in ClerkProvider",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "  return <div>{clerk.loaded ? 'Clerk loaded' : 'Loading...'}</div>;",
+            "highlighted": false
+          },
+          {
+            "line": 227,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 32,
+    "error_count": 28,
+    "warning_count": 4,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 16,
+    "withContracts": 3,
+    "withoutContracts": 13,
+    "packages": [
+      {
+        "name": "@clerk/nextjs",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/rate-limit-scenario.ts"
+        ]
+      },
+      {
+        "name": "next",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/webhook-verification.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "react",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": false,
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/rate-limit-scenario.ts"
+        ]
+      },
+      {
+        "name": "svix",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": false,
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/webhook-verification.ts"
+        ]
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "@clerk/nextjs": {
+      "total": 32,
+      "errors": 28,
+      "warnings": 4,
+      "info": 0,
+      "violations": [
+        {
+          "id": "@clerk/nextjs-use-signin-no-error-state",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 76,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useSignIn",
+          "contract_clause": "use-signin-no-error-state",
+          "description": "Variable '{ signIn, setActive }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+          "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+          "code_snippet": {
+            "startLine": 72,
+            "endLine": 80,
+            "lines": [
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "// ❌ VIOLATION: signIn.create() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "export function SignInForm_NoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  const { signIn, setActive } = useSignIn();",
+                "highlighted": true
+              },
+              {
+                "line": 77,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "  const handleSubmit = async (email: string, password: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "    // No try-catch - errors will be unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "    const result = await signIn?.create({",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-signin-no-error-state",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 96,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useSignIn",
+          "contract_clause": "use-signin-no-error-state",
+          "description": "Variable '{ signIn, setActive }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+          "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+          "code_snippet": {
+            "startLine": 92,
+            "endLine": 100,
+            "lines": [
+              {
+                "line": 92,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "// ❌ VIOLATION: signIn.create() catches error but doesn't display it to user",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "export function SignInForm_NoErrorDisplay() {",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  const { signIn, setActive } = useSignIn();",
+                "highlighted": true
+              },
+              {
+                "line": 97,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "  const handleSubmit = async (email: string, password: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "    try {",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "      const result = await signIn?.create({",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-signin-no-error-state",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 120,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useSignIn",
+          "contract_clause": "use-signin-no-error-state",
+          "description": "Variable '{ signIn, setActive }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+          "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+          "code_snippet": {
+            "startLine": 116,
+            "endLine": 124,
+            "lines": [
+              {
+                "line": 116,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 117,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 118,
+                "content": "// ❌ VIOLATION: user_locked error doesn't show lockout_expires_in_seconds",
+                "highlighted": false
+              },
+              {
+                "line": 119,
+                "content": "export function SignInForm_NoLockoutMeta() {",
+                "highlighted": false
+              },
+              {
+                "line": 120,
+                "content": "  const { signIn, setActive } = useSignIn();",
+                "highlighted": true
+              },
+              {
+                "line": 121,
+                "content": "  const [error, setError] = useState<string>('');",
+                "highlighted": false
+              },
+              {
+                "line": 122,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 123,
+                "content": "  const handleSubmit = async (email: string, password: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 124,
+                "content": "    try {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 203,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "Variable '{ setActive }' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 199,
+            "endLine": 207,
+            "lines": [
+              {
+                "line": 199,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "// ❌ VIOLATION: setActive() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 202,
+                "content": "export function SessionActivation_NoCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 203,
+                "content": "  const { setActive } = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 204,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "  const activateSession = async (sessionId: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 206,
+                "content": "    // No try-catch - will fail silently if session invalid",
+                "highlighted": false
+              },
+              {
+                "line": 207,
+                "content": "    await setActive({ session: sessionId });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 217,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "Variable 'clerk' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 213,
+            "endLine": 221,
+            "lines": [
+              {
+                "line": 213,
+                "content": "// ❌ VIOLATION: useClerk() potentially outside ClerkProvider",
+                "highlighted": false
+              },
+              {
+                "line": 214,
+                "content": "// (This is hard to detect statically, but represents the runtime error)",
+                "highlighted": false
+              },
+              {
+                "line": 215,
+                "content": "export function Component_NoProvider() {",
+                "highlighted": false
+              },
+              {
+                "line": 216,
+                "content": "  // If this component is rendered outside ClerkProvider, it will throw",
+                "highlighted": false
+              },
+              {
+                "line": 217,
+                "content": "  const clerk = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 218,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 219,
+                "content": "  return <div>{clerk.loaded ? 'Loaded' : 'Loading...'}</div>;",
+                "highlighted": false
+              },
+              {
+                "line": 220,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-missing-clerk-middleware",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 18,
+          "column": 28,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "missing-clerk-middleware",
+          "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+          "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+          "code_snippet": {
+            "startLine": 14,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 14,
+                "content": "// (In a real scenario, this would be detected by checking for src/middleware.ts)",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "// ❌ VIOLATION: auth() result used without null check",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "export async function GET_UnprotectedRoute(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  const { userId } = await auth();",
+                "highlighted": true
+              },
+              {
+                "line": 19,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  // No check for null/undefined - will crash if not authenticated",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-auth-null-not-checked",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 18,
+          "column": 28,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "auth-null-not-checked",
+          "description": "Runtime error when accessing properties of null/undefined user",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+          "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+          "code_snippet": {
+            "startLine": 14,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 14,
+                "content": "// (In a real scenario, this would be detected by checking for src/middleware.ts)",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "// ❌ VIOLATION: auth() result used without null check",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "export async function GET_UnprotectedRoute(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  const { userId } = await auth();",
+                "highlighted": true
+              },
+              {
+                "line": 19,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  // No check for null/undefined - will crash if not authenticated",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-missing-clerk-middleware",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 27,
+          "column": 16,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "missing-clerk-middleware",
+          "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+          "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+          "code_snippet": {
+            "startLine": 23,
+            "endLine": 31,
+            "lines": [
+              {
+                "line": 23,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "// ❌ VIOLATION: auth.protect() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  // This will throw if not authenticated, but no try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  await (await auth()).protect();",
+                "highlighted": true
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  const { userId } = await auth();",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-auth-null-not-checked",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 27,
+          "column": 16,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "auth-null-not-checked",
+          "description": "Runtime error when accessing properties of null/undefined user",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+          "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+          "code_snippet": {
+            "startLine": 23,
+            "endLine": 31,
+            "lines": [
+              {
+                "line": 23,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "// ❌ VIOLATION: auth.protect() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  // This will throw if not authenticated, but no try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  await (await auth()).protect();",
+                "highlighted": true
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  const { userId } = await auth();",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-missing-clerk-middleware",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 29,
+          "column": 28,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "missing-clerk-middleware",
+          "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+          "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+          "code_snippet": {
+            "startLine": 25,
+            "endLine": 33,
+            "lines": [
+              {
+                "line": 25,
+                "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  // This will throw if not authenticated, but no try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  await (await auth()).protect();",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  const { userId } = await auth();",
+                "highlighted": true
+              },
+              {
+                "line": 30,
+                "content": "  return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "// ❌ VIOLATION: currentUser() without null check",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-auth-null-not-checked",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 29,
+          "column": 28,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "auth-null-not-checked",
+          "description": "Runtime error when accessing properties of null/undefined user",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+          "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+          "code_snippet": {
+            "startLine": 25,
+            "endLine": 33,
+            "lines": [
+              {
+                "line": 25,
+                "content": "export async function POST_ProtectWithoutCatch(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  // This will throw if not authenticated, but no try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  await (await auth()).protect();",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  const { userId } = await auth();",
+                "highlighted": true
+              },
+              {
+                "line": 30,
+                "content": "  return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "// ❌ VIOLATION: currentUser() without null check",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-current-user-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 22,
+          "package": "@clerk/nextjs",
+          "function": "currentUser",
+          "contract_clause": "current-user-null-not-handled",
+          "description": "Runtime error accessing properties of null",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+          "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "// ❌ VIOLATION: currentUser() without null check",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "export async function GET_CurrentUserNoCheck(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const user = await currentUser();",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  // Directly accessing properties without null check",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  return Response.json({",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    email: user.emailAddresses[0].emailAddress, // Will crash if user is null",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-current-user-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 23,
+          "package": "@clerk/nextjs",
+          "function": "currentUser",
+          "contract_clause": "current-user-null-not-handled",
+          "description": "Runtime error accessing properties of null",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+          "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "// ❌ VIOLATION: Multiple currentUser() calls without caching (Rate limit risk)",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "export async function Layout_MultipleCurrentUserCalls({ children }: { children: React.ReactNode }) {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const user1 = await currentUser(); // API call #1",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "  const user2 = await currentUser(); // API call #2 (duplicate!)",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  const user3 = await currentUser(); // API call #3 (duplicate!)",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  return (",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-current-user-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 46,
+          "column": 23,
+          "package": "@clerk/nextjs",
+          "function": "currentUser",
+          "contract_clause": "current-user-null-not-handled",
+          "description": "Runtime error accessing properties of null",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+          "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+          "code_snippet": {
+            "startLine": 42,
+            "endLine": 50,
+            "lines": [
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "// ❌ VIOLATION: Multiple currentUser() calls without caching (Rate limit risk)",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "export async function Layout_MultipleCurrentUserCalls({ children }: { children: React.ReactNode }) {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const user1 = await currentUser(); // API call #1",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  const user2 = await currentUser(); // API call #2 (duplicate!)",
+                "highlighted": true
+              },
+              {
+                "line": 47,
+                "content": "  const user3 = await currentUser(); // API call #3 (duplicate!)",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  return (",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    <html>",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-current-user-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 47,
+          "column": 23,
+          "package": "@clerk/nextjs",
+          "function": "currentUser",
+          "contract_clause": "current-user-null-not-handled",
+          "description": "Runtime error accessing properties of null",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+          "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+          "code_snippet": {
+            "startLine": 43,
+            "endLine": 51,
+            "lines": [
+              {
+                "line": 43,
+                "content": "// ❌ VIOLATION: Multiple currentUser() calls without caching (Rate limit risk)",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "export async function Layout_MultipleCurrentUserCalls({ children }: { children: React.ReactNode }) {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const user1 = await currentUser(); // API call #1",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  const user2 = await currentUser(); // API call #2 (duplicate!)",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  const user3 = await currentUser(); // API call #3 (duplicate!)",
+                "highlighted": true
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  return (",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    <html>",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "      <body>",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-get-token-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 68,
+          "column": 23,
+          "package": "@clerk/nextjs",
+          "function": "getToken",
+          "contract_clause": "get-token-null-not-handled",
+          "description": "Runtime error when user not authenticated (returns null)",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/get-token",
+          "suggested_fix": "MUST handle null case when getToken() is called. Returns null if user not authenticated or token invalid.\n",
+          "code_snippet": {
+            "startLine": 64,
+            "endLine": 72,
+            "lines": [
+              {
+                "line": 64,
+                "content": "function Footer({ user }: { user: any }) { return null; }",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "// ❌ VIOLATION: getToken() result used without null check",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "export async function GET_TokenNoCheck(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  const token = await getToken();",
+                "highlighted": true
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  // Using token without checking if null",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  return Response.json({ token: token.substring(0, 10) }); // Will crash if token is null",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 203,
+          "column": 25,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 199,
+            "endLine": 207,
+            "lines": [
+              {
+                "line": 199,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "// ❌ VIOLATION: setActive() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 202,
+                "content": "export function SessionActivation_NoCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 203,
+                "content": "  const { setActive } = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 204,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "  const activateSession = async (sessionId: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 206,
+                "content": "    // No try-catch - will fail silently if session invalid",
+                "highlighted": false
+              },
+              {
+                "line": 207,
+                "content": "    await setActive({ session: sessionId });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 217,
+          "column": 17,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 213,
+            "endLine": 221,
+            "lines": [
+              {
+                "line": 213,
+                "content": "// ❌ VIOLATION: useClerk() potentially outside ClerkProvider",
+                "highlighted": false
+              },
+              {
+                "line": 214,
+                "content": "// (This is hard to detect statically, but represents the runtime error)",
+                "highlighted": false
+              },
+              {
+                "line": 215,
+                "content": "export function Component_NoProvider() {",
+                "highlighted": false
+              },
+              {
+                "line": 216,
+                "content": "  // If this component is rendered outside ClerkProvider, it will throw",
+                "highlighted": false
+              },
+              {
+                "line": 217,
+                "content": "  const clerk = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 218,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 219,
+                "content": "  return <div>{clerk.loaded ? 'Loaded' : 'Loading...'}</div>;",
+                "highlighted": false
+              },
+              {
+                "line": 220,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-missing-clerk-middleware",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 225,
+          "column": 28,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "missing-clerk-middleware",
+          "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+          "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+          "code_snippet": {
+            "startLine": 221,
+            "endLine": 229,
+            "lines": [
+              {
+                "line": 221,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "// ❌ VIOLATION: Multiple issues combined",
+                "highlighted": false
+              },
+              {
+                "line": 223,
+                "content": "export async function API_MultipleViolations(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 224,
+                "content": "  // No auth check",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "  const { userId } = await auth(); // Missing null check",
+                "highlighted": true
+              },
+              {
+                "line": 226,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "  const user = await currentUser(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 228,
+                "content": "  const token = await getToken(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 229,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-auth-null-not-checked",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 225,
+          "column": 28,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "auth-null-not-checked",
+          "description": "Runtime error when accessing properties of null/undefined user",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+          "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+          "code_snippet": {
+            "startLine": 221,
+            "endLine": 229,
+            "lines": [
+              {
+                "line": 221,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "// ❌ VIOLATION: Multiple issues combined",
+                "highlighted": false
+              },
+              {
+                "line": 223,
+                "content": "export async function API_MultipleViolations(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 224,
+                "content": "  // No auth check",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "  const { userId } = await auth(); // Missing null check",
+                "highlighted": true
+              },
+              {
+                "line": 226,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "  const user = await currentUser(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 228,
+                "content": "  const token = await getToken(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 229,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-current-user-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 227,
+          "column": 22,
+          "package": "@clerk/nextjs",
+          "function": "currentUser",
+          "contract_clause": "current-user-null-not-handled",
+          "description": "Runtime error accessing properties of null",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+          "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+          "code_snippet": {
+            "startLine": 223,
+            "endLine": 231,
+            "lines": [
+              {
+                "line": 223,
+                "content": "export async function API_MultipleViolations(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 224,
+                "content": "  // No auth check",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "  const { userId } = await auth(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "  const user = await currentUser(); // Missing null check",
+                "highlighted": true
+              },
+              {
+                "line": 228,
+                "content": "  const token = await getToken(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 229,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": "  // Using all without null checks",
+                "highlighted": false
+              },
+              {
+                "line": 231,
+                "content": "  return Response.json({",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-get-token-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/missing-error-handling.ts",
+          "line": 228,
+          "column": 23,
+          "package": "@clerk/nextjs",
+          "function": "getToken",
+          "contract_clause": "get-token-null-not-handled",
+          "description": "Runtime error when user not authenticated (returns null)",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/get-token",
+          "suggested_fix": "MUST handle null case when getToken() is called. Returns null if user not authenticated or token invalid.\n",
+          "code_snippet": {
+            "startLine": 224,
+            "endLine": 232,
+            "lines": [
+              {
+                "line": 224,
+                "content": "  // No auth check",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "  const { userId } = await auth(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "  const user = await currentUser(); // Missing null check",
+                "highlighted": false
+              },
+              {
+                "line": 228,
+                "content": "  const token = await getToken(); // Missing null check",
+                "highlighted": true
+              },
+              {
+                "line": 229,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": "  // Using all without null checks",
+                "highlighted": false
+              },
+              {
+                "line": 231,
+                "content": "  return Response.json({",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": "    userId,",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-signin-no-error-state",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 91,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useSignIn",
+          "contract_clause": "use-signin-no-error-state",
+          "description": "Variable '{ signIn, setActive, isLoaded }' assigned from @clerk/nextjs.useSignIn() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/guides/development/custom-flows/error-handling",
+          "suggested_fix": "SHOULD maintain error state and display ClerkAPIError messages to users. Use isClerkAPIResponseError() to type-check errors.\n",
+          "code_snippet": {
+            "startLine": 87,
+            "endLine": 95,
+            "lines": [
+              {
+                "line": 87,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "// ✅ CORRECT: signIn.create() with error handling",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "export function SignInForm_Proper() {",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "  const { signIn, setActive, isLoaded } = useSignIn();",
+                "highlighted": true
+              },
+              {
+                "line": 92,
+                "content": "  const [error, setError] = useState<string>('');",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "  const handleSubmit = async (email: string, password: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    if (!isLoaded || !signIn) return;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 202,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "Variable '{ setActive }' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 198,
+            "endLine": 206,
+            "lines": [
+              {
+                "line": 198,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 199,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "// ✅ CORRECT: setActive() with error handling",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "export function SessionActivation_Proper() {",
+                "highlighted": false
+              },
+              {
+                "line": 202,
+                "content": "  const { setActive } = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 203,
+                "content": "  const [error, setError] = useState<string>('');",
+                "highlighted": false
+              },
+              {
+                "line": 204,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "  const activateSession = async (sessionId: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 206,
+                "content": "    try {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 223,
+          "column": 9,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "Variable 'clerk' assigned from @clerk/nextjs.useClerk() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 219,
+            "endLine": 227,
+            "lines": [
+              {
+                "line": 219,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 220,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "// ✅ CORRECT: useClerk() inside ClerkProvider context",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "export function Component_WithClerkProvider() {",
+                "highlighted": false
+              },
+              {
+                "line": 223,
+                "content": "  const clerk = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 224,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "  // This is safe because component is wrapped in ClerkProvider",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "  return <div>{clerk.loaded ? 'Clerk loaded' : 'Loading...'}</div>;",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-middleware-not-exported",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 16,
+          "column": 16,
+          "package": "@clerk/nextjs",
+          "function": "clerkMiddleware",
+          "contract_clause": "middleware-not-exported",
+          "description": "Middleware never runs, auth() calls fail",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+          "suggested_fix": "MUST export clerkMiddleware() as default export from src/middleware.ts. Pattern: `export default clerkMiddleware();`\n",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 20,
+            "lines": [
+              {
+                "line": 12,
+                "content": "import { useState } from 'react';",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "// ✅ CORRECT: Middleware properly configured",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "// File: src/middleware.ts",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "export default clerkMiddleware();",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "export const config = {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  matcher: ['/((?!.*\\\\..*|_next).*)', '/'],",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "};",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-missing-clerk-middleware",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 24,
+          "column": 45,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "missing-clerk-middleware",
+          "description": "No try-catch block found. Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/clerk-middleware",
+          "suggested_fix": "MUST have clerkMiddleware() exported from src/middleware.ts with proper matcher configuration. Middleware must run for all routes where auth() is called.\n",
+          "code_snippet": {
+            "startLine": 20,
+            "endLine": 28,
+            "lines": [
+              {
+                "line": 20,
+                "content": "};",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "// ✅ CORRECT: auth() with null check",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "export async function GET_ProtectedRoute(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  const { userId, isAuthenticated } = await auth();",
+                "highlighted": true
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  if (!isAuthenticated || !userId) {",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "    return Response.json({ error: 'Unauthorized' }, { status: 401 });",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-auth-null-not-checked",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 36,
+          "column": 18,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "auth-null-not-checked",
+          "description": "Runtime error when accessing properties of null/undefined user",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+          "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+          "code_snippet": {
+            "startLine": 32,
+            "endLine": 40,
+            "lines": [
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "// ✅ CORRECT: Using auth.protect() with try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "export async function POST_ProtectedWithProtect(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "    await (await auth()).protect();",
+                "highlighted": true
+              },
+              {
+                "line": 37,
+                "content": "    const { userId } = await auth();",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    return Response.json({ error: 'Unauthorized' }, { status: 401 });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-auth-null-not-checked",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 37,
+          "column": 30,
+          "package": "@clerk/nextjs",
+          "function": "auth",
+          "contract_clause": "auth-null-not-checked",
+          "description": "Runtime error when accessing properties of null/undefined user",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/app-router/auth#usage",
+          "suggested_fix": "MUST check auth().userId or auth().isAuthenticated before using authentication data. Pattern: `const { userId } = await auth(); if (!userId) return unauthorized();`\n",
+          "code_snippet": {
+            "startLine": 33,
+            "endLine": 41,
+            "lines": [
+              {
+                "line": 33,
+                "content": "// ✅ CORRECT: Using auth.protect() with try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "export async function POST_ProtectedWithProtect(req: Request) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "    await (await auth()).protect();",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    const { userId } = await auth();",
+                "highlighted": true
+              },
+              {
+                "line": 38,
+                "content": "    return Response.json({ userId });",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    return Response.json({ error: 'Unauthorized' }, { status: 401 });",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-current-user-null-not-handled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 57,
+          "column": 16,
+          "package": "@clerk/nextjs",
+          "function": "currentUser",
+          "contract_clause": "current-user-null-not-handled",
+          "description": "Runtime error accessing properties of null",
+          "source_doc": "https://clerk.com/docs/reference/nextjs/current-user",
+          "suggested_fix": "MUST handle null case when currentUser() is called. Returns null if user not authenticated.\n",
+          "code_snippet": {
+            "startLine": 53,
+            "endLine": 61,
+            "lines": [
+              {
+                "line": 53,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "// ✅ CORRECT: Cached currentUser() to avoid rate limits",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "const getCachedUser = cache(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  return await currentUser();",
+                "highlighted": true
+              },
+              {
+                "line": 58,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "export async function Layout_WithCachedUser({ children }: { children: React.ReactNode }) {",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  const user = await getCachedUser();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 202,
+          "column": 25,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 198,
+            "endLine": 206,
+            "lines": [
+              {
+                "line": 198,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 199,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "// ✅ CORRECT: setActive() with error handling",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "export function SessionActivation_Proper() {",
+                "highlighted": false
+              },
+              {
+                "line": 202,
+                "content": "  const { setActive } = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 203,
+                "content": "  const [error, setError] = useState<string>('');",
+                "highlighted": false
+              },
+              {
+                "line": 204,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "  const activateSession = async (sessionId: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 206,
+                "content": "    try {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@clerk/nextjs-use-clerk-outside-provider",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@clerk/nextjs/fixtures/proper-error-handling.ts",
+          "line": 223,
+          "column": 17,
+          "package": "@clerk/nextjs",
+          "function": "useClerk",
+          "contract_clause": "use-clerk-outside-provider",
+          "description": "No try-catch block found. Error: useClerk must be used within ClerkProvider - this will crash the application.",
+          "source_doc": "https://clerk.com/docs/reference/clerk-react/use-clerk",
+          "suggested_fix": "MUST ensure component using useClerk() is wrapped in ClerkProvider. In Next.js App Router, ClerkProvider should wrap root layout.\n",
+          "code_snippet": {
+            "startLine": 219,
+            "endLine": 227,
+            "lines": [
+              {
+                "line": 219,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 220,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "// ✅ CORRECT: useClerk() inside ClerkProvider context",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "export function Component_WithClerkProvider() {",
+                "highlighted": false
+              },
+              {
+                "line": 223,
+                "content": "  const clerk = useClerk();",
+                "highlighted": true
+              },
+              {
+                "line": 224,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "  // This is safe because component is wrapped in ClerkProvider",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "  return <div>{clerk.loaded ? 'Clerk loaded' : 'Loading...'}</div>;",
+                "highlighted": false
+              },
+              {
+                "line": 227,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

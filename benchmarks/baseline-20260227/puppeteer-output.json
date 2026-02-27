@@ -1,0 +1,841 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:25.539Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "stripe",
+    "superagent",
+    "sharp",
+    "sinon",
+    "socket.io",
+    "sequelize",
+    "redis",
+    "puppeteer",
+    "request-promise",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "node-fetch",
+    "passport",
+    "nodemailer",
+    "mysql2",
+    "multer",
+    "next",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "knex",
+    "ioredis",
+    "joi",
+    "got",
+    "graphql",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@slack/web-api",
+    "@nestjs/common",
+    "@octokit/rest",
+    "@supabase/supabase-js",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "puppeteer-launch-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+      "line": 8,
+      "column": 25,
+      "package": "puppeteer",
+      "function": "launch",
+      "contract_clause": "launch-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+      "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+      "code_snippet": {
+        "startLine": 4,
+        "endLine": 12,
+        "lines": [
+          {
+            "line": 4,
+            "content": " * ❌ MISSING: puppeteer.launch() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "async function screenshotBad(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  const browser = await puppeteer.launch(); // No try-catch - will crash on timeout",
+            "highlighted": true
+          },
+          {
+            "line": 9,
+            "content": "  const page = await browser.newPage();",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "  await page.goto(url);",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  const screenshot = await page.screenshot();",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "  await browser.close();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "puppeteer-launch-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+      "line": 75,
+      "column": 25,
+      "package": "puppeteer",
+      "function": "launch",
+      "contract_clause": "launch-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+      "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": " * ❌ MISSING: Multiple violations - common anti-pattern from official examples",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " * Should trigger MULTIPLE violations",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "async function officialExamplePattern(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const browser = await puppeteer.launch(); // ❌ No try-catch",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "  const page = await browser.newPage(); // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  await page.goto(url); // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "  await page.screenshot({ path: 'screenshot.png' });",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  await browser.close(); // ❌ Not in finally block",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "puppeteer-launch-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+      "line": 87,
+      "column": 25,
+      "package": "puppeteer",
+      "function": "launch",
+      "contract_clause": "launch-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+      "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+      "code_snippet": {
+        "startLine": 83,
+        "endLine": 91,
+        "lines": [
+          {
+            "line": 83,
+            "content": " * ❌ MISSING: Async IIFE pattern (common in examples)",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": " * Should trigger MULTIPLE violations",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  const browser = await puppeteer.launch(); // ❌ No try-catch",
+            "highlighted": true
+          },
+          {
+            "line": 88,
+            "content": "  const page = await browser.newPage(); // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "  await page.goto('https://example.com'); // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "  await browser.close(); // ❌ Not in finally block",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "})();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "puppeteer-launch-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+      "line": 98,
+      "column": 25,
+      "package": "puppeteer",
+      "function": "launch",
+      "contract_clause": "launch-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+      "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+      "code_snippet": {
+        "startLine": 94,
+        "endLine": 102,
+        "lines": [
+          {
+            "line": 94,
+            "content": " * ❌ MISSING: Generic catch without browser cleanup",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": " * Should trigger WARNING violation",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "async function genericCatchNoCleanup(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "  const browser = await puppeteer.launch();",
+            "highlighted": true
+          },
+          {
+            "line": 99,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "    const page = await browser.newPage();",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "    await page.goto(url);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "puppeteer-launch-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+      "line": 115,
+      "column": 25,
+      "package": "puppeteer",
+      "function": "launch",
+      "contract_clause": "launch-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+      "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+      "code_snippet": {
+        "startLine": 111,
+        "endLine": 119,
+        "lines": [
+          {
+            "line": 111,
+            "content": " * ❌ MISSING: Navigation without HTTP status check",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": " * Should trigger ERROR violation + anti-pattern",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "async function noStatusCheck(url: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "  const browser = await puppeteer.launch();",
+            "highlighted": true
+          },
+          {
+            "line": 116,
+            "content": "  const page = await browser.newPage();",
+            "highlighted": false
+          },
+          {
+            "line": 117,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 118,
+            "content": "  // In headless shell mode, goto() doesn't throw on 404/500",
+            "highlighted": false
+          },
+          {
+            "line": 119,
+            "content": "  await page.goto(url); // ❌ No try-catch AND no response.ok() check",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 5,
+    "error_count": 5,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "puppeteer",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "puppeteer": {
+      "total": 5,
+      "errors": 5,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "puppeteer-launch-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+          "line": 8,
+          "column": 25,
+          "package": "puppeteer",
+          "function": "launch",
+          "contract_clause": "launch-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+          "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+          "code_snippet": {
+            "startLine": 4,
+            "endLine": 12,
+            "lines": [
+              {
+                "line": 4,
+                "content": " * ❌ MISSING: puppeteer.launch() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "async function screenshotBad(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  const browser = await puppeteer.launch(); // No try-catch - will crash on timeout",
+                "highlighted": true
+              },
+              {
+                "line": 9,
+                "content": "  const page = await browser.newPage();",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "  await page.goto(url);",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  const screenshot = await page.screenshot();",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "  await browser.close();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "puppeteer-launch-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+          "line": 75,
+          "column": 25,
+          "package": "puppeteer",
+          "function": "launch",
+          "contract_clause": "launch-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+          "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": " * ❌ MISSING: Multiple violations - common anti-pattern from official examples",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " * Should trigger MULTIPLE violations",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "async function officialExamplePattern(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const browser = await puppeteer.launch(); // ❌ No try-catch",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "  const page = await browser.newPage(); // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  await page.goto(url); // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "  await page.screenshot({ path: 'screenshot.png' });",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  await browser.close(); // ❌ Not in finally block",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "puppeteer-launch-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+          "line": 87,
+          "column": 25,
+          "package": "puppeteer",
+          "function": "launch",
+          "contract_clause": "launch-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+          "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+          "code_snippet": {
+            "startLine": 83,
+            "endLine": 91,
+            "lines": [
+              {
+                "line": 83,
+                "content": " * ❌ MISSING: Async IIFE pattern (common in examples)",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": " * Should trigger MULTIPLE violations",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  const browser = await puppeteer.launch(); // ❌ No try-catch",
+                "highlighted": true
+              },
+              {
+                "line": 88,
+                "content": "  const page = await browser.newPage(); // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "  await page.goto('https://example.com'); // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "  await browser.close(); // ❌ Not in finally block",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "})();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "puppeteer-launch-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+          "line": 98,
+          "column": 25,
+          "package": "puppeteer",
+          "function": "launch",
+          "contract_clause": "launch-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+          "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+          "code_snippet": {
+            "startLine": 94,
+            "endLine": 102,
+            "lines": [
+              {
+                "line": 94,
+                "content": " * ❌ MISSING: Generic catch without browser cleanup",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": " * Should trigger WARNING violation",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "async function genericCatchNoCleanup(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "  const browser = await puppeteer.launch();",
+                "highlighted": true
+              },
+              {
+                "line": 99,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "    const page = await browser.newPage();",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "    await page.goto(url);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "puppeteer-launch-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/puppeteer/fixtures/missing-error-handling.ts",
+          "line": 115,
+          "column": 25,
+          "package": "puppeteer",
+          "function": "launch",
+          "contract_clause": "launch-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with TimeoutError, ProtocolError, or Error - this will crash the application.",
+          "source_doc": "https://pptr.dev/api/puppeteer.puppeteernode.launch",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from puppeteer.launch(). Common failures: timeout (default 30s), protocol errors in Docker/containers, missing Chrome binary. Browser instance MUST be closed in finally block to prevent zombie processes. Use pattern: let browser; try { browser = await puppeteer.launch(); } catch (error) { /* handle */ } finally { if (browser) await browser.close(); }\n",
+          "code_snippet": {
+            "startLine": 111,
+            "endLine": 119,
+            "lines": [
+              {
+                "line": 111,
+                "content": " * ❌ MISSING: Navigation without HTTP status check",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": " * Should trigger ERROR violation + anti-pattern",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "async function noStatusCheck(url: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "  const browser = await puppeteer.launch();",
+                "highlighted": true
+              },
+              {
+                "line": 116,
+                "content": "  const page = await browser.newPage();",
+                "highlighted": false
+              },
+              {
+                "line": 117,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 118,
+                "content": "  // In headless shell mode, goto() doesn't throw on 404/500",
+                "highlighted": false
+              },
+              {
+                "line": 119,
+                "content": "  await page.goto(url); // ❌ No try-catch AND no response.ok() check",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:41.855Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/express-async-errors/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "uuid",
+    "unzipper",
+    "validator",
+    "undici",
+    "typescript",
+    "typeorm",
+    "tedious",
+    "twilio",
+    "square",
+    "supertest",
+    "socket.io-client",
+    "sqlite3",
+    "stripe",
+    "superagent",
+    "socket.io",
+    "sequelize",
+    "simple-oauth2",
+    "sharp",
+    "sinon",
+    "request-promise",
+    "redis",
+    "pino",
+    "puppeteer",
+    "pg",
+    "react-hook-form",
+    "passport",
+    "openai",
+    "node-fetch",
+    "next",
+    "nodemailer",
+    "multer",
+    "mysql2",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "lodash",
+    "jsonwebtoken",
+    "joi",
+    "ioredis",
+    "helmet",
+    "knex",
+    "got",
+    "graphql",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "date-fns",
+    "dayjs",
+    "cors",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "chai",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@prisma/client",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [],
+  "summary": {
+    "total_violations": 0,
+    "error_count": 0,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": true
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "express-async-errors",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": false,
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/express-async-errors/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/express-async-errors/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {}
+}

@@ -1,0 +1,597 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:57:20.176Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "twilio",
+    "supertest",
+    "typeorm",
+    "superagent",
+    "tedious",
+    "square",
+    "socket.io-client",
+    "stripe",
+    "sqlite3",
+    "sinon",
+    "socket.io",
+    "sharp",
+    "simple-oauth2",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "react-hook-form",
+    "pino",
+    "puppeteer",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "next",
+    "nodemailer",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "knex",
+    "mocha",
+    "jsonwebtoken",
+    "lodash",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "helmet",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "discord.js",
+    "dayjs",
+    "drizzle-orm",
+    "ethers",
+    "cors",
+    "date-fns",
+    "cassandra-driver",
+    "cloudinary",
+    "chai",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@prisma/client",
+    "@sendgrid/mail",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "sharp-tofile-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/missing-error-handling.ts",
+      "line": 5,
+      "column": 9,
+      "package": "sharp",
+      "function": "toFile",
+      "contract_clause": "tofile-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with Error (ENOENT, EACCES, ENOMEM, or processing errors) - this will crash the application.",
+      "source_doc": "https://sharp.pixelplumbing.com/api-output#tofile",
+      "suggested_fix": "Caller MUST use try-catch or .catch() to handle Promise rejections from toFile(). File system errors (missing directory, permissions), invalid image data, and memory issues will reject the Promise and crash the application if unhandled. Use pattern: try { await sharp(input).toFile('output.jpg'); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 1,
+        "endLine": 9,
+        "lines": [
+          {
+            "line": 1,
+            "content": "import sharp from 'sharp';",
+            "highlighted": false
+          },
+          {
+            "line": 2,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 3,
+            "content": "// ❌ Missing: toFile without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 4,
+            "content": "async function resizeImageBad(inputPath: string, outputPath: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": "  await sharp(inputPath)",
+            "highlighted": true
+          },
+          {
+            "line": 6,
+            "content": "    .resize(300, 200)",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "    .toFile(outputPath);  // No try-catch - will crash on error",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  return { success: true };",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sharp-tobuffer-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/missing-error-handling.ts",
+      "line": 13,
+      "column": 24,
+      "package": "sharp",
+      "function": "toBuffer",
+      "contract_clause": "tobuffer-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+      "source_doc": "https://sharp.pixelplumbing.com/api-output#tobuffer",
+      "suggested_fix": "Caller MUST use try-catch or .catch() to handle Promise rejections from toBuffer(). Invalid or corrupted image data will reject the Promise and crash if unhandled. Use pattern: try { const buffer = await sharp(input).toBuffer(); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 9,
+        "endLine": 17,
+        "lines": [
+          {
+            "line": 9,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// ❌ Missing: toBuffer without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "async function convertToPngBad(inputPath: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  const buffer = await sharp(inputPath)",
+            "highlighted": true
+          },
+          {
+            "line": 14,
+            "content": "    .png()",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "    .toBuffer();  // No try-catch - will crash on invalid image",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  return buffer;",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sharp-tobuffer-rejects-on-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/missing-error-handling.ts",
+      "line": 21,
+      "column": 27,
+      "package": "sharp",
+      "function": "toBuffer",
+      "contract_clause": "tobuffer-rejects-on-error",
+      "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+      "source_doc": "https://sharp.pixelplumbing.com/api-output#tobuffer",
+      "suggested_fix": "Caller MUST use try-catch or .catch() to handle Promise rejections from toBuffer(). Invalid or corrupted image data will reject the Promise and crash if unhandled. Use pattern: try { const buffer = await sharp(input).toBuffer(); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "// ❌ Missing: chained operations without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "async function optimizeImageBad(input: Buffer) {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  const optimized = await sharp(input)",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "    .resize(1200, 800)",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    .jpeg({ quality: 80 })",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "    .toBuffer();  // No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  return optimized;",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 3,
+    "error_count": 3,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "sharp",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "sharp": {
+      "total": 3,
+      "errors": 3,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "sharp-tofile-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/missing-error-handling.ts",
+          "line": 5,
+          "column": 9,
+          "package": "sharp",
+          "function": "toFile",
+          "contract_clause": "tofile-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with Error (ENOENT, EACCES, ENOMEM, or processing errors) - this will crash the application.",
+          "source_doc": "https://sharp.pixelplumbing.com/api-output#tofile",
+          "suggested_fix": "Caller MUST use try-catch or .catch() to handle Promise rejections from toFile(). File system errors (missing directory, permissions), invalid image data, and memory issues will reject the Promise and crash the application if unhandled. Use pattern: try { await sharp(input).toFile('output.jpg'); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 1,
+            "endLine": 9,
+            "lines": [
+              {
+                "line": 1,
+                "content": "import sharp from 'sharp';",
+                "highlighted": false
+              },
+              {
+                "line": 2,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 3,
+                "content": "// ❌ Missing: toFile without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 4,
+                "content": "async function resizeImageBad(inputPath: string, outputPath: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": "  await sharp(inputPath)",
+                "highlighted": true
+              },
+              {
+                "line": 6,
+                "content": "    .resize(300, 200)",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "    .toFile(outputPath);  // No try-catch - will crash on error",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  return { success: true };",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sharp-tobuffer-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/missing-error-handling.ts",
+          "line": 13,
+          "column": 24,
+          "package": "sharp",
+          "function": "toBuffer",
+          "contract_clause": "tobuffer-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+          "source_doc": "https://sharp.pixelplumbing.com/api-output#tobuffer",
+          "suggested_fix": "Caller MUST use try-catch or .catch() to handle Promise rejections from toBuffer(). Invalid or corrupted image data will reject the Promise and crash if unhandled. Use pattern: try { const buffer = await sharp(input).toBuffer(); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 9,
+            "endLine": 17,
+            "lines": [
+              {
+                "line": 9,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// ❌ Missing: toBuffer without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "async function convertToPngBad(inputPath: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  const buffer = await sharp(inputPath)",
+                "highlighted": true
+              },
+              {
+                "line": 14,
+                "content": "    .png()",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "    .toBuffer();  // No try-catch - will crash on invalid image",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  return buffer;",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sharp-tobuffer-rejects-on-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sharp/fixtures/missing-error-handling.ts",
+          "line": 21,
+          "column": 27,
+          "package": "sharp",
+          "function": "toBuffer",
+          "contract_clause": "tobuffer-rejects-on-error",
+          "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+          "source_doc": "https://sharp.pixelplumbing.com/api-output#tobuffer",
+          "suggested_fix": "Caller MUST use try-catch or .catch() to handle Promise rejections from toBuffer(). Invalid or corrupted image data will reject the Promise and crash if unhandled. Use pattern: try { const buffer = await sharp(input).toBuffer(); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "// ❌ Missing: chained operations without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "async function optimizeImageBad(input: Buffer) {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  const optimized = await sharp(input)",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "    .resize(1200, 800)",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    .jpeg({ quality: 80 })",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "    .toBuffer();  // No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  return optimized;",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

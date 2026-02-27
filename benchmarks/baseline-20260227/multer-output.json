@@ -1,0 +1,598 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:43.291Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "stripe",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "superagent",
+    "sinon",
+    "sequelize",
+    "tedious",
+    "sharp",
+    "redis",
+    "request-promise",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "passport",
+    "openai",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "multer",
+    "joi",
+    "knex",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "ioredis",
+    "drizzle-orm",
+    "dayjs",
+    "discord.js",
+    "date-fns",
+    "cors",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@vercel/postgres",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "multer-single-throws-multer-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+      "line": 23,
+      "column": 5,
+      "package": "multer",
+      "function": "single",
+      "contract_clause": "single-throws-multer-error",
+      "description": "No try-catch block found. MulterError - this will crash the application.",
+      "source_doc": "https://github.com/expressjs/multer#error-handling",
+      "suggested_fix": "Caller MUST add error handling middleware after multer to catch MulterError. Check error.code for specific failure reason (LIMIT_FILE_SIZE, LIMIT_UNEXPECTED_FILE, etc.)",
+      "code_snippet": {
+        "startLine": 19,
+        "endLine": 27,
+        "lines": [
+          {
+            "line": 19,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "// ❌ No error handling middleware",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "function setupRouteWithoutErrorHandling(app: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  app.post('/upload',",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    uploadNoLimits.single('file'),",
+            "highlighted": true
+          },
+          {
+            "line": 24,
+            "content": "    // ❌ No error handling middleware here",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "    (req: Request, res: Response) => {",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "      res.json({ file: req.file });",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "    }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "multer-array-throws-multer-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+      "line": 34,
+      "column": 5,
+      "package": "multer",
+      "function": "array",
+      "contract_clause": "array-throws-multer-error",
+      "description": "No try-catch block found. MulterError - this will crash the application.",
+      "source_doc": "https://github.com/expressjs/multer#error-handling",
+      "suggested_fix": "Caller MUST add error handling middleware after multer to catch MulterError. Multiple file uploads can fail individually or collectively.",
+      "code_snippet": {
+        "startLine": 30,
+        "endLine": 38,
+        "lines": [
+          {
+            "line": 30,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "// ❌ Array upload without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "function setupMultipleFilesNoErrorHandling(app: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  app.post('/upload-multiple',",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    uploadNoLimits.array('files', 10),",
+            "highlighted": true
+          },
+          {
+            "line": 35,
+            "content": "    // ❌ No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "    (req: Request, res: Response) => {",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "      res.json({ files: req.files });",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "multer-single-throws-multer-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+      "line": 50,
+      "column": 5,
+      "package": "multer",
+      "function": "single",
+      "contract_clause": "single-throws-multer-error",
+      "description": "No try-catch block found. MulterError - this will crash the application.",
+      "source_doc": "https://github.com/expressjs/multer#error-handling",
+      "suggested_fix": "Caller MUST add error handling middleware after multer to catch MulterError. Check error.code for specific failure reason (LIMIT_FILE_SIZE, LIMIT_UNEXPECTED_FILE, etc.)",
+      "code_snippet": {
+        "startLine": 46,
+        "endLine": 54,
+        "lines": [
+          {
+            "line": 46,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "function setupUnsafeUpload(app: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  app.post('/unsafe-upload',",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    uploadWildcard.single('document'),",
+            "highlighted": true
+          },
+          {
+            "line": 51,
+            "content": "    (req: Request, res: Response) => {",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "      // ❌ No validation, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "      res.json({ success: true });",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "    }",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 3,
+    "error_count": 3,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 14,
+    "withContracts": 3,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "express",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "multer",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "multer": {
+      "total": 3,
+      "errors": 3,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "multer-single-throws-multer-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+          "line": 23,
+          "column": 5,
+          "package": "multer",
+          "function": "single",
+          "contract_clause": "single-throws-multer-error",
+          "description": "No try-catch block found. MulterError - this will crash the application.",
+          "source_doc": "https://github.com/expressjs/multer#error-handling",
+          "suggested_fix": "Caller MUST add error handling middleware after multer to catch MulterError. Check error.code for specific failure reason (LIMIT_FILE_SIZE, LIMIT_UNEXPECTED_FILE, etc.)",
+          "code_snippet": {
+            "startLine": 19,
+            "endLine": 27,
+            "lines": [
+              {
+                "line": 19,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "// ❌ No error handling middleware",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "function setupRouteWithoutErrorHandling(app: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  app.post('/upload',",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    uploadNoLimits.single('file'),",
+                "highlighted": true
+              },
+              {
+                "line": 24,
+                "content": "    // ❌ No error handling middleware here",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "    (req: Request, res: Response) => {",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "      res.json({ file: req.file });",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "    }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "multer-array-throws-multer-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+          "line": 34,
+          "column": 5,
+          "package": "multer",
+          "function": "array",
+          "contract_clause": "array-throws-multer-error",
+          "description": "No try-catch block found. MulterError - this will crash the application.",
+          "source_doc": "https://github.com/expressjs/multer#error-handling",
+          "suggested_fix": "Caller MUST add error handling middleware after multer to catch MulterError. Multiple file uploads can fail individually or collectively.",
+          "code_snippet": {
+            "startLine": 30,
+            "endLine": 38,
+            "lines": [
+              {
+                "line": 30,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "// ❌ Array upload without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "function setupMultipleFilesNoErrorHandling(app: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  app.post('/upload-multiple',",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    uploadNoLimits.array('files', 10),",
+                "highlighted": true
+              },
+              {
+                "line": 35,
+                "content": "    // ❌ No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "    (req: Request, res: Response) => {",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "      res.json({ files: req.files });",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "multer-single-throws-multer-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/multer/fixtures/missing-error-handling.ts",
+          "line": 50,
+          "column": 5,
+          "package": "multer",
+          "function": "single",
+          "contract_clause": "single-throws-multer-error",
+          "description": "No try-catch block found. MulterError - this will crash the application.",
+          "source_doc": "https://github.com/expressjs/multer#error-handling",
+          "suggested_fix": "Caller MUST add error handling middleware after multer to catch MulterError. Check error.code for specific failure reason (LIMIT_FILE_SIZE, LIMIT_UNEXPECTED_FILE, etc.)",
+          "code_snippet": {
+            "startLine": 46,
+            "endLine": 54,
+            "lines": [
+              {
+                "line": 46,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "function setupUnsafeUpload(app: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  app.post('/unsafe-upload',",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    uploadWildcard.single('document'),",
+                "highlighted": true
+              },
+              {
+                "line": 51,
+                "content": "    (req: Request, res: Response) => {",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "      // ❌ No validation, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "      res.json({ success: true });",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "    }",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,3632 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:55:41.738Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "validator",
+    "winston",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "supertest",
+    "square",
+    "stripe",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "superagent",
+    "request-promise",
+    "redis",
+    "pino",
+    "pg",
+    "react-hook-form",
+    "puppeteer",
+    "openai",
+    "nodemailer",
+    "passport",
+    "node-fetch",
+    "mysql2",
+    "next",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "moment",
+    "knex",
+    "jsonwebtoken",
+    "lodash",
+    "joi",
+    "helmet",
+    "graphql",
+    "got",
+    "ioredis",
+    "fastify",
+    "firebase-admin",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "archiver",
+    "ajv",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@supabase/supabase-js",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@slack/web-api",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 5,
+  "violations": [
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+      "line": 21,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": "    throw new Error('Invalid email format');",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  // Normalize (converts to lowercase, removes Gmail aliases)",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  const normalized = validator.normalizeEmail(trimmed);",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "  if (normalized === false) {",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    throw new Error('Email normalization failed');",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+      "line": 35,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * PROPER: Check normalizeEmail() return value",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "function processEmailSafe(email: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const normalized = validator.normalizeEmail(email);",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "  if (normalized === false) {",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    throw new Error('Invalid email - normalization failed');",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  return normalized;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+      "line": 64,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 60,
+        "endLine": 68,
+        "lines": [
+          {
+            "line": 60,
+            "content": " * MISSING: normalizeEmail() result not checked",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "function normalizeEmailUnchecked(email: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "  const normalized = validator.normalizeEmail(email);",
+            "highlighted": true
+          },
+          {
+            "line": 65,
+            "content": "  // ❌ No check for false - type assertion hides the bug",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  return normalized as string;",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+      "line": 74,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 70,
+        "endLine": 78,
+        "lines": [
+          {
+            "line": 70,
+            "content": " * PROPER: Normalize with custom options",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "function normalizeEmailCustomOptions(email: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  const normalized = validator.normalizeEmail(email, {",
+            "highlighted": true
+          },
+          {
+            "line": 75,
+            "content": "    gmail_remove_subaddress: false, // Keep +alias for Gmail",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "    gmail_remove_dots: false,       // Keep dots in Gmail addresses",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "    all_lowercase: true             // Still lowercase everything",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+      "line": 94,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 90,
+        "endLine": 98,
+        "lines": [
+          {
+            "line": 90,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "async function loginUserSafe(email: string, password: string): Promise<boolean> {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "  // Normalize login email same way as registration",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "  const trimmed = validator.trim(email);",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "  const normalized = validator.normalizeEmail(trimmed);",
+            "highlighted": true
+          },
+          {
+            "line": 95,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  if (normalized === false) {",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "    throw new Error('Invalid email format');",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+      "line": 130,
+      "column": 19,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 126,
+        "endLine": 134,
+        "lines": [
+          {
+            "line": 126,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "function deduplicateEmailsSafe(emails: string[]): string[] {",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "  const normalized = emails",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "    .map(email => validator.normalizeEmail(email))",
+            "highlighted": true
+          },
+          {
+            "line": 131,
+            "content": "    .filter((email): email is string => email !== false); // Remove invalid",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  // Remove duplicates using Set",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "  return Array.from(new Set(normalized));",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/missing-error-handling.ts",
+      "line": 17,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 13,
+        "endLine": 21,
+        "lines": [
+          {
+            "line": 13,
+            "content": " * MISSING: normalizeEmail() result not checked for false",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "function normalizeEmailUnchecked(email: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  const normalized = validator.normalizeEmail(email);",
+            "highlighted": true
+          },
+          {
+            "line": 18,
+            "content": "  // ❌ No check for false - will cause issues if email is invalid",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  return normalized as string;",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-protocol-not-whitelisted",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/missing-error-handling.ts",
+      "line": 27,
+      "column": 8,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-protocol-not-whitelisted",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+      "code_snippet": {
+        "startLine": 23,
+        "endLine": 31,
+        "lines": [
+          {
+            "line": 23,
+            "content": " * MISSING: isURL() used without protocol whitelist",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": " * Should trigger ERROR violation (allows javascript:, data: URIs).",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "function validateURLNoWhitelist(url: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  if (!validator.isURL(url)) {",
+            "highlighted": true
+          },
+          {
+            "line": 28,
+            "content": "    throw new Error('Invalid URL');",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // ❌ No protocol whitelist - accepts javascript:alert(1)",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  return url;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-validation-bypass-cve",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/missing-error-handling.ts",
+      "line": 27,
+      "column": 8,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-validation-bypass-cve",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+      "code_snippet": {
+        "startLine": 23,
+        "endLine": 31,
+        "lines": [
+          {
+            "line": 23,
+            "content": " * MISSING: isURL() used without protocol whitelist",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": " * Should trigger ERROR violation (allows javascript:, data: URIs).",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "function validateURLNoWhitelist(url: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  if (!validator.isURL(url)) {",
+            "highlighted": true
+          },
+          {
+            "line": 28,
+            "content": "    throw new Error('Invalid URL');",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // ❌ No protocol whitelist - accepts javascript:alert(1)",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  return url;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+      "line": 19,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * PROPER: Normalizes email and checks for failure",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "function normalizeEmailSafely(email: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const normalized = validator.normalizeEmail(email);",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  if (normalized === false) {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    throw new Error('Invalid email - normalization failed');",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  return normalized;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-protocol-not-whitelisted",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+      "line": 31,
+      "column": 8,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-protocol-not-whitelisted",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+      "code_snippet": {
+        "startLine": 27,
+        "endLine": 35,
+        "lines": [
+          {
+            "line": 27,
+            "content": " * PROPER: Validates URL with protocol whitelist",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "function validateSecureURL(url: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+            "highlighted": true
+          },
+          {
+            "line": 32,
+            "content": "    throw new Error('Invalid or insecure URL');",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  return url;",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-validation-bypass-cve",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+      "line": 31,
+      "column": 8,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-validation-bypass-cve",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+      "code_snippet": {
+        "startLine": 27,
+        "endLine": 35,
+        "lines": [
+          {
+            "line": 27,
+            "content": " * PROPER: Validates URL with protocol whitelist",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "function validateSecureURL(url: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+            "highlighted": true
+          },
+          {
+            "line": 32,
+            "content": "    throw new Error('Invalid or insecure URL');",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  return url;",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+      "line": 53,
+      "column": 19,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 49,
+        "endLine": 57,
+        "lines": [
+          {
+            "line": 49,
+            "content": " * PROPER: Escapes user input before HTML rendering",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "function renderUserBio(bio: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "  const safeBio = validator.escape(bio);",
+            "highlighted": true
+          },
+          {
+            "line": 54,
+            "content": "  return `<p>${safeBio}</p>`;",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-normalize-email-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+      "line": 98,
+      "column": 22,
+      "package": "validator",
+      "function": "normalizeEmail",
+      "contract_clause": "normalize-email-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+      "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+      "code_snippet": {
+        "startLine": 94,
+        "endLine": 102,
+        "lines": [
+          {
+            "line": 94,
+            "content": "    throw new Error('Invalid email format');",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  // Normalize",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "  const normalized = validator.normalizeEmail(trimmed);",
+            "highlighted": true
+          },
+          {
+            "line": 99,
+            "content": "  if (normalized === false) {",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "    throw new Error('Email normalization failed');",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-protocol-not-whitelisted",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-validation.ts",
+      "line": 16,
+      "column": 10,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-protocol-not-whitelisted",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 12,
+            "content": " * Proper URL validation",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": " * Should NOT trigger violations (validator doesn't throw).",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "function validateURLProperly(url: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  return validator.isURL(url);",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-validation-bypass-cve",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-validation.ts",
+      "line": 16,
+      "column": 10,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-validation-bypass-cve",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 12,
+            "content": " * Proper URL validation",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": " * Should NOT trigger violations (validator doesn't throw).",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "function validateURLProperly(url: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  return validator.isURL(url);",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 12,
+      "column": 23,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 8,
+        "endLine": 16,
+        "lines": [
+          {
+            "line": 8,
+            "content": " * PROPER: Escape user input before rendering in HTML",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "function renderCommentSafe(comment: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "  const safeComment = validator.escape(comment);",
+            "highlighted": true
+          },
+          {
+            "line": 13,
+            "content": "  return `<div class=\"comment\">${safeComment}</div>`;",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 21,
+      "column": 20,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": " * PROPER: Escape multiple user inputs",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "function renderUserProfileSafe(name: string, bio: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  const safeName = validator.escape(name);",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "  const safeBio = validator.escape(bio);",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  return `",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "    <div class=\"profile\">",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "      <h2>${safeName}</h2>",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 22,
+      "column": 19,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 18,
+        "endLine": 26,
+        "lines": [
+          {
+            "line": 18,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "function renderUserProfileSafe(name: string, bio: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  const safeName = validator.escape(name);",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  const safeBio = validator.escape(bio);",
+            "highlighted": true
+          },
+          {
+            "line": 23,
+            "content": "  return `",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "    <div class=\"profile\">",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "      <h2>${safeName}</h2>",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "      <p>${safeBio}</p>",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 36,
+      "column": 21,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 32,
+        "endLine": 40,
+        "lines": [
+          {
+            "line": 32,
+            "content": " * PROPER: Escape input in HTML attributes",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "function renderLinkSafe(title: string, url: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  const safeTitle = validator.escape(title);",
+            "highlighted": true
+          },
+          {
+            "line": 37,
+            "content": "  // Note: URL should also be validated separately",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    throw new Error('Invalid URL');",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-protocol-not-whitelisted",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 38,
+      "column": 8,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-protocol-not-whitelisted",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+      "code_snippet": {
+        "startLine": 34,
+        "endLine": 42,
+        "lines": [
+          {
+            "line": 34,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "function renderLinkSafe(title: string, url: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  const safeTitle = validator.escape(title);",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  // Note: URL should also be validated separately",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+            "highlighted": true
+          },
+          {
+            "line": 39,
+            "content": "    throw new Error('Invalid URL');",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  return `<a href=\"${url}\" title=\"${safeTitle}\">Link</a>`;",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-url-validation-bypass-cve",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 38,
+      "column": 8,
+      "package": "validator",
+      "function": "isURL",
+      "contract_clause": "url-validation-bypass-cve",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+      "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+      "code_snippet": {
+        "startLine": 34,
+        "endLine": 42,
+        "lines": [
+          {
+            "line": 34,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "function renderLinkSafe(title: string, url: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  const safeTitle = validator.escape(title);",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  // Note: URL should also be validated separately",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+            "highlighted": true
+          },
+          {
+            "line": 39,
+            "content": "    throw new Error('Invalid URL');",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  return `<a href=\"${url}\" title=\"${safeTitle}\">Link</a>`;",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 67,
+      "column": 20,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 63,
+        "endLine": 71,
+        "lines": [
+          {
+            "line": 63,
+            "content": " * PROPER: Escape in template literal",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "function buildHTMLEmailSafe(userName: string, message: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  const safeName = validator.escape(userName);",
+            "highlighted": true
+          },
+          {
+            "line": 68,
+            "content": "  const safeMessage = validator.escape(message);",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  return `",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "    <!DOCTYPE html>",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 68,
+      "column": 23,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 64,
+        "endLine": 72,
+        "lines": [
+          {
+            "line": 64,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "function buildHTMLEmailSafe(userName: string, message: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  const safeName = validator.escape(userName);",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  const safeMessage = validator.escape(message);",
+            "highlighted": true
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  return `",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "    <!DOCTYPE html>",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "    <html>",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 87,
+      "column": 20,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 83,
+        "endLine": 91,
+        "lines": [
+          {
+            "line": 83,
+            "content": " * This is SAFE but may cause display issues.",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": " * Should NOT trigger violation (defensive programming).",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "function doubleEscape(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  const escaped1 = validator.escape(input);",
+            "highlighted": true
+          },
+          {
+            "line": 88,
+            "content": "  const escaped2 = validator.escape(escaped1); // Double escaping",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "  return `<p>${escaped2}</p>`; // Will show &amp;lt; instead of <",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 88,
+      "column": 20,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 84,
+        "endLine": 92,
+        "lines": [
+          {
+            "line": 84,
+            "content": " * Should NOT trigger violation (defensive programming).",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "function doubleEscape(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  const escaped1 = validator.escape(input);",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  const escaped2 = validator.escape(escaped1); // Double escaping",
+            "highlighted": true
+          },
+          {
+            "line": 89,
+            "content": "  return `<p>${escaped2}</p>`; // Will show &amp;lt; instead of <",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "validator-escape-xss-prevention",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+      "line": 97,
+      "column": 39,
+      "package": "validator",
+      "function": "escape",
+      "contract_clause": "escape-xss-prevention",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://owasp.org/www-community/attacks/xss/",
+      "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+      "code_snippet": {
+        "startLine": 93,
+        "endLine": 101,
+        "lines": [
+          {
+            "line": 93,
+            "content": " * PROPER: Escape before concatenation",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": " * Should NOT trigger violation.",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "function buildDynamicHTMLSafe(items: string[]): string {",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  const safeItems = items.map(item => validator.escape(item));",
+            "highlighted": true
+          },
+          {
+            "line": 98,
+            "content": "  return `<ul>${safeItems.map(item => `<li>${item}</li>`).join('')}</ul>`;",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 27,
+    "error_count": 27,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "validator",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-validation.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts"
+        ]
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "validator": {
+      "total": 27,
+      "errors": 27,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+          "line": 21,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": "    throw new Error('Invalid email format');",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  // Normalize (converts to lowercase, removes Gmail aliases)",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  const normalized = validator.normalizeEmail(trimmed);",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "  if (normalized === false) {",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    throw new Error('Email normalization failed');",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+          "line": 35,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * PROPER: Check normalizeEmail() return value",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "function processEmailSafe(email: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const normalized = validator.normalizeEmail(email);",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "  if (normalized === false) {",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    throw new Error('Invalid email - normalization failed');",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  return normalized;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+          "line": 64,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 60,
+            "endLine": 68,
+            "lines": [
+              {
+                "line": 60,
+                "content": " * MISSING: normalizeEmail() result not checked",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "function normalizeEmailUnchecked(email: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "  const normalized = validator.normalizeEmail(email);",
+                "highlighted": true
+              },
+              {
+                "line": 65,
+                "content": "  // ❌ No check for false - type assertion hides the bug",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  return normalized as string;",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+          "line": 74,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 70,
+            "endLine": 78,
+            "lines": [
+              {
+                "line": 70,
+                "content": " * PROPER: Normalize with custom options",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "function normalizeEmailCustomOptions(email: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  const normalized = validator.normalizeEmail(email, {",
+                "highlighted": true
+              },
+              {
+                "line": 75,
+                "content": "    gmail_remove_subaddress: false, // Keep +alias for Gmail",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "    gmail_remove_dots: false,       // Keep dots in Gmail addresses",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "    all_lowercase: true             // Still lowercase everything",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+          "line": 94,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 90,
+            "endLine": 98,
+            "lines": [
+              {
+                "line": 90,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "async function loginUserSafe(email: string, password: string): Promise<boolean> {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "  // Normalize login email same way as registration",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "  const trimmed = validator.trim(email);",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "  const normalized = validator.normalizeEmail(trimmed);",
+                "highlighted": true
+              },
+              {
+                "line": 95,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  if (normalized === false) {",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "    throw new Error('Invalid email format');",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/email-normalization.ts",
+          "line": 130,
+          "column": 19,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 126,
+            "endLine": 134,
+            "lines": [
+              {
+                "line": 126,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "function deduplicateEmailsSafe(emails: string[]): string[] {",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "  const normalized = emails",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "    .map(email => validator.normalizeEmail(email))",
+                "highlighted": true
+              },
+              {
+                "line": 131,
+                "content": "    .filter((email): email is string => email !== false); // Remove invalid",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  // Remove duplicates using Set",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "  return Array.from(new Set(normalized));",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/missing-error-handling.ts",
+          "line": 17,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 13,
+            "endLine": 21,
+            "lines": [
+              {
+                "line": 13,
+                "content": " * MISSING: normalizeEmail() result not checked for false",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "function normalizeEmailUnchecked(email: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  const normalized = validator.normalizeEmail(email);",
+                "highlighted": true
+              },
+              {
+                "line": 18,
+                "content": "  // ❌ No check for false - will cause issues if email is invalid",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  return normalized as string;",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-protocol-not-whitelisted",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/missing-error-handling.ts",
+          "line": 27,
+          "column": 8,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-protocol-not-whitelisted",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+          "code_snippet": {
+            "startLine": 23,
+            "endLine": 31,
+            "lines": [
+              {
+                "line": 23,
+                "content": " * MISSING: isURL() used without protocol whitelist",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": " * Should trigger ERROR violation (allows javascript:, data: URIs).",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "function validateURLNoWhitelist(url: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  if (!validator.isURL(url)) {",
+                "highlighted": true
+              },
+              {
+                "line": 28,
+                "content": "    throw new Error('Invalid URL');",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // ❌ No protocol whitelist - accepts javascript:alert(1)",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  return url;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-validation-bypass-cve",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/missing-error-handling.ts",
+          "line": 27,
+          "column": 8,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-validation-bypass-cve",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+          "code_snippet": {
+            "startLine": 23,
+            "endLine": 31,
+            "lines": [
+              {
+                "line": 23,
+                "content": " * MISSING: isURL() used without protocol whitelist",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": " * Should trigger ERROR violation (allows javascript:, data: URIs).",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "function validateURLNoWhitelist(url: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  if (!validator.isURL(url)) {",
+                "highlighted": true
+              },
+              {
+                "line": 28,
+                "content": "    throw new Error('Invalid URL');",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // ❌ No protocol whitelist - accepts javascript:alert(1)",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  return url;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+          "line": 19,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * PROPER: Normalizes email and checks for failure",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "function normalizeEmailSafely(email: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const normalized = validator.normalizeEmail(email);",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  if (normalized === false) {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    throw new Error('Invalid email - normalization failed');",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  return normalized;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-protocol-not-whitelisted",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+          "line": 31,
+          "column": 8,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-protocol-not-whitelisted",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+          "code_snippet": {
+            "startLine": 27,
+            "endLine": 35,
+            "lines": [
+              {
+                "line": 27,
+                "content": " * PROPER: Validates URL with protocol whitelist",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "function validateSecureURL(url: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+                "highlighted": true
+              },
+              {
+                "line": 32,
+                "content": "    throw new Error('Invalid or insecure URL');",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  return url;",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-validation-bypass-cve",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+          "line": 31,
+          "column": 8,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-validation-bypass-cve",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+          "code_snippet": {
+            "startLine": 27,
+            "endLine": 35,
+            "lines": [
+              {
+                "line": 27,
+                "content": " * PROPER: Validates URL with protocol whitelist",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "function validateSecureURL(url: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+                "highlighted": true
+              },
+              {
+                "line": 32,
+                "content": "    throw new Error('Invalid or insecure URL');",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  return url;",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+          "line": 53,
+          "column": 19,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 49,
+            "endLine": 57,
+            "lines": [
+              {
+                "line": 49,
+                "content": " * PROPER: Escapes user input before HTML rendering",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "function renderUserBio(bio: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "  const safeBio = validator.escape(bio);",
+                "highlighted": true
+              },
+              {
+                "line": 54,
+                "content": "  return `<p>${safeBio}</p>`;",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-normalize-email-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-error-handling.ts",
+          "line": 98,
+          "column": 22,
+          "package": "validator",
+          "function": "normalizeEmail",
+          "contract_clause": "normalize-email-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/issues/1089",
+          "suggested_fix": "Caller MUST check return value. normalizeEmail() returns false for invalid emails, not a normalized string. Failing to check allows invalid emails to be stored, causing authentication failures.\n",
+          "code_snippet": {
+            "startLine": 94,
+            "endLine": 102,
+            "lines": [
+              {
+                "line": 94,
+                "content": "    throw new Error('Invalid email format');",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  // Normalize",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "  const normalized = validator.normalizeEmail(trimmed);",
+                "highlighted": true
+              },
+              {
+                "line": 99,
+                "content": "  if (normalized === false) {",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "    throw new Error('Email normalization failed');",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-protocol-not-whitelisted",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-validation.ts",
+          "line": 16,
+          "column": 10,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-protocol-not-whitelisted",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 12,
+                "content": " * Proper URL validation",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": " * Should NOT trigger violations (validator doesn't throw).",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "function validateURLProperly(url: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  return validator.isURL(url);",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-validation-bypass-cve",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/proper-validation.ts",
+          "line": 16,
+          "column": 10,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-validation-bypass-cve",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 12,
+                "content": " * Proper URL validation",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": " * Should NOT trigger violations (validator doesn't throw).",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "function validateURLProperly(url: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  return validator.isURL(url);",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 12,
+          "column": 23,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 8,
+            "endLine": 16,
+            "lines": [
+              {
+                "line": 8,
+                "content": " * PROPER: Escape user input before rendering in HTML",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "function renderCommentSafe(comment: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "  const safeComment = validator.escape(comment);",
+                "highlighted": true
+              },
+              {
+                "line": 13,
+                "content": "  return `<div class=\"comment\">${safeComment}</div>`;",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 21,
+          "column": 20,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": " * PROPER: Escape multiple user inputs",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "function renderUserProfileSafe(name: string, bio: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  const safeName = validator.escape(name);",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "  const safeBio = validator.escape(bio);",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  return `",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "    <div class=\"profile\">",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "      <h2>${safeName}</h2>",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 22,
+          "column": 19,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 18,
+            "endLine": 26,
+            "lines": [
+              {
+                "line": 18,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "function renderUserProfileSafe(name: string, bio: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  const safeName = validator.escape(name);",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  const safeBio = validator.escape(bio);",
+                "highlighted": true
+              },
+              {
+                "line": 23,
+                "content": "  return `",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "    <div class=\"profile\">",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "      <h2>${safeName}</h2>",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "      <p>${safeBio}</p>",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 36,
+          "column": 21,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 32,
+            "endLine": 40,
+            "lines": [
+              {
+                "line": 32,
+                "content": " * PROPER: Escape input in HTML attributes",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "function renderLinkSafe(title: string, url: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  const safeTitle = validator.escape(title);",
+                "highlighted": true
+              },
+              {
+                "line": 37,
+                "content": "  // Note: URL should also be validated separately",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    throw new Error('Invalid URL');",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-protocol-not-whitelisted",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 38,
+          "column": 8,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-protocol-not-whitelisted",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/validatorjs/validator.js/security/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "Caller MUST whitelist URL protocols. Default isURL() accepts dangerous protocols like javascript:, data:, and file: which enable XSS and phishing. ALWAYS use: isURL(url, { protocols: ['https'], require_protocol: true })\n",
+          "code_snippet": {
+            "startLine": 34,
+            "endLine": 42,
+            "lines": [
+              {
+                "line": 34,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "function renderLinkSafe(title: string, url: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  const safeTitle = validator.escape(title);",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  // Note: URL should also be validated separately",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+                "highlighted": true
+              },
+              {
+                "line": 39,
+                "content": "    throw new Error('Invalid URL');",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  return `<a href=\"${url}\" title=\"${safeTitle}\">Link</a>`;",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-url-validation-bypass-cve",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 38,
+          "column": 8,
+          "package": "validator",
+          "function": "isURL",
+          "contract_clause": "url-validation-bypass-cve",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://github.com/advisories/GHSA-9965-vmph-33xx",
+          "suggested_fix": "CRITICAL: CVE-2025-56200 affects validator < 13.15.20. The isURL() function has a validation bypass allowing XSS and open redirect attacks. Upgrade to 13.15.20+ immediately. Exploit POC available publicly.\n",
+          "code_snippet": {
+            "startLine": 34,
+            "endLine": 42,
+            "lines": [
+              {
+                "line": 34,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "function renderLinkSafe(title: string, url: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  const safeTitle = validator.escape(title);",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  // Note: URL should also be validated separately",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  if (!validator.isURL(url, { protocols: ['https'], require_protocol: true })) {",
+                "highlighted": true
+              },
+              {
+                "line": 39,
+                "content": "    throw new Error('Invalid URL');",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  return `<a href=\"${url}\" title=\"${safeTitle}\">Link</a>`;",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 67,
+          "column": 20,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 63,
+            "endLine": 71,
+            "lines": [
+              {
+                "line": 63,
+                "content": " * PROPER: Escape in template literal",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "function buildHTMLEmailSafe(userName: string, message: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  const safeName = validator.escape(userName);",
+                "highlighted": true
+              },
+              {
+                "line": 68,
+                "content": "  const safeMessage = validator.escape(message);",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  return `",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "    <!DOCTYPE html>",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 68,
+          "column": 23,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 64,
+            "endLine": 72,
+            "lines": [
+              {
+                "line": 64,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "function buildHTMLEmailSafe(userName: string, message: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  const safeName = validator.escape(userName);",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  const safeMessage = validator.escape(message);",
+                "highlighted": true
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  return `",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "    <!DOCTYPE html>",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "    <html>",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 87,
+          "column": 20,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 83,
+            "endLine": 91,
+            "lines": [
+              {
+                "line": 83,
+                "content": " * This is SAFE but may cause display issues.",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": " * Should NOT trigger violation (defensive programming).",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "function doubleEscape(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  const escaped1 = validator.escape(input);",
+                "highlighted": true
+              },
+              {
+                "line": 88,
+                "content": "  const escaped2 = validator.escape(escaped1); // Double escaping",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "  return `<p>${escaped2}</p>`; // Will show &amp;lt; instead of <",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 88,
+          "column": 20,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 84,
+            "endLine": 92,
+            "lines": [
+              {
+                "line": 84,
+                "content": " * Should NOT trigger violation (defensive programming).",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "function doubleEscape(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  const escaped1 = validator.escape(input);",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  const escaped2 = validator.escape(escaped1); // Double escaping",
+                "highlighted": true
+              },
+              {
+                "line": 89,
+                "content": "  return `<p>${escaped2}</p>`; // Will show &amp;lt; instead of <",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "validator-escape-xss-prevention",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/validator/fixtures/xss-prevention.ts",
+          "line": 97,
+          "column": 39,
+          "package": "validator",
+          "function": "escape",
+          "contract_clause": "escape-xss-prevention",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://owasp.org/www-community/attacks/xss/",
+          "suggested_fix": "Caller MUST use escape() on ALL user input before rendering in HTML. Failure to escape allows XSS attacks, session hijacking, and data theft. CRITICAL: This is the #1 web security vulnerability.\n",
+          "code_snippet": {
+            "startLine": 93,
+            "endLine": 101,
+            "lines": [
+              {
+                "line": 93,
+                "content": " * PROPER: Escape before concatenation",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": " * Should NOT trigger violation.",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "function buildDynamicHTMLSafe(items: string[]): string {",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  const safeItems = items.map(item => validator.escape(item));",
+                "highlighted": true
+              },
+              {
+                "line": 98,
+                "content": "  return `<ul>${safeItems.map(item => `<li>${item}</li>`).join('')}</ul>`;",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

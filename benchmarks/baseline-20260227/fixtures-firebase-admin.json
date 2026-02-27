@@ -1,0 +1,4566 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:32.082Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "validator",
+    "winston",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "supertest",
+    "square",
+    "sqlite3",
+    "stripe",
+    "socket.io-client",
+    "superagent",
+    "sinon",
+    "socket.io",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "react-hook-form",
+    "puppeteer",
+    "pg",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "pino",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "lodash",
+    "jsonwebtoken",
+    "helmet",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "fastify",
+    "firebase-admin",
+    "express",
+    "ethers",
+    "discord.js",
+    "dayjs",
+    "date-fns",
+    "drizzle-orm",
+    "cors",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@prisma/client",
+    "@nestjs/common",
+    "@supabase/supabase-js",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "firebase-admin-token-expired",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 30,
+      "package": "firebase-admin",
+      "function": "verifyIdToken",
+      "contract_clause": "token-expired",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/id-token-expired' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller MUST catch and handle expired token errors. Return 401 Unauthorized to client and require re-authentication. DO NOT retry with same token - it's permanently expired.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": " * ❌ MISSING: No try-catch for verifyIdToken",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " * Should trigger violation - token can be expired/invalid/revoked",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function verifyTokenMissing(idToken: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const decodedToken = await admin.auth().verifyIdToken(idToken);",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  console.log('Token verified for user:', decodedToken.uid);",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  return decodedToken;",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-token-invalid",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 30,
+      "package": "firebase-admin",
+      "function": "verifyIdToken",
+      "contract_clause": "token-invalid",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/argument-error' or 'auth/id-token-revoked' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/verify-id-tokens",
+      "suggested_fix": "Caller MUST validate token format and handle invalid tokens. Check error.code to distinguish between format errors and revoked tokens. Return 401 Unauthorized to client.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": " * ❌ MISSING: No try-catch for verifyIdToken",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " * Should trigger violation - token can be expired/invalid/revoked",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function verifyTokenMissing(idToken: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const decodedToken = await admin.auth().verifyIdToken(idToken);",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  console.log('Token verified for user:', decodedToken.uid);",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  return decodedToken;",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 30,
+      "package": "firebase-admin",
+      "function": "verifyIdToken",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. FirebaseAuthError or generic Error - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/reference/admin/error-handling",
+      "suggested_fix": "Caller SHOULD implement retry with exponential backoff for transient failures. Check if Firebase Auth service is available.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": " * ❌ MISSING: No try-catch for verifyIdToken",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " * Should trigger violation - token can be expired/invalid/revoked",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function verifyTokenMissing(idToken: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const decodedToken = await admin.auth().verifyIdToken(idToken);",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  console.log('Token verified for user:', decodedToken.uid);",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  return decodedToken;",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-email-already-exists",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "createUser",
+      "contract_clause": "email-already-exists",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/email-already-exists' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller MUST check if error.code === 'auth/email-already-exists'. Return user-friendly error message. Consider suggesting password reset if user forgot they have an account. DO NOT retry with same email.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * ❌ MISSING: No try-catch for createUser",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Should trigger violation - email can already exist",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function createUserMissing(email: string, password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const userRecord = await admin.auth().createUser({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    email: email,",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    password: password",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  console.log('User created:', userRecord.uid);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-email",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "createUser",
+      "contract_clause": "invalid-email",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-email' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller SHOULD validate email format before calling createUser. Use email validation library to prevent this error.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * ❌ MISSING: No try-catch for createUser",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Should trigger violation - email can already exist",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function createUserMissing(email: string, password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const userRecord = await admin.auth().createUser({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    email: email,",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    password: password",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  console.log('User created:', userRecord.uid);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-uid-already-exists",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "createUser",
+      "contract_clause": "uid-already-exists",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/uid-already-exists' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "If using custom UIDs, generate unique values. Catch this error and either generate new UID or handle collision.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * ❌ MISSING: No try-catch for createUser",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Should trigger violation - email can already exist",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function createUserMissing(email: string, password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const userRecord = await admin.auth().createUser({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    email: email,",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    password: password",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  console.log('User created:', userRecord.uid);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-password",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "createUser",
+      "contract_clause": "invalid-password",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-password' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/manage-users",
+      "suggested_fix": "Validate password strength on client side. Firebase requires minimum 6 characters. Return helpful error to user about password requirements.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * ❌ MISSING: No try-catch for createUser",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Should trigger violation - email can already exist",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function createUserMissing(email: string, password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const userRecord = await admin.auth().createUser({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    email: email,",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    password: password",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  console.log('User created:', userRecord.uid);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-user-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 48,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "getUser",
+      "contract_clause": "user-not-found",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller MUST handle user-not-found errors. DO NOT assume user exists - always catch this error. Consider if this indicates deleted account or invalid UID.\n",
+      "code_snippet": {
+        "startLine": 44,
+        "endLine": 52,
+        "lines": [
+          {
+            "line": 44,
+            "content": " * ❌ MISSING: No try-catch for getUser",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": " * Should trigger violation - user may not exist",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "async function getUserMissing(uid: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "  const userRecord = await admin.auth().getUser(uid);",
+            "highlighted": true
+          },
+          {
+            "line": 49,
+            "content": "  console.log('User:', userRecord.email);",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  return userRecord;",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-uid",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 48,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "getUser",
+      "contract_clause": "invalid-uid",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-uid' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Validate UID format before calling getUser. Firebase UIDs are typically 28-character strings.\n",
+      "code_snippet": {
+        "startLine": 44,
+        "endLine": 52,
+        "lines": [
+          {
+            "line": 44,
+            "content": " * ❌ MISSING: No try-catch for getUser",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": " * Should trigger violation - user may not exist",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "async function getUserMissing(uid: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "  const userRecord = await admin.auth().getUser(uid);",
+            "highlighted": true
+          },
+          {
+            "line": 49,
+            "content": "  console.log('User:', userRecord.email);",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  return userRecord;",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-user-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "updateUser",
+      "contract_clause": "user-not-found",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller MUST handle user-not-found errors. Decide whether to create user or return error.\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": " * ❌ MISSING: No try-catch for updateUser",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * Should trigger violation - user may not exist, email may be taken",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "async function updateUserMissing(uid: string, updates: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const userRecord = await admin.auth().updateUser(uid, updates);",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "  console.log('User updated:', userRecord.uid);",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  return userRecord;",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-email-already-exists",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "updateUser",
+      "contract_clause": "email-already-exists",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/email-already-exists' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Check if new email is available before updating. Return user-friendly error if email is taken.\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": " * ❌ MISSING: No try-catch for updateUser",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * Should trigger violation - user may not exist, email may be taken",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "async function updateUserMissing(uid: string, updates: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const userRecord = await admin.auth().updateUser(uid, updates);",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "  console.log('User updated:', userRecord.uid);",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  return userRecord;",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-user-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 68,
+      "column": 9,
+      "package": "firebase-admin",
+      "function": "deleteUser",
+      "contract_clause": "user-not-found",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller SHOULD handle user-not-found errors gracefully. Consider if idempotent delete is acceptable (user already deleted).\n",
+      "code_snippet": {
+        "startLine": 64,
+        "endLine": 72,
+        "lines": [
+          {
+            "line": 64,
+            "content": " * ❌ MISSING: No try-catch for deleteUser",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": " * Should trigger violation - user may not exist",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function deleteUserMissing(uid: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await admin.auth().deleteUser(uid);",
+            "highlighted": true
+          },
+          {
+            "line": 69,
+            "content": "  console.log('User deleted');",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-user-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 77,
+      "column": 28,
+      "package": "firebase-admin",
+      "function": "getUserByEmail",
+      "contract_clause": "user-not-found",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller MUST handle user-not-found errors. This is common when checking if email is registered.\n",
+      "code_snippet": {
+        "startLine": 73,
+        "endLine": 81,
+        "lines": [
+          {
+            "line": 73,
+            "content": " * ❌ MISSING: No try-catch for getUserByEmail",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": " * Should trigger violation - user may not exist",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "async function getUserByEmailMissing(email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  const userRecord = await admin.auth().getUserByEmail(email);",
+            "highlighted": true
+          },
+          {
+            "line": 78,
+            "content": "  return userRecord;",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-user-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 86,
+      "column": 9,
+      "package": "firebase-admin",
+      "function": "setCustomUserClaims",
+      "contract_clause": "user-not-found",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Verify user exists before setting claims.\n",
+      "code_snippet": {
+        "startLine": 82,
+        "endLine": 90,
+        "lines": [
+          {
+            "line": 82,
+            "content": " * ❌ MISSING: No try-catch for setCustomUserClaims",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": " * Should trigger violation - user may not exist, claims may be invalid",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "async function setCustomClaimsMissing(uid: string, claims: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  await admin.auth().setCustomUserClaims(uid, claims);",
+            "highlighted": true
+          },
+          {
+            "line": 87,
+            "content": "  console.log('Claims set');",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "// ================================================================================",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-claims",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 86,
+      "column": 9,
+      "package": "firebase-admin",
+      "function": "setCustomUserClaims",
+      "contract_clause": "invalid-claims",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-claims' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/custom-claims",
+      "suggested_fix": "Validate claims size and avoid reserved keys. Reserved keys: iss, sub, aud, exp, iat, auth_time, nonce, etc.\n",
+      "code_snippet": {
+        "startLine": 82,
+        "endLine": 90,
+        "lines": [
+          {
+            "line": 82,
+            "content": " * ❌ MISSING: No try-catch for setCustomUserClaims",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": " * Should trigger violation - user may not exist, claims may be invalid",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "async function setCustomClaimsMissing(uid: string, claims: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  await admin.auth().setCustomUserClaims(uid, claims);",
+            "highlighted": true
+          },
+          {
+            "line": 87,
+            "content": "  console.log('Claims set');",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "// ================================================================================",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-recipient",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 164,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "invalid-recipient",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-recipient' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Caller MUST remove invalid tokens from database. Check error code and error.code === 'messaging/invalid-recipient'. Tokens can expire if user uninstalls app or revokes permissions.\n",
+      "code_snippet": {
+        "startLine": 160,
+        "endLine": 168,
+        "lines": [
+          {
+            "line": 160,
+            "content": "    token: token,",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "  const response = await admin.messaging().send(message);",
+            "highlighted": true
+          },
+          {
+            "line": 165,
+            "content": "  console.log('Message sent');",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 167,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-argument",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 164,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "invalid-argument",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-argument' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Validate message structure before sending. Check payload size limits (4KB for data messages). Verify required fields are present.\n",
+      "code_snippet": {
+        "startLine": 160,
+        "endLine": 168,
+        "lines": [
+          {
+            "line": 160,
+            "content": "    token: token,",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "  const response = await admin.messaging().send(message);",
+            "highlighted": true
+          },
+          {
+            "line": 165,
+            "content": "  console.log('Message sent');",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 167,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-quota-exceeded",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 164,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "quota-exceeded",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/quota-exceeded' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Implement exponential backoff retry. Reduce message send rate. Check if quota limit is reasonable for use case.\n",
+      "code_snippet": {
+        "startLine": 160,
+        "endLine": 168,
+        "lines": [
+          {
+            "line": 160,
+            "content": "    token: token,",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "  const response = await admin.messaging().send(message);",
+            "highlighted": true
+          },
+          {
+            "line": 165,
+            "content": "  console.log('Message sent');",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 167,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-partial-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 179,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "sendMulticast",
+      "contract_clause": "partial-failure",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/send-message",
+      "suggested_fix": "Caller MUST check response.failureCount and response.responses array. Each response contains success boolean and optional error. Remove invalid tokens from database based on specific error codes.\n",
+      "code_snippet": {
+        "startLine": 175,
+        "endLine": 183,
+        "lines": [
+          {
+            "line": 175,
+            "content": "    tokens: tokens,",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 177,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 178,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 179,
+            "content": "  const response = await admin.messaging().sendMulticast(message);",
+            "highlighted": true
+          },
+          {
+            "line": 180,
+            "content": "  console.log('Messages sent');",
+            "highlighted": false
+          },
+          {
+            "line": 181,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 182,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 183,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-argument",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 179,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "sendMulticast",
+      "contract_clause": "invalid-argument",
+      "description": "No try-catch block found. FirebaseMessagingError - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Validate all tokens and payload before sending.",
+      "code_snippet": {
+        "startLine": 175,
+        "endLine": 183,
+        "lines": [
+          {
+            "line": 175,
+            "content": "    tokens: tokens,",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 177,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 178,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 179,
+            "content": "  const response = await admin.messaging().sendMulticast(message);",
+            "highlighted": true
+          },
+          {
+            "line": 180,
+            "content": "  console.log('Messages sent');",
+            "highlighted": false
+          },
+          {
+            "line": 181,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 182,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 183,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-recipient",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 194,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "invalid-recipient",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-recipient' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Caller MUST remove invalid tokens from database. Check error code and error.code === 'messaging/invalid-recipient'. Tokens can expire if user uninstalls app or revokes permissions.\n",
+      "code_snippet": {
+        "startLine": 190,
+        "endLine": 198,
+        "lines": [
+          {
+            "line": 190,
+            "content": "    topic: topic,",
+            "highlighted": false
+          },
+          {
+            "line": 191,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 192,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 193,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 194,
+            "content": "  const response = await admin.messaging().send(message);",
+            "highlighted": true
+          },
+          {
+            "line": 195,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 196,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 198,
+            "content": "// ================================================================================",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-argument",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 194,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "invalid-argument",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-argument' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Validate message structure before sending. Check payload size limits (4KB for data messages). Verify required fields are present.\n",
+      "code_snippet": {
+        "startLine": 190,
+        "endLine": 198,
+        "lines": [
+          {
+            "line": 190,
+            "content": "    topic: topic,",
+            "highlighted": false
+          },
+          {
+            "line": 191,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 192,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 193,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 194,
+            "content": "  const response = await admin.messaging().send(message);",
+            "highlighted": true
+          },
+          {
+            "line": 195,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 196,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 198,
+            "content": "// ================================================================================",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-quota-exceeded",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 194,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "quota-exceeded",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/quota-exceeded' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Implement exponential backoff retry. Reduce message send rate. Check if quota limit is reasonable for use case.\n",
+      "code_snippet": {
+        "startLine": 190,
+        "endLine": 198,
+        "lines": [
+          {
+            "line": 190,
+            "content": "    topic: topic,",
+            "highlighted": false
+          },
+          {
+            "line": 191,
+            "content": "    notification: notification",
+            "highlighted": false
+          },
+          {
+            "line": 192,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 193,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 194,
+            "content": "  const response = await admin.messaging().send(message);",
+            "highlighted": true
+          },
+          {
+            "line": 195,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 196,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 198,
+            "content": "// ================================================================================",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-permission-denied",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 249,
+      "column": 21,
+      "package": "firebase-admin",
+      "function": "get",
+      "contract_clause": "permission-denied",
+      "description": "No try-catch block found. Error with code 'PERMISSION_DENIED' (gRPC code 7) - this will crash the application.",
+      "source_doc": "https://cloud.google.com/firestore/docs/understand-error-codes",
+      "suggested_fix": "Caller MUST handle permission errors. Check Firestore security rules. Admin SDK bypasses rules by default - if seeing this, check service account permissions.\n",
+      "code_snippet": {
+        "startLine": 245,
+        "endLine": 253,
+        "lines": [
+          {
+            "line": 245,
+            "content": " * ❌ MISSING: Multi-level chain without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "async function chainedFirestoreMissing() {",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "  const doc = await admin.firestore().collection('users').doc('123').get();",
+            "highlighted": true
+          },
+          {
+            "line": 250,
+            "content": "  return doc.data();",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 252,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 253,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 249,
+      "column": 21,
+      "package": "firebase-admin",
+      "function": "get",
+      "contract_clause": "not-found",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/firestore/query-data/get-data",
+      "suggested_fix": "Caller MUST check snapshot.exists before accessing data. Use snapshot.exists or check if snapshot.data() is undefined.\n",
+      "code_snippet": {
+        "startLine": 245,
+        "endLine": 253,
+        "lines": [
+          {
+            "line": 245,
+            "content": " * ❌ MISSING: Multi-level chain without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "async function chainedFirestoreMissing() {",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "  const doc = await admin.firestore().collection('users').doc('123').get();",
+            "highlighted": true
+          },
+          {
+            "line": 250,
+            "content": "  return doc.data();",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 252,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 253,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-deadline-exceeded",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 249,
+      "column": 21,
+      "package": "firebase-admin",
+      "function": "get",
+      "contract_clause": "deadline-exceeded",
+      "description": "No try-catch block found. Error with code 'DEADLINE_EXCEEDED' (gRPC code 4) - this will crash the application.",
+      "source_doc": "https://cloud.google.com/firestore/docs/understand-error-codes",
+      "suggested_fix": "Caller SHOULD implement retry with exponential backoff. Check network connectivity and Firestore status. Consider if query is too complex (missing indexes).\n",
+      "code_snippet": {
+        "startLine": 245,
+        "endLine": 253,
+        "lines": [
+          {
+            "line": 245,
+            "content": " * ❌ MISSING: Multi-level chain without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "async function chainedFirestoreMissing() {",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "  const doc = await admin.firestore().collection('users').doc('123').get();",
+            "highlighted": true
+          },
+          {
+            "line": 250,
+            "content": "  return doc.data();",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 252,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 253,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-token-expired",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 258,
+      "column": 25,
+      "package": "firebase-admin",
+      "function": "verifyIdToken",
+      "contract_clause": "token-expired",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/id-token-expired' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+      "suggested_fix": "Caller MUST catch and handle expired token errors. Return 401 Unauthorized to client and require re-authentication. DO NOT retry with same token - it's permanently expired.\n",
+      "code_snippet": {
+        "startLine": 254,
+        "endLine": 262,
+        "lines": [
+          {
+            "line": 254,
+            "content": " * ❌ MISSING: Another chained call",
+            "highlighted": false
+          },
+          {
+            "line": 255,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 256,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 257,
+            "content": "async function chainedAuthMissing(token: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 258,
+            "content": "  const decoded = await admin.auth().verifyIdToken(token);",
+            "highlighted": true
+          },
+          {
+            "line": 259,
+            "content": "  return decoded.uid;",
+            "highlighted": false
+          },
+          {
+            "line": 260,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 261,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 262,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-token-invalid",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 258,
+      "column": 25,
+      "package": "firebase-admin",
+      "function": "verifyIdToken",
+      "contract_clause": "token-invalid",
+      "description": "No try-catch block found. FirebaseAuthError with code 'auth/argument-error' or 'auth/id-token-revoked' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/auth/admin/verify-id-tokens",
+      "suggested_fix": "Caller MUST validate token format and handle invalid tokens. Check error.code to distinguish between format errors and revoked tokens. Return 401 Unauthorized to client.\n",
+      "code_snippet": {
+        "startLine": 254,
+        "endLine": 262,
+        "lines": [
+          {
+            "line": 254,
+            "content": " * ❌ MISSING: Another chained call",
+            "highlighted": false
+          },
+          {
+            "line": 255,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 256,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 257,
+            "content": "async function chainedAuthMissing(token: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 258,
+            "content": "  const decoded = await admin.auth().verifyIdToken(token);",
+            "highlighted": true
+          },
+          {
+            "line": 259,
+            "content": "  return decoded.uid;",
+            "highlighted": false
+          },
+          {
+            "line": 260,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 261,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 262,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 258,
+      "column": 25,
+      "package": "firebase-admin",
+      "function": "verifyIdToken",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. FirebaseAuthError or generic Error - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/reference/admin/error-handling",
+      "suggested_fix": "Caller SHOULD implement retry with exponential backoff for transient failures. Check if Firebase Auth service is available.\n",
+      "code_snippet": {
+        "startLine": 254,
+        "endLine": 262,
+        "lines": [
+          {
+            "line": 254,
+            "content": " * ❌ MISSING: Another chained call",
+            "highlighted": false
+          },
+          {
+            "line": 255,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 256,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 257,
+            "content": "async function chainedAuthMissing(token: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 258,
+            "content": "  const decoded = await admin.auth().verifyIdToken(token);",
+            "highlighted": true
+          },
+          {
+            "line": 259,
+            "content": "  return decoded.uid;",
+            "highlighted": false
+          },
+          {
+            "line": 260,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 261,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 262,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-recipient",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 267,
+      "column": 24,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "invalid-recipient",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-recipient' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Caller MUST remove invalid tokens from database. Check error code and error.code === 'messaging/invalid-recipient'. Tokens can expire if user uninstalls app or revokes permissions.\n",
+      "code_snippet": {
+        "startLine": 263,
+        "endLine": 271,
+        "lines": [
+          {
+            "line": 263,
+            "content": " * ❌ MISSING: Chained messaging call",
+            "highlighted": false
+          },
+          {
+            "line": 264,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 265,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 266,
+            "content": "async function chainedMessagingMissing(token: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 267,
+            "content": "  const result = await admin.messaging().send({",
+            "highlighted": true
+          },
+          {
+            "line": 268,
+            "content": "    token: token,",
+            "highlighted": false
+          },
+          {
+            "line": 269,
+            "content": "    notification: { title: 'Test', body: 'Test body' }",
+            "highlighted": false
+          },
+          {
+            "line": 270,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 271,
+            "content": "  return result;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-invalid-argument",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 267,
+      "column": 24,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "invalid-argument",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-argument' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Validate message structure before sending. Check payload size limits (4KB for data messages). Verify required fields are present.\n",
+      "code_snippet": {
+        "startLine": 263,
+        "endLine": 271,
+        "lines": [
+          {
+            "line": 263,
+            "content": " * ❌ MISSING: Chained messaging call",
+            "highlighted": false
+          },
+          {
+            "line": 264,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 265,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 266,
+            "content": "async function chainedMessagingMissing(token: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 267,
+            "content": "  const result = await admin.messaging().send({",
+            "highlighted": true
+          },
+          {
+            "line": 268,
+            "content": "    token: token,",
+            "highlighted": false
+          },
+          {
+            "line": 269,
+            "content": "    notification: { title: 'Test', body: 'Test body' }",
+            "highlighted": false
+          },
+          {
+            "line": 270,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 271,
+            "content": "  return result;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-quota-exceeded",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 267,
+      "column": 24,
+      "package": "firebase-admin",
+      "function": "send",
+      "contract_clause": "quota-exceeded",
+      "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/quota-exceeded' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "suggested_fix": "Implement exponential backoff retry. Reduce message send rate. Check if quota limit is reasonable for use case.\n",
+      "code_snippet": {
+        "startLine": 263,
+        "endLine": 271,
+        "lines": [
+          {
+            "line": 263,
+            "content": " * ❌ MISSING: Chained messaging call",
+            "highlighted": false
+          },
+          {
+            "line": 264,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 265,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 266,
+            "content": "async function chainedMessagingMissing(token: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 267,
+            "content": "  const result = await admin.messaging().send({",
+            "highlighted": true
+          },
+          {
+            "line": 268,
+            "content": "    token: token,",
+            "highlighted": false
+          },
+          {
+            "line": 269,
+            "content": "    notification: { title: 'Test', body: 'Test body' }",
+            "highlighted": false
+          },
+          {
+            "line": 270,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 271,
+            "content": "  return result;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-permission-denied",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 279,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "once",
+      "contract_clause": "permission-denied",
+      "description": "No try-catch block found. Error with code 'PERMISSION_DENIED' - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/database/admin/start",
+      "suggested_fix": "Check Realtime Database rules. Admin SDK bypasses rules by default - if seeing this, check databaseAuthVariableOverride.\n",
+      "code_snippet": {
+        "startLine": 275,
+        "endLine": 283,
+        "lines": [
+          {
+            "line": 275,
+            "content": " * ❌ MISSING: Chained database call",
+            "highlighted": false
+          },
+          {
+            "line": 276,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 277,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 278,
+            "content": "async function chainedDatabaseMissing() {",
+            "highlighted": false
+          },
+          {
+            "line": 279,
+            "content": "  const snapshot = await admin.database().ref('users/123').once('value');",
+            "highlighted": true
+          },
+          {
+            "line": 280,
+            "content": "  return snapshot.val();",
+            "highlighted": false
+          },
+          {
+            "line": 281,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 282,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 283,
+            "content": "// Export for testing",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "firebase-admin-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+      "line": 279,
+      "column": 26,
+      "package": "firebase-admin",
+      "function": "once",
+      "contract_clause": "network-error",
+      "description": "No try-catch block found. Error - this will crash the application.",
+      "source_doc": "https://firebase.google.com/docs/reference/admin/error-handling",
+      "suggested_fix": "Implement retry with exponential backoff for transient failures.\n",
+      "code_snippet": {
+        "startLine": 275,
+        "endLine": 283,
+        "lines": [
+          {
+            "line": 275,
+            "content": " * ❌ MISSING: Chained database call",
+            "highlighted": false
+          },
+          {
+            "line": 276,
+            "content": " * Should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 277,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 278,
+            "content": "async function chainedDatabaseMissing() {",
+            "highlighted": false
+          },
+          {
+            "line": 279,
+            "content": "  const snapshot = await admin.database().ref('users/123').once('value');",
+            "highlighted": true
+          },
+          {
+            "line": 280,
+            "content": "  return snapshot.val();",
+            "highlighted": false
+          },
+          {
+            "line": 281,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 282,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 283,
+            "content": "// Export for testing",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 34,
+    "error_count": 34,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "firebase-admin",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "firebase-admin": {
+      "total": 34,
+      "errors": 34,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "firebase-admin-token-expired",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 30,
+          "package": "firebase-admin",
+          "function": "verifyIdToken",
+          "contract_clause": "token-expired",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/id-token-expired' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller MUST catch and handle expired token errors. Return 401 Unauthorized to client and require re-authentication. DO NOT retry with same token - it's permanently expired.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": " * ❌ MISSING: No try-catch for verifyIdToken",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " * Should trigger violation - token can be expired/invalid/revoked",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function verifyTokenMissing(idToken: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const decodedToken = await admin.auth().verifyIdToken(idToken);",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  console.log('Token verified for user:', decodedToken.uid);",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  return decodedToken;",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-token-invalid",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 30,
+          "package": "firebase-admin",
+          "function": "verifyIdToken",
+          "contract_clause": "token-invalid",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/argument-error' or 'auth/id-token-revoked' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/verify-id-tokens",
+          "suggested_fix": "Caller MUST validate token format and handle invalid tokens. Check error.code to distinguish between format errors and revoked tokens. Return 401 Unauthorized to client.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": " * ❌ MISSING: No try-catch for verifyIdToken",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " * Should trigger violation - token can be expired/invalid/revoked",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function verifyTokenMissing(idToken: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const decodedToken = await admin.auth().verifyIdToken(idToken);",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  console.log('Token verified for user:', decodedToken.uid);",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  return decodedToken;",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 30,
+          "package": "firebase-admin",
+          "function": "verifyIdToken",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. FirebaseAuthError or generic Error - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/reference/admin/error-handling",
+          "suggested_fix": "Caller SHOULD implement retry with exponential backoff for transient failures. Check if Firebase Auth service is available.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": " * ❌ MISSING: No try-catch for verifyIdToken",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " * Should trigger violation - token can be expired/invalid/revoked",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function verifyTokenMissing(idToken: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const decodedToken = await admin.auth().verifyIdToken(idToken);",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  console.log('Token verified for user:', decodedToken.uid);",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  return decodedToken;",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-email-already-exists",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "createUser",
+          "contract_clause": "email-already-exists",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/email-already-exists' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller MUST check if error.code === 'auth/email-already-exists'. Return user-friendly error message. Consider suggesting password reset if user forgot they have an account. DO NOT retry with same email.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * ❌ MISSING: No try-catch for createUser",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Should trigger violation - email can already exist",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function createUserMissing(email: string, password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const userRecord = await admin.auth().createUser({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    email: email,",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    password: password",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  console.log('User created:', userRecord.uid);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-email",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "createUser",
+          "contract_clause": "invalid-email",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-email' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller SHOULD validate email format before calling createUser. Use email validation library to prevent this error.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * ❌ MISSING: No try-catch for createUser",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Should trigger violation - email can already exist",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function createUserMissing(email: string, password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const userRecord = await admin.auth().createUser({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    email: email,",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    password: password",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  console.log('User created:', userRecord.uid);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-uid-already-exists",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "createUser",
+          "contract_clause": "uid-already-exists",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/uid-already-exists' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "If using custom UIDs, generate unique values. Catch this error and either generate new UID or handle collision.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * ❌ MISSING: No try-catch for createUser",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Should trigger violation - email can already exist",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function createUserMissing(email: string, password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const userRecord = await admin.auth().createUser({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    email: email,",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    password: password",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  console.log('User created:', userRecord.uid);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-password",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "createUser",
+          "contract_clause": "invalid-password",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-password' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/manage-users",
+          "suggested_fix": "Validate password strength on client side. Firebase requires minimum 6 characters. Return helpful error to user about password requirements.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * ❌ MISSING: No try-catch for createUser",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Should trigger violation - email can already exist",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function createUserMissing(email: string, password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const userRecord = await admin.auth().createUser({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    email: email,",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    password: password",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  console.log('User created:', userRecord.uid);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-user-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 48,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "getUser",
+          "contract_clause": "user-not-found",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller MUST handle user-not-found errors. DO NOT assume user exists - always catch this error. Consider if this indicates deleted account or invalid UID.\n",
+          "code_snippet": {
+            "startLine": 44,
+            "endLine": 52,
+            "lines": [
+              {
+                "line": 44,
+                "content": " * ❌ MISSING: No try-catch for getUser",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": " * Should trigger violation - user may not exist",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "async function getUserMissing(uid: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "  const userRecord = await admin.auth().getUser(uid);",
+                "highlighted": true
+              },
+              {
+                "line": 49,
+                "content": "  console.log('User:', userRecord.email);",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  return userRecord;",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-uid",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 48,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "getUser",
+          "contract_clause": "invalid-uid",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-uid' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Validate UID format before calling getUser. Firebase UIDs are typically 28-character strings.\n",
+          "code_snippet": {
+            "startLine": 44,
+            "endLine": 52,
+            "lines": [
+              {
+                "line": 44,
+                "content": " * ❌ MISSING: No try-catch for getUser",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": " * Should trigger violation - user may not exist",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "async function getUserMissing(uid: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "  const userRecord = await admin.auth().getUser(uid);",
+                "highlighted": true
+              },
+              {
+                "line": 49,
+                "content": "  console.log('User:', userRecord.email);",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  return userRecord;",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-user-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "updateUser",
+          "contract_clause": "user-not-found",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller MUST handle user-not-found errors. Decide whether to create user or return error.\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": " * ❌ MISSING: No try-catch for updateUser",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * Should trigger violation - user may not exist, email may be taken",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "async function updateUserMissing(uid: string, updates: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const userRecord = await admin.auth().updateUser(uid, updates);",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "  console.log('User updated:', userRecord.uid);",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  return userRecord;",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-email-already-exists",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "updateUser",
+          "contract_clause": "email-already-exists",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/email-already-exists' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Check if new email is available before updating. Return user-friendly error if email is taken.\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": " * ❌ MISSING: No try-catch for updateUser",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * Should trigger violation - user may not exist, email may be taken",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "async function updateUserMissing(uid: string, updates: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const userRecord = await admin.auth().updateUser(uid, updates);",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "  console.log('User updated:', userRecord.uid);",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  return userRecord;",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-user-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 68,
+          "column": 9,
+          "package": "firebase-admin",
+          "function": "deleteUser",
+          "contract_clause": "user-not-found",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller SHOULD handle user-not-found errors gracefully. Consider if idempotent delete is acceptable (user already deleted).\n",
+          "code_snippet": {
+            "startLine": 64,
+            "endLine": 72,
+            "lines": [
+              {
+                "line": 64,
+                "content": " * ❌ MISSING: No try-catch for deleteUser",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": " * Should trigger violation - user may not exist",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function deleteUserMissing(uid: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await admin.auth().deleteUser(uid);",
+                "highlighted": true
+              },
+              {
+                "line": 69,
+                "content": "  console.log('User deleted');",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-user-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 77,
+          "column": 28,
+          "package": "firebase-admin",
+          "function": "getUserByEmail",
+          "contract_clause": "user-not-found",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller MUST handle user-not-found errors. This is common when checking if email is registered.\n",
+          "code_snippet": {
+            "startLine": 73,
+            "endLine": 81,
+            "lines": [
+              {
+                "line": 73,
+                "content": " * ❌ MISSING: No try-catch for getUserByEmail",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": " * Should trigger violation - user may not exist",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "async function getUserByEmailMissing(email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  const userRecord = await admin.auth().getUserByEmail(email);",
+                "highlighted": true
+              },
+              {
+                "line": 78,
+                "content": "  return userRecord;",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-user-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 86,
+          "column": 9,
+          "package": "firebase-admin",
+          "function": "setCustomUserClaims",
+          "contract_clause": "user-not-found",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/user-not-found' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Verify user exists before setting claims.\n",
+          "code_snippet": {
+            "startLine": 82,
+            "endLine": 90,
+            "lines": [
+              {
+                "line": 82,
+                "content": " * ❌ MISSING: No try-catch for setCustomUserClaims",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": " * Should trigger violation - user may not exist, claims may be invalid",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "async function setCustomClaimsMissing(uid: string, claims: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  await admin.auth().setCustomUserClaims(uid, claims);",
+                "highlighted": true
+              },
+              {
+                "line": 87,
+                "content": "  console.log('Claims set');",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "// ================================================================================",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-claims",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 86,
+          "column": 9,
+          "package": "firebase-admin",
+          "function": "setCustomUserClaims",
+          "contract_clause": "invalid-claims",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/invalid-claims' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/custom-claims",
+          "suggested_fix": "Validate claims size and avoid reserved keys. Reserved keys: iss, sub, aud, exp, iat, auth_time, nonce, etc.\n",
+          "code_snippet": {
+            "startLine": 82,
+            "endLine": 90,
+            "lines": [
+              {
+                "line": 82,
+                "content": " * ❌ MISSING: No try-catch for setCustomUserClaims",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": " * Should trigger violation - user may not exist, claims may be invalid",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "async function setCustomClaimsMissing(uid: string, claims: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  await admin.auth().setCustomUserClaims(uid, claims);",
+                "highlighted": true
+              },
+              {
+                "line": 87,
+                "content": "  console.log('Claims set');",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "// ================================================================================",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-recipient",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 164,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "invalid-recipient",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-recipient' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Caller MUST remove invalid tokens from database. Check error code and error.code === 'messaging/invalid-recipient'. Tokens can expire if user uninstalls app or revokes permissions.\n",
+          "code_snippet": {
+            "startLine": 160,
+            "endLine": 168,
+            "lines": [
+              {
+                "line": 160,
+                "content": "    token: token,",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "  const response = await admin.messaging().send(message);",
+                "highlighted": true
+              },
+              {
+                "line": 165,
+                "content": "  console.log('Message sent');",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 167,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-argument",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 164,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "invalid-argument",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-argument' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Validate message structure before sending. Check payload size limits (4KB for data messages). Verify required fields are present.\n",
+          "code_snippet": {
+            "startLine": 160,
+            "endLine": 168,
+            "lines": [
+              {
+                "line": 160,
+                "content": "    token: token,",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "  const response = await admin.messaging().send(message);",
+                "highlighted": true
+              },
+              {
+                "line": 165,
+                "content": "  console.log('Message sent');",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 167,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-quota-exceeded",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 164,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "quota-exceeded",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/quota-exceeded' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Implement exponential backoff retry. Reduce message send rate. Check if quota limit is reasonable for use case.\n",
+          "code_snippet": {
+            "startLine": 160,
+            "endLine": 168,
+            "lines": [
+              {
+                "line": 160,
+                "content": "    token: token,",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "  const response = await admin.messaging().send(message);",
+                "highlighted": true
+              },
+              {
+                "line": 165,
+                "content": "  console.log('Message sent');",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 167,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-partial-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 179,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "sendMulticast",
+          "contract_clause": "partial-failure",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/send-message",
+          "suggested_fix": "Caller MUST check response.failureCount and response.responses array. Each response contains success boolean and optional error. Remove invalid tokens from database based on specific error codes.\n",
+          "code_snippet": {
+            "startLine": 175,
+            "endLine": 183,
+            "lines": [
+              {
+                "line": 175,
+                "content": "    tokens: tokens,",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 177,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 178,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 179,
+                "content": "  const response = await admin.messaging().sendMulticast(message);",
+                "highlighted": true
+              },
+              {
+                "line": 180,
+                "content": "  console.log('Messages sent');",
+                "highlighted": false
+              },
+              {
+                "line": 181,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 182,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 183,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-argument",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 179,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "sendMulticast",
+          "contract_clause": "invalid-argument",
+          "description": "No try-catch block found. FirebaseMessagingError - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Validate all tokens and payload before sending.",
+          "code_snippet": {
+            "startLine": 175,
+            "endLine": 183,
+            "lines": [
+              {
+                "line": 175,
+                "content": "    tokens: tokens,",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 177,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 178,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 179,
+                "content": "  const response = await admin.messaging().sendMulticast(message);",
+                "highlighted": true
+              },
+              {
+                "line": 180,
+                "content": "  console.log('Messages sent');",
+                "highlighted": false
+              },
+              {
+                "line": 181,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 182,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 183,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-recipient",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 194,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "invalid-recipient",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-recipient' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Caller MUST remove invalid tokens from database. Check error code and error.code === 'messaging/invalid-recipient'. Tokens can expire if user uninstalls app or revokes permissions.\n",
+          "code_snippet": {
+            "startLine": 190,
+            "endLine": 198,
+            "lines": [
+              {
+                "line": 190,
+                "content": "    topic: topic,",
+                "highlighted": false
+              },
+              {
+                "line": 191,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 192,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 193,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 194,
+                "content": "  const response = await admin.messaging().send(message);",
+                "highlighted": true
+              },
+              {
+                "line": 195,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 196,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 198,
+                "content": "// ================================================================================",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-argument",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 194,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "invalid-argument",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-argument' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Validate message structure before sending. Check payload size limits (4KB for data messages). Verify required fields are present.\n",
+          "code_snippet": {
+            "startLine": 190,
+            "endLine": 198,
+            "lines": [
+              {
+                "line": 190,
+                "content": "    topic: topic,",
+                "highlighted": false
+              },
+              {
+                "line": 191,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 192,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 193,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 194,
+                "content": "  const response = await admin.messaging().send(message);",
+                "highlighted": true
+              },
+              {
+                "line": 195,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 196,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 198,
+                "content": "// ================================================================================",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-quota-exceeded",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 194,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "quota-exceeded",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/quota-exceeded' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Implement exponential backoff retry. Reduce message send rate. Check if quota limit is reasonable for use case.\n",
+          "code_snippet": {
+            "startLine": 190,
+            "endLine": 198,
+            "lines": [
+              {
+                "line": 190,
+                "content": "    topic: topic,",
+                "highlighted": false
+              },
+              {
+                "line": 191,
+                "content": "    notification: notification",
+                "highlighted": false
+              },
+              {
+                "line": 192,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 193,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 194,
+                "content": "  const response = await admin.messaging().send(message);",
+                "highlighted": true
+              },
+              {
+                "line": 195,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 196,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 198,
+                "content": "// ================================================================================",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-permission-denied",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 249,
+          "column": 21,
+          "package": "firebase-admin",
+          "function": "get",
+          "contract_clause": "permission-denied",
+          "description": "No try-catch block found. Error with code 'PERMISSION_DENIED' (gRPC code 7) - this will crash the application.",
+          "source_doc": "https://cloud.google.com/firestore/docs/understand-error-codes",
+          "suggested_fix": "Caller MUST handle permission errors. Check Firestore security rules. Admin SDK bypasses rules by default - if seeing this, check service account permissions.\n",
+          "code_snippet": {
+            "startLine": 245,
+            "endLine": 253,
+            "lines": [
+              {
+                "line": 245,
+                "content": " * ❌ MISSING: Multi-level chain without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "async function chainedFirestoreMissing() {",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "  const doc = await admin.firestore().collection('users').doc('123').get();",
+                "highlighted": true
+              },
+              {
+                "line": 250,
+                "content": "  return doc.data();",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 252,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 253,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 249,
+          "column": 21,
+          "package": "firebase-admin",
+          "function": "get",
+          "contract_clause": "not-found",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/firestore/query-data/get-data",
+          "suggested_fix": "Caller MUST check snapshot.exists before accessing data. Use snapshot.exists or check if snapshot.data() is undefined.\n",
+          "code_snippet": {
+            "startLine": 245,
+            "endLine": 253,
+            "lines": [
+              {
+                "line": 245,
+                "content": " * ❌ MISSING: Multi-level chain without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "async function chainedFirestoreMissing() {",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "  const doc = await admin.firestore().collection('users').doc('123').get();",
+                "highlighted": true
+              },
+              {
+                "line": 250,
+                "content": "  return doc.data();",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 252,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 253,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-deadline-exceeded",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 249,
+          "column": 21,
+          "package": "firebase-admin",
+          "function": "get",
+          "contract_clause": "deadline-exceeded",
+          "description": "No try-catch block found. Error with code 'DEADLINE_EXCEEDED' (gRPC code 4) - this will crash the application.",
+          "source_doc": "https://cloud.google.com/firestore/docs/understand-error-codes",
+          "suggested_fix": "Caller SHOULD implement retry with exponential backoff. Check network connectivity and Firestore status. Consider if query is too complex (missing indexes).\n",
+          "code_snippet": {
+            "startLine": 245,
+            "endLine": 253,
+            "lines": [
+              {
+                "line": 245,
+                "content": " * ❌ MISSING: Multi-level chain without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "async function chainedFirestoreMissing() {",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "  const doc = await admin.firestore().collection('users').doc('123').get();",
+                "highlighted": true
+              },
+              {
+                "line": 250,
+                "content": "  return doc.data();",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 252,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 253,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-token-expired",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 258,
+          "column": 25,
+          "package": "firebase-admin",
+          "function": "verifyIdToken",
+          "contract_clause": "token-expired",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/id-token-expired' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/errors",
+          "suggested_fix": "Caller MUST catch and handle expired token errors. Return 401 Unauthorized to client and require re-authentication. DO NOT retry with same token - it's permanently expired.\n",
+          "code_snippet": {
+            "startLine": 254,
+            "endLine": 262,
+            "lines": [
+              {
+                "line": 254,
+                "content": " * ❌ MISSING: Another chained call",
+                "highlighted": false
+              },
+              {
+                "line": 255,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 256,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 257,
+                "content": "async function chainedAuthMissing(token: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 258,
+                "content": "  const decoded = await admin.auth().verifyIdToken(token);",
+                "highlighted": true
+              },
+              {
+                "line": 259,
+                "content": "  return decoded.uid;",
+                "highlighted": false
+              },
+              {
+                "line": 260,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 261,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 262,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-token-invalid",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 258,
+          "column": 25,
+          "package": "firebase-admin",
+          "function": "verifyIdToken",
+          "contract_clause": "token-invalid",
+          "description": "No try-catch block found. FirebaseAuthError with code 'auth/argument-error' or 'auth/id-token-revoked' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/auth/admin/verify-id-tokens",
+          "suggested_fix": "Caller MUST validate token format and handle invalid tokens. Check error.code to distinguish between format errors and revoked tokens. Return 401 Unauthorized to client.\n",
+          "code_snippet": {
+            "startLine": 254,
+            "endLine": 262,
+            "lines": [
+              {
+                "line": 254,
+                "content": " * ❌ MISSING: Another chained call",
+                "highlighted": false
+              },
+              {
+                "line": 255,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 256,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 257,
+                "content": "async function chainedAuthMissing(token: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 258,
+                "content": "  const decoded = await admin.auth().verifyIdToken(token);",
+                "highlighted": true
+              },
+              {
+                "line": 259,
+                "content": "  return decoded.uid;",
+                "highlighted": false
+              },
+              {
+                "line": 260,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 261,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 262,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 258,
+          "column": 25,
+          "package": "firebase-admin",
+          "function": "verifyIdToken",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. FirebaseAuthError or generic Error - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/reference/admin/error-handling",
+          "suggested_fix": "Caller SHOULD implement retry with exponential backoff for transient failures. Check if Firebase Auth service is available.\n",
+          "code_snippet": {
+            "startLine": 254,
+            "endLine": 262,
+            "lines": [
+              {
+                "line": 254,
+                "content": " * ❌ MISSING: Another chained call",
+                "highlighted": false
+              },
+              {
+                "line": 255,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 256,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 257,
+                "content": "async function chainedAuthMissing(token: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 258,
+                "content": "  const decoded = await admin.auth().verifyIdToken(token);",
+                "highlighted": true
+              },
+              {
+                "line": 259,
+                "content": "  return decoded.uid;",
+                "highlighted": false
+              },
+              {
+                "line": 260,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 261,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 262,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-recipient",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 267,
+          "column": 24,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "invalid-recipient",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-recipient' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Caller MUST remove invalid tokens from database. Check error code and error.code === 'messaging/invalid-recipient'. Tokens can expire if user uninstalls app or revokes permissions.\n",
+          "code_snippet": {
+            "startLine": 263,
+            "endLine": 271,
+            "lines": [
+              {
+                "line": 263,
+                "content": " * ❌ MISSING: Chained messaging call",
+                "highlighted": false
+              },
+              {
+                "line": 264,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 265,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 266,
+                "content": "async function chainedMessagingMissing(token: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 267,
+                "content": "  const result = await admin.messaging().send({",
+                "highlighted": true
+              },
+              {
+                "line": 268,
+                "content": "    token: token,",
+                "highlighted": false
+              },
+              {
+                "line": 269,
+                "content": "    notification: { title: 'Test', body: 'Test body' }",
+                "highlighted": false
+              },
+              {
+                "line": 270,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 271,
+                "content": "  return result;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-invalid-argument",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 267,
+          "column": 24,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "invalid-argument",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/invalid-argument' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Validate message structure before sending. Check payload size limits (4KB for data messages). Verify required fields are present.\n",
+          "code_snippet": {
+            "startLine": 263,
+            "endLine": 271,
+            "lines": [
+              {
+                "line": 263,
+                "content": " * ❌ MISSING: Chained messaging call",
+                "highlighted": false
+              },
+              {
+                "line": 264,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 265,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 266,
+                "content": "async function chainedMessagingMissing(token: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 267,
+                "content": "  const result = await admin.messaging().send({",
+                "highlighted": true
+              },
+              {
+                "line": 268,
+                "content": "    token: token,",
+                "highlighted": false
+              },
+              {
+                "line": 269,
+                "content": "    notification: { title: 'Test', body: 'Test body' }",
+                "highlighted": false
+              },
+              {
+                "line": 270,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 271,
+                "content": "  return result;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-quota-exceeded",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 267,
+          "column": 24,
+          "package": "firebase-admin",
+          "function": "send",
+          "contract_clause": "quota-exceeded",
+          "description": "No try-catch block found. FirebaseMessagingError with code 'messaging/quota-exceeded' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+          "suggested_fix": "Implement exponential backoff retry. Reduce message send rate. Check if quota limit is reasonable for use case.\n",
+          "code_snippet": {
+            "startLine": 263,
+            "endLine": 271,
+            "lines": [
+              {
+                "line": 263,
+                "content": " * ❌ MISSING: Chained messaging call",
+                "highlighted": false
+              },
+              {
+                "line": 264,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 265,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 266,
+                "content": "async function chainedMessagingMissing(token: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 267,
+                "content": "  const result = await admin.messaging().send({",
+                "highlighted": true
+              },
+              {
+                "line": 268,
+                "content": "    token: token,",
+                "highlighted": false
+              },
+              {
+                "line": 269,
+                "content": "    notification: { title: 'Test', body: 'Test body' }",
+                "highlighted": false
+              },
+              {
+                "line": 270,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 271,
+                "content": "  return result;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-permission-denied",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 279,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "once",
+          "contract_clause": "permission-denied",
+          "description": "No try-catch block found. Error with code 'PERMISSION_DENIED' - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/database/admin/start",
+          "suggested_fix": "Check Realtime Database rules. Admin SDK bypasses rules by default - if seeing this, check databaseAuthVariableOverride.\n",
+          "code_snippet": {
+            "startLine": 275,
+            "endLine": 283,
+            "lines": [
+              {
+                "line": 275,
+                "content": " * ❌ MISSING: Chained database call",
+                "highlighted": false
+              },
+              {
+                "line": 276,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 277,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 278,
+                "content": "async function chainedDatabaseMissing() {",
+                "highlighted": false
+              },
+              {
+                "line": 279,
+                "content": "  const snapshot = await admin.database().ref('users/123').once('value');",
+                "highlighted": true
+              },
+              {
+                "line": 280,
+                "content": "  return snapshot.val();",
+                "highlighted": false
+              },
+              {
+                "line": 281,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 282,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 283,
+                "content": "// Export for testing",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "firebase-admin-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/firebase-admin/fixtures/missing-error-handling.ts",
+          "line": 279,
+          "column": 26,
+          "package": "firebase-admin",
+          "function": "once",
+          "contract_clause": "network-error",
+          "description": "No try-catch block found. Error - this will crash the application.",
+          "source_doc": "https://firebase.google.com/docs/reference/admin/error-handling",
+          "suggested_fix": "Implement retry with exponential backoff for transient failures.\n",
+          "code_snippet": {
+            "startLine": 275,
+            "endLine": 283,
+            "lines": [
+              {
+                "line": 275,
+                "content": " * ❌ MISSING: Chained database call",
+                "highlighted": false
+              },
+              {
+                "line": 276,
+                "content": " * Should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 277,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 278,
+                "content": "async function chainedDatabaseMissing() {",
+                "highlighted": false
+              },
+              {
+                "line": 279,
+                "content": "  const snapshot = await admin.database().ref('users/123').once('value');",
+                "highlighted": true
+              },
+              {
+                "line": 280,
+                "content": "  return snapshot.val();",
+                "highlighted": false
+              },
+              {
+                "line": 281,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 282,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 283,
+                "content": "// Export for testing",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

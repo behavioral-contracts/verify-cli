@@ -1,12 +1,18 @@
 {
   "name": "@behavioral-contracts/verify-cli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "CLI tool for verifying TypeScript code against behavioral contracts",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "verify-cli": "./dist/index.js"
+    "verify-cli": "./dist/index.js",
+    "behavioral-contracts": "./dist/index.js"
   },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -26,7 +32,7 @@
     "code-quality"
   ],
   "author": "Behavioral Contracts",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/behavioral-contracts/verify-cli.git"
@@ -35,12 +41,13 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "commander": "^12.0.0",
-    "typescript": "^5.3.3",
-    "yaml": "^2.3.4",
+    "@behavioral-contracts/corpus": "^1.0.0",
     "ajv": "^8.12.0",
     "chalk": "^5.3.0",
-    "glob": "^10.3.10"
+    "commander": "^12.0.0",
+    "glob": "^10.3.10",
+    "typescript": "^5.3.3",
+    "yaml": "^2.3.4"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

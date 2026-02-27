@@ -582,9 +582,96 @@ A: Test files have fundamentally different error handling patterns. Tests *expec
 
 ## License
 
-**MIT License**
+**GNU Affero General Public License v3.0 (AGPL-3.0)**
 
-The CLI tool is MIT licensed. The corpus is CC BY 4.0.
+This CLI tool is free and open source software.
+
+### What This Means for You
+
+**Individual Developers:**
+- ✅ Use freely in your projects (free forever)
+- ✅ Run locally without restrictions
+- ✅ Contribute improvements back (open source)
+
+**Companies (Internal Use):**
+- ✅ Run in your CI/CD pipelines (free forever)
+- ✅ Self-host for your organization (free forever)
+- ✅ Modify for internal use (no restrictions)
+- ✅ Integrate into your development workflow
+
+**Companies (Building SaaS):**
+- ⚠️ If you offer this tool as a **web service** (SaaS), you must open source your modifications
+- ⚠️ Or contact us for commercial licensing
+
+### Why AGPL-3.0?
+
+**The AGPL protects open source from cloud providers:**
+
+If Sentry (or any competitor) wants to use our analyzer:
+- ✅ They can use it for free
+- ✅ They can modify it
+- ❌ But if they offer it as SaaS, they must open source their version
+- ❌ Or pay for a commercial license
+
+**What happened to Redis:**
+- Redis: BSD license (permissive)
+- AWS: Forked Redis → ElastiCache (proprietary SaaS)
+- Redis Labs: Lost revenue to AWS
+- Result: Redis Labs had to change license (too late)
+
+**What we learned:**
+- Use AGPL from day 1
+- Prevent proprietary SaaS forks
+- Ensure improvements flow back to community
+
+### Examples
+
+**✅ Allowed without restrictions:**
+```bash
+# Run in GitHub Actions
+- name: Verify contracts
+  run: npx @behavioral-contracts/verify-cli
+
+# Self-host for company
+docker run verify-cli --tsconfig ./tsconfig.json
+
+# Integrate into VSCode extension (if extension is open source)
+import { analyze } from '@behavioral-contracts/verify-cli'
+```
+
+**⚠️ Requires open sourcing OR commercial license:**
+```
+# Building "ContractCheckr.com" (SaaS)
+# Offering verify-cli as a web service
+# Must either:
+#   1. Open source your SaaS (AGPL compliance)
+#   2. Get commercial license from us
+```
+
+### Dual Licensing
+
+For organizations that cannot comply with AGPL-3.0, we offer commercial licenses.
+
+**Commercial licenses include:**
+- Proprietary SaaS rights
+- No source code disclosure requirements
+- Priority support
+- Custom SLA
+
+Contact: [Coming soon]
+
+### Corpus License
+
+The contract corpus is licensed separately under **CC BY-SA 4.0**.
+
+See [corpus/LICENSE](../corpus/LICENSE) for details.
+
+---
+
+**Related:**
+- Full license text: [LICENSE](./LICENSE)
+- License FAQ: [Why AGPL?](https://www.gnu.org/licenses/why-affero-gpl.html)
+- Commercial licensing: [Contact us]
 
 ---
 

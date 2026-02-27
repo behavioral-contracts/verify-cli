@@ -12,12 +12,22 @@ import type { PackageContract, CorpusLoadResult } from './types.js';
 // Handle ESM/CJS interop for Ajv
 const Ajv = (AjvModule as any).default || AjvModule;
 
+export interface LoadCorpusOptions {
+  includeDrafts?: boolean;
+  includeDeprecated?: boolean;
+  includeInDevelopment?: boolean;
+}
+
 /**
  * Loads all behavioral contracts from the corpus directory
  */
-export async function loadCorpus(corpusPath: string): Promise<CorpusLoadResult> {
+export async function loadCorpus(
+  corpusPath: string,
+  options: LoadCorpusOptions = {}
+): Promise<CorpusLoadResult> {
   const contracts = new Map<string, PackageContract>();
   const errors: string[] = [];
+  const skipped: { package: string; status: string; reason: string }[] = [];
 
   // Find all contract.yaml files
   const contractFiles = await glob('**/contract.yaml', {
@@ -51,14 +61,56 @@ export async function loadCorpus(corpusPath: string): Promise<CorpusLoadResult> 
       const content = fs.readFileSync(filePath, 'utf-8');
       const contract = YAML.parse(content) as PackageContract;
 
+      // Get contract status (default to 'production' if not specified)
+      const status = contract.status || 'production';
+
+      // Skip in-development contracts silently (to avoid errors during development)
+      if (status === 'in-development' && !options.includeInDevelopment) {
+        skipped.push({
+          package: contract.package || path.basename(path.dirname(filePath)),
+          status: 'in-development',
+          reason: 'Contract is in development (use --include-drafts to include)'
+        });
+        continue;
+      }
+
       // Validate against JSON Schema
       const valid = validate(contract);
 
       if (!valid) {
+        // If it's in-development and validation fails, skip silently
+        if (status === 'in-development') {
+          skipped.push({
+            package: contract.package || path.basename(path.dirname(filePath)),
+            status: 'in-development',
+            reason: 'Contract validation failed (in-development)'
+          });
+          continue;
+        }
+
         const validationErrors = validate.errors
           ?.map((err: any) => `  ${err.instancePath} ${err.message}`)
           .join('\n');
         errors.push(`Invalid contract ${filePath}:\n${validationErrors}`);
+        continue;
+      }
+
+      // Filter by status
+      if (status === 'draft' && !options.includeDrafts) {
+        skipped.push({
+          package: contract.package,
+          status: 'draft',
+          reason: 'Draft contract excluded (use --include-drafts to include)'
+        });
+        continue;
+      }
+
+      if (status === 'deprecated' && !options.includeDeprecated) {
+        skipped.push({
+          package: contract.package,
+          status: 'deprecated',
+          reason: 'Deprecated contract excluded (use --include-deprecated to include)'
+        });
         continue;
       }
 
@@ -76,7 +128,7 @@ export async function loadCorpus(corpusPath: string): Promise<CorpusLoadResult> 
     }
   }
 
-  return { contracts, errors };
+  return { contracts, errors, skipped };
 }
 
 /**

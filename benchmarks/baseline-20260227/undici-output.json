@@ -1,0 +1,1215 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:39.136Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "superagent",
+    "stripe",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "sinon",
+    "socket.io",
+    "sharp",
+    "sequelize",
+    "request-promise",
+    "redis",
+    "react-hook-form",
+    "pg",
+    "puppeteer",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "knex",
+    "joi",
+    "ioredis",
+    "got",
+    "graphql",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "cors",
+    "dayjs",
+    "date-fns",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@octokit/rest",
+    "@clerk/nextjs",
+    "@hapi/hapi",
+    "@aws-sdk/client-s3",
+    "@nestjs/common",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 47,
+      "package": "undici",
+      "function": "request",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+      "source_doc": "https://www.npmjs.com/package/undici",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": "import { request, fetch } from 'undici';",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "async function fetchDataWithRequestNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const { statusCode, headers, body } = await request('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  let data = '';",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  for await (const chunk of body) {",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "    data += chunk;",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 26,
+      "package": "undici",
+      "function": "fetch",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+      "source_doc": "https://undici.nodejs.org/",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "async function fetchDataWithFetchNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const response = await fetch('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  const data = await response.json();",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  return data;",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+      "line": 26,
+      "column": 26,
+      "package": "undici",
+      "function": "fetch",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+      "source_doc": "https://undici.nodejs.org/",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 22,
+        "endLine": 30,
+        "lines": [
+          {
+            "line": 22,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function postDataWithFetchNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  const response = await fetch('https://api.example.com/users', {",
+            "highlighted": true
+          },
+          {
+            "line": 27,
+            "content": "    method: 'POST',",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "    headers: { 'Content-Type': 'application/json' },",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "    body: JSON.stringify({ name: 'John' })",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+      "line": 37,
+      "column": 26,
+      "package": "undici",
+      "function": "request",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+      "source_doc": "https://www.npmjs.com/package/undici",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 33,
+        "endLine": 41,
+        "lines": [
+          {
+            "line": 33,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "async function putDataWithRequestNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  const { body } = await request('https://api.example.com/users/123', {",
+            "highlighted": true
+          },
+          {
+            "line": 38,
+            "content": "    method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    headers: { 'Content-Type': 'application/json' },",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    body: JSON.stringify({ name: 'Jane' })",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+      "line": 51,
+      "column": 26,
+      "package": "undici",
+      "function": "fetch",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+      "source_doc": "https://undici.nodejs.org/",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "async function deleteDataWithFetchNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  const response = await fetch('https://api.example.com/users/123', {",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "    method: 'DELETE'",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  return response.status;",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+      "line": 60,
+      "column": 10,
+      "package": "undici",
+      "function": "fetch",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+      "source_doc": "https://undici.nodejs.org/",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 56,
+        "endLine": 64,
+        "lines": [
+          {
+            "line": 56,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "// Promise without catch",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "function fetchNoPromiseCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  // ❌ No .catch() - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  return fetch('https://api.example.com/data')",
+            "highlighted": true
+          },
+          {
+            "line": 61,
+            "content": "    .then(response => response.json());",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "function requestNoPromiseCatch() {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+      "line": 66,
+      "column": 10,
+      "package": "undici",
+      "function": "request",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+      "source_doc": "https://www.npmjs.com/package/undici",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 62,
+        "endLine": 69,
+        "lines": [
+          {
+            "line": 62,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "function requestNoPromiseCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "  // ❌ No .catch() - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  return request('https://api.example.com/data')",
+            "highlighted": true
+          },
+          {
+            "line": 67,
+            "content": "    .then(({ body }) => body);",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "undici-network-error-handling",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/proper-error-handling.ts",
+      "line": 67,
+      "column": 10,
+      "package": "undici",
+      "function": "fetch",
+      "contract_clause": "network-error-handling",
+      "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+      "source_doc": "https://undici.nodejs.org/",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+      "code_snippet": {
+        "startLine": 63,
+        "endLine": 71,
+        "lines": [
+          {
+            "line": 63,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "// Using promise .catch()",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "function fetchWithPromiseCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  return fetch('https://api.example.com/data')",
+            "highlighted": true
+          },
+          {
+            "line": 68,
+            "content": "    .then(response => response.json())",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    .catch(error => {",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "      console.error('Fetch failed:', error);",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "      throw error;",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 8,
+    "error_count": 8,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "undici",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "undici": {
+      "total": 8,
+      "errors": 8,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 47,
+          "package": "undici",
+          "function": "request",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+          "source_doc": "https://www.npmjs.com/package/undici",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": "import { request, fetch } from 'undici';",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "async function fetchDataWithRequestNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const { statusCode, headers, body } = await request('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  let data = '';",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  for await (const chunk of body) {",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "    data += chunk;",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 26,
+          "package": "undici",
+          "function": "fetch",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+          "source_doc": "https://undici.nodejs.org/",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "async function fetchDataWithFetchNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const response = await fetch('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  const data = await response.json();",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  return data;",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "line": 26,
+          "column": 26,
+          "package": "undici",
+          "function": "fetch",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+          "source_doc": "https://undici.nodejs.org/",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 22,
+            "endLine": 30,
+            "lines": [
+              {
+                "line": 22,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function postDataWithFetchNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  const response = await fetch('https://api.example.com/users', {",
+                "highlighted": true
+              },
+              {
+                "line": 27,
+                "content": "    method: 'POST',",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "    headers: { 'Content-Type': 'application/json' },",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "    body: JSON.stringify({ name: 'John' })",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "line": 37,
+          "column": 26,
+          "package": "undici",
+          "function": "request",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+          "source_doc": "https://www.npmjs.com/package/undici",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 33,
+            "endLine": 41,
+            "lines": [
+              {
+                "line": 33,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "async function putDataWithRequestNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  const { body } = await request('https://api.example.com/users/123', {",
+                "highlighted": true
+              },
+              {
+                "line": 38,
+                "content": "    method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    headers: { 'Content-Type': 'application/json' },",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    body: JSON.stringify({ name: 'Jane' })",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "line": 51,
+          "column": 26,
+          "package": "undici",
+          "function": "fetch",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+          "source_doc": "https://undici.nodejs.org/",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "async function deleteDataWithFetchNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  const response = await fetch('https://api.example.com/users/123', {",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "    method: 'DELETE'",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  return response.status;",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "line": 60,
+          "column": 10,
+          "package": "undici",
+          "function": "fetch",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+          "source_doc": "https://undici.nodejs.org/",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 56,
+            "endLine": 64,
+            "lines": [
+              {
+                "line": 56,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "// Promise without catch",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "function fetchNoPromiseCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  // ❌ No .catch() - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  return fetch('https://api.example.com/data')",
+                "highlighted": true
+              },
+              {
+                "line": 61,
+                "content": "    .then(response => response.json());",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "function requestNoPromiseCatch() {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/missing-error-handling.ts",
+          "line": 66,
+          "column": 10,
+          "package": "undici",
+          "function": "request",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. Promise rejection with Error - this will crash the application.",
+          "source_doc": "https://www.npmjs.com/package/undici",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 62,
+            "endLine": 69,
+            "lines": [
+              {
+                "line": 62,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "function requestNoPromiseCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "  // ❌ No .catch() - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  return request('https://api.example.com/data')",
+                "highlighted": true
+              },
+              {
+                "line": 67,
+                "content": "    .then(({ body }) => body);",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "undici-network-error-handling",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/undici/fixtures/proper-error-handling.ts",
+          "line": 67,
+          "column": 10,
+          "package": "undici",
+          "function": "fetch",
+          "contract_clause": "network-error-handling",
+          "description": "No try-catch block found. TypeError with 'fetch failed' message and cause property containing underlying error (UND_ERR_SOCKET, etc.) - this will crash the application.",
+          "source_doc": "https://undici.nodejs.org/",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises)",
+          "code_snippet": {
+            "startLine": 63,
+            "endLine": 71,
+            "lines": [
+              {
+                "line": 63,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "// Using promise .catch()",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "function fetchWithPromiseCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  return fetch('https://api.example.com/data')",
+                "highlighted": true
+              },
+              {
+                "line": 68,
+                "content": "    .then(response => response.json())",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    .catch(error => {",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "      console.error('Fetch failed:', error);",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "      throw error;",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

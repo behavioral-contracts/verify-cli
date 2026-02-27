@@ -1,0 +1,2506 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:16.995Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "superagent",
+    "sqlite3",
+    "square",
+    "socket.io-client",
+    "stripe",
+    "sinon",
+    "socket.io",
+    "sequelize",
+    "request-promise",
+    "sharp",
+    "redis",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "passport",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "joi",
+    "graphql",
+    "ioredis",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "cloudinary",
+    "cassandra-driver",
+    "chai",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@slack/web-api",
+    "@hapi/hapi",
+    "@nestjs/common",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 19,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'createMessageWithoutTryCatch' contains unprotected await expression. await anthropic.messages.create({\n    model: 'clau... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " * ❌ VIOLATION: messages.create() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function createMessageWithoutTryCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  const message = await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    messages: [{ role: 'user', content: 'Hello' }],",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 18,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'streamMessageWithoutTryCatch' contains unprotected await expression. await anthropic.messages.stream({\n    model: 'clau... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * ❌ VIOLATION: messages.stream() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function streamMessageWithoutTryCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const stream = await anthropic.messages.stream({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    messages: [{ role: 'user', content: 'Write a story' }],",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 73,
+      "column": 17,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'createBatchWithoutHandling' contains unprotected await expression. await anthropic.messages.batches.create({\n    requ... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 69,
+        "endLine": 77,
+        "lines": [
+          {
+            "line": 69,
+            "content": " * ❌ VIOLATION: Batch operations without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "async function createBatchWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "  const batch = await anthropic.messages.batches.create({",
+            "highlighted": true
+          },
+          {
+            "line": 74,
+            "content": "    requests: [",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "      {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "        custom_id: '1',",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "        params: {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 95,
+      "column": 17,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'retrieveBatchWithoutHandling' contains unprotected await expression. await anthropic.messages.batches.retrieve(batchId)... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 91,
+        "endLine": 99,
+        "lines": [
+          {
+            "line": 91,
+            "content": " * ❌ VIOLATION: Retrieve batch without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "async function retrieveBatchWithoutHandling(batchId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "  const batch = await anthropic.messages.batches.retrieve(batchId);",
+            "highlighted": true
+          },
+          {
+            "line": 96,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  if (batch.processing_status === 'ended') {",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "    const results = await anthropic.messages.batches.results(batchId);",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "    console.log('Results:', results);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 98,
+      "column": 21,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'retrieveBatchWithoutHandling' contains unprotected await expression. await anthropic.messages.batches.results(batchId)... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 94,
+        "endLine": 102,
+        "lines": [
+          {
+            "line": 94,
+            "content": "async function retrieveBatchWithoutHandling(batchId: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "  const batch = await anthropic.messages.batches.retrieve(batchId);",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "  if (batch.processing_status === 'ended') {",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "    const results = await anthropic.messages.batches.results(batchId);",
+            "highlighted": true
+          },
+          {
+            "line": 99,
+            "content": "    console.log('Results:', results);",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  // No error handling for 404 or API failures",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 109,
+      "column": 18,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'iterateStreamWithoutHandling' contains unprotected await expression. await anthropic.messages.stream({\n    model: 'clau... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 105,
+        "endLine": 113,
+        "lines": [
+          {
+            "line": 105,
+            "content": " * ❌ VIOLATION: Stream iteration without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "async function iterateStreamWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "  const stream = await anthropic.messages.stream({",
+            "highlighted": true
+          },
+          {
+            "line": 110,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "    max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "    messages: [{ role: 'user', content: 'Long response' }],",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 131,
+      "column": 20,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'multipleRequestsWithoutHandling' contains unprotected await expression. await anthropic.messages.create({\n    model: 'clau... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 127,
+        "endLine": 135,
+        "lines": [
+          {
+            "line": 127,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "async function multipleRequestsWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  // First request - no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "  const message1 = await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 132,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "    max_tokens: 512,",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 138,
+      "column": 20,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'multipleRequestsWithoutHandling' contains unprotected await expression. await anthropic.messages.create({\n    model: 'clau... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 134,
+        "endLine": 142,
+        "lines": [
+          {
+            "line": 134,
+            "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "  // Second request - no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "  const message2 = await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 139,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": "    max_tokens: 512,",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "    messages: [{ role: 'user', content: 'Question 2' }],",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 154,
+      "column": 12,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'nestedCallWithoutHandling' contains unprotected await expression. await anthropic.messages.create({\n      model: 'cl... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 150,
+        "endLine": 158,
+        "lines": [
+          {
+            "line": 150,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "async function nestedCallWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "  async function innerCreate() {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "    return await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 155,
+            "content": "      model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "      max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 154,
+      "column": 12,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "Async function 'innerCreate' contains unprotected await expression. await anthropic.messages.create({\n      model: 'cl... may throw unhandled errors.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 150,
+        "endLine": 158,
+        "lines": [
+          {
+            "line": 150,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "async function nestedCallWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "  async function innerCreate() {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "    return await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 155,
+            "content": "      model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "      max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 25,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " * ❌ VIOLATION: messages.create() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function createMessageWithoutTryCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  const message = await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    messages: [{ role: 'user', content: 'Hello' }],",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-stream-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 24,
+      "package": "@anthropic-ai/sdk",
+      "function": "stream",
+      "contract_clause": "messages-stream-no-try-catch",
+      "description": "No try-catch block found. APIError, can occur mid-stream after initial 200 response - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.stream() in try-catch block. Should also wrap stream iteration in try-catch to handle mid-stream errors. Check error types for proper recovery.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * ❌ VIOLATION: messages.stream() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function streamMessageWithoutTryCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const stream = await anthropic.messages.stream({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    messages: [{ role: 'user', content: 'Write a story' }],",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 56,
+      "column": 3,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 52,
+        "endLine": 60,
+        "lines": [
+          {
+            "line": 52,
+            "content": " * ❌ VIOLATION: Promise without .catch()",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "function createMessageWithoutCatch() {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  anthropic.messages",
+            "highlighted": true
+          },
+          {
+            "line": 57,
+            "content": "    .create({",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "      model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "      max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 73,
+      "column": 23,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 69,
+        "endLine": 77,
+        "lines": [
+          {
+            "line": 69,
+            "content": " * ❌ VIOLATION: Batch operations without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "async function createBatchWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "  const batch = await anthropic.messages.batches.create({",
+            "highlighted": true
+          },
+          {
+            "line": 74,
+            "content": "    requests: [",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "      {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "        custom_id: '1',",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "        params: {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-stream-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 109,
+      "column": 24,
+      "package": "@anthropic-ai/sdk",
+      "function": "stream",
+      "contract_clause": "messages-stream-no-try-catch",
+      "description": "No try-catch block found. APIError, can occur mid-stream after initial 200 response - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.stream() in try-catch block. Should also wrap stream iteration in try-catch to handle mid-stream errors. Check error types for proper recovery.\n",
+      "code_snippet": {
+        "startLine": 105,
+        "endLine": 113,
+        "lines": [
+          {
+            "line": 105,
+            "content": " * ❌ VIOLATION: Stream iteration without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "async function iterateStreamWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "  const stream = await anthropic.messages.stream({",
+            "highlighted": true
+          },
+          {
+            "line": 110,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "    max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "    messages: [{ role: 'user', content: 'Long response' }],",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 131,
+      "column": 26,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 127,
+        "endLine": 135,
+        "lines": [
+          {
+            "line": 127,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "async function multipleRequestsWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  // First request - no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "  const message1 = await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 132,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "    max_tokens: 512,",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 138,
+      "column": 26,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 134,
+        "endLine": 142,
+        "lines": [
+          {
+            "line": 134,
+            "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "  // Second request - no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "  const message2 = await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 139,
+            "content": "    model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": "    max_tokens: 512,",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "    messages: [{ role: 'user', content: 'Question 2' }],",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+      "line": 154,
+      "column": 18,
+      "package": "@anthropic-ai/sdk",
+      "function": "create",
+      "contract_clause": "messages-create-no-try-catch",
+      "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+      "source_doc": "https://platform.claude.com/docs/en/api/errors",
+      "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+      "code_snippet": {
+        "startLine": 150,
+        "endLine": 158,
+        "lines": [
+          {
+            "line": 150,
+            "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "async function nestedCallWithoutHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "  async function innerCreate() {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "    return await anthropic.messages.create({",
+            "highlighted": true
+          },
+          {
+            "line": 155,
+            "content": "      model: 'claude-sonnet-4-5-20250929',",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "      max_tokens: 1024,",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 18,
+    "error_count": 18,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "@anthropic-ai/sdk",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/generic-catch.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "@anthropic-ai/sdk": {
+      "total": 18,
+      "errors": 18,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 19,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'createMessageWithoutTryCatch' contains unprotected await expression. await anthropic.messages.create({\n    model: 'clau... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " * ❌ VIOLATION: messages.create() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function createMessageWithoutTryCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  const message = await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    messages: [{ role: 'user', content: 'Hello' }],",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 18,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'streamMessageWithoutTryCatch' contains unprotected await expression. await anthropic.messages.stream({\n    model: 'clau... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * ❌ VIOLATION: messages.stream() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function streamMessageWithoutTryCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const stream = await anthropic.messages.stream({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    messages: [{ role: 'user', content: 'Write a story' }],",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 73,
+          "column": 17,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'createBatchWithoutHandling' contains unprotected await expression. await anthropic.messages.batches.create({\n    requ... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 69,
+            "endLine": 77,
+            "lines": [
+              {
+                "line": 69,
+                "content": " * ❌ VIOLATION: Batch operations without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "async function createBatchWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "  const batch = await anthropic.messages.batches.create({",
+                "highlighted": true
+              },
+              {
+                "line": 74,
+                "content": "    requests: [",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "      {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "        custom_id: '1',",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "        params: {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 95,
+          "column": 17,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'retrieveBatchWithoutHandling' contains unprotected await expression. await anthropic.messages.batches.retrieve(batchId)... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 91,
+            "endLine": 99,
+            "lines": [
+              {
+                "line": 91,
+                "content": " * ❌ VIOLATION: Retrieve batch without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "async function retrieveBatchWithoutHandling(batchId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "  const batch = await anthropic.messages.batches.retrieve(batchId);",
+                "highlighted": true
+              },
+              {
+                "line": 96,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  if (batch.processing_status === 'ended') {",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "    const results = await anthropic.messages.batches.results(batchId);",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "    console.log('Results:', results);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 98,
+          "column": 21,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'retrieveBatchWithoutHandling' contains unprotected await expression. await anthropic.messages.batches.results(batchId)... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 94,
+            "endLine": 102,
+            "lines": [
+              {
+                "line": 94,
+                "content": "async function retrieveBatchWithoutHandling(batchId: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "  const batch = await anthropic.messages.batches.retrieve(batchId);",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "  if (batch.processing_status === 'ended') {",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "    const results = await anthropic.messages.batches.results(batchId);",
+                "highlighted": true
+              },
+              {
+                "line": 99,
+                "content": "    console.log('Results:', results);",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  // No error handling for 404 or API failures",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 109,
+          "column": 18,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'iterateStreamWithoutHandling' contains unprotected await expression. await anthropic.messages.stream({\n    model: 'clau... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 105,
+            "endLine": 113,
+            "lines": [
+              {
+                "line": 105,
+                "content": " * ❌ VIOLATION: Stream iteration without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "async function iterateStreamWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "  const stream = await anthropic.messages.stream({",
+                "highlighted": true
+              },
+              {
+                "line": 110,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "    max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "    messages: [{ role: 'user', content: 'Long response' }],",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 131,
+          "column": 20,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'multipleRequestsWithoutHandling' contains unprotected await expression. await anthropic.messages.create({\n    model: 'clau... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 127,
+            "endLine": 135,
+            "lines": [
+              {
+                "line": 127,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "async function multipleRequestsWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  // First request - no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "  const message1 = await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 132,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "    max_tokens: 512,",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 138,
+          "column": 20,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'multipleRequestsWithoutHandling' contains unprotected await expression. await anthropic.messages.create({\n    model: 'clau... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 134,
+            "endLine": 142,
+            "lines": [
+              {
+                "line": 134,
+                "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "  // Second request - no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "  const message2 = await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 139,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": "    max_tokens: 512,",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "    messages: [{ role: 'user', content: 'Question 2' }],",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 154,
+          "column": 12,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'nestedCallWithoutHandling' contains unprotected await expression. await anthropic.messages.create({\n      model: 'cl... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 150,
+            "endLine": 158,
+            "lines": [
+              {
+                "line": 150,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "async function nestedCallWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "  async function innerCreate() {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "    return await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 155,
+                "content": "      model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "      max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 154,
+          "column": 12,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "Async function 'innerCreate' contains unprotected await expression. await anthropic.messages.create({\n      model: 'cl... may throw unhandled errors.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 150,
+            "endLine": 158,
+            "lines": [
+              {
+                "line": 150,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "async function nestedCallWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "  async function innerCreate() {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "    return await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 155,
+                "content": "      model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "      max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 25,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " * ❌ VIOLATION: messages.create() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function createMessageWithoutTryCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  const message = await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    messages: [{ role: 'user', content: 'Hello' }],",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-stream-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 24,
+          "package": "@anthropic-ai/sdk",
+          "function": "stream",
+          "contract_clause": "messages-stream-no-try-catch",
+          "description": "No try-catch block found. APIError, can occur mid-stream after initial 200 response - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.stream() in try-catch block. Should also wrap stream iteration in try-catch to handle mid-stream errors. Check error types for proper recovery.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * ❌ VIOLATION: messages.stream() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function streamMessageWithoutTryCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const stream = await anthropic.messages.stream({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    messages: [{ role: 'user', content: 'Write a story' }],",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 56,
+          "column": 3,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 52,
+            "endLine": 60,
+            "lines": [
+              {
+                "line": 52,
+                "content": " * ❌ VIOLATION: Promise without .catch()",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "function createMessageWithoutCatch() {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  anthropic.messages",
+                "highlighted": true
+              },
+              {
+                "line": 57,
+                "content": "    .create({",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "      model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "      max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 73,
+          "column": 23,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 69,
+            "endLine": 77,
+            "lines": [
+              {
+                "line": 69,
+                "content": " * ❌ VIOLATION: Batch operations without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "async function createBatchWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "  const batch = await anthropic.messages.batches.create({",
+                "highlighted": true
+              },
+              {
+                "line": 74,
+                "content": "    requests: [",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "      {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "        custom_id: '1',",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "        params: {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-stream-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 109,
+          "column": 24,
+          "package": "@anthropic-ai/sdk",
+          "function": "stream",
+          "contract_clause": "messages-stream-no-try-catch",
+          "description": "No try-catch block found. APIError, can occur mid-stream after initial 200 response - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.stream() in try-catch block. Should also wrap stream iteration in try-catch to handle mid-stream errors. Check error types for proper recovery.\n",
+          "code_snippet": {
+            "startLine": 105,
+            "endLine": 113,
+            "lines": [
+              {
+                "line": 105,
+                "content": " * ❌ VIOLATION: Stream iteration without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": " * Should trigger: messages-stream-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "async function iterateStreamWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "  const stream = await anthropic.messages.stream({",
+                "highlighted": true
+              },
+              {
+                "line": 110,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "    max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "    messages: [{ role: 'user', content: 'Long response' }],",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 131,
+          "column": 26,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 127,
+            "endLine": 135,
+            "lines": [
+              {
+                "line": 127,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "async function multipleRequestsWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  // First request - no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "  const message1 = await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 132,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "    max_tokens: 512,",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 138,
+          "column": 26,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 134,
+            "endLine": 142,
+            "lines": [
+              {
+                "line": 134,
+                "content": "    messages: [{ role: 'user', content: 'Question 1' }],",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "  // Second request - no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "  const message2 = await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 139,
+                "content": "    model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": "    max_tokens: 512,",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "    messages: [{ role: 'user', content: 'Question 2' }],",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@anthropic-ai/sdk-messages-create-no-try-catch",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@anthropic-ai/sdk/fixtures/missing-error-handling.ts",
+          "line": 154,
+          "column": 18,
+          "package": "@anthropic-ai/sdk",
+          "function": "create",
+          "contract_clause": "messages-create-no-try-catch",
+          "description": "No try-catch block found. APIError with error.status and error.message - this will crash the application.",
+          "source_doc": "https://platform.claude.com/docs/en/api/errors",
+          "suggested_fix": "MUST wrap await client.messages.create() in try-catch block. Catch block should check error instanceof Anthropic.APIError and handle specific error types (RateLimitError, AuthenticationError, etc.) appropriately.\n",
+          "code_snippet": {
+            "startLine": 150,
+            "endLine": 158,
+            "lines": [
+              {
+                "line": 150,
+                "content": " * Should trigger: messages-create-no-try-catch (ERROR)",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "async function nestedCallWithoutHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "  async function innerCreate() {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "    return await anthropic.messages.create({",
+                "highlighted": true
+              },
+              {
+                "line": 155,
+                "content": "      model: 'claude-sonnet-4-5-20250929',",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "      max_tokens: 1024,",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "      messages: [{ role: 'user', content: 'Hello' }],",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

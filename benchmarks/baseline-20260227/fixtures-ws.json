@@ -1,0 +1,449 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:57:25.055Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ws/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typeorm",
+    "twilio",
+    "supertest",
+    "typescript",
+    "superagent",
+    "tedious",
+    "sqlite3",
+    "square",
+    "socket.io-client",
+    "stripe",
+    "socket.io",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "pino",
+    "request-promise",
+    "react-hook-form",
+    "puppeteer",
+    "pg",
+    "openai",
+    "node-fetch",
+    "passport",
+    "mysql2",
+    "nodemailer",
+    "next",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "knex",
+    "lodash",
+    "jsonwebtoken",
+    "helmet",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "date-fns",
+    "cloudinary",
+    "cors",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@supabase/supabase-js",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "ws-send-before-open",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ws/fixtures/missing-error-handling.ts",
+      "line": 12,
+      "column": 5,
+      "package": "ws",
+      "function": "send",
+      "contract_clause": "send-before-open",
+      "description": "No try-catch block found. Error: WebSocket is not open: readyState X (CONNECTING|CLOSING|CLOSED) - this will crash the application.",
+      "source_doc": "https://github.com/websockets/ws/issues/1170",
+      "suggested_fix": "Caller MUST check readyState before sending OR send only in open event. VERY COMMON BUG (50% of codebases): Sending immediately after new WebSocket(). CORRECT: ws.on('open', () => { ws.send(data); }) CORRECT: if (ws.readyState === WebSocket.OPEN) { ws.send(data); } WRONG: ws.send(data); // Immediately after new WebSocket() - crashes!\n",
+      "code_snippet": {
+        "startLine": 8,
+        "endLine": 15,
+        "lines": [
+          {
+            "line": 8,
+            "content": "  const ws = new WebSocket('ws://localhost:8080');",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "  // ❌ No error listener",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  ws.on('open', () => {",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "    ws.send('Hello Server!'); // ❌ No try-catch",
+            "highlighted": true
+          },
+          {
+            "line": 13,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ws-message-too-large",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ws/fixtures/missing-error-handling.ts",
+      "line": 12,
+      "column": 5,
+      "package": "ws",
+      "function": "send",
+      "contract_clause": "message-too-large",
+      "description": "No try-catch block found. RangeError: Invalid WebSocket frame: payload length > maxPayload - this will crash the application.",
+      "source_doc": "https://github.com/websockets/ws/issues/1543",
+      "suggested_fix": "Caller MUST validate message size before sending. Configure maxPayload appropriately (default 100 MiB may be too high). Connection closes with code 1009 (message too big). Split large messages into chunks or use chunking protocol.\n",
+      "code_snippet": {
+        "startLine": 8,
+        "endLine": 15,
+        "lines": [
+          {
+            "line": 8,
+            "content": "  const ws = new WebSocket('ws://localhost:8080');",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "  // ❌ No error listener",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  ws.on('open', () => {",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "    ws.send('Hello Server!'); // ❌ No try-catch",
+            "highlighted": true
+          },
+          {
+            "line": 13,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 2,
+    "error_count": 2,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "ws",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ws/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ws/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "ws": {
+      "total": 2,
+      "errors": 2,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "ws-send-before-open",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ws/fixtures/missing-error-handling.ts",
+          "line": 12,
+          "column": 5,
+          "package": "ws",
+          "function": "send",
+          "contract_clause": "send-before-open",
+          "description": "No try-catch block found. Error: WebSocket is not open: readyState X (CONNECTING|CLOSING|CLOSED) - this will crash the application.",
+          "source_doc": "https://github.com/websockets/ws/issues/1170",
+          "suggested_fix": "Caller MUST check readyState before sending OR send only in open event. VERY COMMON BUG (50% of codebases): Sending immediately after new WebSocket(). CORRECT: ws.on('open', () => { ws.send(data); }) CORRECT: if (ws.readyState === WebSocket.OPEN) { ws.send(data); } WRONG: ws.send(data); // Immediately after new WebSocket() - crashes!\n",
+          "code_snippet": {
+            "startLine": 8,
+            "endLine": 15,
+            "lines": [
+              {
+                "line": 8,
+                "content": "  const ws = new WebSocket('ws://localhost:8080');",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "  // ❌ No error listener",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  ws.on('open', () => {",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "    ws.send('Hello Server!'); // ❌ No try-catch",
+                "highlighted": true
+              },
+              {
+                "line": 13,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ws-message-too-large",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ws/fixtures/missing-error-handling.ts",
+          "line": 12,
+          "column": 5,
+          "package": "ws",
+          "function": "send",
+          "contract_clause": "message-too-large",
+          "description": "No try-catch block found. RangeError: Invalid WebSocket frame: payload length > maxPayload - this will crash the application.",
+          "source_doc": "https://github.com/websockets/ws/issues/1543",
+          "suggested_fix": "Caller MUST validate message size before sending. Configure maxPayload appropriately (default 100 MiB may be too high). Connection closes with code 1009 (message too big). Split large messages into chunks or use chunking protocol.\n",
+          "code_snippet": {
+            "startLine": 8,
+            "endLine": 15,
+            "lines": [
+              {
+                "line": 8,
+                "content": "  const ws = new WebSocket('ws://localhost:8080');",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "  // ❌ No error listener",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  ws.on('open', () => {",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "    ws.send('Hello Server!'); // ❌ No try-catch",
+                "highlighted": true
+              },
+              {
+                "line": 13,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,840 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:55:42.933Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "tedious",
+    "supertest",
+    "twilio",
+    "superagent",
+    "square",
+    "stripe",
+    "socket.io-client",
+    "sqlite3",
+    "socket.io",
+    "sharp",
+    "sinon",
+    "simple-oauth2",
+    "sequelize",
+    "request-promise",
+    "react-hook-form",
+    "redis",
+    "puppeteer",
+    "pino",
+    "pg",
+    "openai",
+    "passport",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "lodash",
+    "luxon",
+    "knex",
+    "jsonwebtoken",
+    "joi",
+    "helmet",
+    "graphql",
+    "ioredis",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "dayjs",
+    "discord.js",
+    "drizzle-orm",
+    "date-fns",
+    "cors",
+    "cassandra-driver",
+    "chai",
+    "cloudinary",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@clerk/nextjs",
+    "@hapi/hapi",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 9,
+  "violations": [
+    {
+      "id": "joi-assert-throws",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/assert-missing.ts",
+      "line": 5,
+      "column": 3,
+      "package": "joi",
+      "function": "assert",
+      "contract_clause": "assert-throws",
+      "description": "No try-catch block found. ValidationError - this will crash the application.",
+      "source_doc": "https://joi.dev/api/#assertvalue-schema-message-options",
+      "suggested_fix": "Caller MUST wrap Joi.assert() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { Joi.assert(value, schema); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 1,
+        "endLine": 9,
+        "lines": [
+          {
+            "line": 1,
+            "content": "import Joi from 'joi';",
+            "highlighted": false
+          },
+          {
+            "line": 2,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 3,
+            "content": "// ❌ Missing: Joi.assert() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 4,
+            "content": "function validateWithAssertBad(data: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": "  Joi.assert(data, Joi.number());  // Will crash if data is not a number",
+            "highlighted": true
+          },
+          {
+            "line": 6,
+            "content": "  console.log('Validation passed');",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "// ❌ Missing: Joi.assert() in function without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "joi-assert-throws",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/assert-missing.ts",
+      "line": 11,
+      "column": 3,
+      "package": "joi",
+      "function": "assert",
+      "contract_clause": "assert-throws",
+      "description": "No try-catch block found. ValidationError - this will crash the application.",
+      "source_doc": "https://joi.dev/api/#assertvalue-schema-message-options",
+      "suggested_fix": "Caller MUST wrap Joi.assert() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { Joi.assert(value, schema); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 7,
+        "endLine": 14,
+        "lines": [
+          {
+            "line": 7,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "// ❌ Missing: Joi.assert() in function without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "function assertUserAge(age: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  Joi.assert(age, Joi.number().min(0).max(150));  // No try-catch",
+            "highlighted": true
+          },
+          {
+            "line": 12,
+            "content": "  return age;",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "joi-attempt-throws",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-missing.ts",
+      "line": 5,
+      "column": 21,
+      "package": "joi",
+      "function": "attempt",
+      "contract_clause": "attempt-throws",
+      "description": "No try-catch block found. ValidationError - this will crash the application.",
+      "source_doc": "https://joi.dev/api/#attemptvalue-schema-message-options",
+      "suggested_fix": "Caller MUST wrap Joi.attempt() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { const validated = Joi.attempt(value, schema); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 1,
+        "endLine": 9,
+        "lines": [
+          {
+            "line": 1,
+            "content": "import Joi from 'joi';",
+            "highlighted": false
+          },
+          {
+            "line": 2,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 3,
+            "content": "// ❌ Missing: Joi.attempt() without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 4,
+            "content": "function parseNumberBad(value: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 5,
+            "content": "  const validated = Joi.attempt(value, Joi.number());  // Will crash on invalid input",
+            "highlighted": true
+          },
+          {
+            "line": 6,
+            "content": "  return validated;",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "// ❌ Missing: Joi.attempt() used without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "joi-attempt-throws",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-missing.ts",
+      "line": 11,
+      "column": 17,
+      "package": "joi",
+      "function": "attempt",
+      "contract_clause": "attempt-throws",
+      "description": "No try-catch block found. ValidationError - this will crash the application.",
+      "source_doc": "https://joi.dev/api/#attemptvalue-schema-message-options",
+      "suggested_fix": "Caller MUST wrap Joi.attempt() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { const validated = Joi.attempt(value, schema); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 7,
+        "endLine": 15,
+        "lines": [
+          {
+            "line": 7,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "// ❌ Missing: Joi.attempt() used without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "function convertToEmail(input: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "  const email = Joi.attempt(input, Joi.string().email());  // No try-catch",
+            "highlighted": true
+          },
+          {
+            "line": 12,
+            "content": "  return email.toLowerCase();",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "// ❌ Missing: Joi.attempt() in validation chain",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "joi-attempt-throws",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-missing.ts",
+      "line": 22,
+      "column": 18,
+      "package": "joi",
+      "function": "attempt",
+      "contract_clause": "attempt-throws",
+      "description": "No try-catch block found. ValidationError - this will crash the application.",
+      "source_doc": "https://joi.dev/api/#attemptvalue-schema-message-options",
+      "suggested_fix": "Caller MUST wrap Joi.attempt() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { const validated = Joi.attempt(value, schema); } catch (error) { /* handle */ }\n",
+      "code_snippet": {
+        "startLine": 18,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 18,
+            "content": "    username: Joi.string().required(),",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "    age: Joi.number().required()",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  const result = Joi.attempt(data, schema);  // No error handling",
+            "highlighted": true
+          },
+          {
+            "line": 23,
+            "content": "  return result;",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 5,
+    "error_count": 5,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "joi",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/assert-missing.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/assert-proper.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-missing.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-proper.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/proper-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/validate-sync-missing.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/validate-sync-proper.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "joi": {
+      "total": 5,
+      "errors": 5,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "joi-assert-throws",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/assert-missing.ts",
+          "line": 5,
+          "column": 3,
+          "package": "joi",
+          "function": "assert",
+          "contract_clause": "assert-throws",
+          "description": "No try-catch block found. ValidationError - this will crash the application.",
+          "source_doc": "https://joi.dev/api/#assertvalue-schema-message-options",
+          "suggested_fix": "Caller MUST wrap Joi.assert() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { Joi.assert(value, schema); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 1,
+            "endLine": 9,
+            "lines": [
+              {
+                "line": 1,
+                "content": "import Joi from 'joi';",
+                "highlighted": false
+              },
+              {
+                "line": 2,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 3,
+                "content": "// ❌ Missing: Joi.assert() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 4,
+                "content": "function validateWithAssertBad(data: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": "  Joi.assert(data, Joi.number());  // Will crash if data is not a number",
+                "highlighted": true
+              },
+              {
+                "line": 6,
+                "content": "  console.log('Validation passed');",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "// ❌ Missing: Joi.assert() in function without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "joi-assert-throws",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/assert-missing.ts",
+          "line": 11,
+          "column": 3,
+          "package": "joi",
+          "function": "assert",
+          "contract_clause": "assert-throws",
+          "description": "No try-catch block found. ValidationError - this will crash the application.",
+          "source_doc": "https://joi.dev/api/#assertvalue-schema-message-options",
+          "suggested_fix": "Caller MUST wrap Joi.assert() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { Joi.assert(value, schema); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 7,
+            "endLine": 14,
+            "lines": [
+              {
+                "line": 7,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "// ❌ Missing: Joi.assert() in function without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "function assertUserAge(age: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  Joi.assert(age, Joi.number().min(0).max(150));  // No try-catch",
+                "highlighted": true
+              },
+              {
+                "line": 12,
+                "content": "  return age;",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "joi-attempt-throws",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-missing.ts",
+          "line": 5,
+          "column": 21,
+          "package": "joi",
+          "function": "attempt",
+          "contract_clause": "attempt-throws",
+          "description": "No try-catch block found. ValidationError - this will crash the application.",
+          "source_doc": "https://joi.dev/api/#attemptvalue-schema-message-options",
+          "suggested_fix": "Caller MUST wrap Joi.attempt() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { const validated = Joi.attempt(value, schema); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 1,
+            "endLine": 9,
+            "lines": [
+              {
+                "line": 1,
+                "content": "import Joi from 'joi';",
+                "highlighted": false
+              },
+              {
+                "line": 2,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 3,
+                "content": "// ❌ Missing: Joi.attempt() without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 4,
+                "content": "function parseNumberBad(value: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 5,
+                "content": "  const validated = Joi.attempt(value, Joi.number());  // Will crash on invalid input",
+                "highlighted": true
+              },
+              {
+                "line": 6,
+                "content": "  return validated;",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "// ❌ Missing: Joi.attempt() used without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "joi-attempt-throws",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-missing.ts",
+          "line": 11,
+          "column": 17,
+          "package": "joi",
+          "function": "attempt",
+          "contract_clause": "attempt-throws",
+          "description": "No try-catch block found. ValidationError - this will crash the application.",
+          "source_doc": "https://joi.dev/api/#attemptvalue-schema-message-options",
+          "suggested_fix": "Caller MUST wrap Joi.attempt() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { const validated = Joi.attempt(value, schema); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 7,
+            "endLine": 15,
+            "lines": [
+              {
+                "line": 7,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "// ❌ Missing: Joi.attempt() used without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "function convertToEmail(input: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "  const email = Joi.attempt(input, Joi.string().email());  // No try-catch",
+                "highlighted": true
+              },
+              {
+                "line": 12,
+                "content": "  return email.toLowerCase();",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "// ❌ Missing: Joi.attempt() in validation chain",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "joi-attempt-throws",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/joi/fixtures/attempt-missing.ts",
+          "line": 22,
+          "column": 18,
+          "package": "joi",
+          "function": "attempt",
+          "contract_clause": "attempt-throws",
+          "description": "No try-catch block found. ValidationError - this will crash the application.",
+          "source_doc": "https://joi.dev/api/#attemptvalue-schema-message-options",
+          "suggested_fix": "Caller MUST wrap Joi.attempt() in try-catch block. Without error handling, validation failures throw uncaught exceptions that crash the application. Use pattern: try { const validated = Joi.attempt(value, schema); } catch (error) { /* handle */ }\n",
+          "code_snippet": {
+            "startLine": 18,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 18,
+                "content": "    username: Joi.string().required(),",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "    age: Joi.number().required()",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  const result = Joi.attempt(data, schema);  // No error handling",
+                "highlighted": true
+              },
+              {
+                "line": 23,
+                "content": "  return result;",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

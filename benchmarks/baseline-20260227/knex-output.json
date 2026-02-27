@@ -1,0 +1,704 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:58:09.096Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "superagent",
+    "sqlite3",
+    "socket.io-client",
+    "square",
+    "stripe",
+    "sinon",
+    "socket.io",
+    "sequelize",
+    "redis",
+    "sharp",
+    "request-promise",
+    "puppeteer",
+    "pg",
+    "react-hook-form",
+    "openai",
+    "node-fetch",
+    "passport",
+    "nodemailer",
+    "mysql2",
+    "mongoose",
+    "next",
+    "multer",
+    "moment",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "joi",
+    "ioredis",
+    "got",
+    "graphql",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "cors",
+    "date-fns",
+    "dayjs",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@slack/web-api",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@nestjs/common",
+    "@anthropic-ai/sdk",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "knex-select-query-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/instance-usage.ts",
+      "line": 26,
+      "column": 1,
+      "package": "knex",
+      "function": "select",
+      "contract_clause": "select-query-error",
+      "description": "No try-catch block found. Error with query details and database-specific error code - this will crash the application.",
+      "source_doc": "https://knexjs.org/guide/query-builder.html",
+      "suggested_fix": "Caller MUST wrap select() in try-catch to handle SQL errors, connection failures, and timeouts. Query errors crash application if unhandled.",
+      "code_snippet": {
+        "startLine": 22,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 22,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "const db = knex({ client: 'sqlite3', connection: ':memory:' });",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "db('users').select('*'); // ❌ No error handling",
+            "highlighted": true
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "export { DatabaseService };",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "knex-select-query-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/missing-error-handling.ts",
+      "line": 12,
+      "column": 23,
+      "package": "knex",
+      "function": "select",
+      "contract_clause": "select-query-error",
+      "description": "No try-catch block found. Error with query details and database-specific error code - this will crash the application.",
+      "source_doc": "https://knexjs.org/guide/query-builder.html",
+      "suggested_fix": "Caller MUST wrap select() in try-catch to handle SQL errors, connection failures, and timeouts. Query errors crash application if unhandled.",
+      "code_snippet": {
+        "startLine": 8,
+        "endLine": 16,
+        "lines": [
+          {
+            "line": 8,
+            "content": "const db = knex({ client: 'pg', connection: {} });",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "// ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "async function getUsersNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "  const users = await db('users').select('*');",
+            "highlighted": true
+          },
+          {
+            "line": 13,
+            "content": "  return users;",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "// ❌ No try-catch on insert",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "knex-insert-constraint-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/missing-error-handling.ts",
+      "line": 18,
+      "column": 22,
+      "package": "knex",
+      "function": "insert",
+      "contract_clause": "insert-constraint-violation",
+      "description": "No try-catch block found. Error with constraint violation details and database error code - this will crash the application.",
+      "source_doc": "https://knexjs.org/guide/query-builder.html#insert",
+      "suggested_fix": "Caller MUST wrap insert() in try-catch to handle constraint violations. Unique violations, foreign key errors, and type mismatches crash application if unhandled.",
+      "code_snippet": {
+        "startLine": 14,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 14,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "// ❌ No try-catch on insert",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "async function createUserNoErrorHandling(data: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  const [id] = await db('users').insert(data);",
+            "highlighted": true
+          },
+          {
+            "line": 19,
+            "content": "  return id;",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "// ❌ Transaction without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "knex-transaction-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/missing-error-handling.ts",
+      "line": 24,
+      "column": 9,
+      "package": "knex",
+      "function": "transaction",
+      "contract_clause": "transaction-error",
+      "description": "No try-catch block found. Error causing automatic rollback if unhandled - this will crash the application.",
+      "source_doc": "https://knexjs.org/guide/transactions.html",
+      "suggested_fix": "Caller MUST wrap transaction callback in try-catch to handle errors and ensure proper rollback. Unhandled errors may leave database in inconsistent state if transaction partially commits.",
+      "code_snippet": {
+        "startLine": 20,
+        "endLine": 28,
+        "lines": [
+          {
+            "line": 20,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "// ❌ Transaction without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "async function transferNoErrorHandling(from: number, to: number, amount: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  await db.transaction(async (trx) => {",
+            "highlighted": true
+          },
+          {
+            "line": 25,
+            "content": "    await trx('accounts').where({ id: from }).decrement('balance', amount);",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "    await trx('accounts').where({ id: to }).increment('balance', amount);",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 4,
+    "error_count": 4,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "knex",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "knex": {
+      "total": 4,
+      "errors": 4,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "knex-select-query-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/instance-usage.ts",
+          "line": 26,
+          "column": 1,
+          "package": "knex",
+          "function": "select",
+          "contract_clause": "select-query-error",
+          "description": "No try-catch block found. Error with query details and database-specific error code - this will crash the application.",
+          "source_doc": "https://knexjs.org/guide/query-builder.html",
+          "suggested_fix": "Caller MUST wrap select() in try-catch to handle SQL errors, connection failures, and timeouts. Query errors crash application if unhandled.",
+          "code_snippet": {
+            "startLine": 22,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 22,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "const db = knex({ client: 'sqlite3', connection: ':memory:' });",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "db('users').select('*'); // ❌ No error handling",
+                "highlighted": true
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "export { DatabaseService };",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "knex-select-query-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/missing-error-handling.ts",
+          "line": 12,
+          "column": 23,
+          "package": "knex",
+          "function": "select",
+          "contract_clause": "select-query-error",
+          "description": "No try-catch block found. Error with query details and database-specific error code - this will crash the application.",
+          "source_doc": "https://knexjs.org/guide/query-builder.html",
+          "suggested_fix": "Caller MUST wrap select() in try-catch to handle SQL errors, connection failures, and timeouts. Query errors crash application if unhandled.",
+          "code_snippet": {
+            "startLine": 8,
+            "endLine": 16,
+            "lines": [
+              {
+                "line": 8,
+                "content": "const db = knex({ client: 'pg', connection: {} });",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "// ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "async function getUsersNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "  const users = await db('users').select('*');",
+                "highlighted": true
+              },
+              {
+                "line": 13,
+                "content": "  return users;",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "// ❌ No try-catch on insert",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "knex-insert-constraint-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/missing-error-handling.ts",
+          "line": 18,
+          "column": 22,
+          "package": "knex",
+          "function": "insert",
+          "contract_clause": "insert-constraint-violation",
+          "description": "No try-catch block found. Error with constraint violation details and database error code - this will crash the application.",
+          "source_doc": "https://knexjs.org/guide/query-builder.html#insert",
+          "suggested_fix": "Caller MUST wrap insert() in try-catch to handle constraint violations. Unique violations, foreign key errors, and type mismatches crash application if unhandled.",
+          "code_snippet": {
+            "startLine": 14,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 14,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "// ❌ No try-catch on insert",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "async function createUserNoErrorHandling(data: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  const [id] = await db('users').insert(data);",
+                "highlighted": true
+              },
+              {
+                "line": 19,
+                "content": "  return id;",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "// ❌ Transaction without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "knex-transaction-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/knex/fixtures/missing-error-handling.ts",
+          "line": 24,
+          "column": 9,
+          "package": "knex",
+          "function": "transaction",
+          "contract_clause": "transaction-error",
+          "description": "No try-catch block found. Error causing automatic rollback if unhandled - this will crash the application.",
+          "source_doc": "https://knexjs.org/guide/transactions.html",
+          "suggested_fix": "Caller MUST wrap transaction callback in try-catch to handle errors and ensure proper rollback. Unhandled errors may leave database in inconsistent state if transaction partially commits.",
+          "code_snippet": {
+            "startLine": 20,
+            "endLine": 28,
+            "lines": [
+              {
+                "line": 20,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "// ❌ Transaction without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "async function transferNoErrorHandling(from: number, to: number, amount: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  await db.transaction(async (trx) => {",
+                "highlighted": true
+              },
+              {
+                "line": 25,
+                "content": "    await trx('accounts').where({ id: from }).decrement('balance', amount);",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "    await trx('accounts').where({ id: to }).increment('balance', amount);",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

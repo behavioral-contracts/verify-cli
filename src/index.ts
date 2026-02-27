@@ -20,6 +20,16 @@ import {
   printEnhancedTerminalReport,
   printCorpusErrors,
 } from './reporter.js';
+import {
+  printPositiveEvidenceReport,
+  writePositiveEvidenceReport,
+  writePositiveEvidenceReportMarkdown,
+  writeD3Visualization,
+  calculateHealthScore,
+  buildPackageBreakdown,
+  compareAgainstBenchmark,
+  loadBenchmark,
+} from './reporters/index.js';
 import { ensureTsconfig } from './tsconfig-generator.js';
 import type { AnalyzerConfig } from './types.js';
 
@@ -34,17 +44,162 @@ program
   .version('0.1.0');
 
 program
-  .option('--tsconfig <path>', 'Path to tsconfig.json', './tsconfig.json')
+  .option('--tsconfig <path>', 'Path to tsconfig.json or project directory (default: ./tsconfig.json)', './tsconfig.json')
   .option('--corpus <path>', 'Path to corpus directory', findDefaultCorpusPath())
-  .option('--output <path>', 'Output path for audit record JSON', './behavioral-audit.json')
+  .option('--output <path>', 'Output path for audit record JSON (default: auto-generated in output/runs/)')
   .option('--project <path>', 'Path to project root (for package.json discovery)', process.cwd())
   .option('--no-terminal', 'Disable terminal output (JSON only)')
   .option('--fail-on-warnings', 'Exit with error code if warnings are found')
   .option('--discover-packages', 'Enable package discovery and coverage reporting', true)
   .option('--include-tests', 'Include test files in analysis (default: excludes test files)', false)
+  .option('--include-drafts', 'Include draft and in-development contracts (default: excludes draft/in-development)', false)
+  .option('--include-deprecated', 'Include deprecated contracts (default: excludes deprecated)', false)
+  .option('--positive-report', 'Generate positive evidence report (default: true)', true)
+  .option('--no-positive-report', 'Disable positive evidence report')
   .parse(process.argv);
 
 const options = program.opts();
+
+/**
+ * Find git repository root by walking up from a given path
+ */
+function findGitRepoRoot(startPath: string): string | null {
+  let currentDir = path.dirname(path.resolve(startPath));
+  const root = path.parse(currentDir).root;
+
+  while (currentDir !== root) {
+    const gitPath = path.join(currentDir, '.git');
+    if (fs.existsSync(gitPath)) {
+      return currentDir;
+    }
+    currentDir = path.dirname(currentDir);
+  }
+
+  return null;
+}
+
+/**
+ * Get repository name from tsconfig path
+ * Walks up to find git repo root, then uses that directory name
+ */
+function getRepoNameFromTsconfig(tsconfigPath: string): string {
+  // First, try to find git repo root
+  const gitRoot = findGitRepoRoot(tsconfigPath);
+  if (gitRoot) {
+    return path.basename(gitRoot);
+  }
+
+  // Fallback: look for package.json
+  let currentDir = path.dirname(path.resolve(tsconfigPath));
+  const root = path.parse(currentDir).root;
+
+  while (currentDir !== root) {
+    const packageJsonPath = path.join(currentDir, 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      return path.basename(currentDir);
+    }
+    currentDir = path.dirname(currentDir);
+  }
+
+  // Last resort: use directory name where tsconfig lives
+  const resolved = path.resolve(tsconfigPath);
+  const parts = resolved.split(path.sep);
+  return parts[parts.length - 2] || 'unknown-repo';
+}
+
+/**
+ * Get git hash from the analyzed repository (not verify-cli)
+ */
+function getGitHashFromRepo(tsconfigPath: string): string {
+  try {
+    const { execSync } = require('child_process');
+
+    // Get the directory containing the tsconfig (the repo root)
+    const repoDir = path.dirname(path.resolve(tsconfigPath));
+
+    // Run git command in the analyzed repo's directory
+    const gitHash = execSync('git rev-parse --short HEAD', {
+      cwd: repoDir,
+      encoding: 'utf-8',
+    }).trim();
+
+    return gitHash;
+  } catch {
+    // Not a git repo or git not available
+    return 'nogit';
+  }
+}
+
+/**
+ * Generate organized output path
+ */
+function generateOutputPath(tsconfigPath: string): string {
+  const repoName = getRepoNameFromTsconfig(tsconfigPath);
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
+
+  // Get git commit hash from the analyzed repo
+  const gitHash = getGitHashFromRepo(tsconfigPath);
+
+  const runDir = `${timestamp.replace(/T/, '-').replace(/-/g, '').substring(0, 13)}-${gitHash}`;
+  const outputDir = path.join(__dirname, '../output/runs', runDir, repoName);
+
+  // Create directory if it doesn't exist
+  fs.mkdirSync(outputDir, { recursive: true });
+
+  return path.join(outputDir, 'audit.json');
+}
+
+/**
+ * Setup output logging to capture all terminal output to output.txt
+ */
+function setupOutputLogging(outputDir: string): () => void {
+  const outputTxtPath = path.join(outputDir, 'output.txt');
+  const logStream = fs.createWriteStream(outputTxtPath, { flags: 'w' });
+
+  // Store original console methods
+  const originalLog = console.log;
+  const originalError = console.error;
+
+  // Strip ANSI codes for file output
+  const stripAnsi = (str: string) => str.replace(/\x1b\[[0-9;]*m/g, '');
+
+  // Override console.log
+  console.log = (...args: any[]) => {
+    const message = args.map(arg => typeof arg === 'string' ? arg : JSON.stringify(arg)).join(' ');
+    originalLog(...args); // Original output to terminal (with colors)
+    logStream.write(stripAnsi(message) + '\n'); // Clean output to file
+  };
+
+  // Override console.error
+  console.error = (...args: any[]) => {
+    const message = args.map(arg => typeof arg === 'string' ? arg : JSON.stringify(arg)).join(' ');
+    originalError(...args); // Original output to terminal (with colors)
+    logStream.write(stripAnsi(message) + '\n'); // Clean output to file
+  };
+
+  // Return cleanup function
+  return () => {
+    console.log = originalLog;
+    console.error = originalError;
+    logStream.end();
+  };
+}
+
+/**
+ * Normalize tsconfig path (accept directory or file)
+ * If directory is provided, append /tsconfig.json
+ */
+function normalizeTsconfigPath(tsconfigPath: string): string {
+  const resolved = path.resolve(tsconfigPath);
+
+  // If it's a directory, append tsconfig.json
+  if (fs.existsSync(resolved) && fs.statSync(resolved).isDirectory()) {
+    return path.join(resolved, 'tsconfig.json');
+  }
+
+  // Otherwise assume it's already pointing to tsconfig.json
+  return resolved;
+}
 
 /**
  * Main execution
@@ -52,8 +207,11 @@ const options = program.opts();
 async function main() {
   console.log(chalk.bold('\nBehavioral Contract Verification\n'));
 
+  // Normalize tsconfig path (allow directory or file)
+  const tsconfigPath = normalizeTsconfigPath(options.tsconfig);
+
   // Ensure tsconfig exists (generate if missing)
-  ensureTsconfig(options.tsconfig);
+  ensureTsconfig(tsconfigPath);
 
   // Validate corpus exists
   if (!fs.existsSync(options.corpus)) {
@@ -62,13 +220,37 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(chalk.gray(`  tsconfig: ${options.tsconfig}`));
+  // Generate organized output path if not specified
+  const outputPath = options.output || generateOutputPath(tsconfigPath);
+  const outputDir = path.dirname(outputPath);
+
+  // Setup output logging (capture all terminal output to output.txt)
+  const cleanupLogging = setupOutputLogging(outputDir);
+
+  console.log(chalk.gray(`  tsconfig: ${tsconfigPath}`));
   console.log(chalk.gray(`  corpus: ${options.corpus}`));
-  console.log(chalk.gray(`  output: ${options.output}\n`));
+
+  // Show corpus source (npm package vs local)
+  if (options.corpus === findDefaultCorpusPath()) {
+    try {
+      require.resolve('@behavioral-contracts/corpus');
+      console.log(chalk.dim(`  (using npm package @behavioral-contracts/corpus)`));
+    } catch {
+      console.log(chalk.dim(`  (using local corpus for development)`));
+    }
+  } else {
+    console.log(chalk.dim(`  (using custom corpus path)`));
+  }
+
+  console.log(chalk.gray(`  output: ${outputPath}\n`));
 
   // Load corpus
   console.log(chalk.dim('Loading behavioral contracts...'));
-  const corpusResult = await loadCorpus(options.corpus);
+  const corpusResult = await loadCorpus(options.corpus, {
+    includeDrafts: options.includeDrafts,
+    includeDeprecated: options.includeDeprecated,
+    includeInDevelopment: options.includeDrafts, // in-development included with drafts
+  });
 
   if (corpusResult.errors.length > 0) {
     printCorpusErrors(corpusResult.errors);
@@ -80,7 +262,22 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(chalk.green(`✓ Loaded ${corpusResult.contracts.size} package contracts\n`));
+  console.log(chalk.green(`✓ Loaded ${corpusResult.contracts.size} package contracts`));
+
+  // Show skipped contracts (if any)
+  if (corpusResult.skipped && corpusResult.skipped.length > 0) {
+    const draftCount = corpusResult.skipped.filter(s => s.status === 'draft').length;
+    const inDevCount = corpusResult.skipped.filter(s => s.status === 'in-development').length;
+    const deprecatedCount = corpusResult.skipped.filter(s => s.status === 'deprecated').length;
+
+    const skippedParts: string[] = [];
+    if (draftCount > 0) skippedParts.push(`${draftCount} draft`);
+    if (inDevCount > 0) skippedParts.push(`${inDevCount} in-development`);
+    if (deprecatedCount > 0) skippedParts.push(`${deprecatedCount} deprecated`);
+
+    console.log(chalk.dim(`  (Skipped ${skippedParts.join(', ')} - use --include-drafts to include)`));
+  }
+  console.log();
 
   // Discover packages (if enabled)
   let packageDiscovery;
@@ -89,14 +286,14 @@ async function main() {
     const discoveryTool = new PackageDiscovery(corpusResult.contracts);
     packageDiscovery = await discoveryTool.discoverPackages(
       options.project,
-      path.resolve(options.tsconfig)
+      path.resolve(tsconfigPath)
     );
     console.log(chalk.green(`✓ Discovered ${packageDiscovery.total} packages\n`));
   }
 
   // Create analyzer
   const config: AnalyzerConfig = {
-    tsconfigPath: path.resolve(options.tsconfig),
+    tsconfigPath: path.resolve(tsconfigPath),
     corpusPath: path.resolve(options.corpus),
     includeTests: options.includeTests,
   };
@@ -126,8 +323,8 @@ async function main() {
     : auditRecord;
 
   // Write JSON output
-  writeAuditRecord(finalRecord, options.output);
-  console.log(chalk.gray(`Audit record written to ${options.output}`));
+  writeAuditRecord(finalRecord, outputPath);
+  console.log(chalk.gray(`Audit record written to ${outputPath}`));
 
   // Print terminal report
   if (options.terminal !== false) {
@@ -137,6 +334,82 @@ async function main() {
       printTerminalReport(auditRecord);
     }
   }
+
+  // Generate and print positive evidence report (default: on)
+  if (options.positiveReport !== false && options.terminal !== false) {
+    console.log(''); // Add spacing
+
+    const reportOptions = {
+      showHealthScore: true,
+      showPackageBreakdown: true,
+      showInsights: true,
+      showRecommendations: true,
+      showBenchmarking: true, // Phase 2 - now enabled!
+    };
+
+    await printPositiveEvidenceReport(finalRecord as any, reportOptions);
+
+    // Write positive evidence report to file (both .txt and .md)
+    const positiveReportTxtPath = path.join(outputDir, 'positive-report.txt');
+    const positiveReportMdPath = path.join(outputDir, 'positive-report.md');
+
+    await writePositiveEvidenceReport(finalRecord as any, positiveReportTxtPath, reportOptions);
+    await writePositiveEvidenceReportMarkdown(finalRecord as any, positiveReportMdPath, reportOptions);
+
+    // Generate D3.js interactive visualization
+    const d3HtmlPath = path.join(outputDir, 'index.html');
+
+    // Calculate metrics for D3 visualization
+    const healthMetrics = calculateHealthScore(finalRecord);
+    const packageBreakdown = buildPackageBreakdown(finalRecord);
+
+    // Load benchmark if available
+    let benchmarkComparison;
+    let benchmarkData;
+    try {
+      const benchmarkPath = path.join(__dirname, '../data/benchmarks.json');
+      benchmarkData = await loadBenchmark(benchmarkPath);
+      if (benchmarkData) {
+        benchmarkComparison = compareAgainstBenchmark(finalRecord, benchmarkData);
+      }
+    } catch {
+      // Benchmark not available
+    }
+
+    await writeD3Visualization(
+      {
+        audit: finalRecord,
+        health: healthMetrics,
+        packageBreakdown,
+        benchmarking: benchmarkComparison,
+        benchmark: benchmarkData || undefined,
+      },
+      d3HtmlPath
+    );
+
+    const outputTxtPath = path.join(outputDir, 'output.txt');
+
+    console.log(chalk.gray(`Reports written to:`));
+    console.log(chalk.gray(`  - ${outputTxtPath} (full terminal output)`));
+    console.log(chalk.gray(`  - ${positiveReportTxtPath}`));
+    console.log(chalk.gray(`  - ${positiveReportMdPath}`));
+    console.log(chalk.green(`  - file://${d3HtmlPath} (interactive visualization)\n`));
+  }
+
+  // Final summary at the very end (easy to spot after all output)
+  const totalViolations = auditRecord.summary.error_count + auditRecord.summary.warning_count;
+  if (totalViolations > 0) {
+    console.log(chalk.yellow('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
+    console.log(chalk.yellow.bold(`  ⚠️  ${totalViolations} violation${totalViolations === 1 ? '' : 's'} found - scroll up for full report`));
+    console.log(chalk.yellow('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'));
+  } else {
+    console.log(chalk.green('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
+    console.log(chalk.green.bold('  ✓ No violations found - great work!'));
+    console.log(chalk.green('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'));
+  }
+
+  // Cleanup logging
+  cleanupLogging();
 
   // Exit with appropriate code
   const hasErrors = auditRecord.summary.error_count > 0;
@@ -154,10 +427,25 @@ async function main() {
 }
 
 /**
- * Finds the default corpus path by looking for the corpus repo
+ * Finds the default corpus path by trying:
+ * 1. Published npm package (@behavioral-contracts/corpus)
+ * 2. Local development paths (for contributors)
  */
 function findDefaultCorpusPath(): string {
-  // Look for corpus in common locations
+  // Try 1: Use published npm package (production use)
+  try {
+    // Dynamic import to avoid issues if package not installed
+    const corpusModule = require('@behavioral-contracts/corpus');
+    const corpusPath = corpusModule.getCorpusPath();
+
+    if (fs.existsSync(corpusPath)) {
+      return corpusPath;
+    }
+  } catch (err) {
+    // Package not installed - fall through to local paths
+  }
+
+  // Try 2: Look for local corpus repo (development use)
   const possiblePaths = [
     path.join(process.cwd(), '../corpus'),
     path.join(process.cwd(), '../../corpus'),
@@ -170,7 +458,8 @@ function findDefaultCorpusPath(): string {
     }
   }
 
-  // Default fallback
+  // Fallback: assume npm package will be installed
+  // (This path will error if neither npm package nor local corpus exists)
   return path.join(process.cwd(), '../corpus');
 }
 

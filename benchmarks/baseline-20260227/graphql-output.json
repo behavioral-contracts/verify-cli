@@ -1,0 +1,1216 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:55.367Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "typescript",
+    "twilio",
+    "undici",
+    "typeorm",
+    "tedious",
+    "superagent",
+    "stripe",
+    "sqlite3",
+    "square",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "socket.io-client",
+    "redis",
+    "request-promise",
+    "react-hook-form",
+    "pg",
+    "puppeteer",
+    "passport",
+    "openai",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "mocha",
+    "knex",
+    "joi",
+    "ioredis",
+    "graphql",
+    "firebase-admin",
+    "fastify",
+    "got",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "cors",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "date-fns",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@sendgrid/mail",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "graphql-parse-syntax-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/instance-usage.ts",
+      "line": 16,
+      "column": 12,
+      "package": "graphql",
+      "function": "parse",
+      "contract_clause": "parse-syntax-error",
+      "description": "No try-catch block found. GraphQLError with syntax error details and location - this will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/language/#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch to handle syntax errors. Invalid query syntax throws GraphQLError that crashes application if unhandled.",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 20,
+        "lines": [
+          {
+            "line": 12,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "  parseQuery(query: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "    return parse(query);",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  // ❌ Not checking errors",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  async executeQuery(document: any) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "graphql-execute-resolver-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/instance-usage.ts",
+      "line": 21,
+      "column": 26,
+      "package": "graphql",
+      "function": "execute",
+      "contract_clause": "execute-resolver-errors",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/execution/#execute",
+      "suggested_fix": "Caller MUST check result.errors array before accessing result.data. Resolver errors are returned in errors array, not thrown. Use if (result.errors) to detect failures and handle appropriately.",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  // ❌ Not checking errors",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  async executeQuery(document: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    const result = await execute({ schema: this.schema, document });",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "    return result.data;",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "graphql-parse-syntax-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/instance-usage.ts",
+      "line": 27,
+      "column": 1,
+      "package": "graphql",
+      "function": "parse",
+      "contract_clause": "parse-syntax-error",
+      "description": "No try-catch block found. GraphQLError with syntax error details and location - this will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/language/#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch to handle syntax errors. Invalid query syntax throws GraphQLError that crashes application if unhandled.",
+      "code_snippet": {
+        "startLine": 23,
+        "endLine": 30,
+        "lines": [
+          {
+            "line": 23,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "// ❌ Module-level operations without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "parse('query { user }');",
+            "highlighted": true
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "export { GraphQLService };",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "graphql-parse-syntax-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/missing-error-handling.ts",
+      "line": 12,
+      "column": 20,
+      "package": "graphql",
+      "function": "parse",
+      "contract_clause": "parse-syntax-error",
+      "description": "No try-catch block found. GraphQLError with syntax error details and location - this will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/language/#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch to handle syntax errors. Invalid query syntax throws GraphQLError that crashes application if unhandled.",
+      "code_snippet": {
+        "startLine": 8,
+        "endLine": 16,
+        "lines": [
+          {
+            "line": 8,
+            "content": "const schema = new GraphQLSchema({});",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "// ❌ No try-catch around parse",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "function parseNoErrorHandling(query: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "  const document = parse(query);",
+            "highlighted": true
+          },
+          {
+            "line": 13,
+            "content": "  return document;",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "// ❌ Not checking validate() return value",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "graphql-validate-schema-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/missing-error-handling.ts",
+      "line": 18,
+      "column": 18,
+      "package": "graphql",
+      "function": "validate",
+      "contract_clause": "validate-schema-errors",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/validation/#validate",
+      "suggested_fix": "Caller MUST check if validate() returns non-empty array before executing query. Validation errors indicate query will fail - check if (errors.length > 0) and handle before execution.",
+      "code_snippet": {
+        "startLine": 14,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 14,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "// ❌ Not checking validate() return value",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "function validateNoCheck(schema: GraphQLSchema, document: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  const errors = validate(schema, document);",
+            "highlighted": true
+          },
+          {
+            "line": 19,
+            "content": "  return true; // ❌ Not checking errors array",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "// ❌ Not checking execute() result errors",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "graphql-execute-resolver-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/missing-error-handling.ts",
+      "line": 24,
+      "column": 24,
+      "package": "graphql",
+      "function": "execute",
+      "contract_clause": "execute-resolver-errors",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/execution/#execute",
+      "suggested_fix": "Caller MUST check result.errors array before accessing result.data. Resolver errors are returned in errors array, not thrown. Use if (result.errors) to detect failures and handle appropriately.",
+      "code_snippet": {
+        "startLine": 20,
+        "endLine": 28,
+        "lines": [
+          {
+            "line": 20,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "// ❌ Not checking execute() result errors",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "async function executeNoErrorCheck(schema: GraphQLSchema, document: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  const result = await execute({ schema, document });",
+            "highlighted": true
+          },
+          {
+            "line": 25,
+            "content": "  return result.data; // ❌ Not checking result.errors",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "export { parseNoErrorHandling, validateNoCheck, executeNoErrorCheck };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "graphql-validate-schema-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/proper-error-handling.ts",
+      "line": 25,
+      "column": 18,
+      "package": "graphql",
+      "function": "validate",
+      "contract_clause": "validate-schema-errors",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/validation/#validate",
+      "suggested_fix": "Caller MUST check if validate() returns non-empty array before executing query. Validation errors indicate query will fail - check if (errors.length > 0) and handle before execution.",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "// ✅ Check validate() return value",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "function validateQuery(schema: GraphQLSchema, document: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const errors = validate(schema, document);",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  if (errors.length > 0) {",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "    console.error('Validation errors:', errors);",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "    throw new Error('Query validation failed');",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "graphql-execute-resolver-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/proper-error-handling.ts",
+      "line": 35,
+      "column": 24,
+      "package": "graphql",
+      "function": "execute",
+      "contract_clause": "execute-resolver-errors",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://graphql.org/graphql-js/execution/#execute",
+      "suggested_fix": "Caller MUST check result.errors array before accessing result.data. Resolver errors are returned in errors array, not thrown. Use if (result.errors) to detect failures and handle appropriately.",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "// ✅ Check execute() result for errors",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function executeQuery(schema: GraphQLSchema, document: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const result = await execute({ schema, document });",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  if (result.errors && result.errors.length > 0) {",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    console.error('Execution errors:', result.errors);",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    throw new Error('Query execution failed');",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 8,
+    "error_count": 8,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "graphql",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "graphql": {
+      "total": 8,
+      "errors": 8,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "graphql-parse-syntax-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/instance-usage.ts",
+          "line": 16,
+          "column": 12,
+          "package": "graphql",
+          "function": "parse",
+          "contract_clause": "parse-syntax-error",
+          "description": "No try-catch block found. GraphQLError with syntax error details and location - this will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/language/#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch to handle syntax errors. Invalid query syntax throws GraphQLError that crashes application if unhandled.",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 20,
+            "lines": [
+              {
+                "line": 12,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "  parseQuery(query: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "    return parse(query);",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  // ❌ Not checking errors",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  async executeQuery(document: any) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "graphql-execute-resolver-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/instance-usage.ts",
+          "line": 21,
+          "column": 26,
+          "package": "graphql",
+          "function": "execute",
+          "contract_clause": "execute-resolver-errors",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/execution/#execute",
+          "suggested_fix": "Caller MUST check result.errors array before accessing result.data. Resolver errors are returned in errors array, not thrown. Use if (result.errors) to detect failures and handle appropriately.",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  // ❌ Not checking errors",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  async executeQuery(document: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    const result = await execute({ schema: this.schema, document });",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "    return result.data;",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "graphql-parse-syntax-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/instance-usage.ts",
+          "line": 27,
+          "column": 1,
+          "package": "graphql",
+          "function": "parse",
+          "contract_clause": "parse-syntax-error",
+          "description": "No try-catch block found. GraphQLError with syntax error details and location - this will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/language/#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch to handle syntax errors. Invalid query syntax throws GraphQLError that crashes application if unhandled.",
+          "code_snippet": {
+            "startLine": 23,
+            "endLine": 30,
+            "lines": [
+              {
+                "line": 23,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "// ❌ Module-level operations without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "parse('query { user }');",
+                "highlighted": true
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "export { GraphQLService };",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "graphql-parse-syntax-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/missing-error-handling.ts",
+          "line": 12,
+          "column": 20,
+          "package": "graphql",
+          "function": "parse",
+          "contract_clause": "parse-syntax-error",
+          "description": "No try-catch block found. GraphQLError with syntax error details and location - this will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/language/#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch to handle syntax errors. Invalid query syntax throws GraphQLError that crashes application if unhandled.",
+          "code_snippet": {
+            "startLine": 8,
+            "endLine": 16,
+            "lines": [
+              {
+                "line": 8,
+                "content": "const schema = new GraphQLSchema({});",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "// ❌ No try-catch around parse",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "function parseNoErrorHandling(query: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "  const document = parse(query);",
+                "highlighted": true
+              },
+              {
+                "line": 13,
+                "content": "  return document;",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "// ❌ Not checking validate() return value",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "graphql-validate-schema-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/missing-error-handling.ts",
+          "line": 18,
+          "column": 18,
+          "package": "graphql",
+          "function": "validate",
+          "contract_clause": "validate-schema-errors",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/validation/#validate",
+          "suggested_fix": "Caller MUST check if validate() returns non-empty array before executing query. Validation errors indicate query will fail - check if (errors.length > 0) and handle before execution.",
+          "code_snippet": {
+            "startLine": 14,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 14,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "// ❌ Not checking validate() return value",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "function validateNoCheck(schema: GraphQLSchema, document: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  const errors = validate(schema, document);",
+                "highlighted": true
+              },
+              {
+                "line": 19,
+                "content": "  return true; // ❌ Not checking errors array",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "// ❌ Not checking execute() result errors",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "graphql-execute-resolver-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/missing-error-handling.ts",
+          "line": 24,
+          "column": 24,
+          "package": "graphql",
+          "function": "execute",
+          "contract_clause": "execute-resolver-errors",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/execution/#execute",
+          "suggested_fix": "Caller MUST check result.errors array before accessing result.data. Resolver errors are returned in errors array, not thrown. Use if (result.errors) to detect failures and handle appropriately.",
+          "code_snippet": {
+            "startLine": 20,
+            "endLine": 28,
+            "lines": [
+              {
+                "line": 20,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "// ❌ Not checking execute() result errors",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "async function executeNoErrorCheck(schema: GraphQLSchema, document: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  const result = await execute({ schema, document });",
+                "highlighted": true
+              },
+              {
+                "line": 25,
+                "content": "  return result.data; // ❌ Not checking result.errors",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "export { parseNoErrorHandling, validateNoCheck, executeNoErrorCheck };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "graphql-validate-schema-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/proper-error-handling.ts",
+          "line": 25,
+          "column": 18,
+          "package": "graphql",
+          "function": "validate",
+          "contract_clause": "validate-schema-errors",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/validation/#validate",
+          "suggested_fix": "Caller MUST check if validate() returns non-empty array before executing query. Validation errors indicate query will fail - check if (errors.length > 0) and handle before execution.",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "// ✅ Check validate() return value",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "function validateQuery(schema: GraphQLSchema, document: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const errors = validate(schema, document);",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  if (errors.length > 0) {",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "    console.error('Validation errors:', errors);",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "    throw new Error('Query validation failed');",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "graphql-execute-resolver-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/graphql/fixtures/proper-error-handling.ts",
+          "line": 35,
+          "column": 24,
+          "package": "graphql",
+          "function": "execute",
+          "contract_clause": "execute-resolver-errors",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://graphql.org/graphql-js/execution/#execute",
+          "suggested_fix": "Caller MUST check result.errors array before accessing result.data. Resolver errors are returned in errors array, not thrown. Use if (result.errors) to detect failures and handle appropriately.",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "// ✅ Check execute() result for errors",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function executeQuery(schema: GraphQLSchema, document: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const result = await execute({ schema, document });",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  if (result.errors && result.errors.length > 0) {",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    console.error('Execution errors:', result.errors);",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    throw new Error('Query execution failed');",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

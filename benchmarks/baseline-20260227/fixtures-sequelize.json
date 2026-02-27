@@ -1,0 +1,2764 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:38.046Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "uuid",
+    "validator",
+    "undici",
+    "unzipper",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "supertest",
+    "stripe",
+    "superagent",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "tedious",
+    "sinon",
+    "sequelize",
+    "sharp",
+    "simple-oauth2",
+    "redis",
+    "request-promise",
+    "react-hook-form",
+    "puppeteer",
+    "pino",
+    "pg",
+    "openai",
+    "passport",
+    "nodemailer",
+    "node-fetch",
+    "mysql2",
+    "next",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "knex",
+    "mocha",
+    "jsonwebtoken",
+    "lodash",
+    "helmet",
+    "graphql",
+    "ioredis",
+    "joi",
+    "got",
+    "fastify",
+    "firebase-admin",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "cors",
+    "date-fns",
+    "dayjs",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@supabase/supabase-js",
+    "@nestjs/common",
+    "@slack/web-api",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "sequelize-sync-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/instance-usage.ts",
+      "line": 23,
+      "column": 9,
+      "package": "sequelize",
+      "function": "sync",
+      "contract_clause": "sync-failure",
+      "description": "No try-catch block found. DatabaseError, ConnectionError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-basics/",
+      "suggested_fix": "Caller MUST catch sync errors. NEVER use sync() in production - use migrations instead. sync() can drop and recreate tables - data loss risk.\n",
+      "code_snippet": {
+        "startLine": 19,
+        "endLine": 27,
+        "lines": [
+          {
+            "line": 19,
+            "content": "    email: DataTypes.STRING,",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  }, { sequelize });",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  await sequelize.sync();",
+            "highlighted": true
+          },
+          {
+            "line": 24,
+            "content": "  const user = await User.create({ email: 'test@example.com' });",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  return user;",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-connection-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 16,
+      "column": 9,
+      "package": "sequelize",
+      "function": "authenticate",
+      "contract_clause": "connection-failure",
+      "description": "No try-catch block found. ConnectionError, ConnectionRefusedError, HostNotFoundError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/getting-started/",
+      "suggested_fix": "Caller MUST catch connection errors. Common causes: wrong credentials, database down, network issues. Implement retry with exponential backoff for transient issues.\n",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 20,
+        "lines": [
+          {
+            "line": 12,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "async function testConnectionWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "  const sequelize = new Sequelize('postgresql://localhost/testdb');",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  await sequelize.authenticate();",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "  console.log('Connection established.');",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-query-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 23,
+      "package": "sequelize",
+      "function": "findAll",
+      "contract_clause": "query-failure",
+      "description": "No try-catch block found. DatabaseError, ConnectionError, TimeoutError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+      "suggested_fix": "Caller MUST catch query errors. Network errors may be transient and retriable. Invalid query errors should not be retried.\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": " * ❌ Missing try-catch for findAll",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "async function findAllUsersWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const users = await sequelize.models.User.findAll();",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  return users;",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-query-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 34,
+      "column": 22,
+      "package": "sequelize",
+      "function": "findByPk",
+      "contract_clause": "query-failure",
+      "description": "No try-catch block found. DatabaseError, ConnectionError, TimeoutError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-finders/",
+      "suggested_fix": "Caller MUST catch query errors. Returns null if record not found (not an error).\n",
+      "code_snippet": {
+        "startLine": 30,
+        "endLine": 38,
+        "lines": [
+          {
+            "line": 30,
+            "content": " * ❌ Missing try-catch for findOne",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "async function findUserByIdWithoutErrorHandling(sequelize: Sequelize, id: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  const user = await sequelize.models.User.findByPk(id);",
+            "highlighted": true
+          },
+          {
+            "line": 35,
+            "content": "  return user;",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-unique-constraint",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 43,
+      "column": 22,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "unique-constraint",
+      "description": "No try-catch block found. UniqueConstraintError with fields and error.errors array - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST catch unique constraint errors. Extract conflicting fields from error.fields. DO NOT retry without changing unique field values.\n",
+      "code_snippet": {
+        "startLine": 39,
+        "endLine": 47,
+        "lines": [
+          {
+            "line": 39,
+            "content": " * ❌ Missing try-catch for create",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "async function createUserWithoutErrorHandling(sequelize: Sequelize, email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  const user = await sequelize.models.User.create({ email });",
+            "highlighted": true
+          },
+          {
+            "line": 44,
+            "content": "  return user;",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 43,
+      "column": 22,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "validation-error",
+      "description": "No try-catch block found. ValidationError with error.errors array - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST validate data before insert. Check error.errors for list of validation failures. DO NOT retry without fixing validation issues.\n",
+      "code_snippet": {
+        "startLine": 39,
+        "endLine": 47,
+        "lines": [
+          {
+            "line": 39,
+            "content": " * ❌ Missing try-catch for create",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "async function createUserWithoutErrorHandling(sequelize: Sequelize, email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  const user = await sequelize.models.User.create({ email });",
+            "highlighted": true
+          },
+          {
+            "line": 44,
+            "content": "  return user;",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-foreign-key-constraint",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 43,
+      "column": 22,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "foreign-key-constraint",
+      "description": "No try-catch block found. ForeignKeyConstraintError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST verify referenced record exists before insertion. DO NOT retry - indicates data integrity issue.\n",
+      "code_snippet": {
+        "startLine": 39,
+        "endLine": 47,
+        "lines": [
+          {
+            "line": 39,
+            "content": " * ❌ Missing try-catch for create",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "async function createUserWithoutErrorHandling(sequelize: Sequelize, email: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  const user = await sequelize.models.User.create({ email });",
+            "highlighted": true
+          },
+          {
+            "line": 44,
+            "content": "  return user;",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-update-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 52,
+      "column": 9,
+      "package": "sequelize",
+      "function": "update",
+      "contract_clause": "update-failure",
+      "description": "No try-catch block found. DatabaseError, ValidationError, UniqueConstraintError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+      "suggested_fix": "Caller MUST catch update errors. Validation errors: check error.errors array. Constraint violations: DO NOT retry without fixing data.\n",
+      "code_snippet": {
+        "startLine": 48,
+        "endLine": 56,
+        "lines": [
+          {
+            "line": 48,
+            "content": " * ❌ Missing try-catch for update",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "async function updateUserWithoutErrorHandling(sequelize: Sequelize, id: number, name: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "  await sequelize.models.User.update({ name }, { where: { id } });",
+            "highlighted": true
+          },
+          {
+            "line": 53,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " * ❌ Missing try-catch for destroy",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-delete-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 60,
+      "column": 9,
+      "package": "sequelize",
+      "function": "destroy",
+      "contract_clause": "delete-failure",
+      "description": "No try-catch block found. DatabaseError, ForeignKeyConstraintError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+      "suggested_fix": "Caller MUST catch delete errors. Foreign key errors: child records may still reference this record. Deleting non-existent record is NOT an error (returns 0).\n",
+      "code_snippet": {
+        "startLine": 56,
+        "endLine": 64,
+        "lines": [
+          {
+            "line": 56,
+            "content": " * ❌ Missing try-catch for destroy",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "async function deleteUserWithoutErrorHandling(sequelize: Sequelize, id: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  await sequelize.models.User.destroy({ where: { id } });",
+            "highlighted": true
+          },
+          {
+            "line": 61,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " * ❌ Missing try-catch for transaction",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-transaction-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 68,
+      "column": 9,
+      "package": "sequelize",
+      "function": "transaction",
+      "contract_clause": "transaction-failure",
+      "description": "No try-catch block found. DatabaseError, TimeoutError, UniqueConstraintError, etc. - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/other-topics/transactions/",
+      "suggested_fix": "Caller MUST catch transaction errors and handle rollback. Sequelize auto-rollbacks on error in managed transactions. For unmanaged transactions, caller must explicitly rollback. Deadlocks may be transient and retriable.\n",
+      "code_snippet": {
+        "startLine": 64,
+        "endLine": 72,
+        "lines": [
+          {
+            "line": 64,
+            "content": " * ❌ Missing try-catch for transaction",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": " * Should trigger ERROR violations",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await sequelize.transaction(async (t) => {",
+            "highlighted": true
+          },
+          {
+            "line": 69,
+            "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-unique-constraint",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 69,
+      "column": 11,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "unique-constraint",
+      "description": "No try-catch block found. UniqueConstraintError with fields and error.errors array - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST catch unique constraint errors. Extract conflicting fields from error.fields. DO NOT retry without changing unique field values.\n",
+      "code_snippet": {
+        "startLine": 65,
+        "endLine": 73,
+        "lines": [
+          {
+            "line": 65,
+            "content": " * Should trigger ERROR violations",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await sequelize.transaction(async (t) => {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+            "highlighted": true
+          },
+          {
+            "line": 70,
+            "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 69,
+      "column": 11,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "validation-error",
+      "description": "No try-catch block found. ValidationError with error.errors array - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST validate data before insert. Check error.errors for list of validation failures. DO NOT retry without fixing validation issues.\n",
+      "code_snippet": {
+        "startLine": 65,
+        "endLine": 73,
+        "lines": [
+          {
+            "line": 65,
+            "content": " * Should trigger ERROR violations",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await sequelize.transaction(async (t) => {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+            "highlighted": true
+          },
+          {
+            "line": 70,
+            "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-foreign-key-constraint",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 69,
+      "column": 11,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "foreign-key-constraint",
+      "description": "No try-catch block found. ForeignKeyConstraintError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST verify referenced record exists before insertion. DO NOT retry - indicates data integrity issue.\n",
+      "code_snippet": {
+        "startLine": 65,
+        "endLine": 73,
+        "lines": [
+          {
+            "line": 65,
+            "content": " * Should trigger ERROR violations",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await sequelize.transaction(async (t) => {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+            "highlighted": true
+          },
+          {
+            "line": 70,
+            "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-unique-constraint",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 70,
+      "column": 11,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "unique-constraint",
+      "description": "No try-catch block found. UniqueConstraintError with fields and error.errors array - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST catch unique constraint errors. Extract conflicting fields from error.fields. DO NOT retry without changing unique field values.\n",
+      "code_snippet": {
+        "startLine": 66,
+        "endLine": 74,
+        "lines": [
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await sequelize.transaction(async (t) => {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+            "highlighted": true
+          },
+          {
+            "line": 71,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 70,
+      "column": 11,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "validation-error",
+      "description": "No try-catch block found. ValidationError with error.errors array - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST validate data before insert. Check error.errors for list of validation failures. DO NOT retry without fixing validation issues.\n",
+      "code_snippet": {
+        "startLine": 66,
+        "endLine": 74,
+        "lines": [
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await sequelize.transaction(async (t) => {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+            "highlighted": true
+          },
+          {
+            "line": 71,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-foreign-key-constraint",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 70,
+      "column": 11,
+      "package": "sequelize",
+      "function": "create",
+      "contract_clause": "foreign-key-constraint",
+      "description": "No try-catch block found. ForeignKeyConstraintError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST verify referenced record exists before insertion. DO NOT retry - indicates data integrity issue.\n",
+      "code_snippet": {
+        "startLine": 66,
+        "endLine": 74,
+        "lines": [
+          {
+            "line": 66,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await sequelize.transaction(async (t) => {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+            "highlighted": true
+          },
+          {
+            "line": 71,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-syntax-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 79,
+      "column": 27,
+      "package": "sequelize",
+      "function": "query",
+      "contract_clause": "syntax-error",
+      "description": "No try-catch block found. DatabaseError with original SQL error from underlying driver - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/raw-queries/",
+      "suggested_fix": "Caller MUST validate SQL syntax before execution. DO NOT retry - indicates SQL syntax error. Check error.original for underlying driver error.\n",
+      "code_snippet": {
+        "startLine": 75,
+        "endLine": 83,
+        "lines": [
+          {
+            "line": 75,
+            "content": " * ❌ Missing try-catch for raw query",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "async function rawQueryWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  const [results] = await sequelize.query('SELECT * FROM users');",
+            "highlighted": true
+          },
+          {
+            "line": 80,
+            "content": "  return results;",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-constraint-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 79,
+      "column": 27,
+      "package": "sequelize",
+      "function": "query",
+      "contract_clause": "constraint-violation",
+      "description": "No try-catch block found. UniqueConstraintError, ForeignKeyConstraintError, ValidationError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+      "suggested_fix": "Caller MUST handle constraint violations gracefully. UniqueConstraintError: extract fields from error.fields. ForeignKeyConstraintError: check error.index. DO NOT retry without fixing data.\n",
+      "code_snippet": {
+        "startLine": 75,
+        "endLine": 83,
+        "lines": [
+          {
+            "line": 75,
+            "content": " * ❌ Missing try-catch for raw query",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "async function rawQueryWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  const [results] = await sequelize.query('SELECT * FROM users');",
+            "highlighted": true
+          },
+          {
+            "line": 80,
+            "content": "  return results;",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-connection-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 79,
+      "column": 27,
+      "package": "sequelize",
+      "function": "query",
+      "contract_clause": "connection-error",
+      "description": "No try-catch block found. ConnectionError, TimeoutError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/",
+      "suggested_fix": "Caller MUST handle connection errors separately from query errors. Implement retry with exponential backoff for transient connection issues.\n",
+      "code_snippet": {
+        "startLine": 75,
+        "endLine": 83,
+        "lines": [
+          {
+            "line": 75,
+            "content": " * ❌ Missing try-catch for raw query",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "async function rawQueryWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  const [results] = await sequelize.query('SELECT * FROM users');",
+            "highlighted": true
+          },
+          {
+            "line": 80,
+            "content": "  return results;",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequelize-count-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+      "line": 88,
+      "column": 23,
+      "package": "sequelize",
+      "function": "count",
+      "contract_clause": "count-failure",
+      "description": "No try-catch block found. DatabaseError, ConnectionError, TimeoutError - this will crash the application.",
+      "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+      "suggested_fix": "Caller MUST catch count errors. Network errors may be transient and retriable.\n",
+      "code_snippet": {
+        "startLine": 84,
+        "endLine": 91,
+        "lines": [
+          {
+            "line": 84,
+            "content": " * ❌ Missing try-catch for count",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "async function countUsersWithoutErrorHandling(sequelize: Sequelize) {",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  const count = await sequelize.models.User.count();",
+            "highlighted": true
+          },
+          {
+            "line": 89,
+            "content": "  return count;",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 20,
+    "error_count": 20,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "sequelize",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "sequelize": {
+      "total": 20,
+      "errors": 20,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "sequelize-sync-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/instance-usage.ts",
+          "line": 23,
+          "column": 9,
+          "package": "sequelize",
+          "function": "sync",
+          "contract_clause": "sync-failure",
+          "description": "No try-catch block found. DatabaseError, ConnectionError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-basics/",
+          "suggested_fix": "Caller MUST catch sync errors. NEVER use sync() in production - use migrations instead. sync() can drop and recreate tables - data loss risk.\n",
+          "code_snippet": {
+            "startLine": 19,
+            "endLine": 27,
+            "lines": [
+              {
+                "line": 19,
+                "content": "    email: DataTypes.STRING,",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  }, { sequelize });",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  await sequelize.sync();",
+                "highlighted": true
+              },
+              {
+                "line": 24,
+                "content": "  const user = await User.create({ email: 'test@example.com' });",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  return user;",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-connection-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 16,
+          "column": 9,
+          "package": "sequelize",
+          "function": "authenticate",
+          "contract_clause": "connection-failure",
+          "description": "No try-catch block found. ConnectionError, ConnectionRefusedError, HostNotFoundError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/getting-started/",
+          "suggested_fix": "Caller MUST catch connection errors. Common causes: wrong credentials, database down, network issues. Implement retry with exponential backoff for transient issues.\n",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 20,
+            "lines": [
+              {
+                "line": 12,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "async function testConnectionWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "  const sequelize = new Sequelize('postgresql://localhost/testdb');",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  await sequelize.authenticate();",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "  console.log('Connection established.');",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-query-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 23,
+          "package": "sequelize",
+          "function": "findAll",
+          "contract_clause": "query-failure",
+          "description": "No try-catch block found. DatabaseError, ConnectionError, TimeoutError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+          "suggested_fix": "Caller MUST catch query errors. Network errors may be transient and retriable. Invalid query errors should not be retried.\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": " * ❌ Missing try-catch for findAll",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "async function findAllUsersWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const users = await sequelize.models.User.findAll();",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  return users;",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-query-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 34,
+          "column": 22,
+          "package": "sequelize",
+          "function": "findByPk",
+          "contract_clause": "query-failure",
+          "description": "No try-catch block found. DatabaseError, ConnectionError, TimeoutError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-finders/",
+          "suggested_fix": "Caller MUST catch query errors. Returns null if record not found (not an error).\n",
+          "code_snippet": {
+            "startLine": 30,
+            "endLine": 38,
+            "lines": [
+              {
+                "line": 30,
+                "content": " * ❌ Missing try-catch for findOne",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "async function findUserByIdWithoutErrorHandling(sequelize: Sequelize, id: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  const user = await sequelize.models.User.findByPk(id);",
+                "highlighted": true
+              },
+              {
+                "line": 35,
+                "content": "  return user;",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-unique-constraint",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 43,
+          "column": 22,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "unique-constraint",
+          "description": "No try-catch block found. UniqueConstraintError with fields and error.errors array - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST catch unique constraint errors. Extract conflicting fields from error.fields. DO NOT retry without changing unique field values.\n",
+          "code_snippet": {
+            "startLine": 39,
+            "endLine": 47,
+            "lines": [
+              {
+                "line": 39,
+                "content": " * ❌ Missing try-catch for create",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "async function createUserWithoutErrorHandling(sequelize: Sequelize, email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  const user = await sequelize.models.User.create({ email });",
+                "highlighted": true
+              },
+              {
+                "line": 44,
+                "content": "  return user;",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 43,
+          "column": 22,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "validation-error",
+          "description": "No try-catch block found. ValidationError with error.errors array - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST validate data before insert. Check error.errors for list of validation failures. DO NOT retry without fixing validation issues.\n",
+          "code_snippet": {
+            "startLine": 39,
+            "endLine": 47,
+            "lines": [
+              {
+                "line": 39,
+                "content": " * ❌ Missing try-catch for create",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "async function createUserWithoutErrorHandling(sequelize: Sequelize, email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  const user = await sequelize.models.User.create({ email });",
+                "highlighted": true
+              },
+              {
+                "line": 44,
+                "content": "  return user;",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-foreign-key-constraint",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 43,
+          "column": 22,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "foreign-key-constraint",
+          "description": "No try-catch block found. ForeignKeyConstraintError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST verify referenced record exists before insertion. DO NOT retry - indicates data integrity issue.\n",
+          "code_snippet": {
+            "startLine": 39,
+            "endLine": 47,
+            "lines": [
+              {
+                "line": 39,
+                "content": " * ❌ Missing try-catch for create",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "async function createUserWithoutErrorHandling(sequelize: Sequelize, email: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  const user = await sequelize.models.User.create({ email });",
+                "highlighted": true
+              },
+              {
+                "line": 44,
+                "content": "  return user;",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-update-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 52,
+          "column": 9,
+          "package": "sequelize",
+          "function": "update",
+          "contract_clause": "update-failure",
+          "description": "No try-catch block found. DatabaseError, ValidationError, UniqueConstraintError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+          "suggested_fix": "Caller MUST catch update errors. Validation errors: check error.errors array. Constraint violations: DO NOT retry without fixing data.\n",
+          "code_snippet": {
+            "startLine": 48,
+            "endLine": 56,
+            "lines": [
+              {
+                "line": 48,
+                "content": " * ❌ Missing try-catch for update",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "async function updateUserWithoutErrorHandling(sequelize: Sequelize, id: number, name: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "  await sequelize.models.User.update({ name }, { where: { id } });",
+                "highlighted": true
+              },
+              {
+                "line": 53,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " * ❌ Missing try-catch for destroy",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-delete-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 60,
+          "column": 9,
+          "package": "sequelize",
+          "function": "destroy",
+          "contract_clause": "delete-failure",
+          "description": "No try-catch block found. DatabaseError, ForeignKeyConstraintError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+          "suggested_fix": "Caller MUST catch delete errors. Foreign key errors: child records may still reference this record. Deleting non-existent record is NOT an error (returns 0).\n",
+          "code_snippet": {
+            "startLine": 56,
+            "endLine": 64,
+            "lines": [
+              {
+                "line": 56,
+                "content": " * ❌ Missing try-catch for destroy",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "async function deleteUserWithoutErrorHandling(sequelize: Sequelize, id: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  await sequelize.models.User.destroy({ where: { id } });",
+                "highlighted": true
+              },
+              {
+                "line": 61,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " * ❌ Missing try-catch for transaction",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-transaction-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 68,
+          "column": 9,
+          "package": "sequelize",
+          "function": "transaction",
+          "contract_clause": "transaction-failure",
+          "description": "No try-catch block found. DatabaseError, TimeoutError, UniqueConstraintError, etc. - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/other-topics/transactions/",
+          "suggested_fix": "Caller MUST catch transaction errors and handle rollback. Sequelize auto-rollbacks on error in managed transactions. For unmanaged transactions, caller must explicitly rollback. Deadlocks may be transient and retriable.\n",
+          "code_snippet": {
+            "startLine": 64,
+            "endLine": 72,
+            "lines": [
+              {
+                "line": 64,
+                "content": " * ❌ Missing try-catch for transaction",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": " * Should trigger ERROR violations",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await sequelize.transaction(async (t) => {",
+                "highlighted": true
+              },
+              {
+                "line": 69,
+                "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-unique-constraint",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 69,
+          "column": 11,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "unique-constraint",
+          "description": "No try-catch block found. UniqueConstraintError with fields and error.errors array - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST catch unique constraint errors. Extract conflicting fields from error.fields. DO NOT retry without changing unique field values.\n",
+          "code_snippet": {
+            "startLine": 65,
+            "endLine": 73,
+            "lines": [
+              {
+                "line": 65,
+                "content": " * Should trigger ERROR violations",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await sequelize.transaction(async (t) => {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+                "highlighted": true
+              },
+              {
+                "line": 70,
+                "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 69,
+          "column": 11,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "validation-error",
+          "description": "No try-catch block found. ValidationError with error.errors array - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST validate data before insert. Check error.errors for list of validation failures. DO NOT retry without fixing validation issues.\n",
+          "code_snippet": {
+            "startLine": 65,
+            "endLine": 73,
+            "lines": [
+              {
+                "line": 65,
+                "content": " * Should trigger ERROR violations",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await sequelize.transaction(async (t) => {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+                "highlighted": true
+              },
+              {
+                "line": 70,
+                "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-foreign-key-constraint",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 69,
+          "column": 11,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "foreign-key-constraint",
+          "description": "No try-catch block found. ForeignKeyConstraintError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST verify referenced record exists before insertion. DO NOT retry - indicates data integrity issue.\n",
+          "code_snippet": {
+            "startLine": 65,
+            "endLine": 73,
+            "lines": [
+              {
+                "line": 65,
+                "content": " * Should trigger ERROR violations",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await sequelize.transaction(async (t) => {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+                "highlighted": true
+              },
+              {
+                "line": 70,
+                "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-unique-constraint",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 70,
+          "column": 11,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "unique-constraint",
+          "description": "No try-catch block found. UniqueConstraintError with fields and error.errors array - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST catch unique constraint errors. Extract conflicting fields from error.fields. DO NOT retry without changing unique field values.\n",
+          "code_snippet": {
+            "startLine": 66,
+            "endLine": 74,
+            "lines": [
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await sequelize.transaction(async (t) => {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+                "highlighted": true
+              },
+              {
+                "line": 71,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 70,
+          "column": 11,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "validation-error",
+          "description": "No try-catch block found. ValidationError with error.errors array - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST validate data before insert. Check error.errors for list of validation failures. DO NOT retry without fixing validation issues.\n",
+          "code_snippet": {
+            "startLine": 66,
+            "endLine": 74,
+            "lines": [
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await sequelize.transaction(async (t) => {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+                "highlighted": true
+              },
+              {
+                "line": 71,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-foreign-key-constraint",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 70,
+          "column": 11,
+          "package": "sequelize",
+          "function": "create",
+          "contract_clause": "foreign-key-constraint",
+          "description": "No try-catch block found. ForeignKeyConstraintError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST verify referenced record exists before insertion. DO NOT retry - indicates data integrity issue.\n",
+          "code_snippet": {
+            "startLine": 66,
+            "endLine": 74,
+            "lines": [
+              {
+                "line": 66,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function transactionWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await sequelize.transaction(async (t) => {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "    await sequelize.models.User.create({ email: 'test@example.com' }, { transaction: t });",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "    await sequelize.models.Profile.create({ userId: 1 }, { transaction: t });",
+                "highlighted": true
+              },
+              {
+                "line": 71,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-syntax-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 79,
+          "column": 27,
+          "package": "sequelize",
+          "function": "query",
+          "contract_clause": "syntax-error",
+          "description": "No try-catch block found. DatabaseError with original SQL error from underlying driver - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/raw-queries/",
+          "suggested_fix": "Caller MUST validate SQL syntax before execution. DO NOT retry - indicates SQL syntax error. Check error.original for underlying driver error.\n",
+          "code_snippet": {
+            "startLine": 75,
+            "endLine": 83,
+            "lines": [
+              {
+                "line": 75,
+                "content": " * ❌ Missing try-catch for raw query",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "async function rawQueryWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  const [results] = await sequelize.query('SELECT * FROM users');",
+                "highlighted": true
+              },
+              {
+                "line": 80,
+                "content": "  return results;",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-constraint-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 79,
+          "column": 27,
+          "package": "sequelize",
+          "function": "query",
+          "contract_clause": "constraint-violation",
+          "description": "No try-catch block found. UniqueConstraintError, ForeignKeyConstraintError, ValidationError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
+          "suggested_fix": "Caller MUST handle constraint violations gracefully. UniqueConstraintError: extract fields from error.fields. ForeignKeyConstraintError: check error.index. DO NOT retry without fixing data.\n",
+          "code_snippet": {
+            "startLine": 75,
+            "endLine": 83,
+            "lines": [
+              {
+                "line": 75,
+                "content": " * ❌ Missing try-catch for raw query",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "async function rawQueryWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  const [results] = await sequelize.query('SELECT * FROM users');",
+                "highlighted": true
+              },
+              {
+                "line": 80,
+                "content": "  return results;",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-connection-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 79,
+          "column": 27,
+          "package": "sequelize",
+          "function": "query",
+          "contract_clause": "connection-error",
+          "description": "No try-catch block found. ConnectionError, TimeoutError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/",
+          "suggested_fix": "Caller MUST handle connection errors separately from query errors. Implement retry with exponential backoff for transient connection issues.\n",
+          "code_snippet": {
+            "startLine": 75,
+            "endLine": 83,
+            "lines": [
+              {
+                "line": 75,
+                "content": " * ❌ Missing try-catch for raw query",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "async function rawQueryWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  const [results] = await sequelize.query('SELECT * FROM users');",
+                "highlighted": true
+              },
+              {
+                "line": 80,
+                "content": "  return results;",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "sequelize-count-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/sequelize/fixtures/missing-error-handling.ts",
+          "line": 88,
+          "column": 23,
+          "package": "sequelize",
+          "function": "count",
+          "contract_clause": "count-failure",
+          "description": "No try-catch block found. DatabaseError, ConnectionError, TimeoutError - this will crash the application.",
+          "source_doc": "https://sequelize.org/docs/v6/core-concepts/model-querying-basics/",
+          "suggested_fix": "Caller MUST catch count errors. Network errors may be transient and retriable.\n",
+          "code_snippet": {
+            "startLine": 84,
+            "endLine": 91,
+            "lines": [
+              {
+                "line": 84,
+                "content": " * ❌ Missing try-catch for count",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "async function countUsersWithoutErrorHandling(sequelize: Sequelize) {",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  const count = await sequelize.models.User.count();",
+                "highlighted": true
+              },
+              {
+                "line": 89,
+                "content": "  return count;",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

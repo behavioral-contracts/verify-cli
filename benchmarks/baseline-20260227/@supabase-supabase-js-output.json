@@ -1,0 +1,2505 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:59.728Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "tedious",
+    "twilio",
+    "stripe",
+    "square",
+    "superagent",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "request-promise",
+    "redis",
+    "react-hook-form",
+    "puppeteer",
+    "pg",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "multer",
+    "mysql2",
+    "next",
+    "moment",
+    "mongoose",
+    "mongodb",
+    "mocha",
+    "knex",
+    "luxon",
+    "joi",
+    "graphql",
+    "got",
+    "ioredis",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "date-fns",
+    "dayjs",
+    "cors",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@sendgrid/mail",
+    "@vercel/postgres",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk",
+    "@hapi/hapi"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "@supabase/supabase-js-rls-policy-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 33,
+      "package": "@supabase/supabase-js",
+      "function": "select",
+      "contract_clause": "rls-policy-violation",
+      "description": "No try-catch block found. Error with code '42501' or status 403 - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+      "suggested_fix": "Caller MUST handle RLS policy violations gracefully. This indicates user doesn't have permission to access data. CRITICAL: Ensure RLS policies are configured for all tables. Using anon or authenticated role without RLS is a MAJOR security risk. Return empty result or access denied message to user.\n",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " * ❌ Missing try-catch for select query",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function fetchUsersWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  const { data, error } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    .select('*');",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch, no error check",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-column-access-denied",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 33,
+      "package": "@supabase/supabase-js",
+      "function": "select",
+      "contract_clause": "column-access-denied",
+      "description": "No try-catch block found. Error with code '42501' when using select * - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+      "suggested_fix": "Avoid using select * if column-level RLS is configured. Explicitly select only columns user should access. Handle 42501 errors by selecting subset of columns.\n",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " * ❌ Missing try-catch for select query",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function fetchUsersWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  const { data, error } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    .select('*');",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch, no error check",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-connection-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 33,
+      "package": "@supabase/supabase-js",
+      "function": "select",
+      "contract_clause": "connection-error",
+      "description": "No try-catch block found. Network or connection error - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Implement retry with exponential backoff. Check database health status. Alert operations if persistent.\n",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " * ❌ Missing try-catch for select query",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function fetchUsersWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  const { data, error } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    .select('*');",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch, no error check",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-table-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 33,
+      "package": "@supabase/supabase-js",
+      "function": "from",
+      "contract_clause": "table-not-found",
+      "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/database/tables",
+      "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " * ❌ Missing try-catch for select query",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "async function fetchUsersWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  const { data, error } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "    .select('*');",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch, no error check",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-rls-policy-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 33,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "insert",
+      "contract_clause": "rls-policy-violation",
+      "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+      "suggested_fix": "Ensure RLS policies allow INSERT for user's role. Check if user is authenticated if policy requires it. Return clear error about insufficient permissions.\n",
+      "code_snippet": {
+        "startLine": 29,
+        "endLine": 37,
+        "lines": [
+          {
+            "line": 29,
+            "content": " * ❌ Missing try-catch for insert",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 34,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "    .insert(user);",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  return data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-unique-constraint-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 33,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "insert",
+      "contract_clause": "unique-constraint-violation",
+      "description": "No try-catch block found. Error with code '23505' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Handle duplicate key violations gracefully. Check if record already exists before inserting. Return user-friendly error message.\n",
+      "code_snippet": {
+        "startLine": 29,
+        "endLine": 37,
+        "lines": [
+          {
+            "line": 29,
+            "content": " * ❌ Missing try-catch for insert",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 34,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "    .insert(user);",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  return data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-foreign-key-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 33,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "insert",
+      "contract_clause": "foreign-key-violation",
+      "description": "No try-catch block found. Error with code '23503' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Verify referenced records exist before insert. DO NOT retry without fixing data integrity issue.\n",
+      "code_snippet": {
+        "startLine": 29,
+        "endLine": 37,
+        "lines": [
+          {
+            "line": 29,
+            "content": " * ❌ Missing try-catch for insert",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 34,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "    .insert(user);",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  return data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-connection-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 33,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "insert",
+      "contract_clause": "connection-error",
+      "description": "No try-catch block found. Network error - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Retry with exponential backoff",
+      "code_snippet": {
+        "startLine": 29,
+        "endLine": 37,
+        "lines": [
+          {
+            "line": 29,
+            "content": " * ❌ Missing try-catch for insert",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 34,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "    .insert(user);",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  return data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-table-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 33,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "from",
+      "contract_clause": "table-not-found",
+      "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/database/tables",
+      "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+      "code_snippet": {
+        "startLine": 29,
+        "endLine": 37,
+        "lines": [
+          {
+            "line": 29,
+            "content": " * ❌ Missing try-catch for insert",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 34,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "    .insert(user);",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  return data;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-rls-policy-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "update",
+      "contract_clause": "rls-policy-violation",
+      "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+      "suggested_fix": "Ensure RLS policies allow UPDATE for user. Verify user owns the record if policy checks ownership. Return insufficient permissions error.\n",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": " * ❌ Missing try-catch for update",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "async function updateUserWithoutErrorHandling(id: number, name: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "    .update({ name })",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "    .eq('id', id);",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  ",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-unique-constraint-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "update",
+      "contract_clause": "unique-constraint-violation",
+      "description": "No try-catch block found. Error with code '23505' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Check for conflicts before updating. DO NOT retry.",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": " * ❌ Missing try-catch for update",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "async function updateUserWithoutErrorHandling(id: number, name: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "    .update({ name })",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "    .eq('id', id);",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  ",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-table-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "from",
+      "contract_clause": "table-not-found",
+      "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/database/tables",
+      "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": " * ❌ Missing try-catch for update",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "async function updateUserWithoutErrorHandling(id: number, name: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "    .update({ name })",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "    .eq('id', id);",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  ",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-rls-policy-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "delete",
+      "contract_clause": "rls-policy-violation",
+      "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+      "suggested_fix": "Ensure RLS policies allow DELETE for user. Verify user owns the record if policy checks ownership.\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": " * ❌ Missing try-catch for delete",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "async function deleteUserWithoutErrorHandling(id: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "    .delete()",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "    .eq('id', id);",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  ",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-foreign-key-violation",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "delete",
+      "contract_clause": "foreign-key-violation",
+      "description": "No try-catch block found. Error with code '23503' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Delete dependent records first or use CASCADE. Return error about dependent records to user.\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": " * ❌ Missing try-catch for delete",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "async function deleteUserWithoutErrorHandling(id: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "    .delete()",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "    .eq('id', id);",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  ",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-table-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "from",
+      "contract_clause": "table-not-found",
+      "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/database/tables",
+      "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": " * ❌ Missing try-catch for delete",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "async function deleteUserWithoutErrorHandling(id: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "    .from('users')",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "    .delete()",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "    .eq('id', id);",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  ",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-function-not-found",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 71,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "rpc",
+      "contract_clause": "function-not-found",
+      "description": "No try-catch block found. Error with code '42883' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Verify function name is correct. Ensure function is created in database. DO NOT retry without fixing function name.\n",
+      "code_snippet": {
+        "startLine": 67,
+        "endLine": 75,
+        "lines": [
+          {
+            "line": 67,
+            "content": " * ❌ Missing try-catch for RPC call",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "async function callRpcWithoutErrorHandling(param: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 72,
+            "content": "    .rpc('my_function', { param });",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  return data;",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-permission-denied",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 71,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "rpc",
+      "contract_clause": "permission-denied",
+      "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+      "suggested_fix": "Grant EXECUTE permission on function to appropriate role. Check if user is authenticated if required.\n",
+      "code_snippet": {
+        "startLine": 67,
+        "endLine": 75,
+        "lines": [
+          {
+            "line": 67,
+            "content": " * ❌ Missing try-catch for RPC call",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "async function callRpcWithoutErrorHandling(param: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 72,
+            "content": "    .rpc('my_function', { param });",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  return data;",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@supabase/supabase-js-rpc-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+      "line": 71,
+      "column": 26,
+      "package": "@supabase/supabase-js",
+      "function": "rpc",
+      "contract_clause": "rpc-error",
+      "description": "No try-catch block found. Error from function execution - this will crash the application.",
+      "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+      "suggested_fix": "Check function logs for specific error. Handle business logic errors from function. May include constraint violations, custom errors, etc.\n",
+      "code_snippet": {
+        "startLine": 67,
+        "endLine": 75,
+        "lines": [
+          {
+            "line": 67,
+            "content": " * ❌ Missing try-catch for RPC call",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": " * Should trigger ERROR violation (if detected)",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "async function callRpcWithoutErrorHandling(param: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  const { data } = await supabase",
+            "highlighted": true
+          },
+          {
+            "line": 72,
+            "content": "    .rpc('my_function', { param });",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "  ",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  return data;",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 18,
+    "error_count": 18,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "@supabase/supabase-js",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "@supabase/supabase-js": {
+      "total": 18,
+      "errors": 18,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "@supabase/supabase-js-rls-policy-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 33,
+          "package": "@supabase/supabase-js",
+          "function": "select",
+          "contract_clause": "rls-policy-violation",
+          "description": "No try-catch block found. Error with code '42501' or status 403 - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+          "suggested_fix": "Caller MUST handle RLS policy violations gracefully. This indicates user doesn't have permission to access data. CRITICAL: Ensure RLS policies are configured for all tables. Using anon or authenticated role without RLS is a MAJOR security risk. Return empty result or access denied message to user.\n",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " * ❌ Missing try-catch for select query",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function fetchUsersWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  const { data, error } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    .select('*');",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch, no error check",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-column-access-denied",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 33,
+          "package": "@supabase/supabase-js",
+          "function": "select",
+          "contract_clause": "column-access-denied",
+          "description": "No try-catch block found. Error with code '42501' when using select * - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+          "suggested_fix": "Avoid using select * if column-level RLS is configured. Explicitly select only columns user should access. Handle 42501 errors by selecting subset of columns.\n",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " * ❌ Missing try-catch for select query",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function fetchUsersWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  const { data, error } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    .select('*');",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch, no error check",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-connection-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 33,
+          "package": "@supabase/supabase-js",
+          "function": "select",
+          "contract_clause": "connection-error",
+          "description": "No try-catch block found. Network or connection error - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Implement retry with exponential backoff. Check database health status. Alert operations if persistent.\n",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " * ❌ Missing try-catch for select query",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function fetchUsersWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  const { data, error } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    .select('*');",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch, no error check",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-table-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 33,
+          "package": "@supabase/supabase-js",
+          "function": "from",
+          "contract_clause": "table-not-found",
+          "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/database/tables",
+          "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " * ❌ Missing try-catch for select query",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "async function fetchUsersWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  const { data, error } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "    .select('*');",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch, no error check",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-rls-policy-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 33,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "insert",
+          "contract_clause": "rls-policy-violation",
+          "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+          "suggested_fix": "Ensure RLS policies allow INSERT for user's role. Check if user is authenticated if policy requires it. Return clear error about insufficient permissions.\n",
+          "code_snippet": {
+            "startLine": 29,
+            "endLine": 37,
+            "lines": [
+              {
+                "line": 29,
+                "content": " * ❌ Missing try-catch for insert",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 34,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "    .insert(user);",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  return data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-unique-constraint-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 33,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "insert",
+          "contract_clause": "unique-constraint-violation",
+          "description": "No try-catch block found. Error with code '23505' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Handle duplicate key violations gracefully. Check if record already exists before inserting. Return user-friendly error message.\n",
+          "code_snippet": {
+            "startLine": 29,
+            "endLine": 37,
+            "lines": [
+              {
+                "line": 29,
+                "content": " * ❌ Missing try-catch for insert",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 34,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "    .insert(user);",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  return data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-foreign-key-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 33,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "insert",
+          "contract_clause": "foreign-key-violation",
+          "description": "No try-catch block found. Error with code '23503' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Verify referenced records exist before insert. DO NOT retry without fixing data integrity issue.\n",
+          "code_snippet": {
+            "startLine": 29,
+            "endLine": 37,
+            "lines": [
+              {
+                "line": 29,
+                "content": " * ❌ Missing try-catch for insert",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 34,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "    .insert(user);",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  return data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-connection-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 33,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "insert",
+          "contract_clause": "connection-error",
+          "description": "No try-catch block found. Network error - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Retry with exponential backoff",
+          "code_snippet": {
+            "startLine": 29,
+            "endLine": 37,
+            "lines": [
+              {
+                "line": 29,
+                "content": " * ❌ Missing try-catch for insert",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 34,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "    .insert(user);",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  return data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-table-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 33,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "from",
+          "contract_clause": "table-not-found",
+          "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/database/tables",
+          "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+          "code_snippet": {
+            "startLine": 29,
+            "endLine": 37,
+            "lines": [
+              {
+                "line": 29,
+                "content": " * ❌ Missing try-catch for insert",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "async function insertUserWithoutErrorHandling(user: { name: string; email: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 34,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "    .insert(user);",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  return data;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-rls-policy-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "update",
+          "contract_clause": "rls-policy-violation",
+          "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+          "suggested_fix": "Ensure RLS policies allow UPDATE for user. Verify user owns the record if policy checks ownership. Return insufficient permissions error.\n",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": " * ❌ Missing try-catch for update",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "async function updateUserWithoutErrorHandling(id: number, name: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "    .update({ name })",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "    .eq('id', id);",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  ",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-unique-constraint-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "update",
+          "contract_clause": "unique-constraint-violation",
+          "description": "No try-catch block found. Error with code '23505' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Check for conflicts before updating. DO NOT retry.",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": " * ❌ Missing try-catch for update",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "async function updateUserWithoutErrorHandling(id: number, name: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "    .update({ name })",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "    .eq('id', id);",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  ",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-table-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "from",
+          "contract_clause": "table-not-found",
+          "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/database/tables",
+          "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": " * ❌ Missing try-catch for update",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "async function updateUserWithoutErrorHandling(id: number, name: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "    .update({ name })",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "    .eq('id', id);",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  ",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-rls-policy-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "delete",
+          "contract_clause": "rls-policy-violation",
+          "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+          "suggested_fix": "Ensure RLS policies allow DELETE for user. Verify user owns the record if policy checks ownership.\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": " * ❌ Missing try-catch for delete",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "async function deleteUserWithoutErrorHandling(id: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "    .delete()",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "    .eq('id', id);",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  ",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-foreign-key-violation",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "delete",
+          "contract_clause": "foreign-key-violation",
+          "description": "No try-catch block found. Error with code '23503' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Delete dependent records first or use CASCADE. Return error about dependent records to user.\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": " * ❌ Missing try-catch for delete",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "async function deleteUserWithoutErrorHandling(id: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "    .delete()",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "    .eq('id', id);",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  ",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-table-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "from",
+          "contract_clause": "table-not-found",
+          "description": "No try-catch block found. Error indicating table not found - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/database/tables",
+          "suggested_fix": "Verify table name is correct. Ensure migrations have been applied.\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": " * ❌ Missing try-catch for delete",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "async function deleteUserWithoutErrorHandling(id: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "    .from('users')",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "    .delete()",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "    .eq('id', id);",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  ",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-function-not-found",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 71,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "rpc",
+          "contract_clause": "function-not-found",
+          "description": "No try-catch block found. Error with code '42883' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Verify function name is correct. Ensure function is created in database. DO NOT retry without fixing function name.\n",
+          "code_snippet": {
+            "startLine": 67,
+            "endLine": 75,
+            "lines": [
+              {
+                "line": 67,
+                "content": " * ❌ Missing try-catch for RPC call",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "async function callRpcWithoutErrorHandling(param: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 72,
+                "content": "    .rpc('my_function', { param });",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  return data;",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-permission-denied",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 71,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "rpc",
+          "contract_clause": "permission-denied",
+          "description": "No try-catch block found. Error with code '42501' - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/guides/troubleshooting/database-api-42501-errors",
+          "suggested_fix": "Grant EXECUTE permission on function to appropriate role. Check if user is authenticated if required.\n",
+          "code_snippet": {
+            "startLine": 67,
+            "endLine": 75,
+            "lines": [
+              {
+                "line": 67,
+                "content": " * ❌ Missing try-catch for RPC call",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "async function callRpcWithoutErrorHandling(param: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 72,
+                "content": "    .rpc('my_function', { param });",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  return data;",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@supabase/supabase-js-rpc-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@supabase/supabase-js/fixtures/missing-error-handling.ts",
+          "line": 71,
+          "column": 26,
+          "package": "@supabase/supabase-js",
+          "function": "rpc",
+          "contract_clause": "rpc-error",
+          "description": "No try-catch block found. Error from function execution - this will crash the application.",
+          "source_doc": "https://supabase.com/docs/reference/javascript/v1",
+          "suggested_fix": "Check function logs for specific error. Handle business logic errors from function. May include constraint violations, custom errors, etc.\n",
+          "code_snippet": {
+            "startLine": 67,
+            "endLine": 75,
+            "lines": [
+              {
+                "line": 67,
+                "content": " * ❌ Missing try-catch for RPC call",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": " * Should trigger ERROR violation (if detected)",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "async function callRpcWithoutErrorHandling(param: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  const { data } = await supabase",
+                "highlighted": true
+              },
+              {
+                "line": 72,
+                "content": "    .rpc('my_function', { param });",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "  ",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  return data;",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4789 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:24.383Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "twilio",
+    "typeorm",
+    "tedious",
+    "sqlite3",
+    "stripe",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "square",
+    "request-promise",
+    "redis",
+    "puppeteer",
+    "pg",
+    "react-hook-form",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "superagent",
+    "moment",
+    "luxon",
+    "mongodb",
+    "mocha",
+    "knex",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "dayjs",
+    "discord.js",
+    "cors",
+    "date-fns",
+    "chai",
+    "cassandra-driver",
+    "cloudinary",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@tanstack/react-query",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@clerk/nextjs",
+    "@prisma/client",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 14,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 10,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 10,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": " * ❌ VIOLATION: No isValid() check after parsing user input",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "function parseUserDateUnsafe(dateString: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  const parsed = moment(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 15,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  return parsed.format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-utc-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 23,
+      "column": 9,
+      "package": "moment",
+      "function": "utc",
+      "contract_clause": "utc-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.utc() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+      "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 19,
+        "endLine": 27,
+        "lines": [
+          {
+            "line": 19,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": " * ❌ VIOLATION: No isValid() check for UTC parsing",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "function parseUTCDateUnsafe(dateString: string): Date {",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  const parsed = moment.utc(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  return parsed.toDate();",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 40,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'startDate' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 36,
+        "endLine": 44,
+        "lines": [
+          {
+            "line": 36,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  const startDate = moment(start);",
+            "highlighted": true
+          },
+          {
+            "line": 41,
+            "content": "  const endDate = moment(end);",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "  // ❌ No isValid() checks before diff()",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  return endDate.diff(startDate, 'days');",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 41,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'endDate' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 37,
+        "endLine": 45,
+        "lines": [
+          {
+            "line": 37,
+            "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  const startDate = moment(start);",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  const endDate = moment(end);",
+            "highlighted": true
+          },
+          {
+            "line": 42,
+            "content": "  // ❌ No isValid() checks before diff()",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  return endDate.diff(startDate, 'days');",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * ❌ VIOLATION: Using user input with format specifier but no check",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "function parseWithFormatUnsafe(input: string, format: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const parsed = moment(input, format);",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  return parsed.format('LL');",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 67,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 63,
+        "endLine": 71,
+        "lines": [
+          {
+            "line": 63,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " * ❌ VIOLATION: Converting to native Date without check",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "function toNativeDateUnsafe(dateString: string): Date {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  const parsed = moment(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 68,
+            "content": "  // ❌ Missing isValid() check before toDate()",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "  return parsed.toDate();",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 76,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 72,
+        "endLine": 80,
+        "lines": [
+          {
+            "line": 72,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " * ❌ VIOLATION: Using fromNow() without check",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "function relativeTimeUnsafe(dateString: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  const parsed = moment(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 77,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "  return parsed.fromNow();",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 85,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'm1' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 81,
+        "endLine": 89,
+        "lines": [
+          {
+            "line": 81,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " * ❌ VIOLATION: Comparison operations without check",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "  const m1 = moment(date1);",
+            "highlighted": true
+          },
+          {
+            "line": 86,
+            "content": "  const m2 = moment(date2);",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  // ❌ No isValid() checks before isBefore()",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  return m1.isBefore(m2);",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 86,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'm2' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 82,
+        "endLine": 90,
+        "lines": [
+          {
+            "line": 82,
+            "content": " * ❌ VIOLATION: Comparison operations without check",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "  const m1 = moment(date1);",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  const m2 = moment(date2);",
+            "highlighted": true
+          },
+          {
+            "line": 87,
+            "content": "  // ❌ No isValid() checks before isBefore()",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  return m1.isBefore(m2);",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 14,
+      "column": 18,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 10,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 10,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": " * ❌ VIOLATION: No isValid() check after parsing user input",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "function parseUserDateUnsafe(dateString: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  const parsed = moment(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 15,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  return parsed.format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-utc-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 23,
+      "column": 18,
+      "package": "moment",
+      "function": "utc",
+      "contract_clause": "utc-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+      "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 19,
+        "endLine": 27,
+        "lines": [
+          {
+            "line": 19,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": " * ❌ VIOLATION: No isValid() check for UTC parsing",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "function parseUTCDateUnsafe(dateString: string): Date {",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  const parsed = moment.utc(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  return parsed.toDate();",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-locale-path-traversal",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 33,
+      "column": 3,
+      "package": "moment",
+      "function": "locale",
+      "contract_clause": "locale-path-traversal",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://nvd.nist.gov/vuln/detail/CVE-2022-24785",
+      "suggested_fix": "When using user input to set locale, MUST validate against an allowlist. Vulnerable versions (1.0.1-2.29.1) allow path traversal via locale strings containing dot-dot sequences (/../). Patched in version 2.29.2. Use pattern: const allowed = ['en','fr','de']; if (allowed.includes(userLocale)) moment.locale(userLocale);\n",
+      "code_snippet": {
+        "startLine": 29,
+        "endLine": 37,
+        "lines": [
+          {
+            "line": 29,
+            "content": " * ❌ VIOLATION: Direct use of user input in locale()",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "function setUserLocaleUnsafe(userLocale: string): void {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  // ❌ CVE-2022-24785: Path traversal vulnerability",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  moment.locale(userLocale);",
+            "highlighted": true
+          },
+          {
+            "line": 34,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 40,
+      "column": 21,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 36,
+        "endLine": 44,
+        "lines": [
+          {
+            "line": 36,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  const startDate = moment(start);",
+            "highlighted": true
+          },
+          {
+            "line": 41,
+            "content": "  const endDate = moment(end);",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "  // ❌ No isValid() checks before diff()",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  return endDate.diff(startDate, 'days');",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 41,
+      "column": 19,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 37,
+        "endLine": 45,
+        "lines": [
+          {
+            "line": 37,
+            "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  const startDate = moment(start);",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  const endDate = moment(end);",
+            "highlighted": true
+          },
+          {
+            "line": 42,
+            "content": "  // ❌ No isValid() checks before diff()",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  return endDate.diff(startDate, 'days');",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 51,
+      "column": 10,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": " * ❌ VIOLATION: Chained operations without validity check",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "function addDaysUnsafe(dateString: string, days: number): string {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  // ❌ No isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  return moment(dateString).add(days, 'days').format('YYYY-MM-DD');",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * ❌ VIOLATION: Using user input with format specifier but no check",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 18,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " * ❌ VIOLATION: Using user input with format specifier but no check",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "function parseWithFormatUnsafe(input: string, format: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const parsed = moment(input, format);",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  return parsed.format('LL');",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 67,
+      "column": 18,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 63,
+        "endLine": 71,
+        "lines": [
+          {
+            "line": 63,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " * ❌ VIOLATION: Converting to native Date without check",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "function toNativeDateUnsafe(dateString: string): Date {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  const parsed = moment(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 68,
+            "content": "  // ❌ Missing isValid() check before toDate()",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "  return parsed.toDate();",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 76,
+      "column": 18,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 72,
+        "endLine": 80,
+        "lines": [
+          {
+            "line": 72,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " * ❌ VIOLATION: Using fromNow() without check",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "function relativeTimeUnsafe(dateString: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  const parsed = moment(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 77,
+            "content": "  // ❌ Missing isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "  return parsed.fromNow();",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 85,
+      "column": 14,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 81,
+        "endLine": 89,
+        "lines": [
+          {
+            "line": 81,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " * ❌ VIOLATION: Comparison operations without check",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "  const m1 = moment(date1);",
+            "highlighted": true
+          },
+          {
+            "line": 86,
+            "content": "  const m2 = moment(date2);",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  // ❌ No isValid() checks before isBefore()",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  return m1.isBefore(m2);",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 86,
+      "column": 14,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 82,
+        "endLine": 90,
+        "lines": [
+          {
+            "line": 82,
+            "content": " * ❌ VIOLATION: Comparison operations without check",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "  const m1 = moment(date1);",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  const m2 = moment(date2);",
+            "highlighted": true
+          },
+          {
+            "line": 87,
+            "content": "  // ❌ No isValid() checks before isBefore()",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "  return m1.isBefore(m2);",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-locale-path-traversal",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 96,
+      "column": 3,
+      "package": "moment",
+      "function": "locale",
+      "contract_clause": "locale-path-traversal",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://nvd.nist.gov/vuln/detail/CVE-2022-24785",
+      "suggested_fix": "When using user input to set locale, MUST validate against an allowlist. Vulnerable versions (1.0.1-2.29.1) allow path traversal via locale strings containing dot-dot sequences (/../). Patched in version 2.29.2. Use pattern: const allowed = ['en','fr','de']; if (allowed.includes(userLocale)) moment.locale(userLocale);\n",
+      "code_snippet": {
+        "startLine": 92,
+        "endLine": 100,
+        "lines": [
+          {
+            "line": 92,
+            "content": " * ❌ VIOLATION: Setting locale from request parameter",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "function setLocaleFromRequest(req: { query: { locale: string } }): void {",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "  // ❌ CVE-2022-24785: Using req.query directly",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  moment.locale(req.query.locale);",
+            "highlighted": true
+          },
+          {
+            "line": 97,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": " * ❌ VIOLATION: RFC2822 parsing without length validation",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 104,
+      "column": 10,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 100,
+        "endLine": 108,
+        "lines": [
+          {
+            "line": 100,
+            "content": " * ❌ VIOLATION: RFC2822 parsing without length validation",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "function parseRFC2822Unsafe(input: string): moment.Moment {",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  // ❌ CVE-2022-31129: ReDoS vulnerability with long input",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "  return moment(input, moment.RFC_2822);",
+            "highlighted": true
+          },
+          {
+            "line": 105,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": " * ❌ VIOLATION: Arithmetic without validation",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+      "line": 112,
+      "column": 10,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 108,
+        "endLine": 114,
+        "lines": [
+          {
+            "line": 108,
+            "content": " * ❌ VIOLATION: Arithmetic without validation",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "function subtractMonthsUnsafe(dateString: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  // ❌ No isValid() check",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "  return moment(dateString).subtract(1, 'months').format('YYYY-MM-DD');",
+            "highlighted": true
+          },
+          {
+            "line": 113,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 14,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 10,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 10,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": " * Properly checks isValid() after parsing user input",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "function parseUserDateSafe(dateString: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  const parsed = moment(dateString, 'YYYY-MM-DD');",
+            "highlighted": true
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  // ✅ GOOD: Check isValid() before using the result",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  if (!parsed.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "    throw new Error('Invalid date format');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-utc-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 28,
+      "column": 9,
+      "package": "moment",
+      "function": "utc",
+      "contract_clause": "utc-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.utc() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+      "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 24,
+        "endLine": 32,
+        "lines": [
+          {
+            "line": 24,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": " * Properly checks isValid() for UTC parsing",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "function parseUTCDateSafe(dateString: string): Date {",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  const parsed = moment.utc(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // ✅ GOOD: Check isValid() before converting",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  if (!parsed.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "    throw new Error('Invalid UTC date');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 56,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'start' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 52,
+        "endLine": 60,
+        "lines": [
+          {
+            "line": 52,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " * Multiple checks in sequence",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "function processUserDates(startDate: string, endDate: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+            "highlighted": true
+          },
+          {
+            "line": 57,
+            "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  // ✅ GOOD: Check both dates",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  if (!start.isValid()) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 57,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'end' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 53,
+        "endLine": 61,
+        "lines": [
+          {
+            "line": 53,
+            "content": " * Multiple checks in sequence",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "function processUserDates(startDate: string, endDate: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+            "highlighted": true
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  // ✅ GOOD: Check both dates",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  if (!start.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "    throw new Error('Invalid start date');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 76,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'date' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 72,
+        "endLine": 80,
+        "lines": [
+          {
+            "line": 72,
+            "content": " * Using literal dates (no user input) - no check needed",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "function getLiteralDate(): string {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  // ✅ GOOD: Literal input is safe, no check needed",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  const date = moment('2023-01-15');",
+            "highlighted": true
+          },
+          {
+            "line": 77,
+            "content": "  return date.format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 84,
+      "column": 9,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": " * Checking validity in conditional",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "function tryParseDate(input: string): moment.Moment | null {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  const parsed = moment(input, 'YYYY-MM-DD');",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  // ✅ GOOD: Returns null if invalid",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  return parsed.isValid() ? parsed : null;",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 14,
+      "column": 18,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 10,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 10,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": " * Properly checks isValid() after parsing user input",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "function parseUserDateSafe(dateString: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  const parsed = moment(dateString, 'YYYY-MM-DD');",
+            "highlighted": true
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  // ✅ GOOD: Check isValid() before using the result",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  if (!parsed.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "    throw new Error('Invalid date format');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-utc-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 28,
+      "column": 18,
+      "package": "moment",
+      "function": "utc",
+      "contract_clause": "utc-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+      "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 24,
+        "endLine": 32,
+        "lines": [
+          {
+            "line": 24,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": " * Properly checks isValid() for UTC parsing",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "function parseUTCDateSafe(dateString: string): Date {",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  const parsed = moment.utc(dateString);",
+            "highlighted": true
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // ✅ GOOD: Check isValid() before converting",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  if (!parsed.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "    throw new Error('Invalid UTC date');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-locale-path-traversal",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 49,
+      "column": 3,
+      "package": "moment",
+      "function": "locale",
+      "contract_clause": "locale-path-traversal",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://nvd.nist.gov/vuln/detail/CVE-2022-24785",
+      "suggested_fix": "When using user input to set locale, MUST validate against an allowlist. Vulnerable versions (1.0.1-2.29.1) allow path traversal via locale strings containing dot-dot sequences (/../). Patched in version 2.29.2. Use pattern: const allowed = ['en','fr','de']; if (allowed.includes(userLocale)) moment.locale(userLocale);\n",
+      "code_snippet": {
+        "startLine": 45,
+        "endLine": 53,
+        "lines": [
+          {
+            "line": 45,
+            "content": "  if (!ALLOWED_LOCALES.includes(userLocale)) {",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "    throw new Error(`Invalid locale: ${userLocale}`);",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  moment.locale(userLocale);",
+            "highlighted": true
+          },
+          {
+            "line": 50,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " * Multiple checks in sequence",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 56,
+      "column": 17,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 52,
+        "endLine": 60,
+        "lines": [
+          {
+            "line": 52,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " * Multiple checks in sequence",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "function processUserDates(startDate: string, endDate: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+            "highlighted": true
+          },
+          {
+            "line": 57,
+            "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  // ✅ GOOD: Check both dates",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  if (!start.isValid()) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 57,
+      "column": 15,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 53,
+        "endLine": 61,
+        "lines": [
+          {
+            "line": 53,
+            "content": " * Multiple checks in sequence",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "function processUserDates(startDate: string, endDate: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+            "highlighted": true
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  // ✅ GOOD: Check both dates",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  if (!start.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "    throw new Error('Invalid start date');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 76,
+      "column": 16,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 72,
+        "endLine": 80,
+        "lines": [
+          {
+            "line": 72,
+            "content": " * Using literal dates (no user input) - no check needed",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "function getLiteralDate(): string {",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  // ✅ GOOD: Literal input is safe, no check needed",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  const date = moment('2023-01-15');",
+            "highlighted": true
+          },
+          {
+            "line": 77,
+            "content": "  return date.format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment-moment-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+      "line": 84,
+      "column": 18,
+      "package": "moment",
+      "function": "moment",
+      "contract_clause": "moment-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+      "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": " * Checking validity in conditional",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "function tryParseDate(input: string): moment.Moment | null {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  const parsed = moment(input, 'YYYY-MM-DD');",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  // ✅ GOOD: Returns null if invalid",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  return parsed.isValid() ? parsed : null;",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 36,
+    "error_count": 36,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "moment",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "moment": {
+      "total": 36,
+      "errors": 36,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 14,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 10,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 10,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": " * ❌ VIOLATION: No isValid() check after parsing user input",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "function parseUserDateUnsafe(dateString: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  const parsed = moment(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 15,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  return parsed.format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-utc-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 23,
+          "column": 9,
+          "package": "moment",
+          "function": "utc",
+          "contract_clause": "utc-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.utc() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+          "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 19,
+            "endLine": 27,
+            "lines": [
+              {
+                "line": 19,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": " * ❌ VIOLATION: No isValid() check for UTC parsing",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "function parseUTCDateUnsafe(dateString: string): Date {",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  const parsed = moment.utc(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  return parsed.toDate();",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 40,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'startDate' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 36,
+            "endLine": 44,
+            "lines": [
+              {
+                "line": 36,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  const startDate = moment(start);",
+                "highlighted": true
+              },
+              {
+                "line": 41,
+                "content": "  const endDate = moment(end);",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "  // ❌ No isValid() checks before diff()",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  return endDate.diff(startDate, 'days');",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 41,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'endDate' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 37,
+            "endLine": 45,
+            "lines": [
+              {
+                "line": 37,
+                "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  const startDate = moment(start);",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  const endDate = moment(end);",
+                "highlighted": true
+              },
+              {
+                "line": 42,
+                "content": "  // ❌ No isValid() checks before diff()",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  return endDate.diff(startDate, 'days');",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * ❌ VIOLATION: Using user input with format specifier but no check",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "function parseWithFormatUnsafe(input: string, format: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const parsed = moment(input, format);",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  return parsed.format('LL');",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 67,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 63,
+            "endLine": 71,
+            "lines": [
+              {
+                "line": 63,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " * ❌ VIOLATION: Converting to native Date without check",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "function toNativeDateUnsafe(dateString: string): Date {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  const parsed = moment(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 68,
+                "content": "  // ❌ Missing isValid() check before toDate()",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "  return parsed.toDate();",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 76,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 72,
+            "endLine": 80,
+            "lines": [
+              {
+                "line": 72,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " * ❌ VIOLATION: Using fromNow() without check",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "function relativeTimeUnsafe(dateString: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  const parsed = moment(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 77,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "  return parsed.fromNow();",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 85,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'm1' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 81,
+            "endLine": 89,
+            "lines": [
+              {
+                "line": 81,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " * ❌ VIOLATION: Comparison operations without check",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "  const m1 = moment(date1);",
+                "highlighted": true
+              },
+              {
+                "line": 86,
+                "content": "  const m2 = moment(date2);",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  // ❌ No isValid() checks before isBefore()",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  return m1.isBefore(m2);",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 86,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'm2' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 82,
+            "endLine": 90,
+            "lines": [
+              {
+                "line": 82,
+                "content": " * ❌ VIOLATION: Comparison operations without check",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "  const m1 = moment(date1);",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  const m2 = moment(date2);",
+                "highlighted": true
+              },
+              {
+                "line": 87,
+                "content": "  // ❌ No isValid() checks before isBefore()",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  return m1.isBefore(m2);",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 14,
+          "column": 18,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 10,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 10,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": " * ❌ VIOLATION: No isValid() check after parsing user input",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "function parseUserDateUnsafe(dateString: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  const parsed = moment(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 15,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  return parsed.format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-utc-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 23,
+          "column": 18,
+          "package": "moment",
+          "function": "utc",
+          "contract_clause": "utc-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+          "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 19,
+            "endLine": 27,
+            "lines": [
+              {
+                "line": 19,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": " * ❌ VIOLATION: No isValid() check for UTC parsing",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "function parseUTCDateUnsafe(dateString: string): Date {",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  const parsed = moment.utc(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  return parsed.toDate();",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-locale-path-traversal",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 33,
+          "column": 3,
+          "package": "moment",
+          "function": "locale",
+          "contract_clause": "locale-path-traversal",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://nvd.nist.gov/vuln/detail/CVE-2022-24785",
+          "suggested_fix": "When using user input to set locale, MUST validate against an allowlist. Vulnerable versions (1.0.1-2.29.1) allow path traversal via locale strings containing dot-dot sequences (/../). Patched in version 2.29.2. Use pattern: const allowed = ['en','fr','de']; if (allowed.includes(userLocale)) moment.locale(userLocale);\n",
+          "code_snippet": {
+            "startLine": 29,
+            "endLine": 37,
+            "lines": [
+              {
+                "line": 29,
+                "content": " * ❌ VIOLATION: Direct use of user input in locale()",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "function setUserLocaleUnsafe(userLocale: string): void {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  // ❌ CVE-2022-24785: Path traversal vulnerability",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  moment.locale(userLocale);",
+                "highlighted": true
+              },
+              {
+                "line": 34,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 40,
+          "column": 21,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 36,
+            "endLine": 44,
+            "lines": [
+              {
+                "line": 36,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  const startDate = moment(start);",
+                "highlighted": true
+              },
+              {
+                "line": 41,
+                "content": "  const endDate = moment(end);",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "  // ❌ No isValid() checks before diff()",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  return endDate.diff(startDate, 'days');",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 41,
+          "column": 19,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 37,
+            "endLine": 45,
+            "lines": [
+              {
+                "line": 37,
+                "content": " * ❌ VIOLATION: Multiple operations without checking validity",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "function calculateDateDiffUnsafe(start: string, end: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  const startDate = moment(start);",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  const endDate = moment(end);",
+                "highlighted": true
+              },
+              {
+                "line": 42,
+                "content": "  // ❌ No isValid() checks before diff()",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  return endDate.diff(startDate, 'days');",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 51,
+          "column": 10,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": " * ❌ VIOLATION: Chained operations without validity check",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "function addDaysUnsafe(dateString: string, days: number): string {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  // ❌ No isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  return moment(dateString).add(days, 'days').format('YYYY-MM-DD');",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * ❌ VIOLATION: Using user input with format specifier but no check",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 18,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " * ❌ VIOLATION: Using user input with format specifier but no check",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "function parseWithFormatUnsafe(input: string, format: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const parsed = moment(input, format);",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  return parsed.format('LL');",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 67,
+          "column": 18,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 63,
+            "endLine": 71,
+            "lines": [
+              {
+                "line": 63,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " * ❌ VIOLATION: Converting to native Date without check",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "function toNativeDateUnsafe(dateString: string): Date {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  const parsed = moment(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 68,
+                "content": "  // ❌ Missing isValid() check before toDate()",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "  return parsed.toDate();",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 76,
+          "column": 18,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 72,
+            "endLine": 80,
+            "lines": [
+              {
+                "line": 72,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " * ❌ VIOLATION: Using fromNow() without check",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "function relativeTimeUnsafe(dateString: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  const parsed = moment(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 77,
+                "content": "  // ❌ Missing isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "  return parsed.fromNow();",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 85,
+          "column": 14,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 81,
+            "endLine": 89,
+            "lines": [
+              {
+                "line": 81,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " * ❌ VIOLATION: Comparison operations without check",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "  const m1 = moment(date1);",
+                "highlighted": true
+              },
+              {
+                "line": 86,
+                "content": "  const m2 = moment(date2);",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  // ❌ No isValid() checks before isBefore()",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  return m1.isBefore(m2);",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 86,
+          "column": 14,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 82,
+            "endLine": 90,
+            "lines": [
+              {
+                "line": 82,
+                "content": " * ❌ VIOLATION: Comparison operations without check",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "function isBeforeUnsafe(date1: string, date2: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "  const m1 = moment(date1);",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  const m2 = moment(date2);",
+                "highlighted": true
+              },
+              {
+                "line": 87,
+                "content": "  // ❌ No isValid() checks before isBefore()",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "  return m1.isBefore(m2);",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-locale-path-traversal",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 96,
+          "column": 3,
+          "package": "moment",
+          "function": "locale",
+          "contract_clause": "locale-path-traversal",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://nvd.nist.gov/vuln/detail/CVE-2022-24785",
+          "suggested_fix": "When using user input to set locale, MUST validate against an allowlist. Vulnerable versions (1.0.1-2.29.1) allow path traversal via locale strings containing dot-dot sequences (/../). Patched in version 2.29.2. Use pattern: const allowed = ['en','fr','de']; if (allowed.includes(userLocale)) moment.locale(userLocale);\n",
+          "code_snippet": {
+            "startLine": 92,
+            "endLine": 100,
+            "lines": [
+              {
+                "line": 92,
+                "content": " * ❌ VIOLATION: Setting locale from request parameter",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "function setLocaleFromRequest(req: { query: { locale: string } }): void {",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "  // ❌ CVE-2022-24785: Using req.query directly",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  moment.locale(req.query.locale);",
+                "highlighted": true
+              },
+              {
+                "line": 97,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": " * ❌ VIOLATION: RFC2822 parsing without length validation",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 104,
+          "column": 10,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 100,
+            "endLine": 108,
+            "lines": [
+              {
+                "line": 100,
+                "content": " * ❌ VIOLATION: RFC2822 parsing without length validation",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "function parseRFC2822Unsafe(input: string): moment.Moment {",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  // ❌ CVE-2022-31129: ReDoS vulnerability with long input",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "  return moment(input, moment.RFC_2822);",
+                "highlighted": true
+              },
+              {
+                "line": 105,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": " * ❌ VIOLATION: Arithmetic without validation",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/missing-error-handling.ts",
+          "line": 112,
+          "column": 10,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 108,
+            "endLine": 114,
+            "lines": [
+              {
+                "line": 108,
+                "content": " * ❌ VIOLATION: Arithmetic without validation",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "function subtractMonthsUnsafe(dateString: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  // ❌ No isValid() check",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "  return moment(dateString).subtract(1, 'months').format('YYYY-MM-DD');",
+                "highlighted": true
+              },
+              {
+                "line": 113,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 14,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 10,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 10,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": " * Properly checks isValid() after parsing user input",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "function parseUserDateSafe(dateString: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  const parsed = moment(dateString, 'YYYY-MM-DD');",
+                "highlighted": true
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  // ✅ GOOD: Check isValid() before using the result",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  if (!parsed.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "    throw new Error('Invalid date format');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-utc-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 28,
+          "column": 9,
+          "package": "moment",
+          "function": "utc",
+          "contract_clause": "utc-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.utc() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+          "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 24,
+            "endLine": 32,
+            "lines": [
+              {
+                "line": 24,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": " * Properly checks isValid() for UTC parsing",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "function parseUTCDateSafe(dateString: string): Date {",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  const parsed = moment.utc(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // ✅ GOOD: Check isValid() before converting",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  if (!parsed.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "    throw new Error('Invalid UTC date');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 56,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'start' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 52,
+            "endLine": 60,
+            "lines": [
+              {
+                "line": 52,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " * Multiple checks in sequence",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "function processUserDates(startDate: string, endDate: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+                "highlighted": true
+              },
+              {
+                "line": 57,
+                "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  // ✅ GOOD: Check both dates",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  if (!start.isValid()) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 57,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'end' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 53,
+            "endLine": 61,
+            "lines": [
+              {
+                "line": 53,
+                "content": " * Multiple checks in sequence",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "function processUserDates(startDate: string, endDate: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+                "highlighted": true
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  // ✅ GOOD: Check both dates",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  if (!start.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "    throw new Error('Invalid start date');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 76,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'date' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 72,
+            "endLine": 80,
+            "lines": [
+              {
+                "line": 72,
+                "content": " * Using literal dates (no user input) - no check needed",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "function getLiteralDate(): string {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  // ✅ GOOD: Literal input is safe, no check needed",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  const date = moment('2023-01-15');",
+                "highlighted": true
+              },
+              {
+                "line": 77,
+                "content": "  return date.format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 84,
+          "column": 9,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "Variable 'parsed' assigned from moment.moment() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": " * Checking validity in conditional",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "function tryParseDate(input: string): moment.Moment | null {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  const parsed = moment(input, 'YYYY-MM-DD');",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  // ✅ GOOD: Returns null if invalid",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  return parsed.isValid() ? parsed : null;",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 14,
+          "column": 18,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 10,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 10,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": " * Properly checks isValid() after parsing user input",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "function parseUserDateSafe(dateString: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  const parsed = moment(dateString, 'YYYY-MM-DD');",
+                "highlighted": true
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  // ✅ GOOD: Check isValid() before using the result",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  if (!parsed.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "    throw new Error('Invalid date format');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-utc-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 28,
+          "column": 18,
+          "package": "moment",
+          "function": "utc",
+          "contract_clause": "utc-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/utc/",
+          "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC moments can cause timezone calculation errors and data corruption. Use pattern: const m = moment.utc(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 24,
+            "endLine": 32,
+            "lines": [
+              {
+                "line": 24,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": " * Properly checks isValid() for UTC parsing",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "function parseUTCDateSafe(dateString: string): Date {",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  const parsed = moment.utc(dateString);",
+                "highlighted": true
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // ✅ GOOD: Check isValid() before converting",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  if (!parsed.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "    throw new Error('Invalid UTC date');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-locale-path-traversal",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 49,
+          "column": 3,
+          "package": "moment",
+          "function": "locale",
+          "contract_clause": "locale-path-traversal",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://nvd.nist.gov/vuln/detail/CVE-2022-24785",
+          "suggested_fix": "When using user input to set locale, MUST validate against an allowlist. Vulnerable versions (1.0.1-2.29.1) allow path traversal via locale strings containing dot-dot sequences (/../). Patched in version 2.29.2. Use pattern: const allowed = ['en','fr','de']; if (allowed.includes(userLocale)) moment.locale(userLocale);\n",
+          "code_snippet": {
+            "startLine": 45,
+            "endLine": 53,
+            "lines": [
+              {
+                "line": 45,
+                "content": "  if (!ALLOWED_LOCALES.includes(userLocale)) {",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "    throw new Error(`Invalid locale: ${userLocale}`);",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  moment.locale(userLocale);",
+                "highlighted": true
+              },
+              {
+                "line": 50,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " * Multiple checks in sequence",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 56,
+          "column": 17,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 52,
+            "endLine": 60,
+            "lines": [
+              {
+                "line": 52,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " * Multiple checks in sequence",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "function processUserDates(startDate: string, endDate: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+                "highlighted": true
+              },
+              {
+                "line": 57,
+                "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  // ✅ GOOD: Check both dates",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  if (!start.isValid()) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 57,
+          "column": 15,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 53,
+            "endLine": 61,
+            "lines": [
+              {
+                "line": 53,
+                "content": " * Multiple checks in sequence",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "function processUserDates(startDate: string, endDate: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  const start = moment(startDate, 'YYYY-MM-DD', true); // strict mode",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  const end = moment(endDate, 'YYYY-MM-DD', true);",
+                "highlighted": true
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  // ✅ GOOD: Check both dates",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  if (!start.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "    throw new Error('Invalid start date');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 76,
+          "column": 16,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 72,
+            "endLine": 80,
+            "lines": [
+              {
+                "line": 72,
+                "content": " * Using literal dates (no user input) - no check needed",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "function getLiteralDate(): string {",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  // ✅ GOOD: Literal input is safe, no check needed",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  const date = moment('2023-01-15');",
+                "highlighted": true
+              },
+              {
+                "line": 77,
+                "content": "  return date.format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "moment-moment-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/moment/fixtures/proper-error-handling.ts",
+          "line": 84,
+          "column": 18,
+          "package": "moment",
+          "function": "moment",
+          "contract_clause": "moment-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://momentjs.com/docs/#/parsing/string/",
+          "suggested_fix": "Caller MUST check isValid() before using the moment object. Invalid moment objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const m = moment(input); if (!m.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": " * Checking validity in conditional",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "function tryParseDate(input: string): moment.Moment | null {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  const parsed = moment(input, 'YYYY-MM-DD');",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  // ✅ GOOD: Returns null if invalid",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  return parsed.isValid() ? parsed : null;",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

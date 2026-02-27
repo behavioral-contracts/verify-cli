@@ -1,0 +1,4554 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:58:14.362Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "tedious",
+    "superagent",
+    "stripe",
+    "twilio",
+    "square",
+    "socket.io-client",
+    "sqlite3",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "request-promise",
+    "redis",
+    "react-hook-form",
+    "puppeteer",
+    "pg",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongodb",
+    "mongoose",
+    "moment",
+    "mocha",
+    "knex",
+    "luxon",
+    "joi",
+    "ioredis",
+    "graphql",
+    "fastify",
+    "firebase-admin",
+    "got",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "cloudinary",
+    "chai",
+    "bullmq",
+    "cassandra-driver",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@sendgrid/mail",
+    "@octokit/rest",
+    "@prisma/client",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 22,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 18,
+        "endLine": 26,
+        "lines": [
+          {
+            "line": 18,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "export async function fetchDataWithInstance() {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  const response = await client.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 23,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "// Pattern 2: Instance in class",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 22,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 18,
+        "endLine": 26,
+        "lines": [
+          {
+            "line": 18,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "export async function fetchDataWithInstance() {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  const response = await client.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 23,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "// Pattern 2: Instance in class",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 22,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 18,
+        "endLine": 26,
+        "lines": [
+          {
+            "line": 18,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "export async function fetchDataWithInstance() {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "  const response = await client.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 23,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "// Pattern 2: Instance in class",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 140,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 136,
+        "endLine": 144,
+        "lines": [
+          {
+            "line": 136,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "export async function fetchWithGlobalClient() {",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": "  const response = await globalClient.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 141,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 144,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 140,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 136,
+        "endLine": 144,
+        "lines": [
+          {
+            "line": 136,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "export async function fetchWithGlobalClient() {",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": "  const response = await globalClient.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 141,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 144,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 140,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 136,
+        "endLine": 144,
+        "lines": [
+          {
+            "line": 136,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "export async function fetchWithGlobalClient() {",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": "  const response = await globalClient.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 141,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 144,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 150,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 146,
+        "endLine": 154,
+        "lines": [
+          {
+            "line": 146,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "export async function fetchWithGlobalClientSafe() {",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "    const response = await globalClient.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 151,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "    if (axios.isAxiosError(error)) {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "      console.error('Request failed:', error.message);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 150,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 146,
+        "endLine": 154,
+        "lines": [
+          {
+            "line": 146,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "export async function fetchWithGlobalClientSafe() {",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "    const response = await globalClient.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 151,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "    if (axios.isAxiosError(error)) {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "      console.error('Request failed:', error.message);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+      "line": 150,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 146,
+        "endLine": 154,
+        "lines": [
+          {
+            "line": 146,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "export async function fetchWithGlobalClientSafe() {",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "    const response = await globalClient.get('/data');",
+            "highlighted": true
+          },
+          {
+            "line": 151,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "    if (axios.isAxiosError(error)) {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "      console.error('Request failed:', error.message);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 13,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 9,
+        "endLine": 17,
+        "lines": [
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "// VIOLATION: No error handling at all",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// Should detect: missing try-catch for network failures",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "export async function noErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 14,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 13,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 9,
+        "endLine": 17,
+        "lines": [
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "// VIOLATION: No error handling at all",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// Should detect: missing try-catch for network failures",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "export async function noErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 14,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 13,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 9,
+        "endLine": 17,
+        "lines": [
+          {
+            "line": 9,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 10,
+            "content": "// VIOLATION: No error handling at all",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "// Should detect: missing try-catch for network failures",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "export async function noErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 14,
+            "content": "  return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 21,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "// Should detect: accessing error.response.status without checking if error.response exists",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "export async function unsafeErrorAccess() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "    // This will crash on network errors where error.response is undefined",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "    console.log('Error status:', error.response.status);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 21,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 17,
+        "endLine": 25,
+        "lines": [
+          {
+            "line": 17,
+            "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "// Should detect: accessing error.response.status without checking if error.response exists",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "export async function unsafeErrorAccess() {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 22,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "    // This will crash on network errors where error.response is undefined",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "    console.log('Error status:', error.response.status);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 34,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 30,
+        "endLine": 38,
+        "lines": [
+          {
+            "line": 30,
+            "content": "// VIOLATION: Catches 429 but ignores it",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "// Should detect: 429 status code not explicitly handled",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "export async function ignoresRateLimiting() {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 35,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    // Generic catch - no 429 handling",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    console.error('Request failed:', error.message);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 34,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 30,
+        "endLine": 38,
+        "lines": [
+          {
+            "line": 30,
+            "content": "// VIOLATION: Catches 429 but ignores it",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "// Should detect: 429 status code not explicitly handled",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "export async function ignoresRateLimiting() {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 35,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    // Generic catch - no 429 handling",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    console.error('Request failed:', error.message);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 34,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 30,
+        "endLine": 38,
+        "lines": [
+          {
+            "line": 30,
+            "content": "// VIOLATION: Catches 429 but ignores it",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "// Should detect: 429 status code not explicitly handled",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "export async function ignoresRateLimiting() {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 35,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    // Generic catch - no 429 handling",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    console.error('Request failed:', error.message);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 47,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 43,
+        "endLine": 51,
+        "lines": [
+          {
+            "line": 43,
+            "content": "// VIOLATION: Checks status but doesn't handle 429 specifically",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "// Should detect: 429 not in handled status codes and no retry logic",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "export async function handlesErrorsButNot429() {",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 48,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    if (error.response) {",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "      if (error.response.status === 404) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 69,
+      "column": 30,
+      "package": "axios",
+      "function": "post",
+      "contract_clause": "error-4xx-5xx",
+      "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and inspect error.response.status",
+      "code_snippet": {
+        "startLine": 65,
+        "endLine": 73,
+        "lines": [
+          {
+            "line": 65,
+            "content": "export async function postWithNaiveRetry(data: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  let attempts = 0;",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  while (attempts < 3) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "    try {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "      const response = await axios.post('https://api.example.com/items', data);",
+            "highlighted": true
+          },
+          {
+            "line": 70,
+            "content": "      return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "    } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "      attempts++;",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "      if (attempts >= 3) throw error;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 69,
+      "column": 30,
+      "package": "axios",
+      "function": "post",
+      "contract_clause": "network-failure",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Check error.response exists before accessing error.response.status",
+      "code_snippet": {
+        "startLine": 65,
+        "endLine": 73,
+        "lines": [
+          {
+            "line": 65,
+            "content": "export async function postWithNaiveRetry(data: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  let attempts = 0;",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "  while (attempts < 3) {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "    try {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "      const response = await axios.post('https://api.example.com/items', data);",
+            "highlighted": true
+          },
+          {
+            "line": 70,
+            "content": "      return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "    } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "      attempts++;",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "      if (attempts >= 3) throw error;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 84,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": "// VIOLATION: Network error not distinguished from HTTP error",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "// Should detect: doesn't check error.response exists",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "export async function doesNotDistinguishNetworkErrors() {",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "    // Assumes all errors have response property",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "    if (error.response.status >= 500) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 84,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 80,
+        "endLine": 88,
+        "lines": [
+          {
+            "line": 80,
+            "content": "// VIOLATION: Network error not distinguished from HTTP error",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "// Should detect: doesn't check error.response exists",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "export async function doesNotDistinguishNetworkErrors() {",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 85,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  } catch (error: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "    // Assumes all errors have response property",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "    if (error.response.status >= 500) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 101,
+      "column": 23,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 97,
+        "endLine": 105,
+        "lines": [
+          {
+            "line": 97,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "// VIOLATION: Multiple calls, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": true
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 101,
+      "column": 23,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 97,
+        "endLine": 105,
+        "lines": [
+          {
+            "line": 97,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "// VIOLATION: Multiple calls, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": true
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 101,
+      "column": 23,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 97,
+        "endLine": 105,
+        "lines": [
+          {
+            "line": 97,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "// VIOLATION: Multiple calls, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": true
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 102,
+      "column": 23,
+      "package": "axios",
+      "function": "post",
+      "contract_clause": "error-4xx-5xx",
+      "description": "No try-catch block found. AxiosError with error.response - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and inspect error.response.status",
+      "code_snippet": {
+        "startLine": 98,
+        "endLine": 106,
+        "lines": [
+          {
+            "line": 98,
+            "content": "// VIOLATION: Multiple calls, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": true
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 102,
+      "column": 23,
+      "package": "axios",
+      "function": "post",
+      "contract_clause": "rate-limited-429",
+      "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "For POST requests, retry logic MUST be idempotency-aware. Either use idempotency keys or handle 429 as terminal error.\n",
+      "code_snippet": {
+        "startLine": 98,
+        "endLine": 106,
+        "lines": [
+          {
+            "line": 98,
+            "content": "// VIOLATION: Multiple calls, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": true
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 102,
+      "column": 23,
+      "package": "axios",
+      "function": "post",
+      "contract_clause": "network-failure",
+      "description": "No try-catch block found. AxiosError with error.response === undefined - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Check error.response exists before accessing error.response.status",
+      "code_snippet": {
+        "startLine": 98,
+        "endLine": 106,
+        "lines": [
+          {
+            "line": 98,
+            "content": "// VIOLATION: Multiple calls, no error handling",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": true
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 103,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 99,
+        "endLine": 107,
+        "lines": [
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": true
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 103,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 99,
+        "endLine": 107,
+        "lines": [
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": true
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 103,
+      "column": 26,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 99,
+        "endLine": 107,
+        "lines": [
+          {
+            "line": 99,
+            "content": "// Should detect: multiple violations in same function",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": "export async function multipleViolations() {",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "  const users = await axios.get('/api/users');",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  const settings = await axios.get('/api/settings');",
+            "highlighted": true
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-error-4xx-5xx",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 112,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "error-4xx-5xx",
+      "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+      "code_snippet": {
+        "startLine": 108,
+        "endLine": 116,
+        "lines": [
+          {
+            "line": 108,
+            "content": "// VIOLATION: Swallows all errors",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "// Should detect: catch block doesn't actually handle errors",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "export async function swallowsErrors() {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 113,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "    // Silent failure - just returns null",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "    return null;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-rate-limited-429",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 112,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "rate-limited-429",
+      "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+      "code_snippet": {
+        "startLine": 108,
+        "endLine": 116,
+        "lines": [
+          {
+            "line": 108,
+            "content": "// VIOLATION: Swallows all errors",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "// Should detect: catch block doesn't actually handle errors",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "export async function swallowsErrors() {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 113,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "    // Silent failure - just returns null",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "    return null;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "axios-network-failure",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+      "line": 112,
+      "column": 28,
+      "package": "axios",
+      "function": "get",
+      "contract_clause": "network-failure",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://axios-http.com/docs/handling_errors",
+      "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+      "code_snippet": {
+        "startLine": 108,
+        "endLine": 116,
+        "lines": [
+          {
+            "line": 108,
+            "content": "// VIOLATION: Swallows all errors",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "// Should detect: catch block doesn't actually handle errors",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "export async function swallowsErrors() {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "    const response = await axios.get('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 113,
+            "content": "    return response.data;",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "  } catch (error) {",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "    // Silent failure - just returns null",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "    return null;",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 34,
+    "error_count": 18,
+    "warning_count": 16,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "axios",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "axios": {
+      "total": 34,
+      "errors": 18,
+      "warnings": 16,
+      "info": 0,
+      "violations": [
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 22,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 18,
+            "endLine": 26,
+            "lines": [
+              {
+                "line": 18,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "export async function fetchDataWithInstance() {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  const response = await client.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 23,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "// Pattern 2: Instance in class",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 22,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 18,
+            "endLine": 26,
+            "lines": [
+              {
+                "line": 18,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "export async function fetchDataWithInstance() {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  const response = await client.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 23,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "// Pattern 2: Instance in class",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 22,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 18,
+            "endLine": 26,
+            "lines": [
+              {
+                "line": 18,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "export async function fetchDataWithInstance() {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "  const response = await client.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 23,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "// Pattern 2: Instance in class",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 140,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 136,
+            "endLine": 144,
+            "lines": [
+              {
+                "line": 136,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "export async function fetchWithGlobalClient() {",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": "  const response = await globalClient.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 141,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 144,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 140,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 136,
+            "endLine": 144,
+            "lines": [
+              {
+                "line": 136,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "export async function fetchWithGlobalClient() {",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": "  const response = await globalClient.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 141,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 144,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 140,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 136,
+            "endLine": 144,
+            "lines": [
+              {
+                "line": 136,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "export async function fetchWithGlobalClient() {",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": "  const response = await globalClient.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 141,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 144,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 150,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 146,
+            "endLine": 154,
+            "lines": [
+              {
+                "line": 146,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "export async function fetchWithGlobalClientSafe() {",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "    const response = await globalClient.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 151,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "    if (axios.isAxiosError(error)) {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "      console.error('Request failed:', error.message);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 150,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 146,
+            "endLine": 154,
+            "lines": [
+              {
+                "line": 146,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "export async function fetchWithGlobalClientSafe() {",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "    const response = await globalClient.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 151,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "    if (axios.isAxiosError(error)) {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "      console.error('Request failed:', error.message);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/instance-usage.ts",
+          "line": 150,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 146,
+            "endLine": 154,
+            "lines": [
+              {
+                "line": 146,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "export async function fetchWithGlobalClientSafe() {",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "    const response = await globalClient.get('/data');",
+                "highlighted": true
+              },
+              {
+                "line": 151,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "    if (axios.isAxiosError(error)) {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "      console.error('Request failed:', error.message);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 13,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 9,
+            "endLine": 17,
+            "lines": [
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "// VIOLATION: No error handling at all",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// Should detect: missing try-catch for network failures",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "export async function noErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 14,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 13,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 9,
+            "endLine": 17,
+            "lines": [
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "// VIOLATION: No error handling at all",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// Should detect: missing try-catch for network failures",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "export async function noErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 14,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 13,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 9,
+            "endLine": 17,
+            "lines": [
+              {
+                "line": 9,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 10,
+                "content": "// VIOLATION: No error handling at all",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "// Should detect: missing try-catch for network failures",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "export async function noErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 14,
+                "content": "  return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 21,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "// Should detect: accessing error.response.status without checking if error.response exists",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "export async function unsafeErrorAccess() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "    // This will crash on network errors where error.response is undefined",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "    console.log('Error status:', error.response.status);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 21,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 17,
+            "endLine": 25,
+            "lines": [
+              {
+                "line": 17,
+                "content": "// VIOLATION: Generic catch that doesn't check error.response exists",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "// Should detect: accessing error.response.status without checking if error.response exists",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "export async function unsafeErrorAccess() {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 22,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "    // This will crash on network errors where error.response is undefined",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "    console.log('Error status:', error.response.status);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 34,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 30,
+            "endLine": 38,
+            "lines": [
+              {
+                "line": 30,
+                "content": "// VIOLATION: Catches 429 but ignores it",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "// Should detect: 429 status code not explicitly handled",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "export async function ignoresRateLimiting() {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 35,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    // Generic catch - no 429 handling",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    console.error('Request failed:', error.message);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 34,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 30,
+            "endLine": 38,
+            "lines": [
+              {
+                "line": 30,
+                "content": "// VIOLATION: Catches 429 but ignores it",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "// Should detect: 429 status code not explicitly handled",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "export async function ignoresRateLimiting() {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 35,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    // Generic catch - no 429 handling",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    console.error('Request failed:', error.message);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 34,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 30,
+            "endLine": 38,
+            "lines": [
+              {
+                "line": 30,
+                "content": "// VIOLATION: Catches 429 but ignores it",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "// Should detect: 429 status code not explicitly handled",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "export async function ignoresRateLimiting() {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 35,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    // Generic catch - no 429 handling",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    console.error('Request failed:', error.message);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 47,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 43,
+            "endLine": 51,
+            "lines": [
+              {
+                "line": 43,
+                "content": "// VIOLATION: Checks status but doesn't handle 429 specifically",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "// Should detect: 429 not in handled status codes and no retry logic",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "export async function handlesErrorsButNot429() {",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 48,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    if (error.response) {",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "      if (error.response.status === 404) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 69,
+          "column": 30,
+          "package": "axios",
+          "function": "post",
+          "contract_clause": "error-4xx-5xx",
+          "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and inspect error.response.status",
+          "code_snippet": {
+            "startLine": 65,
+            "endLine": 73,
+            "lines": [
+              {
+                "line": 65,
+                "content": "export async function postWithNaiveRetry(data: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  let attempts = 0;",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  while (attempts < 3) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "    try {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "      const response = await axios.post('https://api.example.com/items', data);",
+                "highlighted": true
+              },
+              {
+                "line": 70,
+                "content": "      return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "    } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "      attempts++;",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "      if (attempts >= 3) throw error;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 69,
+          "column": 30,
+          "package": "axios",
+          "function": "post",
+          "contract_clause": "network-failure",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Check error.response exists before accessing error.response.status",
+          "code_snippet": {
+            "startLine": 65,
+            "endLine": 73,
+            "lines": [
+              {
+                "line": 65,
+                "content": "export async function postWithNaiveRetry(data: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  let attempts = 0;",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "  while (attempts < 3) {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "    try {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "      const response = await axios.post('https://api.example.com/items', data);",
+                "highlighted": true
+              },
+              {
+                "line": 70,
+                "content": "      return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "    } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "      attempts++;",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "      if (attempts >= 3) throw error;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 84,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": "// VIOLATION: Network error not distinguished from HTTP error",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "// Should detect: doesn't check error.response exists",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "export async function doesNotDistinguishNetworkErrors() {",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "    // Assumes all errors have response property",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "    if (error.response.status >= 500) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 84,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 80,
+            "endLine": 88,
+            "lines": [
+              {
+                "line": 80,
+                "content": "// VIOLATION: Network error not distinguished from HTTP error",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "// Should detect: doesn't check error.response exists",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "export async function doesNotDistinguishNetworkErrors() {",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 85,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  } catch (error: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "    // Assumes all errors have response property",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "    if (error.response.status >= 500) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 101,
+          "column": 23,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 97,
+            "endLine": 105,
+            "lines": [
+              {
+                "line": 97,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "// VIOLATION: Multiple calls, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": true
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 101,
+          "column": 23,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 97,
+            "endLine": 105,
+            "lines": [
+              {
+                "line": 97,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "// VIOLATION: Multiple calls, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": true
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 101,
+          "column": 23,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 97,
+            "endLine": 105,
+            "lines": [
+              {
+                "line": 97,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "// VIOLATION: Multiple calls, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": true
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 102,
+          "column": 23,
+          "package": "axios",
+          "function": "post",
+          "contract_clause": "error-4xx-5xx",
+          "description": "No try-catch block found. AxiosError with error.response - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and inspect error.response.status",
+          "code_snippet": {
+            "startLine": 98,
+            "endLine": 106,
+            "lines": [
+              {
+                "line": 98,
+                "content": "// VIOLATION: Multiple calls, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": true
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 102,
+          "column": 23,
+          "package": "axios",
+          "function": "post",
+          "contract_clause": "rate-limited-429",
+          "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "For POST requests, retry logic MUST be idempotency-aware. Either use idempotency keys or handle 429 as terminal error.\n",
+          "code_snippet": {
+            "startLine": 98,
+            "endLine": 106,
+            "lines": [
+              {
+                "line": 98,
+                "content": "// VIOLATION: Multiple calls, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": true
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 102,
+          "column": 23,
+          "package": "axios",
+          "function": "post",
+          "contract_clause": "network-failure",
+          "description": "No try-catch block found. AxiosError with error.response === undefined - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Check error.response exists before accessing error.response.status",
+          "code_snippet": {
+            "startLine": 98,
+            "endLine": 106,
+            "lines": [
+              {
+                "line": 98,
+                "content": "// VIOLATION: Multiple calls, no error handling",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": true
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 103,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "No try-catch block found. AxiosError with error.response containing the error response - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 99,
+            "endLine": 107,
+            "lines": [
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": true
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 103,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "No try-catch block found. AxiosError with error.response.status === 429 - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 99,
+            "endLine": 107,
+            "lines": [
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": true
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 103,
+          "column": 26,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "No try-catch block found. AxiosError with error.request populated but error.response === undefined - this will crash the application.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 99,
+            "endLine": 107,
+            "lines": [
+              {
+                "line": 99,
+                "content": "// Should detect: multiple violations in same function",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": "export async function multipleViolations() {",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "  const users = await axios.get('/api/users');",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const posts = await axios.post('/api/posts', { title: 'Test' });",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  const settings = await axios.get('/api/settings');",
+                "highlighted": true
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  return { users: users.data, posts: posts.data, settings: settings.data };",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-error-4xx-5xx",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 112,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "error-4xx-5xx",
+          "description": "Generic error handling found. Consider inspecting error.response.status to distinguish between 4xx client errors and 5xx server errors for better UX.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST catch AxiosError and check error.response.status to distinguish between client errors (4xx) and server errors (5xx).\n",
+          "code_snippet": {
+            "startLine": 108,
+            "endLine": 116,
+            "lines": [
+              {
+                "line": 108,
+                "content": "// VIOLATION: Swallows all errors",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "// Should detect: catch block doesn't actually handle errors",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "export async function swallowsErrors() {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 113,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "    // Silent failure - just returns null",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "    return null;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-rate-limited-429",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 112,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "rate-limited-429",
+          "description": "Rate limit response (429) is not explicitly handled. Consider implementing retry logic with exponential backoff.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST either: 1. Implement exponential backoff retry logic with the Retry-After header, OR 2. Explicitly handle 429 as a terminal error and surface to the user, OR 3. Use a request queue that respects rate limits. Silently catching and ignoring 429 without retry logic is a violation.\n",
+          "code_snippet": {
+            "startLine": 108,
+            "endLine": 116,
+            "lines": [
+              {
+                "line": 108,
+                "content": "// VIOLATION: Swallows all errors",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "// Should detect: catch block doesn't actually handle errors",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "export async function swallowsErrors() {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 113,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "    // Silent failure - just returns null",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "    return null;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "axios-network-failure",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/axios/fixtures/missing-error-handling.ts",
+          "line": 112,
+          "column": 28,
+          "package": "axios",
+          "function": "get",
+          "contract_clause": "network-failure",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://axios-http.com/docs/handling_errors",
+          "suggested_fix": "Caller MUST check if error.response exists before accessing error.response.status. Network errors have error.request but NO error.response property. Code that assumes error.response is always present will crash.\n",
+          "code_snippet": {
+            "startLine": 108,
+            "endLine": 116,
+            "lines": [
+              {
+                "line": 108,
+                "content": "// VIOLATION: Swallows all errors",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "// Should detect: catch block doesn't actually handle errors",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "export async function swallowsErrors() {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "    const response = await axios.get('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 113,
+                "content": "    return response.data;",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "  } catch (error) {",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "    // Silent failure - just returns null",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "    return null;",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

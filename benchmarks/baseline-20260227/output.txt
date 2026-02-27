@@ -1,0 +1,163 @@
+  tsconfig: /Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/fastify/fixtures/tsconfig.json
+  corpus: /Users/calebgates/WebstormProjects/behavioral-contracts/corpus
+  (using local corpus for development)
+  output: /Users/calebgates/WebstormProjects/behavioral-contracts/verify-cli/benchmarks/baseline-20260227/fastify-output.json
+
+Loading behavioral contracts...
+✓ Loaded 66 package contracts
+  (Skipped 12 draft, 22 in-development - use --include-drafts to include)
+
+Discovering packages...
+✓ Discovered 13 packages
+
+Analyzing TypeScript code...
+✓ Analyzed 3 files
+
+Audit record written to /Users/calebgates/WebstormProjects/behavioral-contracts/verify-cli/benchmarks/baseline-20260227/fastify-output.json
+
+Behavioral Contract Verification Report
+────────────────────────────────────────────────────────────────────────────────
+
+Summary:
+  Files analyzed: 3
+  Contracts applied: 363
+  Timestamp: 2026-02-27T17:58:25.775Z
+  Git commit: 8c03361a
+  Git branch: main
+
+Package Discovery & Coverage
+────────────────────────────────────────────────────────────────────────────────
+
+  Total packages: 13
+  Packages with contracts: 2 (15.4%)
+  Packages without contracts: 11
+
+  ✓ Packages with contracts:
+    fastify@unknown (contract v1.0.0)
+    typescript@^5.3.3 (contract v1.0.0)
+
+  ⚠ Packages without contracts:
+    @behavioral-contracts/corpus@^1.0.0
+    @types/node@^20.11.0
+    @typescript-eslint/eslint-plugin@^6.19.0
+    @typescript-eslint/parser@^6.19.0
+    ajv@^8.12.0
+    chalk@^5.3.0
+    commander@^12.0.0
+    eslint@^8.56.0
+    glob@^10.3.10
+    vitest@^1.2.0
+    yaml@^2.3.4
+
+Violations by Package
+────────────────────────────────────────────────────────────────────────────────
+
+fastify (1 violations)
+  Errors: 1 | Warnings: 0 | Info: 0
+
+  ✗ ../corpus/packages/fastify/fixtures/missing-error-handling.ts:3:1
+    No try-catch block found. Error causing 500 Internal Server Error if no error handler is configured - this will crash the application.
+    Package: fastify.get()
+    Contract: route-handler-async-error
+
+      1 | import fastify from 'fastify';
+      2 | const app = fastify();
+    > 3 | app.get('/user', async (request, reply) => {
+      4 |   const data = await fetchUserData();
+      5 |   return { data };
+      6 | });
+      7 | 
+    Fix: Route handlers MUST handle async errors with try-catch or configure setErrorHandler. Unhandled async errors crash server unless error handler is configured. Use try-catch and reply.code(statusCode).send(error) for controlled error responses.
+    Docs: https://fastify.dev/docs/latest/Reference/Routes/
+
+────────────────────────────────────────────────────────────────────────────────
+
+Overall Summary:
+  Total violations: 1
+  Errors: 1
+  Warnings: 0
+  Info: 0
+
+✗ FAILED
+
+
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                  Behavioral Contracts Analysis Report                         ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+Repository: fixtures
+Analyzed: 2/27/2026, 12:58:25 PM
+Git Commit: 8c03361a
+Git Branch: main
+
+✅ CODE HEALTH SCORE: 74/100
+
+📊 COVERAGE SUMMARY
+────────────────────────────────────────────────────────────────────────────────
+  • Files Analyzed: 3
+  • Package Usages Detected: 363
+  • Contracts Applied: 363
+  • Violations Found: 1 !
+  • Checks Passed: 362 ✓
+
+📈 REPOSITORY HEALTH METRICS
+────────────────────────────────────────────────────────────────────────────────
+  • Error Handling Compliance: 100%
+  • Package Coverage: 15%
+  • Code Maturity: HIGH
+  • Risk Level: MEDIUM
+
+
+🔍 PACKAGE USAGE BREAKDOWN
+────────────────────────────────────────────────────────────────────────────────
+  typescript                      ✓   181 checks    0 issues  100% pass
+  fastify                         ✗     5 checks    1 issues  80% pass
+      ↳ 1 errors
+
+  Total packages analyzed: 66
+  Packages with contracts: 2
+  Fully compliant: 1 ✓
+  With violations: 1 ✗
+
+🏆 BENCHMARKING
+────────────────────────────────────────────────────────────────────────────────
+  Sample Size: 282 repositories analyzed
+
+  Your Violations: 1
+  Average Violations: 29
+
+  ✓ You avoided 28 violations vs typical repo
+
+  Your Ranking: Top 62%
+  Your repo is worse than 38% of repos scanned.
+
+  Percentile Distribution:
+    25th percentile: 0 violations
+    50th percentile: 0 violations (median)
+    75th percentile: 2 violations
+    90th percentile: 38 violations
+
+💡 INSIGHTS
+────────────────────────────────────────────────────────────────────────────────
+  ✓ Perfect score! All 363 package usage points follow best practices.
+  ✓ 1 packages have zero violations (typescript).
+  ✓ Global error handling patterns detected - shows architectural maturity.
+  ✓ Consistent error handling patterns throughout codebase.
+  ! 11 packages don't have contracts yet - coverage opportunity for future scans.
+  ✓ Analyzed 363 function calls across 3 files - comprehensive coverage.
+  ✓ Avoided 28 violations compared to average repo.
+
+🎯 RECOMMENDATIONS
+────────────────────────────────────────────────────────────────────────────────
+  1. Fix 1 remaining violations to achieve 100% compliance
+  2. Run scan after fixes to verify improvements
+  3. Add to CI to prevent future violations
+  4. Request contracts for your most-used packages (11 uncovered)
+
+════════════════════════════════════════════════════════════════════════════════
+  Report generated by Behavioral Contracts v0.1.0
+  Next scan: Enable CI integration for continuous monitoring
+════════════════════════════════════════════════════════════════════════════════
+
+Reports written to:

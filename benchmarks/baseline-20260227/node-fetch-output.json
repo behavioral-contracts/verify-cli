@@ -1,0 +1,2761 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:23.371Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "superagent",
+    "twilio",
+    "tedious",
+    "square",
+    "socket.io-client",
+    "sqlite3",
+    "stripe",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "request-promise",
+    "react-hook-form",
+    "puppeteer",
+    "redis",
+    "pg",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "knex",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "discord.js",
+    "drizzle-orm",
+    "ethers",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@supabase/supabase-js",
+    "@tanstack/react-query",
+    "@vercel/postgres",
+    "@slack/web-api",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@clerk/nextjs",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3",
+    "@nestjs/common"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 14,
+      "column": 26,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 10,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 10,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "async function fetchWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  // ❌ No try-catch - network errors will cause unhandled rejection",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  const response = await fetch('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 15,
+            "content": "  const data = await response.json();",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  return data;",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 26,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "async function postWithoutErrorHandling(userData: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch - network errors unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const response = await fetch('https://api.example.com/users', {",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "    method: 'POST',",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "    headers: {",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "      'Content-Type': 'application/json',",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "    },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 42,
+      "column": 26,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 38,
+        "endLine": 46,
+        "lines": [
+          {
+            "line": 38,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "async function fetchWithOnlyHttpErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  // ❌ Checks HTTP errors but no try-catch for network errors",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "  const response = await fetch('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 43,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  if (!response.ok) {",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "    throw new Error(`HTTP error! status: ${response.status}`);",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 57,
+      "column": 31,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 53,
+        "endLine": 61,
+        "lines": [
+          {
+            "line": 53,
+            "content": " * Should trigger ERROR violations (multiple)",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "async function fetchMultipleWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  // ❌ No try-catch on either fetch call",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  const usersResponse = await fetch('https://api.example.com/users');",
+            "highlighted": true
+          },
+          {
+            "line": 58,
+            "content": "  const postsResponse = await fetch('https://api.example.com/posts');",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  const users = await usersResponse.json();",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  const posts = await postsResponse.json();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 58,
+      "column": 31,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 54,
+        "endLine": 62,
+        "lines": [
+          {
+            "line": 54,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "async function fetchMultipleWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  // ❌ No try-catch on either fetch call",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  const usersResponse = await fetch('https://api.example.com/users');",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  const postsResponse = await fetch('https://api.example.com/posts');",
+            "highlighted": true
+          },
+          {
+            "line": 59,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  const users = await usersResponse.json();",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  const posts = await postsResponse.json();",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 73,
+      "column": 5,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 69,
+        "endLine": 77,
+        "lines": [
+          {
+            "line": 69,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "async function parallelFetchWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  // ❌ No try-catch around Promise.all",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "  const [response1, response2] = await Promise.all([",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "    fetch('https://api.example.com/endpoint1'),",
+            "highlighted": true
+          },
+          {
+            "line": 74,
+            "content": "    fetch('https://api.example.com/endpoint2'),",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  ]);",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  return {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 74,
+      "column": 5,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 70,
+        "endLine": 78,
+        "lines": [
+          {
+            "line": 70,
+            "content": "async function parallelFetchWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  // ❌ No try-catch around Promise.all",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "  const [response1, response2] = await Promise.all([",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "    fetch('https://api.example.com/endpoint1'),",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "    fetch('https://api.example.com/endpoint2'),",
+            "highlighted": true
+          },
+          {
+            "line": 75,
+            "content": "  ]);",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  return {",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "    data1: await response1.json(),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 92,
+      "column": 28,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 88,
+        "endLine": 96,
+        "lines": [
+          {
+            "line": 88,
+            "content": "  const results = [];",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "  for (const id of ids) {",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "    // ❌ No try-catch in loop",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "    const response = await fetch(`https://api.example.com/items/${id}`);",
+            "highlighted": true
+          },
+          {
+            "line": 93,
+            "content": "    const data = await response.json();",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "    results.push(data);",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 106,
+      "column": 30,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 102,
+        "endLine": 110,
+        "lines": [
+          {
+            "line": 102,
+            "content": " * Should trigger ERROR violations (multiple)",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "async function chainedFetchWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  // ❌ First fetch without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "  const userResponse = await fetch('https://api.example.com/user/me');",
+            "highlighted": true
+          },
+          {
+            "line": 107,
+            "content": "  const user = await userResponse.json();",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "  // ❌ Second fetch without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "  const postsResponse = await fetch(`https://api.example.com/users/${user.id}/posts`);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 110,
+      "column": 31,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 106,
+        "endLine": 114,
+        "lines": [
+          {
+            "line": 106,
+            "content": "  const userResponse = await fetch('https://api.example.com/user/me');",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "  const user = await userResponse.json();",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "  // ❌ Second fetch without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "  const postsResponse = await fetch(`https://api.example.com/users/${user.id}/posts`);",
+            "highlighted": true
+          },
+          {
+            "line": 111,
+            "content": "  const posts = await postsResponse.json();",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "  return { user, posts };",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 122,
+      "column": 26,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 118,
+        "endLine": 126,
+        "lines": [
+          {
+            "line": 118,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 119,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 120,
+            "content": "async function deleteWithoutErrorHandling(id: number) {",
+            "highlighted": false
+          },
+          {
+            "line": 121,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 122,
+            "content": "  const response = await fetch(`https://api.example.com/items/${id}`, {",
+            "highlighted": true
+          },
+          {
+            "line": 123,
+            "content": "    method: 'DELETE',",
+            "highlighted": false
+          },
+          {
+            "line": 124,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 125,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 126,
+            "content": "  return response.ok;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 135,
+      "column": 26,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 131,
+        "endLine": 139,
+        "lines": [
+          {
+            "line": 131,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "async function updateWithoutErrorHandling(id: number, data: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  const response = await fetch(`https://api.example.com/items/${id}`, {",
+            "highlighted": true
+          },
+          {
+            "line": 136,
+            "content": "    method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "    headers: {",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "      'Content-Type': 'application/json',",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "    },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+      "line": 152,
+      "column": 26,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 148,
+        "endLine": 156,
+        "lines": [
+          {
+            "line": 148,
+            "content": " * Should trigger ERROR violation",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "async function fetchWithHeadersNoErrorHandling(token: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "  const response = await fetch('https://api.example.com/protected', {",
+            "highlighted": true
+          },
+          {
+            "line": 153,
+            "content": "    headers: {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "      'Authorization': `Bearer ${token}`,",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": "      'Accept': 'application/json',",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "    },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+      "line": 14,
+      "column": 28,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 10,
+        "endLine": 18,
+        "lines": [
+          {
+            "line": 10,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "async function fetchWithProperErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "    const response = await fetch('https://api.example.com/data');",
+            "highlighted": true
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "    // Also handle HTTP errors (fetch doesn't reject on 4xx/5xx)",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "    if (!response.ok) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "      throw new Error(`HTTP error! status: ${response.status}`);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+      "line": 36,
+      "column": 28,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 32,
+        "endLine": 40,
+        "lines": [
+          {
+            "line": 32,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "async function fetchWithDetailedErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "    const response = await fetch('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 37,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    if (!response.ok) {",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "      throw new Error(`HTTP ${response.status}: ${response.statusText}`);",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+      "line": 62,
+      "column": 28,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 58,
+        "endLine": 66,
+        "lines": [
+          {
+            "line": 58,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "async function postDataWithErrorHandling(data: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "    const response = await fetch('https://api.example.com/users', {",
+            "highlighted": true
+          },
+          {
+            "line": 63,
+            "content": "      method: 'POST',",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "      headers: {",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "        'Content-Type': 'application/json',",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "      },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+      "line": 89,
+      "column": 7,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 85,
+        "endLine": 93,
+        "lines": [
+          {
+            "line": 85,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "async function fetchMultipleEndpoints() {",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "    const [usersResponse, postsResponse] = await Promise.all([",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "      fetch('https://api.example.com/users'),",
+            "highlighted": true
+          },
+          {
+            "line": 90,
+            "content": "      fetch('https://api.example.com/posts'),",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "    ]);",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "    if (!usersResponse.ok || !postsResponse.ok) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+      "line": 90,
+      "column": 7,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 86,
+        "endLine": 94,
+        "lines": [
+          {
+            "line": 86,
+            "content": "async function fetchMultipleEndpoints() {",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "    const [usersResponse, postsResponse] = await Promise.all([",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "      fetch('https://api.example.com/users'),",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "      fetch('https://api.example.com/posts'),",
+            "highlighted": true
+          },
+          {
+            "line": 91,
+            "content": "    ]);",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "    if (!usersResponse.ok || !postsResponse.ok) {",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "      throw new Error('One or more requests failed');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+      "line": 112,
+      "column": 10,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 108,
+        "endLine": 116,
+        "lines": [
+          {
+            "line": 108,
+            "content": " * Proper: Using .then().catch() instead of try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "function fetchWithPromiseChain() {",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "  return fetch('https://api.example.com/data')",
+            "highlighted": true
+          },
+          {
+            "line": 113,
+            "content": "    .then(response => {",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "      if (!response.ok) {",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "        throw new Error(`HTTP error! status: ${response.status}`);",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "      }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-fetch-fetch-rejects-on-network-error",
+      "severity": "warning",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+      "line": 131,
+      "column": 28,
+      "package": "node-fetch",
+      "function": "fetch",
+      "contract_clause": "fetch-rejects-on-network-error",
+      "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+      "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+      "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+      "code_snippet": {
+        "startLine": 127,
+        "endLine": 135,
+        "lines": [
+          {
+            "line": 127,
+            "content": " * Should NOT trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "async function safeFetch(url: string, options?: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  try {",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "    const response = await fetch(url, options);",
+            "highlighted": true
+          },
+          {
+            "line": 132,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "    if (!response.ok) {",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "      throw new Error(`HTTP error! status: ${response.status}`);",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "    }",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 20,
+    "error_count": 14,
+    "warning_count": 6,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "node-fetch",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "node-fetch": {
+      "total": 20,
+      "errors": 14,
+      "warnings": 6,
+      "info": 0,
+      "violations": [
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 14,
+          "column": 26,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 10,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 10,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "async function fetchWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  // ❌ No try-catch - network errors will cause unhandled rejection",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  const response = await fetch('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 15,
+                "content": "  const data = await response.json();",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  return data;",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 26,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "async function postWithoutErrorHandling(userData: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch - network errors unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const response = await fetch('https://api.example.com/users', {",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "    method: 'POST',",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "    headers: {",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "      'Content-Type': 'application/json',",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "    },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 42,
+          "column": 26,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 38,
+            "endLine": 46,
+            "lines": [
+              {
+                "line": 38,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "async function fetchWithOnlyHttpErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  // ❌ Checks HTTP errors but no try-catch for network errors",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "  const response = await fetch('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 43,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  if (!response.ok) {",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "    throw new Error(`HTTP error! status: ${response.status}`);",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 57,
+          "column": 31,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 53,
+            "endLine": 61,
+            "lines": [
+              {
+                "line": 53,
+                "content": " * Should trigger ERROR violations (multiple)",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "async function fetchMultipleWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  // ❌ No try-catch on either fetch call",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  const usersResponse = await fetch('https://api.example.com/users');",
+                "highlighted": true
+              },
+              {
+                "line": 58,
+                "content": "  const postsResponse = await fetch('https://api.example.com/posts');",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  const users = await usersResponse.json();",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  const posts = await postsResponse.json();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 58,
+          "column": 31,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 54,
+            "endLine": 62,
+            "lines": [
+              {
+                "line": 54,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "async function fetchMultipleWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  // ❌ No try-catch on either fetch call",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  const usersResponse = await fetch('https://api.example.com/users');",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  const postsResponse = await fetch('https://api.example.com/posts');",
+                "highlighted": true
+              },
+              {
+                "line": 59,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  const users = await usersResponse.json();",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  const posts = await postsResponse.json();",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 73,
+          "column": 5,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 69,
+            "endLine": 77,
+            "lines": [
+              {
+                "line": 69,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "async function parallelFetchWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  // ❌ No try-catch around Promise.all",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "  const [response1, response2] = await Promise.all([",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "    fetch('https://api.example.com/endpoint1'),",
+                "highlighted": true
+              },
+              {
+                "line": 74,
+                "content": "    fetch('https://api.example.com/endpoint2'),",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  ]);",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  return {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 74,
+          "column": 5,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 70,
+            "endLine": 78,
+            "lines": [
+              {
+                "line": 70,
+                "content": "async function parallelFetchWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  // ❌ No try-catch around Promise.all",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "  const [response1, response2] = await Promise.all([",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "    fetch('https://api.example.com/endpoint1'),",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "    fetch('https://api.example.com/endpoint2'),",
+                "highlighted": true
+              },
+              {
+                "line": 75,
+                "content": "  ]);",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  return {",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "    data1: await response1.json(),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 92,
+          "column": 28,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 88,
+            "endLine": 96,
+            "lines": [
+              {
+                "line": 88,
+                "content": "  const results = [];",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "  for (const id of ids) {",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "    // ❌ No try-catch in loop",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "    const response = await fetch(`https://api.example.com/items/${id}`);",
+                "highlighted": true
+              },
+              {
+                "line": 93,
+                "content": "    const data = await response.json();",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "    results.push(data);",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 106,
+          "column": 30,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 102,
+            "endLine": 110,
+            "lines": [
+              {
+                "line": 102,
+                "content": " * Should trigger ERROR violations (multiple)",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "async function chainedFetchWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  // ❌ First fetch without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "  const userResponse = await fetch('https://api.example.com/user/me');",
+                "highlighted": true
+              },
+              {
+                "line": 107,
+                "content": "  const user = await userResponse.json();",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "  // ❌ Second fetch without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "  const postsResponse = await fetch(`https://api.example.com/users/${user.id}/posts`);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 110,
+          "column": 31,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 106,
+            "endLine": 114,
+            "lines": [
+              {
+                "line": 106,
+                "content": "  const userResponse = await fetch('https://api.example.com/user/me');",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "  const user = await userResponse.json();",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "  // ❌ Second fetch without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "  const postsResponse = await fetch(`https://api.example.com/users/${user.id}/posts`);",
+                "highlighted": true
+              },
+              {
+                "line": 111,
+                "content": "  const posts = await postsResponse.json();",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "  return { user, posts };",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 122,
+          "column": 26,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 118,
+            "endLine": 126,
+            "lines": [
+              {
+                "line": 118,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 119,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 120,
+                "content": "async function deleteWithoutErrorHandling(id: number) {",
+                "highlighted": false
+              },
+              {
+                "line": 121,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 122,
+                "content": "  const response = await fetch(`https://api.example.com/items/${id}`, {",
+                "highlighted": true
+              },
+              {
+                "line": 123,
+                "content": "    method: 'DELETE',",
+                "highlighted": false
+              },
+              {
+                "line": 124,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 125,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 126,
+                "content": "  return response.ok;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 135,
+          "column": 26,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 131,
+            "endLine": 139,
+            "lines": [
+              {
+                "line": 131,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "async function updateWithoutErrorHandling(id: number, data: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  const response = await fetch(`https://api.example.com/items/${id}`, {",
+                "highlighted": true
+              },
+              {
+                "line": 136,
+                "content": "    method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "    headers: {",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "      'Content-Type': 'application/json',",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "    },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/missing-error-handling.ts",
+          "line": 152,
+          "column": 26,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 148,
+            "endLine": 156,
+            "lines": [
+              {
+                "line": 148,
+                "content": " * Should trigger ERROR violation",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "async function fetchWithHeadersNoErrorHandling(token: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "  const response = await fetch('https://api.example.com/protected', {",
+                "highlighted": true
+              },
+              {
+                "line": 153,
+                "content": "    headers: {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "      'Authorization': `Bearer ${token}`,",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": "      'Accept': 'application/json',",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "    },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+          "line": 14,
+          "column": 28,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 10,
+            "endLine": 18,
+            "lines": [
+              {
+                "line": 10,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "async function fetchWithProperErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "    const response = await fetch('https://api.example.com/data');",
+                "highlighted": true
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "    // Also handle HTTP errors (fetch doesn't reject on 4xx/5xx)",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "    if (!response.ok) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "      throw new Error(`HTTP error! status: ${response.status}`);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+          "line": 36,
+          "column": 28,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 32,
+            "endLine": 40,
+            "lines": [
+              {
+                "line": 32,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "async function fetchWithDetailedErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "    const response = await fetch('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 37,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    if (!response.ok) {",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "      throw new Error(`HTTP ${response.status}: ${response.statusText}`);",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+          "line": 62,
+          "column": 28,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 58,
+            "endLine": 66,
+            "lines": [
+              {
+                "line": 58,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "async function postDataWithErrorHandling(data: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "    const response = await fetch('https://api.example.com/users', {",
+                "highlighted": true
+              },
+              {
+                "line": 63,
+                "content": "      method: 'POST',",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "      headers: {",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "        'Content-Type': 'application/json',",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "      },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+          "line": 89,
+          "column": 7,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 85,
+            "endLine": 93,
+            "lines": [
+              {
+                "line": 85,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "async function fetchMultipleEndpoints() {",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "    const [usersResponse, postsResponse] = await Promise.all([",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "      fetch('https://api.example.com/users'),",
+                "highlighted": true
+              },
+              {
+                "line": 90,
+                "content": "      fetch('https://api.example.com/posts'),",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "    ]);",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "    if (!usersResponse.ok || !postsResponse.ok) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+          "line": 90,
+          "column": 7,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 86,
+            "endLine": 94,
+            "lines": [
+              {
+                "line": 86,
+                "content": "async function fetchMultipleEndpoints() {",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "    const [usersResponse, postsResponse] = await Promise.all([",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "      fetch('https://api.example.com/users'),",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "      fetch('https://api.example.com/posts'),",
+                "highlighted": true
+              },
+              {
+                "line": 91,
+                "content": "    ]);",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "    if (!usersResponse.ok || !postsResponse.ok) {",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "      throw new Error('One or more requests failed');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+          "line": 112,
+          "column": 10,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "No try-catch block found. Promise rejection with FetchError (error.type='system', error.code like ENOTFOUND, ECONNREFUSED, ETIMEDOUT) - this will crash the application.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 108,
+            "endLine": 116,
+            "lines": [
+              {
+                "line": 108,
+                "content": " * Proper: Using .then().catch() instead of try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "function fetchWithPromiseChain() {",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "  return fetch('https://api.example.com/data')",
+                "highlighted": true
+              },
+              {
+                "line": 113,
+                "content": "    .then(response => {",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "      if (!response.ok) {",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "        throw new Error(`HTTP error! status: ${response.status}`);",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "      }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "node-fetch-fetch-rejects-on-network-error",
+          "severity": "warning",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/node-fetch/fixtures/proper-error-handling.ts",
+          "line": 131,
+          "column": 28,
+          "package": "node-fetch",
+          "function": "fetch",
+          "contract_clause": "fetch-rejects-on-network-error",
+          "description": "Generic error handling found. Consider checking if error.response exists to distinguish network failures from HTTP errors.",
+          "source_doc": "https://github.com/node-fetch/node-fetch/blob/main/docs/ERROR-HANDLING.md",
+          "suggested_fix": "Caller MUST use try-catch to handle Promise rejections from fetch(). Network-level failures (DNS errors, connection refused, timeouts) reject the Promise. CRITICAL: fetch() does NOT reject on HTTP 4xx/5xx status codes - those are successful responses that must be checked with response.ok. Recommended pattern: try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); } catch (error) { /* handle network errors */ }\n",
+          "code_snippet": {
+            "startLine": 127,
+            "endLine": 135,
+            "lines": [
+              {
+                "line": 127,
+                "content": " * Should NOT trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "async function safeFetch(url: string, options?: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  try {",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "    const response = await fetch(url, options);",
+                "highlighted": true
+              },
+              {
+                "line": 132,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "    if (!response.ok) {",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "      throw new Error(`HTTP error! status: ${response.status}`);",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "    }",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

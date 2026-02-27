@@ -1,0 +1,3286 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:55:25.499Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "validator",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "tedious",
+    "unzipper",
+    "superagent",
+    "stripe",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "twilio",
+    "sinon",
+    "socket.io",
+    "simple-oauth2",
+    "sequelize",
+    "sharp",
+    "redis",
+    "request-promise",
+    "react-hook-form",
+    "puppeteer",
+    "supertest",
+    "pino",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "lodash",
+    "knex",
+    "jsonwebtoken",
+    "joi",
+    "graphql",
+    "got",
+    "helmet",
+    "ioredis",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "chai",
+    "cassandra-driver",
+    "cloudinary",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "archiver",
+    "ajv",
+    "@vercel/postgres",
+    "@supabase/supabase-js",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@prisma/client",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/instance-usage.ts",
+      "line": 112,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 108,
+        "endLine": 116,
+        "lines": [
+          {
+            "line": 108,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "// ❌ Composed schemas WITHOUT error handling",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "function validateUserWithAddressUnsafe(data: unknown) {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  // ❌ No error handling - will throw on invalid input",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "  const validData = userWithAddressSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 113,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "// ✅ Extended schemas with safeParse",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/instance-usage.ts",
+      "line": 112,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 108,
+        "endLine": 116,
+        "lines": [
+          {
+            "line": 108,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "// ❌ Composed schemas WITHOUT error handling",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "function validateUserWithAddressUnsafe(data: unknown) {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  // ❌ No error handling - will throw on invalid input",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "  const validData = userWithAddressSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 113,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 115,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "// ✅ Extended schemas with safeParse",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 17,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 13,
+        "endLine": 21,
+        "lines": [
+          {
+            "line": 13,
+            "content": "    age: z.number().min(0),",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  // ❌ No error handling - will throw ZodError on invalid input",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  const validData = userSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 18,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "// ❌ Violation 2: parseAsync() without try-catch",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 17,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 13,
+        "endLine": 21,
+        "lines": [
+          {
+            "line": 13,
+            "content": "    age: z.number().min(0),",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  // ❌ No error handling - will throw ZodError on invalid input",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  const validData = userSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 18,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "// ❌ Violation 2: parseAsync() without try-catch",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-async-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 31,
+      "column": 27,
+      "package": "zod",
+      "function": "parseAsync",
+      "contract_clause": "parse-async-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parseAsync() in try-catch block or use safeParseAsync() instead.\nHandle rejected promises appropriately.\n",
+      "code_snippet": {
+        "startLine": 27,
+        "endLine": 35,
+        "lines": [
+          {
+            "line": 27,
+            "content": "    return val.email !== 'taken@example.com';",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // ❌ No error handling - will throw ZodError on invalid input or failed refinement",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  const validData = await userSchema.parseAsync(data);",
+            "highlighted": true
+          },
+          {
+            "line": 32,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "// ❌ Violation 3: Type coercion with parse() without try-catch",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-async-refinement-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 31,
+      "column": 27,
+      "package": "zod",
+      "function": "parseAsync",
+      "contract_clause": "parse-async-refinement-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#refine",
+      "suggested_fix": "Caller MUST handle async refinement failures. The error.issues array will\ncontain details about which refinements failed.\n",
+      "code_snippet": {
+        "startLine": 27,
+        "endLine": 35,
+        "lines": [
+          {
+            "line": 27,
+            "content": "    return val.email !== 'taken@example.com';",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // ❌ No error handling - will throw ZodError on invalid input or failed refinement",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  const validData = await userSchema.parseAsync(data);",
+            "highlighted": true
+          },
+          {
+            "line": 32,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "// ❌ Violation 3: Type coercion with parse() without try-catch",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 42,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 38,
+        "endLine": 46,
+        "lines": [
+          {
+            "line": 38,
+            "content": "    createdAt: z.coerce.date(),",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  // ❌ No error handling - will throw if coercion fails",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "  const validData = timestampSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 43,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "// ❌ Violation 4: Custom refinements without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 42,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 38,
+        "endLine": 46,
+        "lines": [
+          {
+            "line": 38,
+            "content": "    createdAt: z.coerce.date(),",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  // ❌ No error handling - will throw if coercion fails",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "  const validData = timestampSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 43,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "// ❌ Violation 4: Custom refinements without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 75,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": "    address: addressSchema,",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const validData = userSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "// ❌ Violation 6: Array validation without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 75,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 71,
+        "endLine": 79,
+        "lines": [
+          {
+            "line": 71,
+            "content": "    address: addressSchema,",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  const validData = userSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 76,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "// ❌ Violation 6: Array validation without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 87,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 83,
+        "endLine": 91,
+        "lines": [
+          {
+            "line": 83,
+            "content": "    name: z.string(),",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  }));",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  const validData = arraySchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 88,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "// ❌ Violation 7: Union types without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 87,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 83,
+        "endLine": 91,
+        "lines": [
+          {
+            "line": 83,
+            "content": "    name: z.string(),",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  }));",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  const validData = arraySchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 88,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "// ❌ Violation 7: Union types without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 99,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 95,
+        "endLine": 103,
+        "lines": [
+          {
+            "line": 95,
+            "content": "    z.object({ success: z.literal(false), error: z.string() }),",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  ]);",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "  const validData = responseSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 100,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "// ❌ Violation 8: Complex validation chain without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 99,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 95,
+        "endLine": 103,
+        "lines": [
+          {
+            "line": 95,
+            "content": "    z.object({ success: z.literal(false), error: z.string() }),",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "  ]);",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 98,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": "  const validData = responseSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 100,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "// ❌ Violation 8: Complex validation chain without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 114,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 110,
+        "endLine": 118,
+        "lines": [
+          {
+            "line": 110,
+            "content": "    message: 'Must be 21+ for alcohol-related tags',",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 115,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 117,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 118,
+            "content": "// ❌ Violation 9: Optional fields with parse() without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 114,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 110,
+        "endLine": 118,
+        "lines": [
+          {
+            "line": 110,
+            "content": "    message: 'Must be 21+ for alcohol-related tags',",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 115,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 117,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 118,
+            "content": "// ❌ Violation 9: Optional fields with parse() without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 127,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 123,
+        "endLine": 131,
+        "lines": [
+          {
+            "line": 123,
+            "content": "    bio: z.string().nullable(),",
+            "highlighted": false
+          },
+          {
+            "line": 124,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 125,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 126,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 128,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "// ❌ Violation 10: Discriminated union without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 127,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 123,
+        "endLine": 131,
+        "lines": [
+          {
+            "line": 123,
+            "content": "    bio: z.string().nullable(),",
+            "highlighted": false
+          },
+          {
+            "line": 124,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 125,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 126,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 128,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "// ❌ Violation 10: Discriminated union without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 139,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 135,
+        "endLine": 143,
+        "lines": [
+          {
+            "line": 135,
+            "content": "    z.object({ type: z.literal('keypress'), key: z.string() }),",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "  ]);",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "  const validData = eventSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 140,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "// ❌ Violation 11: Transform without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 139,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 135,
+        "endLine": 143,
+        "lines": [
+          {
+            "line": 135,
+            "content": "    z.object({ type: z.literal('keypress'), key: z.string() }),",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "  ]);",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "  const validData = eventSchema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 140,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "// ❌ Violation 11: Transform without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 150,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 146,
+        "endLine": 154,
+        "lines": [
+          {
+            "line": 146,
+            "content": "    timestamp: z.string().transform((str) => new Date(str)),",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "  // ❌ No error handling - will throw if transform fails",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 151,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "// ❌ Violation 12: Multiple refinements without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 150,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 146,
+        "endLine": 154,
+        "lines": [
+          {
+            "line": 146,
+            "content": "    timestamp: z.string().transform((str) => new Date(str)),",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "  // ❌ No error handling - will throw if transform fails",
+            "highlighted": false
+          },
+          {
+            "line": 150,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 151,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "// ❌ Violation 12: Multiple refinements without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-validation-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 171,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-validation-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#parse",
+      "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+      "code_snippet": {
+        "startLine": 167,
+        "endLine": 175,
+        "lines": [
+          {
+            "line": 167,
+            "content": "    message: 'Date range cannot exceed 1 year',",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 172,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 173,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "// Export functions for testing",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "zod-parse-type-coercion-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+      "line": 171,
+      "column": 21,
+      "package": "zod",
+      "function": "parse",
+      "contract_clause": "parse-type-coercion-error",
+      "description": "No try-catch block found. ZodError - this will crash the application.",
+      "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+      "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+      "code_snippet": {
+        "startLine": 167,
+        "endLine": 175,
+        "lines": [
+          {
+            "line": 167,
+            "content": "    message: 'Date range cannot exceed 1 year',",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "  // ❌ No error handling - will throw on validation failure",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "  const validData = schema.parse(data);",
+            "highlighted": true
+          },
+          {
+            "line": 172,
+            "content": "  return validData;",
+            "highlighted": false
+          },
+          {
+            "line": 173,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "// Export functions for testing",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 24,
+    "error_count": 24,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "zod",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "zod": {
+      "total": 24,
+      "errors": 24,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/instance-usage.ts",
+          "line": 112,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 108,
+            "endLine": 116,
+            "lines": [
+              {
+                "line": 108,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "// ❌ Composed schemas WITHOUT error handling",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "function validateUserWithAddressUnsafe(data: unknown) {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  // ❌ No error handling - will throw on invalid input",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "  const validData = userWithAddressSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 113,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "// ✅ Extended schemas with safeParse",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/instance-usage.ts",
+          "line": 112,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 108,
+            "endLine": 116,
+            "lines": [
+              {
+                "line": 108,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "// ❌ Composed schemas WITHOUT error handling",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "function validateUserWithAddressUnsafe(data: unknown) {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  // ❌ No error handling - will throw on invalid input",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "  const validData = userWithAddressSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 113,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 115,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "// ✅ Extended schemas with safeParse",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 17,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 13,
+            "endLine": 21,
+            "lines": [
+              {
+                "line": 13,
+                "content": "    age: z.number().min(0),",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  // ❌ No error handling - will throw ZodError on invalid input",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  const validData = userSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 18,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "// ❌ Violation 2: parseAsync() without try-catch",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 17,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 13,
+            "endLine": 21,
+            "lines": [
+              {
+                "line": 13,
+                "content": "    age: z.number().min(0),",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  // ❌ No error handling - will throw ZodError on invalid input",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  const validData = userSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 18,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "// ❌ Violation 2: parseAsync() without try-catch",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-async-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 31,
+          "column": 27,
+          "package": "zod",
+          "function": "parseAsync",
+          "contract_clause": "parse-async-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parseAsync() in try-catch block or use safeParseAsync() instead.\nHandle rejected promises appropriately.\n",
+          "code_snippet": {
+            "startLine": 27,
+            "endLine": 35,
+            "lines": [
+              {
+                "line": 27,
+                "content": "    return val.email !== 'taken@example.com';",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // ❌ No error handling - will throw ZodError on invalid input or failed refinement",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  const validData = await userSchema.parseAsync(data);",
+                "highlighted": true
+              },
+              {
+                "line": 32,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "// ❌ Violation 3: Type coercion with parse() without try-catch",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-async-refinement-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 31,
+          "column": 27,
+          "package": "zod",
+          "function": "parseAsync",
+          "contract_clause": "parse-async-refinement-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#refine",
+          "suggested_fix": "Caller MUST handle async refinement failures. The error.issues array will\ncontain details about which refinements failed.\n",
+          "code_snippet": {
+            "startLine": 27,
+            "endLine": 35,
+            "lines": [
+              {
+                "line": 27,
+                "content": "    return val.email !== 'taken@example.com';",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // ❌ No error handling - will throw ZodError on invalid input or failed refinement",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  const validData = await userSchema.parseAsync(data);",
+                "highlighted": true
+              },
+              {
+                "line": 32,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "// ❌ Violation 3: Type coercion with parse() without try-catch",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 42,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 38,
+            "endLine": 46,
+            "lines": [
+              {
+                "line": 38,
+                "content": "    createdAt: z.coerce.date(),",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  // ❌ No error handling - will throw if coercion fails",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "  const validData = timestampSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 43,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "// ❌ Violation 4: Custom refinements without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 42,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 38,
+            "endLine": 46,
+            "lines": [
+              {
+                "line": 38,
+                "content": "    createdAt: z.coerce.date(),",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  // ❌ No error handling - will throw if coercion fails",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "  const validData = timestampSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 43,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "// ❌ Violation 4: Custom refinements without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 75,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": "    address: addressSchema,",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const validData = userSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "// ❌ Violation 6: Array validation without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 75,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 71,
+            "endLine": 79,
+            "lines": [
+              {
+                "line": 71,
+                "content": "    address: addressSchema,",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  const validData = userSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 76,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "// ❌ Violation 6: Array validation without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 87,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 83,
+            "endLine": 91,
+            "lines": [
+              {
+                "line": 83,
+                "content": "    name: z.string(),",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  }));",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  const validData = arraySchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 88,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "// ❌ Violation 7: Union types without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 87,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 83,
+            "endLine": 91,
+            "lines": [
+              {
+                "line": 83,
+                "content": "    name: z.string(),",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  }));",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  const validData = arraySchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 88,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "// ❌ Violation 7: Union types without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 99,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 95,
+            "endLine": 103,
+            "lines": [
+              {
+                "line": 95,
+                "content": "    z.object({ success: z.literal(false), error: z.string() }),",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  ]);",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "  const validData = responseSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 100,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "// ❌ Violation 8: Complex validation chain without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 99,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 95,
+            "endLine": 103,
+            "lines": [
+              {
+                "line": 95,
+                "content": "    z.object({ success: z.literal(false), error: z.string() }),",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "  ]);",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 98,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": "  const validData = responseSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 100,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "// ❌ Violation 8: Complex validation chain without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 114,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 110,
+            "endLine": 118,
+            "lines": [
+              {
+                "line": 110,
+                "content": "    message: 'Must be 21+ for alcohol-related tags',",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 115,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 117,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 118,
+                "content": "// ❌ Violation 9: Optional fields with parse() without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 114,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 110,
+            "endLine": 118,
+            "lines": [
+              {
+                "line": 110,
+                "content": "    message: 'Must be 21+ for alcohol-related tags',",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 115,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 117,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 118,
+                "content": "// ❌ Violation 9: Optional fields with parse() without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 127,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 123,
+            "endLine": 131,
+            "lines": [
+              {
+                "line": 123,
+                "content": "    bio: z.string().nullable(),",
+                "highlighted": false
+              },
+              {
+                "line": 124,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 125,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 126,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 128,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "// ❌ Violation 10: Discriminated union without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 127,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 123,
+            "endLine": 131,
+            "lines": [
+              {
+                "line": 123,
+                "content": "    bio: z.string().nullable(),",
+                "highlighted": false
+              },
+              {
+                "line": 124,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 125,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 126,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 128,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "// ❌ Violation 10: Discriminated union without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 139,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 135,
+            "endLine": 143,
+            "lines": [
+              {
+                "line": 135,
+                "content": "    z.object({ type: z.literal('keypress'), key: z.string() }),",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "  ]);",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "  const validData = eventSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 140,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "// ❌ Violation 11: Transform without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 139,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 135,
+            "endLine": 143,
+            "lines": [
+              {
+                "line": 135,
+                "content": "    z.object({ type: z.literal('keypress'), key: z.string() }),",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "  ]);",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "  const validData = eventSchema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 140,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "// ❌ Violation 11: Transform without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 150,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 146,
+            "endLine": 154,
+            "lines": [
+              {
+                "line": 146,
+                "content": "    timestamp: z.string().transform((str) => new Date(str)),",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "  // ❌ No error handling - will throw if transform fails",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 151,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "// ❌ Violation 12: Multiple refinements without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 150,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 146,
+            "endLine": 154,
+            "lines": [
+              {
+                "line": 146,
+                "content": "    timestamp: z.string().transform((str) => new Date(str)),",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "  // ❌ No error handling - will throw if transform fails",
+                "highlighted": false
+              },
+              {
+                "line": 150,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 151,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "// ❌ Violation 12: Multiple refinements without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-validation-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 171,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-validation-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#parse",
+          "suggested_fix": "Caller MUST wrap parse() in try-catch block or use safeParse() instead.\nZodError contains detailed validation failure information in the 'issues' array.\n",
+          "code_snippet": {
+            "startLine": 167,
+            "endLine": 175,
+            "lines": [
+              {
+                "line": 167,
+                "content": "    message: 'Date range cannot exceed 1 year',",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 172,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 173,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "// Export functions for testing",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "zod-parse-type-coercion-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/zod/fixtures/missing-error-handling.ts",
+          "line": 171,
+          "column": 21,
+          "package": "zod",
+          "function": "parse",
+          "contract_clause": "parse-type-coercion-error",
+          "description": "No try-catch block found. ZodError - this will crash the application.",
+          "source_doc": "https://github.com/colinhacks/zod#coercion-for-primitives",
+          "suggested_fix": "Caller MUST handle coercion failures. Use safeParse() or try-catch.\n",
+          "code_snippet": {
+            "startLine": 167,
+            "endLine": 175,
+            "lines": [
+              {
+                "line": 167,
+                "content": "    message: 'Date range cannot exceed 1 year',",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "  // ❌ No error handling - will throw on validation failure",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "  const validData = schema.parse(data);",
+                "highlighted": true
+              },
+              {
+                "line": 172,
+                "content": "  return validData;",
+                "highlighted": false
+              },
+              {
+                "line": 173,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "// Export functions for testing",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

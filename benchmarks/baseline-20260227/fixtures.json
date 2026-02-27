@@ -1,0 +1,928 @@
+[
+  {
+    "package": "helmet",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 106,
+    "exitCode": 1,
+    "outputFile": "fixtures-helmet.json"
+  },
+  {
+    "package": "formidable",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-formidable.json"
+  },
+  {
+    "package": "discord.js",
+    "status": "production",
+    "result": "success",
+    "violationCount": 87,
+    "exitCode": 1,
+    "outputFile": "fixtures-discord.js.json"
+  },
+  {
+    "package": "zod",
+    "status": "production",
+    "result": "success",
+    "violationCount": 24,
+    "exitCode": 1,
+    "outputFile": "fixtures-zod.json"
+  },
+  {
+    "package": "lodash",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 7,
+    "exitCode": 1,
+    "outputFile": "fixtures-lodash.json"
+  },
+  {
+    "package": "tedious",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-tedious.json"
+  },
+  {
+    "package": "pino",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-pino.json"
+  },
+  {
+    "package": "pino/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "node_modules/sonic-boom",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "on-exit-leak-free/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "pino-abstract-transport/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "next",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-next.json"
+  },
+  {
+    "package": "@azure/storage-blob",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-@azure-storage-blob.json"
+  },
+  {
+    "package": "@anthropic-ai/sdk",
+    "status": "production",
+    "result": "success",
+    "violationCount": 18,
+    "exitCode": 1,
+    "outputFile": "fixtures-@anthropic-ai-sdk.json"
+  },
+  {
+    "package": "bull",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-bull.json"
+  },
+  {
+    "package": "mocha",
+    "status": "production",
+    "result": "success",
+    "violationCount": 34,
+    "exitCode": 1,
+    "outputFile": "fixtures-mocha.json"
+  },
+  {
+    "package": "@tanstack/react-query",
+    "status": "production",
+    "result": "success",
+    "violationCount": 11,
+    "exitCode": 1,
+    "outputFile": "fixtures-@tanstack-react-query.json"
+  },
+  {
+    "package": "mysql2",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-mysql2.json"
+  },
+  {
+    "package": "dotenv",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-dotenv.json"
+  },
+  {
+    "package": "ethers",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-ethers.json"
+  },
+  {
+    "package": "validator",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 27,
+    "exitCode": 1,
+    "outputFile": "fixtures-validator.json"
+  },
+  {
+    "package": "joi",
+    "status": "production",
+    "result": "success",
+    "violationCount": 5,
+    "exitCode": 1,
+    "outputFile": "fixtures-joi.json"
+  },
+  {
+    "package": "node-fetch",
+    "status": "production",
+    "result": "success",
+    "violationCount": 20,
+    "exitCode": 1,
+    "outputFile": "fixtures-node-fetch.json"
+  },
+  {
+    "package": "moment",
+    "status": "production",
+    "result": "success",
+    "violationCount": 21,
+    "exitCode": 1,
+    "outputFile": "fixtures-moment.json"
+  },
+  {
+    "package": "axios-retry",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-axios-retry.json"
+  },
+  {
+    "package": "puppeteer",
+    "status": "production",
+    "result": "success",
+    "violationCount": 5,
+    "exitCode": 1,
+    "outputFile": "fixtures-puppeteer.json"
+  },
+  {
+    "package": "@nestjs/common",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-@nestjs-common.json"
+  },
+  {
+    "package": "supertest",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-supertest.json"
+  },
+  {
+    "package": "sinon",
+    "status": "production",
+    "result": "success",
+    "violationCount": 145,
+    "exitCode": 1,
+    "outputFile": "fixtures-sinon.json"
+  },
+  {
+    "package": "express",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-express.json"
+  },
+  {
+    "package": "redis",
+    "status": "production",
+    "result": "success",
+    "violationCount": 43,
+    "exitCode": 1,
+    "outputFile": "fixtures-redis.json"
+  },
+  {
+    "package": "@aws-sdk/client-s3",
+    "status": "production",
+    "result": "success",
+    "violationCount": 27,
+    "exitCode": 1,
+    "outputFile": "fixtures-@aws-sdk-client-s3.json"
+  },
+  {
+    "package": "bcrypt",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-bcrypt.json"
+  },
+  {
+    "package": "square",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-square.json"
+  },
+  {
+    "package": "typescript",
+    "status": "production",
+    "result": "success",
+    "violationCount": 62,
+    "exitCode": 1,
+    "outputFile": "fixtures-typescript.json"
+  },
+  {
+    "package": "react-hook-form",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-react-hook-form.json"
+  },
+  {
+    "package": "socket.io-client",
+    "status": "production",
+    "result": "success",
+    "violationCount": 21,
+    "exitCode": 1,
+    "outputFile": "fixtures-socket.io-client.json"
+  },
+  {
+    "package": "date-fns",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-date-fns.json"
+  },
+  {
+    "package": "jsonwebtoken",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 123,
+    "exitCode": 1,
+    "outputFile": "fixtures-jsonwebtoken.json"
+  },
+  {
+    "package": "undici",
+    "status": "production",
+    "result": "success",
+    "violationCount": 8,
+    "exitCode": 1,
+    "outputFile": "fixtures-undici.json"
+  },
+  {
+    "package": "cloudinary",
+    "status": "production",
+    "result": "success",
+    "violationCount": 4,
+    "exitCode": 1,
+    "outputFile": "fixtures-cloudinary.json"
+  },
+  {
+    "package": "ioredis",
+    "status": "production",
+    "result": "success",
+    "violationCount": 18,
+    "exitCode": 1,
+    "outputFile": "fixtures-ioredis.json"
+  },
+  {
+    "package": "archiver",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 48,
+    "exitCode": 1,
+    "outputFile": "fixtures-archiver.json"
+  },
+  {
+    "package": "got",
+    "status": "",
+    "result": "success",
+    "violationCount": 9,
+    "exitCode": 1,
+    "outputFile": "fixtures-got.json"
+  },
+  {
+    "package": "@sendgrid/mail",
+    "status": "production",
+    "result": "success",
+    "violationCount": 7,
+    "exitCode": 1,
+    "outputFile": "fixtures-@sendgrid-mail.json"
+  },
+  {
+    "package": "multer",
+    "status": "production",
+    "result": "success",
+    "violationCount": 3,
+    "exitCode": 1,
+    "outputFile": "fixtures-multer.json"
+  },
+  {
+    "package": "superagent",
+    "status": "production",
+    "result": "success",
+    "violationCount": 52,
+    "exitCode": 1,
+    "outputFile": "fixtures-superagent.json"
+  },
+  {
+    "package": "minio",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-minio.json"
+  },
+  {
+    "package": "passport",
+    "status": "production",
+    "result": "success",
+    "violationCount": 6,
+    "exitCode": 1,
+    "outputFile": "fixtures-passport.json"
+  },
+  {
+    "package": "mongodb",
+    "status": "production",
+    "result": "success",
+    "violationCount": 13,
+    "exitCode": 1,
+    "outputFile": "fixtures-mongodb.json"
+  },
+  {
+    "package": "mongoose",
+    "status": "production",
+    "result": "success",
+    "violationCount": 120,
+    "exitCode": 1,
+    "outputFile": "fixtures-mongoose.json"
+  },
+  {
+    "package": "yup",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-yup.json"
+  },
+  {
+    "package": "pg",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-pg.json"
+  },
+  {
+    "package": "@google-cloud/storage",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-@google-cloud-storage.json"
+  },
+  {
+    "package": "bcryptjs",
+    "status": "production",
+    "result": "success",
+    "violationCount": 7,
+    "exitCode": 1,
+    "outputFile": "fixtures-bcryptjs.json"
+  },
+  {
+    "package": "eventemitter2",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-eventemitter2.json"
+  },
+  {
+    "package": "socket.io",
+    "status": "production",
+    "result": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "fixtures-socket.io.json"
+  },
+  {
+    "package": "jsonschema",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-jsonschema.json"
+  },
+  {
+    "package": "drizzle-orm",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-drizzle-orm.json"
+  },
+  {
+    "package": "firebase-admin",
+    "status": "production",
+    "result": "success",
+    "violationCount": 34,
+    "exitCode": 1,
+    "outputFile": "fixtures-firebase-admin.json"
+  },
+  {
+    "package": "body-parser",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-body-parser.json"
+  },
+  {
+    "package": "graphql",
+    "status": "production",
+    "result": "success",
+    "violationCount": 8,
+    "exitCode": 1,
+    "outputFile": "fixtures-graphql.json"
+  },
+  {
+    "package": "sqlite3",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-sqlite3.json"
+  },
+  {
+    "package": "node-gyp/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "tar-fs/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "unzipper",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-unzipper.json"
+  },
+  {
+    "package": "sequelize",
+    "status": "production",
+    "result": "success",
+    "violationCount": 20,
+    "exitCode": 1,
+    "outputFile": "fixtures-sequelize.json"
+  },
+  {
+    "package": "express-rate-limit",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-express-rate-limit.json"
+  },
+  {
+    "package": "@prisma/client",
+    "status": "production",
+    "result": "success",
+    "violationCount": 49,
+    "exitCode": 1,
+    "outputFile": "fixtures-@prisma-client.json"
+  },
+  {
+    "package": "express-async-errors",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-express-async-errors.json"
+  },
+  {
+    "package": "compression",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-compression.json"
+  },
+  {
+    "package": "@supabase/supabase-js",
+    "status": "production",
+    "result": "success",
+    "violationCount": 18,
+    "exitCode": 1,
+    "outputFile": "fixtures-@supabase-supabase-js.json"
+  },
+  {
+    "package": "passport-local",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-passport-local.json"
+  },
+  {
+    "package": "cors",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-cors.json"
+  },
+  {
+    "package": "nock",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-nock.json"
+  },
+  {
+    "package": ".discord.js.bak",
+    "status": "",
+    "result": "success",
+    "violationCount": 82,
+    "exitCode": 1,
+    "outputFile": "fixtures-.discord.js.bak.json"
+  },
+  {
+    "package": "request-promise",
+    "status": "production",
+    "result": "success",
+    "violationCount": 15,
+    "exitCode": 1,
+    "outputFile": "fixtures-request-promise.json"
+  },
+  {
+    "package": "@octokit/rest",
+    "status": "production",
+    "result": "success",
+    "violationCount": 32,
+    "exitCode": 1,
+    "outputFile": "fixtures-@octokit-rest.json"
+  },
+  {
+    "package": "simple-oauth2",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-simple-oauth2.json"
+  },
+  {
+    "package": "dayjs",
+    "status": "production",
+    "result": "success",
+    "violationCount": 24,
+    "exitCode": 1,
+    "outputFile": "fixtures-dayjs.json"
+  },
+  {
+    "package": "cookie-parser",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-cookie-parser.json"
+  },
+  {
+    "package": "busboy",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-busboy.json"
+  },
+  {
+    "package": "@vercel/postgres",
+    "status": "production",
+    "result": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "fixtures-@vercel-postgres.json"
+  },
+  {
+    "package": "morgan",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-morgan.json"
+  },
+  {
+    "package": "typeorm",
+    "status": "production",
+    "result": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "fixtures-typeorm.json"
+  },
+  {
+    "package": ".mongodb.disabled",
+    "status": "",
+    "result": "success",
+    "violationCount": 13,
+    "exitCode": 1,
+    "outputFile": "fixtures-.mongodb.disabled.json"
+  },
+  {
+    "package": "express-validator",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-express-validator.json"
+  },
+  {
+    "package": "bullmq",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-bullmq.json"
+  },
+  {
+    "package": "knex",
+    "status": "production",
+    "result": "success",
+    "violationCount": 4,
+    "exitCode": 1,
+    "outputFile": "fixtures-knex.json"
+  },
+  {
+    "package": "cassandra-driver",
+    "status": "production",
+    "result": "success",
+    "violationCount": 104,
+    "exitCode": 1,
+    "outputFile": "fixtures-cassandra-driver.json"
+  },
+  {
+    "package": "luxon",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-luxon.json"
+  },
+  {
+    "package": "uuid",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-uuid.json"
+  },
+  {
+    "package": "passport-jwt",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-passport-jwt.json"
+  },
+  {
+    "package": "@hapi/hapi",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-@hapi-hapi.json"
+  },
+  {
+    "package": ".discord.js.disabled",
+    "status": "",
+    "result": "success",
+    "violationCount": 82,
+    "exitCode": 1,
+    "outputFile": "fixtures-.discord.js.disabled.json"
+  },
+  {
+    "package": "axios",
+    "status": "production",
+    "result": "success",
+    "violationCount": 34,
+    "exitCode": 1,
+    "outputFile": "fixtures-axios.json"
+  },
+  {
+    "package": ".mongodb.bak",
+    "status": "",
+    "result": "success",
+    "violationCount": 13,
+    "exitCode": 1,
+    "outputFile": "fixtures-.mongodb.bak.json"
+  },
+  {
+    "package": "@slack/web-api",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-@slack-web-api.json"
+  },
+  {
+    "package": "express-session",
+    "status": "in-development",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-express-session.json"
+  },
+  {
+    "package": "ajv",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 13,
+    "exitCode": 1,
+    "outputFile": "fixtures-ajv.json"
+  },
+  {
+    "package": "json-schema-traverse/spec",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "fast-uri/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "sharp",
+    "status": "production",
+    "result": "success",
+    "violationCount": 3,
+    "exitCode": 1,
+    "outputFile": "fixtures-sharp.json"
+  },
+  {
+    "package": "@clerk/nextjs",
+    "status": "production",
+    "result": "success",
+    "violationCount": 24,
+    "exitCode": 1,
+    "outputFile": "fixtures-@clerk-nextjs.json"
+  },
+  {
+    "package": "backend/dist",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "nodemailer",
+    "status": "production",
+    "result": "success",
+    "violationCount": 46,
+    "exitCode": 1,
+    "outputFile": "fixtures-nodemailer.json"
+  },
+  {
+    "package": "winston",
+    "status": "production",
+    "result": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "fixtures-winston.json"
+  },
+  {
+    "package": "ws",
+    "status": "draft",
+    "result": "success",
+    "violationCount": 2,
+    "exitCode": 1,
+    "outputFile": "fixtures-ws.json"
+  },
+  {
+    "package": "openai",
+    "status": "production",
+    "result": "success",
+    "violationCount": 53,
+    "exitCode": 1,
+    "outputFile": "fixtures-openai.json"
+  },
+  {
+    "package": "twilio",
+    "status": "production",
+    "result": "success",
+    "violationCount": 24,
+    "exitCode": 1,
+    "outputFile": "fixtures-twilio.json"
+  },
+  {
+    "package": "stripe",
+    "status": "production",
+    "result": "success",
+    "violationCount": 37,
+    "exitCode": 1,
+    "outputFile": "fixtures-stripe.json"
+  },
+  {
+    "package": "fastify",
+    "status": "production",
+    "result": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "fixtures-fastify.json"
+  },
+  {
+    "package": "pino/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "fast-json-stringify/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "node_modules/sonic-boom",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "avvio/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "json-schema-traverse/spec",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "on-exit-leak-free/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "fast-uri/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  },
+  {
+    "package": "pino-abstract-transport/test",
+    "status": "unknown",
+    "result": "no_tsconfig",
+    "violations": []
+  }
+]

@@ -1,0 +1,1067 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:50.306Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "twilio",
+    "tedious",
+    "typeorm",
+    "square",
+    "superagent",
+    "stripe",
+    "sqlite3",
+    "sinon",
+    "socket.io",
+    "socket.io-client",
+    "sequelize",
+    "sharp",
+    "request-promise",
+    "redis",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "passport",
+    "openai",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "knex",
+    "mocha",
+    "ioredis",
+    "joi",
+    "got",
+    "graphql",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@tanstack/react-query",
+    "@vercel/postgres",
+    "@prisma/client",
+    "@slack/web-api",
+    "@sendgrid/mail",
+    "@octokit/rest",
+    "@supabase/supabase-js",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "bcryptjs-hash-type-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 22,
+      "package": "bcryptjs",
+      "function": "hash",
+      "contract_clause": "hash-type-error",
+      "description": "No try-catch block found. Error: Illegal arguments: [actual_type], [actual_type] - this will crash the application.",
+      "source_doc": "https://github.com/dcodeIO/bcrypt.js/issues/146",
+      "suggested_fix": "Caller MUST wrap bcrypt.hash() in try-catch block or use .catch() handler. Type errors occur when forgetting await on Promise or passing wrong types. Validate input types before calling hash() to provide better error messages.\n",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const hash = await bcrypt.hash(password, 10);",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  return hash;",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bcryptjs-hash-invalid-salt",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 22,
+      "package": "bcryptjs",
+      "function": "hash",
+      "contract_clause": "hash-invalid-salt",
+      "description": "No try-catch block found. Error: Invalid salt version or Illegal arguments - this will crash the application.",
+      "source_doc": "https://github.com/dcodeIO/bcrypt.js/issues/20",
+      "suggested_fix": "Caller MUST handle errors from invalid salt parameter. Use genSalt() to generate valid salts, or pass numeric salt rounds (recommended: 12).\n",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const hash = await bcrypt.hash(password, 10);",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  return hash;",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bcryptjs-hash-rounds-out-of-range",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 22,
+      "package": "bcryptjs",
+      "function": "hash",
+      "contract_clause": "hash-rounds-out-of-range",
+      "description": "No try-catch block found. Error: Rounds out of range (4-31) - this will crash the application.",
+      "source_doc": "https://github.com/kelektiv/node.bcrypt.js/issues/898",
+      "suggested_fix": "Caller MUST validate salt rounds are between 4 and 31. Production systems should use rounds >= 12 for adequate security.\n",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const hash = await bcrypt.hash(password, 10);",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  return hash;",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bcryptjs-hash-internal-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 22,
+      "package": "bcryptjs",
+      "function": "hash",
+      "contract_clause": "hash-internal-failure",
+      "description": "No try-catch block found. Error - this will crash the application.",
+      "source_doc": "https://www.npmjs.com/package/bcryptjs",
+      "suggested_fix": "Caller MUST handle unexpected errors from hash() operation. While rare, internal failures can occur and should not crash the application.\n",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const hash = await bcrypt.hash(password, 10);",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  return hash;",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bcryptjs-compare-type-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 25,
+      "package": "bcryptjs",
+      "function": "compare",
+      "contract_clause": "compare-type-error",
+      "description": "No try-catch block found. Error: Illegal arguments: [actual_type], [actual_type] - this will crash the application.",
+      "source_doc": "https://github.com/dcodeIO/bcrypt.js/issues/76",
+      "suggested_fix": "Caller MUST wrap bcrypt.compare() in try-catch or use .catch() handler. Type errors commonly occur when retrieving hash from database as Buffer instead of string, or when password input is undefined/null.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "async function comparePasswordWithoutErrorHandling(password: string, hash: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const isMatch = await bcrypt.compare(password, hash);",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  return isMatch;",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bcryptjs-compare-invalid-hash",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 25,
+      "package": "bcryptjs",
+      "function": "compare",
+      "contract_clause": "compare-invalid-hash",
+      "description": "No try-catch block found. Error: Invalid hash provided or hash is not a valid bcrypt hash - this will crash the application.",
+      "source_doc": "https://github.com/kelektiv/node.bcrypt.js/issues/1037",
+      "suggested_fix": "Caller MUST handle errors from malformed hash values. Database corruption, string truncation (VARCHAR < 60), or encoding issues can cause invalid hashes. This is the #1 production authentication bug.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "async function comparePasswordWithoutErrorHandling(password: string, hash: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const isMatch = await bcrypt.compare(password, hash);",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  return isMatch;",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bcryptjs-compare-internal-failure",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 25,
+      "package": "bcryptjs",
+      "function": "compare",
+      "contract_clause": "compare-internal-failure",
+      "description": "No try-catch block found. Error - this will crash the application.",
+      "source_doc": "https://www.npmjs.com/package/bcryptjs",
+      "suggested_fix": "Caller MUST handle unexpected errors from compare() operation. Errors should not be silently swallowed as they may indicate security issues or data corruption.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 22,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "async function comparePasswordWithoutErrorHandling(password: string, hash: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const isMatch = await bcrypt.compare(password, hash);",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "  return isMatch;",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 7,
+    "error_count": 7,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "bcryptjs",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "bcryptjs": {
+      "total": 7,
+      "errors": 7,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "bcryptjs-hash-type-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 22,
+          "package": "bcryptjs",
+          "function": "hash",
+          "contract_clause": "hash-type-error",
+          "description": "No try-catch block found. Error: Illegal arguments: [actual_type], [actual_type] - this will crash the application.",
+          "source_doc": "https://github.com/dcodeIO/bcrypt.js/issues/146",
+          "suggested_fix": "Caller MUST wrap bcrypt.hash() in try-catch block or use .catch() handler. Type errors occur when forgetting await on Promise or passing wrong types. Validate input types before calling hash() to provide better error messages.\n",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const hash = await bcrypt.hash(password, 10);",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  return hash;",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bcryptjs-hash-invalid-salt",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 22,
+          "package": "bcryptjs",
+          "function": "hash",
+          "contract_clause": "hash-invalid-salt",
+          "description": "No try-catch block found. Error: Invalid salt version or Illegal arguments - this will crash the application.",
+          "source_doc": "https://github.com/dcodeIO/bcrypt.js/issues/20",
+          "suggested_fix": "Caller MUST handle errors from invalid salt parameter. Use genSalt() to generate valid salts, or pass numeric salt rounds (recommended: 12).\n",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const hash = await bcrypt.hash(password, 10);",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  return hash;",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bcryptjs-hash-rounds-out-of-range",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 22,
+          "package": "bcryptjs",
+          "function": "hash",
+          "contract_clause": "hash-rounds-out-of-range",
+          "description": "No try-catch block found. Error: Rounds out of range (4-31) - this will crash the application.",
+          "source_doc": "https://github.com/kelektiv/node.bcrypt.js/issues/898",
+          "suggested_fix": "Caller MUST validate salt rounds are between 4 and 31. Production systems should use rounds >= 12 for adequate security.\n",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const hash = await bcrypt.hash(password, 10);",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  return hash;",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bcryptjs-hash-internal-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 22,
+          "package": "bcryptjs",
+          "function": "hash",
+          "contract_clause": "hash-internal-failure",
+          "description": "No try-catch block found. Error - this will crash the application.",
+          "source_doc": "https://www.npmjs.com/package/bcryptjs",
+          "suggested_fix": "Caller MUST handle unexpected errors from hash() operation. While rare, internal failures can occur and should not crash the application.\n",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "async function hashPasswordWithoutErrorHandling(password: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const hash = await bcrypt.hash(password, 10);",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  return hash;",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bcryptjs-compare-type-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 25,
+          "package": "bcryptjs",
+          "function": "compare",
+          "contract_clause": "compare-type-error",
+          "description": "No try-catch block found. Error: Illegal arguments: [actual_type], [actual_type] - this will crash the application.",
+          "source_doc": "https://github.com/dcodeIO/bcrypt.js/issues/76",
+          "suggested_fix": "Caller MUST wrap bcrypt.compare() in try-catch or use .catch() handler. Type errors commonly occur when retrieving hash from database as Buffer instead of string, or when password input is undefined/null.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "async function comparePasswordWithoutErrorHandling(password: string, hash: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const isMatch = await bcrypt.compare(password, hash);",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  return isMatch;",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bcryptjs-compare-invalid-hash",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 25,
+          "package": "bcryptjs",
+          "function": "compare",
+          "contract_clause": "compare-invalid-hash",
+          "description": "No try-catch block found. Error: Invalid hash provided or hash is not a valid bcrypt hash - this will crash the application.",
+          "source_doc": "https://github.com/kelektiv/node.bcrypt.js/issues/1037",
+          "suggested_fix": "Caller MUST handle errors from malformed hash values. Database corruption, string truncation (VARCHAR < 60), or encoding issues can cause invalid hashes. This is the #1 production authentication bug.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "async function comparePasswordWithoutErrorHandling(password: string, hash: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const isMatch = await bcrypt.compare(password, hash);",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  return isMatch;",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bcryptjs-compare-internal-failure",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bcryptjs/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 25,
+          "package": "bcryptjs",
+          "function": "compare",
+          "contract_clause": "compare-internal-failure",
+          "description": "No try-catch block found. Error - this will crash the application.",
+          "source_doc": "https://www.npmjs.com/package/bcryptjs",
+          "suggested_fix": "Caller MUST handle unexpected errors from compare() operation. Errors should not be silently swallowed as they may indicate security issues or data corruption.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 22,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "async function comparePasswordWithoutErrorHandling(password: string, hash: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const isMatch = await bcrypt.compare(password, hash);",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "  return isMatch;",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

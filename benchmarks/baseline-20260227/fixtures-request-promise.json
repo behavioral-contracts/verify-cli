@@ -1,0 +1,2133 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:50.393Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "tedious",
+    "twilio",
+    "supertest",
+    "square",
+    "sqlite3",
+    "stripe",
+    "superagent",
+    "socket.io-client",
+    "sinon",
+    "socket.io",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "pino",
+    "react-hook-form",
+    "pg",
+    "puppeteer",
+    "openai",
+    "passport",
+    "node-fetch",
+    "next",
+    "nodemailer",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "lodash",
+    "knex",
+    "jsonwebtoken",
+    "mocha",
+    "ioredis",
+    "helmet",
+    "joi",
+    "graphql",
+    "got",
+    "fastify",
+    "firebase-admin",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "chai",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "request-promise-http-status-code-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 26,
+      "package": "request-promise",
+      "function": "post",
+      "contract_clause": "http-status-code-errors",
+      "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "async function postDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const response = await rp.post({",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "    uri: 'https://api.example.com/users',",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "    body: { name: 'John' },",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-network-request-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 26,
+      "package": "request-promise",
+      "function": "post",
+      "contract_clause": "network-request-errors",
+      "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+      "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "async function postDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const response = await rp.post({",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "    uri: 'https://api.example.com/users',",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "    body: { name: 'John' },",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-transform-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 25,
+      "column": 26,
+      "package": "request-promise",
+      "function": "post",
+      "contract_clause": "transform-errors",
+      "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "async function postDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const response = await rp.post({",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "    uri: 'https://api.example.com/users',",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "    body: { name: 'John' },",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-http-status-code-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 26,
+      "package": "request-promise",
+      "function": "put",
+      "contract_clause": "http-status-code-errors",
+      "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "async function putDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const response = await rp.put({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    uri: 'https://api.example.com/users/123',",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    body: { name: 'Jane' },",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-network-request-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 26,
+      "package": "request-promise",
+      "function": "put",
+      "contract_clause": "network-request-errors",
+      "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+      "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "async function putDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const response = await rp.put({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    uri: 'https://api.example.com/users/123',",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    body: { name: 'Jane' },",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-transform-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 35,
+      "column": 26,
+      "package": "request-promise",
+      "function": "put",
+      "contract_clause": "transform-errors",
+      "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "async function putDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const response = await rp.put({",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "    uri: 'https://api.example.com/users/123',",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "    body: { name: 'Jane' },",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-http-status-code-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 26,
+      "package": "request-promise",
+      "function": "delete",
+      "contract_clause": "http-status-code-errors",
+      "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "async function deleteDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const response = await rp.delete('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "async function patchDataNoErrorHandling() {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-network-request-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 26,
+      "package": "request-promise",
+      "function": "delete",
+      "contract_clause": "network-request-errors",
+      "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+      "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "async function deleteDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const response = await rp.delete('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "async function patchDataNoErrorHandling() {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-transform-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 45,
+      "column": 26,
+      "package": "request-promise",
+      "function": "delete",
+      "contract_clause": "transform-errors",
+      "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+      "code_snippet": {
+        "startLine": 41,
+        "endLine": 49,
+        "lines": [
+          {
+            "line": 41,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "async function deleteDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  const response = await rp.delete('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 46,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "async function patchDataNoErrorHandling() {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-http-status-code-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 51,
+      "column": 26,
+      "package": "request-promise",
+      "function": "patch",
+      "contract_clause": "http-status-code-errors",
+      "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "async function patchDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  const response = await rp.patch({",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "    uri: 'https://api.example.com/users/123',",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "    body: { status: 'active' },",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-network-request-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 51,
+      "column": 26,
+      "package": "request-promise",
+      "function": "patch",
+      "contract_clause": "network-request-errors",
+      "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+      "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "async function patchDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  const response = await rp.patch({",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "    uri: 'https://api.example.com/users/123',",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "    body: { status: 'active' },",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-transform-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 51,
+      "column": 26,
+      "package": "request-promise",
+      "function": "patch",
+      "contract_clause": "transform-errors",
+      "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "async function patchDataNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "  const response = await rp.patch({",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "    uri: 'https://api.example.com/users/123',",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "    body: { status: 'active' },",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "    json: true",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-http-status-code-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 61,
+      "column": 26,
+      "package": "request-promise",
+      "function": "head",
+      "contract_clause": "http-status-code-errors",
+      "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+      "code_snippet": {
+        "startLine": 57,
+        "endLine": 65,
+        "lines": [
+          {
+            "line": 57,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "async function headRequestNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  const response = await rp.head('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 62,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "// Promise without catch",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-network-request-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 61,
+      "column": 26,
+      "package": "request-promise",
+      "function": "head",
+      "contract_clause": "network-request-errors",
+      "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+      "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+      "code_snippet": {
+        "startLine": 57,
+        "endLine": 65,
+        "lines": [
+          {
+            "line": 57,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "async function headRequestNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  const response = await rp.head('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 62,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "// Promise without catch",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-promise-transform-errors",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+      "line": 61,
+      "column": 26,
+      "package": "request-promise",
+      "function": "head",
+      "contract_clause": "transform-errors",
+      "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+      "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+      "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+      "code_snippet": {
+        "startLine": 57,
+        "endLine": 65,
+        "lines": [
+          {
+            "line": 57,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "async function headRequestNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  // ❌ No try-catch - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  const response = await rp.head('https://api.example.com/users/123');",
+            "highlighted": true
+          },
+          {
+            "line": 62,
+            "content": "  return response;",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "// Promise without catch",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 15,
+    "error_count": 15,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "request-promise",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "request-promise": {
+      "total": 15,
+      "errors": 15,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "request-promise-http-status-code-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 26,
+          "package": "request-promise",
+          "function": "post",
+          "contract_clause": "http-status-code-errors",
+          "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "async function postDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const response = await rp.post({",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "    uri: 'https://api.example.com/users',",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "    body: { name: 'John' },",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-network-request-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 26,
+          "package": "request-promise",
+          "function": "post",
+          "contract_clause": "network-request-errors",
+          "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+          "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "async function postDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const response = await rp.post({",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "    uri: 'https://api.example.com/users',",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "    body: { name: 'John' },",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-transform-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 25,
+          "column": 26,
+          "package": "request-promise",
+          "function": "post",
+          "contract_clause": "transform-errors",
+          "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "async function postDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const response = await rp.post({",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "    uri: 'https://api.example.com/users',",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "    body: { name: 'John' },",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-http-status-code-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 26,
+          "package": "request-promise",
+          "function": "put",
+          "contract_clause": "http-status-code-errors",
+          "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "async function putDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const response = await rp.put({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    uri: 'https://api.example.com/users/123',",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    body: { name: 'Jane' },",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-network-request-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 26,
+          "package": "request-promise",
+          "function": "put",
+          "contract_clause": "network-request-errors",
+          "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+          "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "async function putDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const response = await rp.put({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    uri: 'https://api.example.com/users/123',",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    body: { name: 'Jane' },",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-transform-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 35,
+          "column": 26,
+          "package": "request-promise",
+          "function": "put",
+          "contract_clause": "transform-errors",
+          "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "async function putDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const response = await rp.put({",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "    uri: 'https://api.example.com/users/123',",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "    body: { name: 'Jane' },",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-http-status-code-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 26,
+          "package": "request-promise",
+          "function": "delete",
+          "contract_clause": "http-status-code-errors",
+          "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "async function deleteDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const response = await rp.delete('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "async function patchDataNoErrorHandling() {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-network-request-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 26,
+          "package": "request-promise",
+          "function": "delete",
+          "contract_clause": "network-request-errors",
+          "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+          "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "async function deleteDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const response = await rp.delete('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "async function patchDataNoErrorHandling() {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-transform-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 45,
+          "column": 26,
+          "package": "request-promise",
+          "function": "delete",
+          "contract_clause": "transform-errors",
+          "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+          "code_snippet": {
+            "startLine": 41,
+            "endLine": 49,
+            "lines": [
+              {
+                "line": 41,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "async function deleteDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  const response = await rp.delete('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 46,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "async function patchDataNoErrorHandling() {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-http-status-code-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 51,
+          "column": 26,
+          "package": "request-promise",
+          "function": "patch",
+          "contract_clause": "http-status-code-errors",
+          "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "async function patchDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  const response = await rp.patch({",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "    uri: 'https://api.example.com/users/123',",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "    body: { status: 'active' },",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-network-request-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 51,
+          "column": 26,
+          "package": "request-promise",
+          "function": "patch",
+          "contract_clause": "network-request-errors",
+          "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+          "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "async function patchDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  const response = await rp.patch({",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "    uri: 'https://api.example.com/users/123',",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "    body: { status: 'active' },",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-transform-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 51,
+          "column": 26,
+          "package": "request-promise",
+          "function": "patch",
+          "contract_clause": "transform-errors",
+          "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "async function patchDataNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "  const response = await rp.patch({",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "    uri: 'https://api.example.com/users/123',",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "    body: { status: 'active' },",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "    json: true",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-http-status-code-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 61,
+          "column": 26,
+          "package": "request-promise",
+          "function": "head",
+          "contract_clause": "http-status-code-errors",
+          "description": "No try-catch block found. Promise rejection with StatusCodeError containing statusCode, body, options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - StatusCodeError for non-2xx responses",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle HTTP errors",
+          "code_snippet": {
+            "startLine": 57,
+            "endLine": 65,
+            "lines": [
+              {
+                "line": 57,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "async function headRequestNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  const response = await rp.head('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 62,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "// Promise without catch",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-network-request-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 61,
+          "column": 26,
+          "package": "request-promise",
+          "function": "head",
+          "contract_clause": "network-request-errors",
+          "description": "No try-catch block found. Promise rejection with RequestError containing cause (original error), options, response - this will crash the application.",
+          "source_doc": "https://npmdoc.github.io/node-npmdoc-request-promise/build/apidoc.html - RequestError documentation",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle network failures",
+          "code_snippet": {
+            "startLine": 57,
+            "endLine": 65,
+            "lines": [
+              {
+                "line": 57,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "async function headRequestNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  const response = await rp.head('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 62,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "// Promise without catch",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "request-promise-transform-errors",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/request-promise/fixtures/missing-error-handling.ts",
+          "line": 61,
+          "column": 26,
+          "package": "request-promise",
+          "function": "head",
+          "contract_clause": "transform-errors",
+          "description": "No try-catch block found. Promise rejection with TransformError containing cause (transform error), options, response - this will crash the application.",
+          "source_doc": "https://github.com/request/request-promise - TransformError for transformation failures",
+          "suggested_fix": "Use try-catch (async/await) or .catch() (promises) to handle parsing errors",
+          "code_snippet": {
+            "startLine": 57,
+            "endLine": 65,
+            "lines": [
+              {
+                "line": 57,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "async function headRequestNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  // ❌ No try-catch - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  const response = await rp.head('https://api.example.com/users/123');",
+                "highlighted": true
+              },
+              {
+                "line": 62,
+                "content": "  return response;",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "// Promise without catch",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4565 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:19.116Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typeorm",
+    "typescript",
+    "tedious",
+    "twilio",
+    "square",
+    "superagent",
+    "sqlite3",
+    "stripe",
+    "socket.io-client",
+    "socket.io",
+    "sharp",
+    "sinon",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "puppeteer",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "multer",
+    "mocha",
+    "knex",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "cors",
+    "dayjs",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@octokit/rest",
+    "@slack/web-api",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+      "line": 276,
+      "column": 5,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Async function 'handlePrefetch' contains unprotected await expression. await queryClient.prefetchQuery({\n      queryKey: ... may throw unhandled errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 272,
+        "endLine": 280,
+        "lines": [
+          {
+            "line": 272,
+            "content": "  const queryClient = useQueryClient();",
+            "highlighted": false
+          },
+          {
+            "line": 273,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 274,
+            "content": "  const handlePrefetch = async (userId: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 275,
+            "content": "    // ❌ VIOLATION: No try-catch around prefetch",
+            "highlighted": false
+          },
+          {
+            "line": 276,
+            "content": "    await queryClient.prefetchQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 277,
+            "content": "      queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 278,
+            "content": "      queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 279,
+            "content": "        const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 280,
+            "content": "        if (!response.ok) throw new Error('Prefetch failed');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+      "line": 179,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data: user, error: userError, isError: isUserError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 175,
+        "endLine": 183,
+        "lines": [
+          {
+            "line": 175,
+            "content": " * ✅ Dependent queries with proper error handling",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 177,
+            "content": "function UserWithPosts({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 178,
+            "content": "  // First query - get user",
+            "highlighted": false
+          },
+          {
+            "line": 179,
+            "content": "  const { data: user, error: userError, isError: isUserError } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 180,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 181,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 182,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 183,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+      "line": 189,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data: posts, error: postsError, isError: isPostsError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 185,
+        "endLine": 193,
+        "lines": [
+          {
+            "line": 185,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 186,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 187,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 188,
+            "content": "  // Second query - get user's posts (depends on first query)",
+            "highlighted": false
+          },
+          {
+            "line": 189,
+            "content": "  const { data: posts, error: postsError, isError: isPostsError } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 190,
+            "content": "    queryKey: ['posts', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 191,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 192,
+            "content": "      const response = await fetch(`/api/users/${userId}/posts`);",
+            "highlighted": false
+          },
+          {
+            "line": 193,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch posts');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+      "line": 299,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data: user }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 295,
+        "endLine": 303,
+        "lines": [
+          {
+            "line": 295,
+            "content": " * ❌ Dependent queries without checking error states",
+            "highlighted": false
+          },
+          {
+            "line": 296,
+            "content": " * Should trigger: query-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 297,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 298,
+            "content": "function UserWithPostsNoErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 299,
+            "content": "  const { data: user } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 300,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 301,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 302,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 303,
+            "content": "      if (!response.ok) throw new Error('Failed');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+      "line": 308,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data: posts }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 304,
+        "endLine": 312,
+        "lines": [
+          {
+            "line": 304,
+            "content": "      return response.json();",
+            "highlighted": false
+          },
+          {
+            "line": 305,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 306,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 307,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 308,
+            "content": "  const { data: posts } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 309,
+            "content": "    queryKey: ['posts', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 310,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 311,
+            "content": "      const response = await fetch(`/api/users/${userId}/posts`);",
+            "highlighted": false
+          },
+          {
+            "line": 312,
+            "content": "      if (!response.ok) throw new Error('Failed');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 139,
+      "column": 5,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Async function 'handleSubmit' contains unprotected await expression. await mutation.mutateAsync(formData)... may throw unhandled errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 135,
+        "endLine": 143,
+        "lines": [
+          {
+            "line": 135,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "  const handleSubmit = async (formData: { name: string }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "    // ❌ VIOLATION: No try-catch around mutateAsync",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "    await mutation.mutateAsync(formData);",
+            "highlighted": true
+          },
+          {
+            "line": 140,
+            "content": "    console.log('User updated');",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "  return (",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, isLoading }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * ❌ Missing error handling - not checking isError or error property",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * Should trigger: query-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "function UserProfileNoErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const { data, isLoading } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 43,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 39,
+        "endLine": 47,
+        "lines": [
+          {
+            "line": 39,
+            "content": " * ❌ Retries on all errors including client errors (4xx)",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": " * Should trigger: query-retry-client-errors",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "function UserDataBadRetry({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  const { data, error, isError } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 44,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 66,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 62,
+        "endLine": 70,
+        "lines": [
+          {
+            "line": 62,
+            "content": " * ❌ Infinite retries on all errors",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": " * Should trigger: query-retry-client-errors",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "function UserDataInfiniteRetry({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  const { data, error, isError } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 67,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "      if (!response.ok) throw new Error('Failed');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 90,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 86,
+        "endLine": 94,
+        "lines": [
+          {
+            "line": 86,
+            "content": " * ❌ Missing mutation error handling",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": " * Should trigger: mutation-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "function CreateUserFormNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 91,
+            "content": "    mutationFn: async (userData: { name: string; email: string }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "      const response = await fetch('/api/users', {",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "        method: 'POST',",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "        headers: { 'Content-Type': 'application/json' },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 126,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 122,
+        "endLine": 130,
+        "lines": [
+          {
+            "line": 122,
+            "content": " * ❌ Using mutateAsync without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 123,
+            "content": " * Should trigger: mutation-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 124,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 125,
+            "content": "function UpdateUserFormNoTryCatch({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 126,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 127,
+            "content": "    mutationFn: async (userData: { name: string }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "      const response = await fetch(`/api/users/${userId}`, {",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "        body: JSON.stringify(userData),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 159,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 155,
+        "endLine": 163,
+        "lines": [
+          {
+            "line": 155,
+            "content": " * ❌ Optimistic update without error rollback",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": " * Should trigger: mutation-optimistic-update-rollback",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "function TodoToggleNoRollback({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 160,
+            "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "      const response = await fetch(`/api/todos/${id}`, {",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "        body: JSON.stringify({ completed }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-infinite-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 197,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useInfiniteQuery",
+      "contract_clause": "infinite-query-error-unhandled",
+      "description": "Variable '{\n    data,\n    fetchNextPage,\n    hasNextPage,\n    isFetchingNextPage,\n  }' assigned from @tanstack/react-query.useInfiniteQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/infinite-queries",
+      "suggested_fix": "Caller MUST handle errors when fetching additional pages:\n1. Check `error` and `isError` state, OR\n2. Check `fetchNextPageError` for page-specific errors, OR\n3. Provide onError callback in query options.\n\nWhen fetchNextPage fails, previously loaded pages remain accessible via `data`.\nUser must be informed that loading more failed.\n",
+      "code_snippet": {
+        "startLine": 193,
+        "endLine": 201,
+        "lines": [
+          {
+            "line": 193,
+            "content": " * ❌ Missing infinite query error handling",
+            "highlighted": false
+          },
+          {
+            "line": 194,
+            "content": " * Should trigger: infinite-query-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 195,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 196,
+            "content": "function InfiniteUserListNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": "  const {",
+            "highlighted": true
+          },
+          {
+            "line": 198,
+            "content": "    data,",
+            "highlighted": false
+          },
+          {
+            "line": 199,
+            "content": "    fetchNextPage,",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "    hasNextPage,",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "    isFetchingNextPage,",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 258,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 254,
+        "endLine": 262,
+        "lines": [
+          {
+            "line": 254,
+            "content": " * ❌ Treating all errors the same (network vs HTTP)",
+            "highlighted": false
+          },
+          {
+            "line": 255,
+            "content": " * Should trigger: network-error-handling",
+            "highlighted": false
+          },
+          {
+            "line": 256,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 257,
+            "content": "function UserDataGenericErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 258,
+            "content": "  const { data, error, isError } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 259,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 260,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 261,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 262,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 285,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'updateNameMutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 281,
+        "endLine": 289,
+        "lines": [
+          {
+            "line": 281,
+            "content": " * ❌ Parallel mutations without coordination",
+            "highlighted": false
+          },
+          {
+            "line": 282,
+            "content": " * Should trigger: mutation-parallel-execution (warning)",
+            "highlighted": false
+          },
+          {
+            "line": 283,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 284,
+            "content": "function ParallelMutationsNoCoordination() {",
+            "highlighted": false
+          },
+          {
+            "line": 285,
+            "content": "  const updateNameMutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 286,
+            "content": "    mutationFn: async (name: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 287,
+            "content": "      const response = await fetch('/api/user/name', {",
+            "highlighted": false
+          },
+          {
+            "line": 288,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 289,
+            "content": "        body: JSON.stringify({ name }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 296,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'updateEmailMutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 292,
+        "endLine": 300,
+        "lines": [
+          {
+            "line": 292,
+            "content": "      return response.json();",
+            "highlighted": false
+          },
+          {
+            "line": 293,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 294,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 295,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 296,
+            "content": "  const updateEmailMutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 297,
+            "content": "    mutationFn: async (email: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 298,
+            "content": "      const response = await fetch('/api/user/email', {",
+            "highlighted": false
+          },
+          {
+            "line": 299,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 300,
+            "content": "        body: JSON.stringify({ email }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 326,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, isLoading }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 322,
+        "endLine": 330,
+        "lines": [
+          {
+            "line": 322,
+            "content": " * ❌ Not handling background refetch errors for stale queries",
+            "highlighted": false
+          },
+          {
+            "line": 323,
+            "content": " * Should trigger: stale-query-refetch-error",
+            "highlighted": false
+          },
+          {
+            "line": 324,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 325,
+            "content": "function StaleDataNoRefetchErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 326,
+            "content": "  const { data, isLoading } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 327,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 328,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 329,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 330,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 19,
+      "column": 31,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": " * ❌ Missing error handling - not checking isError or error property",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * Should trigger: query-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "function UserProfileNoErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const { data, isLoading } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 90,
+      "column": 20,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 86,
+        "endLine": 94,
+        "lines": [
+          {
+            "line": 86,
+            "content": " * ❌ Missing mutation error handling",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": " * Should trigger: mutation-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "function CreateUserFormNoErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 91,
+            "content": "    mutationFn: async (userData: { name: string; email: string }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "      const response = await fetch('/api/users', {",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "        method: 'POST',",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "        headers: { 'Content-Type': 'application/json' },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 126,
+      "column": 20,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 122,
+        "endLine": 130,
+        "lines": [
+          {
+            "line": 122,
+            "content": " * ❌ Using mutateAsync without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 123,
+            "content": " * Should trigger: mutation-error-unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 124,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 125,
+            "content": "function UpdateUserFormNoTryCatch({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 126,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 127,
+            "content": "    mutationFn: async (userData: { name: string }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "      const response = await fetch(`/api/users/${userId}`, {",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "        body: JSON.stringify(userData),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 159,
+      "column": 20,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 155,
+        "endLine": 163,
+        "lines": [
+          {
+            "line": 155,
+            "content": " * ❌ Optimistic update without error rollback",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": " * Should trigger: mutation-optimistic-update-rollback",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "function TodoToggleNoRollback({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 160,
+            "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "      const response = await fetch(`/api/todos/${id}`, {",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "        body: JSON.stringify({ completed }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-optimistic-update-rollback",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 159,
+      "column": 20,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-optimistic-update-rollback",
+      "description": "Optimistic update without rollback. UI will show incorrect data on error.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/optimistic-updates",
+      "suggested_fix": "When using optimistic updates, the onError callback MUST roll back the optimistic changes.\n\nRequired pattern:\n```\nonMutate: async (newData) => {\n  await queryClient.cancelQueries({ queryKey })\n  const previousData = queryClient.getQueryData(queryKey)\n  queryClient.setQueryData(queryKey, newData) // optimistic update\n  return { previousData } // context for rollback\n},\nonError: (err, newData, context) => {\n  queryClient.setQueryData(queryKey, context.previousData) // ROLLBACK\n}\n```\n\nWithout rollback, failed mutations leave UI showing incorrect data.\n",
+      "code_snippet": {
+        "startLine": 155,
+        "endLine": 163,
+        "lines": [
+          {
+            "line": 155,
+            "content": " * ❌ Optimistic update without error rollback",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": " * Should trigger: mutation-optimistic-update-rollback",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "function TodoToggleNoRollback({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 160,
+            "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "      const response = await fetch(`/api/todos/${id}`, {",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "        body: JSON.stringify({ completed }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-infinite-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 202,
+      "column": 7,
+      "package": "@tanstack/react-query",
+      "function": "useInfiniteQuery",
+      "contract_clause": "infinite-query-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/infinite-queries",
+      "suggested_fix": "Caller MUST handle errors when fetching additional pages:\n1. Check `error` and `isError` state, OR\n2. Check `fetchNextPageError` for page-specific errors, OR\n3. Provide onError callback in query options.\n\nWhen fetchNextPage fails, previously loaded pages remain accessible via `data`.\nUser must be informed that loading more failed.\n",
+      "code_snippet": {
+        "startLine": 198,
+        "endLine": 206,
+        "lines": [
+          {
+            "line": 198,
+            "content": "    data,",
+            "highlighted": false
+          },
+          {
+            "line": 199,
+            "content": "    fetchNextPage,",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "    hasNextPage,",
+            "highlighted": false
+          },
+          {
+            "line": 201,
+            "content": "    isFetchingNextPage,",
+            "highlighted": false
+          },
+          {
+            "line": 202,
+            "content": "  } = useInfiniteQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 203,
+            "content": "    queryKey: ['users', 'infinite'],",
+            "highlighted": false
+          },
+          {
+            "line": 204,
+            "content": "    queryFn: async ({ pageParam = 0 }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "      const response = await fetch(`/api/users?page=${pageParam}`);",
+            "highlighted": false
+          },
+          {
+            "line": 206,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch users');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 285,
+      "column": 30,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 281,
+        "endLine": 289,
+        "lines": [
+          {
+            "line": 281,
+            "content": " * ❌ Parallel mutations without coordination",
+            "highlighted": false
+          },
+          {
+            "line": 282,
+            "content": " * Should trigger: mutation-parallel-execution (warning)",
+            "highlighted": false
+          },
+          {
+            "line": 283,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 284,
+            "content": "function ParallelMutationsNoCoordination() {",
+            "highlighted": false
+          },
+          {
+            "line": 285,
+            "content": "  const updateNameMutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 286,
+            "content": "    mutationFn: async (name: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 287,
+            "content": "      const response = await fetch('/api/user/name', {",
+            "highlighted": false
+          },
+          {
+            "line": 288,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 289,
+            "content": "        body: JSON.stringify({ name }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 296,
+      "column": 31,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 292,
+        "endLine": 300,
+        "lines": [
+          {
+            "line": 292,
+            "content": "      return response.json();",
+            "highlighted": false
+          },
+          {
+            "line": 293,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 294,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 295,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 296,
+            "content": "  const updateEmailMutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 297,
+            "content": "    mutationFn: async (email: string) => {",
+            "highlighted": false
+          },
+          {
+            "line": 298,
+            "content": "      const response = await fetch('/api/user/email', {",
+            "highlighted": false
+          },
+          {
+            "line": 299,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 300,
+            "content": "        body: JSON.stringify({ email }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+      "line": 326,
+      "column": 31,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "No error handling found. Errors will crash the application.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 322,
+        "endLine": 330,
+        "lines": [
+          {
+            "line": 322,
+            "content": " * ❌ Not handling background refetch errors for stale queries",
+            "highlighted": false
+          },
+          {
+            "line": 323,
+            "content": " * Should trigger: stale-query-refetch-error",
+            "highlighted": false
+          },
+          {
+            "line": 324,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 325,
+            "content": "function StaleDataNoRefetchErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 326,
+            "content": "  const { data, isLoading } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 327,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 328,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 329,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 330,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 19,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, error, isError, isLoading }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 15,
+        "endLine": 23,
+        "lines": [
+          {
+            "line": 15,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": " * ✅ Correctly handles query errors by checking isError state",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "function UserProfileWithErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  const { data, error, isError, isLoading } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 20,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 46,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 42,
+        "endLine": 50,
+        "lines": [
+          {
+            "line": 42,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": " * ✅ Correctly handles query errors with onError callback",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "function UserDataWithCallback({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  const { data } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 47,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 71,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 67,
+        "endLine": 75,
+        "lines": [
+          {
+            "line": 67,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": " * ✅ Correctly configures retry to avoid retrying client errors",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "function UserDataWithSmartRetry({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  const { data, error, isError } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 72,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "      const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "      if (!response.ok) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 109,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 105,
+        "endLine": 113,
+        "lines": [
+          {
+            "line": 105,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": " * ✅ Correctly handles mutation errors with onError callback",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "function CreateUserForm() {",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 110,
+            "content": "    mutationFn: async (userData: { name: string; email: string }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "      const response = await fetch('/api/users', {",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "        method: 'POST',",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "        headers: { 'Content-Type': 'application/json' },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 154,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 150,
+        "endLine": 158,
+        "lines": [
+          {
+            "line": 150,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": " * ✅ Correctly handles mutation errors with try-catch on mutateAsync",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "function UpdateUserForm({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 155,
+            "content": "    mutationFn: async (userData: { name: string }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "      const response = await fetch(`/api/users/${userId}`, {",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "        headers: { 'Content-Type': 'application/json' },",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-mutation-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 193,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useMutation",
+      "contract_clause": "mutation-error-unhandled",
+      "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+      "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+      "code_snippet": {
+        "startLine": 189,
+        "endLine": 197,
+        "lines": [
+          {
+            "line": 189,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 190,
+            "content": " * ✅ Correctly handles optimistic update rollback on error",
+            "highlighted": false
+          },
+          {
+            "line": 191,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 192,
+            "content": "function TodoToggle({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+            "highlighted": false
+          },
+          {
+            "line": 193,
+            "content": "  const mutation = useMutation({",
+            "highlighted": true
+          },
+          {
+            "line": 194,
+            "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+            "highlighted": false
+          },
+          {
+            "line": 195,
+            "content": "      const response = await fetch(`/api/todos/${id}`, {",
+            "highlighted": false
+          },
+          {
+            "line": 196,
+            "content": "        method: 'PUT',",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": "        body: JSON.stringify({ completed }),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-infinite-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 233,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useInfiniteQuery",
+      "contract_clause": "infinite-query-error-unhandled",
+      "description": "Variable '{\n    data,\n    error,\n    isError,\n    fetchNextPage,\n    hasNextPage,\n    isFetchingNextPage,\n  }' assigned from @tanstack/react-query.useInfiniteQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/infinite-queries",
+      "suggested_fix": "Caller MUST handle errors when fetching additional pages:\n1. Check `error` and `isError` state, OR\n2. Check `fetchNextPageError` for page-specific errors, OR\n3. Provide onError callback in query options.\n\nWhen fetchNextPage fails, previously loaded pages remain accessible via `data`.\nUser must be informed that loading more failed.\n",
+      "code_snippet": {
+        "startLine": 229,
+        "endLine": 237,
+        "lines": [
+          {
+            "line": 229,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": " * ✅ Correctly handles infinite query errors",
+            "highlighted": false
+          },
+          {
+            "line": 231,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": "function InfiniteUserList() {",
+            "highlighted": false
+          },
+          {
+            "line": 233,
+            "content": "  const {",
+            "highlighted": true
+          },
+          {
+            "line": 234,
+            "content": "    data,",
+            "highlighted": false
+          },
+          {
+            "line": 235,
+            "content": "    error,",
+            "highlighted": false
+          },
+          {
+            "line": 236,
+            "content": "    isError,",
+            "highlighted": false
+          },
+          {
+            "line": 237,
+            "content": "    fetchNextPage,",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "@tanstack/react-query-query-error-unhandled",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+      "line": 329,
+      "column": 9,
+      "package": "@tanstack/react-query",
+      "function": "useQuery",
+      "contract_clause": "query-error-unhandled",
+      "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+      "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+      "code_snippet": {
+        "startLine": 325,
+        "endLine": 333,
+        "lines": [
+          {
+            "line": 325,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 326,
+            "content": " * ✅ Correctly distinguishes between network errors and HTTP errors",
+            "highlighted": false
+          },
+          {
+            "line": 327,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 328,
+            "content": "function UserDataWithNetworkErrorHandling({ userId }: { userId: string }) {",
+            "highlighted": false
+          },
+          {
+            "line": 329,
+            "content": "  const { data, error, isError } = useQuery({",
+            "highlighted": true
+          },
+          {
+            "line": 330,
+            "content": "    queryKey: ['user', userId],",
+            "highlighted": false
+          },
+          {
+            "line": 331,
+            "content": "    queryFn: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 332,
+            "content": "      try {",
+            "highlighted": false
+          },
+          {
+            "line": 333,
+            "content": "        const response = await fetch(`/api/users/${userId}`);",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 34,
+    "error_count": 34,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 14,
+    "withContracts": 3,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "@tanstack/react-query",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "axios",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "@tanstack/react-query": {
+      "total": 34,
+      "errors": 34,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+          "line": 276,
+          "column": 5,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Async function 'handlePrefetch' contains unprotected await expression. await queryClient.prefetchQuery({\n      queryKey: ... may throw unhandled errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 272,
+            "endLine": 280,
+            "lines": [
+              {
+                "line": 272,
+                "content": "  const queryClient = useQueryClient();",
+                "highlighted": false
+              },
+              {
+                "line": 273,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 274,
+                "content": "  const handlePrefetch = async (userId: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 275,
+                "content": "    // ❌ VIOLATION: No try-catch around prefetch",
+                "highlighted": false
+              },
+              {
+                "line": 276,
+                "content": "    await queryClient.prefetchQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 277,
+                "content": "      queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 278,
+                "content": "      queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 279,
+                "content": "        const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 280,
+                "content": "        if (!response.ok) throw new Error('Prefetch failed');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+          "line": 179,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data: user, error: userError, isError: isUserError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 175,
+            "endLine": 183,
+            "lines": [
+              {
+                "line": 175,
+                "content": " * ✅ Dependent queries with proper error handling",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 177,
+                "content": "function UserWithPosts({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 178,
+                "content": "  // First query - get user",
+                "highlighted": false
+              },
+              {
+                "line": 179,
+                "content": "  const { data: user, error: userError, isError: isUserError } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 180,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 181,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 182,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 183,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+          "line": 189,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data: posts, error: postsError, isError: isPostsError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 185,
+            "endLine": 193,
+            "lines": [
+              {
+                "line": 185,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 186,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 187,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 188,
+                "content": "  // Second query - get user's posts (depends on first query)",
+                "highlighted": false
+              },
+              {
+                "line": 189,
+                "content": "  const { data: posts, error: postsError, isError: isPostsError } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 190,
+                "content": "    queryKey: ['posts', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 191,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 192,
+                "content": "      const response = await fetch(`/api/users/${userId}/posts`);",
+                "highlighted": false
+              },
+              {
+                "line": 193,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch posts');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+          "line": 299,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data: user }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 295,
+            "endLine": 303,
+            "lines": [
+              {
+                "line": 295,
+                "content": " * ❌ Dependent queries without checking error states",
+                "highlighted": false
+              },
+              {
+                "line": 296,
+                "content": " * Should trigger: query-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 297,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 298,
+                "content": "function UserWithPostsNoErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 299,
+                "content": "  const { data: user } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 300,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 301,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 302,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 303,
+                "content": "      if (!response.ok) throw new Error('Failed');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/instance-usage.ts",
+          "line": 308,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data: posts }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 304,
+            "endLine": 312,
+            "lines": [
+              {
+                "line": 304,
+                "content": "      return response.json();",
+                "highlighted": false
+              },
+              {
+                "line": 305,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 306,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 307,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 308,
+                "content": "  const { data: posts } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 309,
+                "content": "    queryKey: ['posts', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 310,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 311,
+                "content": "      const response = await fetch(`/api/users/${userId}/posts`);",
+                "highlighted": false
+              },
+              {
+                "line": 312,
+                "content": "      if (!response.ok) throw new Error('Failed');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 139,
+          "column": 5,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Async function 'handleSubmit' contains unprotected await expression. await mutation.mutateAsync(formData)... may throw unhandled errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 135,
+            "endLine": 143,
+            "lines": [
+              {
+                "line": 135,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "  const handleSubmit = async (formData: { name: string }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "    // ❌ VIOLATION: No try-catch around mutateAsync",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "    await mutation.mutateAsync(formData);",
+                "highlighted": true
+              },
+              {
+                "line": 140,
+                "content": "    console.log('User updated');",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "  return (",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, isLoading }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * ❌ Missing error handling - not checking isError or error property",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * Should trigger: query-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "function UserProfileNoErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const { data, isLoading } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 43,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 39,
+            "endLine": 47,
+            "lines": [
+              {
+                "line": 39,
+                "content": " * ❌ Retries on all errors including client errors (4xx)",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": " * Should trigger: query-retry-client-errors",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "function UserDataBadRetry({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  const { data, error, isError } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 44,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 66,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 62,
+            "endLine": 70,
+            "lines": [
+              {
+                "line": 62,
+                "content": " * ❌ Infinite retries on all errors",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": " * Should trigger: query-retry-client-errors",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "function UserDataInfiniteRetry({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  const { data, error, isError } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 67,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "      if (!response.ok) throw new Error('Failed');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 90,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 86,
+            "endLine": 94,
+            "lines": [
+              {
+                "line": 86,
+                "content": " * ❌ Missing mutation error handling",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": " * Should trigger: mutation-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "function CreateUserFormNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 91,
+                "content": "    mutationFn: async (userData: { name: string; email: string }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "      const response = await fetch('/api/users', {",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "        method: 'POST',",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "        headers: { 'Content-Type': 'application/json' },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 126,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 122,
+            "endLine": 130,
+            "lines": [
+              {
+                "line": 122,
+                "content": " * ❌ Using mutateAsync without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 123,
+                "content": " * Should trigger: mutation-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 124,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 125,
+                "content": "function UpdateUserFormNoTryCatch({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 126,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 127,
+                "content": "    mutationFn: async (userData: { name: string }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "      const response = await fetch(`/api/users/${userId}`, {",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "        body: JSON.stringify(userData),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 159,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 155,
+            "endLine": 163,
+            "lines": [
+              {
+                "line": 155,
+                "content": " * ❌ Optimistic update without error rollback",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": " * Should trigger: mutation-optimistic-update-rollback",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "function TodoToggleNoRollback({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 160,
+                "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "      const response = await fetch(`/api/todos/${id}`, {",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "        body: JSON.stringify({ completed }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-infinite-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 197,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useInfiniteQuery",
+          "contract_clause": "infinite-query-error-unhandled",
+          "description": "Variable '{\n    data,\n    fetchNextPage,\n    hasNextPage,\n    isFetchingNextPage,\n  }' assigned from @tanstack/react-query.useInfiniteQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/infinite-queries",
+          "suggested_fix": "Caller MUST handle errors when fetching additional pages:\n1. Check `error` and `isError` state, OR\n2. Check `fetchNextPageError` for page-specific errors, OR\n3. Provide onError callback in query options.\n\nWhen fetchNextPage fails, previously loaded pages remain accessible via `data`.\nUser must be informed that loading more failed.\n",
+          "code_snippet": {
+            "startLine": 193,
+            "endLine": 201,
+            "lines": [
+              {
+                "line": 193,
+                "content": " * ❌ Missing infinite query error handling",
+                "highlighted": false
+              },
+              {
+                "line": 194,
+                "content": " * Should trigger: infinite-query-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 195,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 196,
+                "content": "function InfiniteUserListNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": "  const {",
+                "highlighted": true
+              },
+              {
+                "line": 198,
+                "content": "    data,",
+                "highlighted": false
+              },
+              {
+                "line": 199,
+                "content": "    fetchNextPage,",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "    hasNextPage,",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "    isFetchingNextPage,",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 258,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 254,
+            "endLine": 262,
+            "lines": [
+              {
+                "line": 254,
+                "content": " * ❌ Treating all errors the same (network vs HTTP)",
+                "highlighted": false
+              },
+              {
+                "line": 255,
+                "content": " * Should trigger: network-error-handling",
+                "highlighted": false
+              },
+              {
+                "line": 256,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 257,
+                "content": "function UserDataGenericErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 258,
+                "content": "  const { data, error, isError } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 259,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 260,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 261,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 262,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 285,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'updateNameMutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 281,
+            "endLine": 289,
+            "lines": [
+              {
+                "line": 281,
+                "content": " * ❌ Parallel mutations without coordination",
+                "highlighted": false
+              },
+              {
+                "line": 282,
+                "content": " * Should trigger: mutation-parallel-execution (warning)",
+                "highlighted": false
+              },
+              {
+                "line": 283,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 284,
+                "content": "function ParallelMutationsNoCoordination() {",
+                "highlighted": false
+              },
+              {
+                "line": 285,
+                "content": "  const updateNameMutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 286,
+                "content": "    mutationFn: async (name: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 287,
+                "content": "      const response = await fetch('/api/user/name', {",
+                "highlighted": false
+              },
+              {
+                "line": 288,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 289,
+                "content": "        body: JSON.stringify({ name }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 296,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'updateEmailMutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 292,
+            "endLine": 300,
+            "lines": [
+              {
+                "line": 292,
+                "content": "      return response.json();",
+                "highlighted": false
+              },
+              {
+                "line": 293,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 294,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 295,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 296,
+                "content": "  const updateEmailMutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 297,
+                "content": "    mutationFn: async (email: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 298,
+                "content": "      const response = await fetch('/api/user/email', {",
+                "highlighted": false
+              },
+              {
+                "line": 299,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 300,
+                "content": "        body: JSON.stringify({ email }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 326,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, isLoading }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 322,
+            "endLine": 330,
+            "lines": [
+              {
+                "line": 322,
+                "content": " * ❌ Not handling background refetch errors for stale queries",
+                "highlighted": false
+              },
+              {
+                "line": 323,
+                "content": " * Should trigger: stale-query-refetch-error",
+                "highlighted": false
+              },
+              {
+                "line": 324,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 325,
+                "content": "function StaleDataNoRefetchErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 326,
+                "content": "  const { data, isLoading } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 327,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 328,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 329,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 330,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 19,
+          "column": 31,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": " * ❌ Missing error handling - not checking isError or error property",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * Should trigger: query-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "function UserProfileNoErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const { data, isLoading } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 90,
+          "column": 20,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 86,
+            "endLine": 94,
+            "lines": [
+              {
+                "line": 86,
+                "content": " * ❌ Missing mutation error handling",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": " * Should trigger: mutation-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "function CreateUserFormNoErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 91,
+                "content": "    mutationFn: async (userData: { name: string; email: string }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "      const response = await fetch('/api/users', {",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "        method: 'POST',",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "        headers: { 'Content-Type': 'application/json' },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 126,
+          "column": 20,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 122,
+            "endLine": 130,
+            "lines": [
+              {
+                "line": 122,
+                "content": " * ❌ Using mutateAsync without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 123,
+                "content": " * Should trigger: mutation-error-unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 124,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 125,
+                "content": "function UpdateUserFormNoTryCatch({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 126,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 127,
+                "content": "    mutationFn: async (userData: { name: string }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "      const response = await fetch(`/api/users/${userId}`, {",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "        body: JSON.stringify(userData),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 159,
+          "column": 20,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 155,
+            "endLine": 163,
+            "lines": [
+              {
+                "line": 155,
+                "content": " * ❌ Optimistic update without error rollback",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": " * Should trigger: mutation-optimistic-update-rollback",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "function TodoToggleNoRollback({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 160,
+                "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "      const response = await fetch(`/api/todos/${id}`, {",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "        body: JSON.stringify({ completed }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-optimistic-update-rollback",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 159,
+          "column": 20,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-optimistic-update-rollback",
+          "description": "Optimistic update without rollback. UI will show incorrect data on error.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/optimistic-updates",
+          "suggested_fix": "When using optimistic updates, the onError callback MUST roll back the optimistic changes.\n\nRequired pattern:\n```\nonMutate: async (newData) => {\n  await queryClient.cancelQueries({ queryKey })\n  const previousData = queryClient.getQueryData(queryKey)\n  queryClient.setQueryData(queryKey, newData) // optimistic update\n  return { previousData } // context for rollback\n},\nonError: (err, newData, context) => {\n  queryClient.setQueryData(queryKey, context.previousData) // ROLLBACK\n}\n```\n\nWithout rollback, failed mutations leave UI showing incorrect data.\n",
+          "code_snippet": {
+            "startLine": 155,
+            "endLine": 163,
+            "lines": [
+              {
+                "line": 155,
+                "content": " * ❌ Optimistic update without error rollback",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": " * Should trigger: mutation-optimistic-update-rollback",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "function TodoToggleNoRollback({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 160,
+                "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "      const response = await fetch(`/api/todos/${id}`, {",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "        body: JSON.stringify({ completed }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-infinite-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 202,
+          "column": 7,
+          "package": "@tanstack/react-query",
+          "function": "useInfiniteQuery",
+          "contract_clause": "infinite-query-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/infinite-queries",
+          "suggested_fix": "Caller MUST handle errors when fetching additional pages:\n1. Check `error` and `isError` state, OR\n2. Check `fetchNextPageError` for page-specific errors, OR\n3. Provide onError callback in query options.\n\nWhen fetchNextPage fails, previously loaded pages remain accessible via `data`.\nUser must be informed that loading more failed.\n",
+          "code_snippet": {
+            "startLine": 198,
+            "endLine": 206,
+            "lines": [
+              {
+                "line": 198,
+                "content": "    data,",
+                "highlighted": false
+              },
+              {
+                "line": 199,
+                "content": "    fetchNextPage,",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "    hasNextPage,",
+                "highlighted": false
+              },
+              {
+                "line": 201,
+                "content": "    isFetchingNextPage,",
+                "highlighted": false
+              },
+              {
+                "line": 202,
+                "content": "  } = useInfiniteQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 203,
+                "content": "    queryKey: ['users', 'infinite'],",
+                "highlighted": false
+              },
+              {
+                "line": 204,
+                "content": "    queryFn: async ({ pageParam = 0 }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "      const response = await fetch(`/api/users?page=${pageParam}`);",
+                "highlighted": false
+              },
+              {
+                "line": 206,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch users');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 285,
+          "column": 30,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 281,
+            "endLine": 289,
+            "lines": [
+              {
+                "line": 281,
+                "content": " * ❌ Parallel mutations without coordination",
+                "highlighted": false
+              },
+              {
+                "line": 282,
+                "content": " * Should trigger: mutation-parallel-execution (warning)",
+                "highlighted": false
+              },
+              {
+                "line": 283,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 284,
+                "content": "function ParallelMutationsNoCoordination() {",
+                "highlighted": false
+              },
+              {
+                "line": 285,
+                "content": "  const updateNameMutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 286,
+                "content": "    mutationFn: async (name: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 287,
+                "content": "      const response = await fetch('/api/user/name', {",
+                "highlighted": false
+              },
+              {
+                "line": 288,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 289,
+                "content": "        body: JSON.stringify({ name }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 296,
+          "column": 31,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 292,
+            "endLine": 300,
+            "lines": [
+              {
+                "line": 292,
+                "content": "      return response.json();",
+                "highlighted": false
+              },
+              {
+                "line": 293,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 294,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 295,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 296,
+                "content": "  const updateEmailMutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 297,
+                "content": "    mutationFn: async (email: string) => {",
+                "highlighted": false
+              },
+              {
+                "line": 298,
+                "content": "      const response = await fetch('/api/user/email', {",
+                "highlighted": false
+              },
+              {
+                "line": 299,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 300,
+                "content": "        body: JSON.stringify({ email }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/missing-error-handling.ts",
+          "line": 326,
+          "column": 31,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "No error handling found. Errors will crash the application.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 322,
+            "endLine": 330,
+            "lines": [
+              {
+                "line": 322,
+                "content": " * ❌ Not handling background refetch errors for stale queries",
+                "highlighted": false
+              },
+              {
+                "line": 323,
+                "content": " * Should trigger: stale-query-refetch-error",
+                "highlighted": false
+              },
+              {
+                "line": 324,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 325,
+                "content": "function StaleDataNoRefetchErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 326,
+                "content": "  const { data, isLoading } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 327,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 328,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 329,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 330,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 19,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, error, isError, isLoading }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 15,
+            "endLine": 23,
+            "lines": [
+              {
+                "line": 15,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": " * ✅ Correctly handles query errors by checking isError state",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "function UserProfileWithErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  const { data, error, isError, isLoading } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 20,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 46,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 42,
+            "endLine": 50,
+            "lines": [
+              {
+                "line": 42,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": " * ✅ Correctly handles query errors with onError callback",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "function UserDataWithCallback({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  const { data } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 47,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "      if (!response.ok) throw new Error('Failed to fetch user');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 71,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 67,
+            "endLine": 75,
+            "lines": [
+              {
+                "line": 67,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": " * ✅ Correctly configures retry to avoid retrying client errors",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "function UserDataWithSmartRetry({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  const { data, error, isError } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 72,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "      const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "      if (!response.ok) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 109,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 105,
+            "endLine": 113,
+            "lines": [
+              {
+                "line": 105,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": " * ✅ Correctly handles mutation errors with onError callback",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "function CreateUserForm() {",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 110,
+                "content": "    mutationFn: async (userData: { name: string; email: string }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "      const response = await fetch('/api/users', {",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "        method: 'POST',",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "        headers: { 'Content-Type': 'application/json' },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 154,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 150,
+            "endLine": 158,
+            "lines": [
+              {
+                "line": 150,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": " * ✅ Correctly handles mutation errors with try-catch on mutateAsync",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "function UpdateUserForm({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 155,
+                "content": "    mutationFn: async (userData: { name: string }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "      const response = await fetch(`/api/users/${userId}`, {",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "        headers: { 'Content-Type': 'application/json' },",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-mutation-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 193,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useMutation",
+          "contract_clause": "mutation-error-unhandled",
+          "description": "Variable 'mutation' assigned from @tanstack/react-query.useMutation() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/mutations",
+          "suggested_fix": "Caller MUST handle mutation errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useMutation, OR\n2. Provide onError callback in mutation options, OR\n3. Handle errors in the .catch() when calling mutate/mutateAsync, OR\n4. Configure global mutation error handler via QueryClient mutationCache.onError.\n\nMutations modify server state - users MUST know if they failed.\nSilent failures lead to data inconsistency and user confusion.\n",
+          "code_snippet": {
+            "startLine": 189,
+            "endLine": 197,
+            "lines": [
+              {
+                "line": 189,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 190,
+                "content": " * ✅ Correctly handles optimistic update rollback on error",
+                "highlighted": false
+              },
+              {
+                "line": 191,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 192,
+                "content": "function TodoToggle({ todoId, queryClient }: { todoId: string; queryClient: any }) {",
+                "highlighted": false
+              },
+              {
+                "line": 193,
+                "content": "  const mutation = useMutation({",
+                "highlighted": true
+              },
+              {
+                "line": 194,
+                "content": "    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {",
+                "highlighted": false
+              },
+              {
+                "line": 195,
+                "content": "      const response = await fetch(`/api/todos/${id}`, {",
+                "highlighted": false
+              },
+              {
+                "line": 196,
+                "content": "        method: 'PUT',",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": "        body: JSON.stringify({ completed }),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-infinite-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 233,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useInfiniteQuery",
+          "contract_clause": "infinite-query-error-unhandled",
+          "description": "Variable '{\n    data,\n    error,\n    isError,\n    fetchNextPage,\n    hasNextPage,\n    isFetchingNextPage,\n  }' assigned from @tanstack/react-query.useInfiniteQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/infinite-queries",
+          "suggested_fix": "Caller MUST handle errors when fetching additional pages:\n1. Check `error` and `isError` state, OR\n2. Check `fetchNextPageError` for page-specific errors, OR\n3. Provide onError callback in query options.\n\nWhen fetchNextPage fails, previously loaded pages remain accessible via `data`.\nUser must be informed that loading more failed.\n",
+          "code_snippet": {
+            "startLine": 229,
+            "endLine": 237,
+            "lines": [
+              {
+                "line": 229,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": " * ✅ Correctly handles infinite query errors",
+                "highlighted": false
+              },
+              {
+                "line": 231,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": "function InfiniteUserList() {",
+                "highlighted": false
+              },
+              {
+                "line": 233,
+                "content": "  const {",
+                "highlighted": true
+              },
+              {
+                "line": 234,
+                "content": "    data,",
+                "highlighted": false
+              },
+              {
+                "line": 235,
+                "content": "    error,",
+                "highlighted": false
+              },
+              {
+                "line": 236,
+                "content": "    isError,",
+                "highlighted": false
+              },
+              {
+                "line": 237,
+                "content": "    fetchNextPage,",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "@tanstack/react-query-query-error-unhandled",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/@tanstack/react-query/fixtures/proper-error-handling.ts",
+          "line": 329,
+          "column": 9,
+          "package": "@tanstack/react-query",
+          "function": "useQuery",
+          "contract_clause": "query-error-unhandled",
+          "description": "Variable '{ data, error, isError }' assigned from @tanstack/react-query.useQuery() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://tanstack.com/query/latest/docs/framework/react/guides/query-functions",
+          "suggested_fix": "Caller MUST handle query errors using one of these methods:\n1. Check the `error` property and `isError` state returned by useQuery, OR\n2. Wrap the component in an ErrorBoundary with throwOnError: true, OR\n3. Provide an onError callback in query options.\n\nQuery errors are NOT thrown - they are returned in the error property.\nIgnoring the error state leaves users with broken UI and no feedback.\n",
+          "code_snippet": {
+            "startLine": 325,
+            "endLine": 333,
+            "lines": [
+              {
+                "line": 325,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 326,
+                "content": " * ✅ Correctly distinguishes between network errors and HTTP errors",
+                "highlighted": false
+              },
+              {
+                "line": 327,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 328,
+                "content": "function UserDataWithNetworkErrorHandling({ userId }: { userId: string }) {",
+                "highlighted": false
+              },
+              {
+                "line": 329,
+                "content": "  const { data, error, isError } = useQuery({",
+                "highlighted": true
+              },
+              {
+                "line": 330,
+                "content": "    queryKey: ['user', userId],",
+                "highlighted": false
+              },
+              {
+                "line": 331,
+                "content": "    queryFn: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 332,
+                "content": "      try {",
+                "highlighted": false
+              },
+              {
+                "line": 333,
+                "content": "        const response = await fetch(`/api/users/${userId}`);",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

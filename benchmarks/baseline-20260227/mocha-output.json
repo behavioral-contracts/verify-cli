@@ -1,0 +1,4554 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:18.023Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "typescript",
+    "undici",
+    "twilio",
+    "typeorm",
+    "tedious",
+    "superagent",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "stripe",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sequelize",
+    "request-promise",
+    "puppeteer",
+    "redis",
+    "react-hook-form",
+    "pg",
+    "openai",
+    "passport",
+    "node-fetch",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "cloudinary",
+    "chai",
+    "bullmq",
+    "cassandra-driver",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@supabase/supabase-js",
+    "@slack/web-api",
+    "@nestjs/common",
+    "@octokit/rest",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3",
+    "@clerk/nextjs"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 46,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 42,
+        "endLine": 50,
+        "lines": [
+          {
+            "line": 42,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "// ✅ CORRECT: Instance-based async operations with proper handling",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "describe('Instance usage - proper handling', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 47,
+            "content": "  const db = new DatabaseService();",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  before(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "    // ✅ Proper async instance method in hook",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 72,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 68,
+        "endLine": 76,
+        "lines": [
+          {
+            "line": 68,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "// ❌ VIOLATION: Instance-based async operations without proper handling",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "describe('Instance usage - missing async handling', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 73,
+            "content": "  const db = new DatabaseService();",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  before(() => {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "    // ❌ Instance method returns promise but not awaited/returned",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 93,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 89,
+        "endLine": 97,
+        "lines": [
+          {
+            "line": 89,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "// Edge case: Timeout configuration",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "describe('Timeout configuration edge cases', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 94,
+            "content": "  it('should work with custom timeout', function() {",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    // ✅ Proper timeout configuration (must use function keyword)",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "    this.timeout(3000);",
+            "highlighted": false
+          },
+          {
+            "line": 97,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 114,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 110,
+        "endLine": 118,
+        "lines": [
+          {
+            "line": 110,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "// Edge case: Dynamic test generation",
+            "highlighted": false
+          },
+          {
+            "line": 114,
+            "content": "describe('Dynamic test generation', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 115,
+            "content": "  const testCases = ['user1', 'user2', 'user3'];",
+            "highlighted": false
+          },
+          {
+            "line": 116,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 117,
+            "content": "  testCases.forEach(userId => {",
+            "highlighted": false
+          },
+          {
+            "line": 118,
+            "content": "    it(`should fetch ${userId}`, async () => {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 137,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 133,
+        "endLine": 141,
+        "lines": [
+          {
+            "line": 133,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "// Edge case: Nested describe blocks",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "describe('Outer describe', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 138,
+            "content": "  let outerDb: DatabaseService;",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": "  before(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 141,
+            "content": "    outerDb = new DatabaseService();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 149,
+      "column": 3,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 145,
+        "endLine": 153,
+        "lines": [
+          {
+            "line": 145,
+            "content": "  after(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 146,
+            "content": "    await outerDb.disconnect();",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "  describe('Nested describe - proper handling', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 150,
+            "content": "    it('should access outer scope resource', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 151,
+            "content": "      // ✅ Can access resources from outer scope",
+            "highlighted": false
+          },
+          {
+            "line": 152,
+            "content": "      const results = await outerDb.query('SELECT 1');",
+            "highlighted": false
+          },
+          {
+            "line": 153,
+            "content": "      assert.ok(results);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 157,
+      "column": 3,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 153,
+        "endLine": 161,
+        "lines": [
+          {
+            "line": 153,
+            "content": "      assert.ok(results);",
+            "highlighted": false
+          },
+          {
+            "line": 154,
+            "content": "    });",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "  describe('Nested describe - improper handling', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 158,
+            "content": "    beforeEach(() => {",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "      // ❌ Async operation in nested hook without return/await",
+            "highlighted": false
+          },
+          {
+            "line": 160,
+            "content": "      outerDb.query('DELETE FROM test');",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "    });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 172,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 168,
+        "endLine": 176,
+        "lines": [
+          {
+            "line": 168,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "// Edge case: Skip and only",
+            "highlighted": false
+          },
+          {
+            "line": 172,
+            "content": "describe('Skip and only edge cases', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 173,
+            "content": "  it.skip('should skip this test', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "    // Even skipped tests should have proper async handling",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "    await Promise.resolve();",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 186,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 182,
+        "endLine": 190,
+        "lines": [
+          {
+            "line": 182,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 183,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 184,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 185,
+            "content": "// Edge case: Multiple assertions on same promise",
+            "highlighted": false
+          },
+          {
+            "line": 186,
+            "content": "describe('Multiple assertions on promise', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 187,
+            "content": "  it('should handle multiple assertions properly', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 188,
+            "content": "    // ✅ Proper pattern - await once, assert multiple times",
+            "highlighted": false
+          },
+          {
+            "line": 189,
+            "content": "    const result = await Promise.resolve({ id: 1, name: 'Test', age: 30 });",
+            "highlighted": false
+          },
+          {
+            "line": 190,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 207,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 203,
+        "endLine": 211,
+        "lines": [
+          {
+            "line": 203,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 204,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 205,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 206,
+            "content": "// Edge case: Conditional async logic",
+            "highlighted": false
+          },
+          {
+            "line": 207,
+            "content": "describe('Conditional async logic', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 208,
+            "content": "  it('should handle conditional await properly', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 209,
+            "content": "    const shouldFetch = true;",
+            "highlighted": false
+          },
+          {
+            "line": 210,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 211,
+            "content": "    if (shouldFetch) {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 233,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 229,
+        "endLine": 237,
+        "lines": [
+          {
+            "line": 229,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 230,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 231,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": "// Edge case: Error handling in hooks",
+            "highlighted": false
+          },
+          {
+            "line": 233,
+            "content": "describe('Error handling in hooks', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 234,
+            "content": "  before(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 235,
+            "content": "    // ✅ Proper error handling in hook",
+            "highlighted": false
+          },
+          {
+            "line": 236,
+            "content": "    try {",
+            "highlighted": false
+          },
+          {
+            "line": 237,
+            "content": "      await Promise.reject(new Error('Setup error'));",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 250,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 246,
+        "endLine": 254,
+        "lines": [
+          {
+            "line": 246,
+            "content": "    assert.ok(true);",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 249,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 250,
+            "content": "describe('Unhandled error in hook - prevents tests', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 251,
+            "content": "  before(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 252,
+            "content": "    // ❌ Unhandled rejection in hook - all tests will be skipped",
+            "highlighted": false
+          },
+          {
+            "line": 253,
+            "content": "    await Promise.reject(new Error('Fatal setup error'));",
+            "highlighted": false
+          },
+          {
+            "line": 254,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 263,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 259,
+        "endLine": 267,
+        "lines": [
+          {
+            "line": 259,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 260,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 261,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 262,
+            "content": "// Edge case: Promise.race and Promise.all",
+            "highlighted": false
+          },
+          {
+            "line": 263,
+            "content": "describe('Promise combinators', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 264,
+            "content": "  it('should handle Promise.all properly', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 265,
+            "content": "    // ✅ Proper Promise.all usage",
+            "highlighted": false
+          },
+          {
+            "line": 266,
+            "content": "    const results = await Promise.all([",
+            "highlighted": false
+          },
+          {
+            "line": 267,
+            "content": "      Promise.resolve(1),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 297,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 293,
+        "endLine": 301,
+        "lines": [
+          {
+            "line": 293,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 294,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 295,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 296,
+            "content": "// Edge case: Async iteration",
+            "highlighted": false
+          },
+          {
+            "line": 297,
+            "content": "describe('Async iteration', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 298,
+            "content": "  it('should handle for...of with async properly', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 299,
+            "content": "    const items = [1, 2, 3];",
+            "highlighted": false
+          },
+          {
+            "line": 300,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 301,
+            "content": "    // ✅ Proper sequential async iteration",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+      "line": 323,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 319,
+        "endLine": 327,
+        "lines": [
+          {
+            "line": 319,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 320,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 321,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 322,
+            "content": "// Edge case: Nested async/await",
+            "highlighted": false
+          },
+          {
+            "line": 323,
+            "content": "describe('Nested async operations', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 324,
+            "content": "  it('should handle deeply nested async/await', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 325,
+            "content": "    // ✅ Proper deep nesting with await at each level",
+            "highlighted": false
+          },
+          {
+            "line": 326,
+            "content": "    const level1 = await Promise.resolve('level1');",
+            "highlighted": false
+          },
+          {
+            "line": 327,
+            "content": "    assert.ok(level1);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 37,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 33,
+        "endLine": 41,
+        "lines": [
+          {
+            "line": 33,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "// ❌ VIOLATION: Promise not returned (MOST COMMON BUG - 60-70%)",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "describe('Missing promise return', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 38,
+            "content": "  it('should trigger violation - promise not returned', () => {",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    // ❌ Promise created but NOT returned - test passes immediately!",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    fetchUser('123').then(user => {",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "      assert.strictEqual(user.name, 'John Doe');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 61,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 57,
+        "endLine": 65,
+        "lines": [
+          {
+            "line": 57,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "// ❌ VIOLATION: Missing await keyword (30-40% frequency)",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "describe('Missing await keyword', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 62,
+            "content": "  it('should trigger violation - missing await', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "    // ❌ Async operation not awaited",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "    fetchUser('123'); // Missing await!",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 80,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 76,
+        "endLine": 84,
+        "lines": [
+          {
+            "line": 76,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "// ❌ VIOLATION: Hooks without return or await (50-60% frequency)",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "describe('Hooks without proper async handling', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 81,
+            "content": "  before(() => {",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "    // ❌ Promise not returned - tests start before setup completes",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "    setupDatabase();",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 109,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 105,
+        "endLine": 113,
+        "lines": [
+          {
+            "line": 105,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "// ❌ VIOLATION: Assertion in promise catch block (40-50% frequency)",
+            "highlighted": false
+          },
+          {
+            "line": 109,
+            "content": "describe('Assertions in catch blocks', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 110,
+            "content": "  it('should trigger violation - assertion in catch causes timeout', () => {",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "    return fetchUser('123')",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "      .then(() => {",
+            "highlighted": false
+          },
+          {
+            "line": 113,
+            "content": "        // Expecting rejection but got success",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 134,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 130,
+        "endLine": 138,
+        "lines": [
+          {
+            "line": 130,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "// ❌ VIOLATION: Async operation in synchronous describe (15-20% frequency)",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "describe('Async in describe block', async () => {",
+            "highlighted": true
+          },
+          {
+            "line": 135,
+            "content": "  // ❌ describe() MUST be synchronous - Mocha doesn't await this!",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "  const userData = await fetchUser('123'); // NOT awaited by Mocha!",
+            "highlighted": false
+          },
+          {
+            "line": 137,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "  it('should have undefined user data', () => {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 145,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 141,
+        "endLine": 149,
+        "lines": [
+          {
+            "line": 141,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 142,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 143,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 144,
+            "content": "// ❌ VIOLATION: Promise.all without await",
+            "highlighted": false
+          },
+          {
+            "line": 145,
+            "content": "describe('Promise.all not awaited', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 146,
+            "content": "  it('should trigger violation - Promise.all not awaited', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 147,
+            "content": "    // ❌ Promise.all not awaited",
+            "highlighted": false
+          },
+          {
+            "line": 148,
+            "content": "    Promise.all([",
+            "highlighted": false
+          },
+          {
+            "line": 149,
+            "content": "      fetchUser('123'),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 159,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 155,
+        "endLine": 163,
+        "lines": [
+          {
+            "line": 155,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "// ❌ VIOLATION: Nested promises not returned",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "describe('Nested promises not handled', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 160,
+            "content": "  it('should trigger violation - nested promise not returned', () => {",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "    return fetchUser('123')",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "      .then(user => {",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "        assert.ok(user);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 176,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 172,
+        "endLine": 180,
+        "lines": [
+          {
+            "line": 172,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 173,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "// ❌ VIOLATION: Error in async operation not caught",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "describe('Unhandled async errors', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 177,
+            "content": "  it('should trigger violation - unhandled rejection', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 178,
+            "content": "    const failingOperation = async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 179,
+            "content": "      throw new Error('Unhandled error');",
+            "highlighted": false
+          },
+          {
+            "line": 180,
+            "content": "    };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 200,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 196,
+        "endLine": 204,
+        "lines": [
+          {
+            "line": 196,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 198,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 199,
+            "content": "// ❌ VIOLATION: Resource leak (25-35% frequency)",
+            "highlighted": false
+          },
+          {
+            "line": 200,
+            "content": "describe('Resource leak in hooks', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 201,
+            "content": "  // Simulated server",
+            "highlighted": false
+          },
+          {
+            "line": 202,
+            "content": "  const server = {",
+            "highlighted": false
+          },
+          {
+            "line": 203,
+            "content": "    close: async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 204,
+            "content": "      return new Promise<void>(resolve => {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 222,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 218,
+        "endLine": 226,
+        "lines": [
+          {
+            "line": 218,
+            "content": "  // After this test suite, Mocha may hang waiting for resources to close",
+            "highlighted": false
+          },
+          {
+            "line": 219,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 220,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "// ❌ VIOLATION: Timeout used to mask async bug (30-40% frequency)",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "describe('Timeout masking real bug', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 223,
+            "content": "  it('should trigger violation - timeout hides missing return', function() {",
+            "highlighted": false
+          },
+          {
+            "line": 224,
+            "content": "    this.timeout(5000); // Increased timeout to hide bug",
+            "highlighted": false
+          },
+          {
+            "line": 225,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 226,
+            "content": "    // ❌ Promise not returned - timeout just delays the error",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+      "line": 234,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 230,
+        "endLine": 238,
+        "lines": [
+          {
+            "line": 230,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 231,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 232,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 233,
+            "content": "// ❌ VIOLATION: Multiple async issues in one test",
+            "highlighted": false
+          },
+          {
+            "line": 234,
+            "content": "describe('Multiple async violations', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 235,
+            "content": "  beforeEach(() => {",
+            "highlighted": false
+          },
+          {
+            "line": 236,
+            "content": "    // ❌ Hook promise not returned",
+            "highlighted": false
+          },
+          {
+            "line": 237,
+            "content": "    clearTestData();",
+            "highlighted": false
+          },
+          {
+            "line": 238,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 37,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 33,
+        "endLine": 41,
+        "lines": [
+          {
+            "line": 33,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "// ✅ CORRECT: Async/await pattern",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "describe('Proper async/await tests', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 38,
+            "content": "  it('should fetch user with async/await', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "    const user = await fetchUser('123');",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    assert.strictEqual(user.name, 'John Doe');",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 62,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 58,
+        "endLine": 66,
+        "lines": [
+          {
+            "line": 58,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "// ✅ CORRECT: Promise return pattern",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "describe('Proper promise return tests', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 63,
+            "content": "  it('should fetch user with promise return', () => {",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "    // MUST return the promise",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "    return fetchUser('123').then(user => {",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "      assert.strictEqual(user.name, 'John Doe');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 90,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 86,
+        "endLine": 94,
+        "lines": [
+          {
+            "line": 86,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "// ✅ CORRECT: Suite-level hooks with async/await",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "describe('Proper hook handling - suite level', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 91,
+            "content": "  before(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "    // Proper async setup",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "    await setupDatabase();",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 108,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 104,
+        "endLine": 112,
+        "lines": [
+          {
+            "line": 104,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "// ✅ CORRECT: Test-level hooks with async/await",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "describe('Proper hook handling - test level', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 109,
+            "content": "  beforeEach(async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "    // Proper async setup before each test",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "    await clearTestData();",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 131,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 127,
+        "endLine": 135,
+        "lines": [
+          {
+            "line": 127,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "// ✅ CORRECT: Hooks with promise return",
+            "highlighted": false
+          },
+          {
+            "line": 131,
+            "content": "describe('Proper hook handling - promise return', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 132,
+            "content": "  before(() => {",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "    // Return the promise",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "    return setupDatabase();",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  });",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 160,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 156,
+        "endLine": 164,
+        "lines": [
+          {
+            "line": 156,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 159,
+            "content": "// ✅ CORRECT: Testing expected rejections with async/await",
+            "highlighted": false
+          },
+          {
+            "line": 160,
+            "content": "describe('Proper rejection handling', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 161,
+            "content": "  it('should handle expected rejection with try/catch', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": "    const failingOperation = async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "      throw new Error('Expected error');",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "    };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 193,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 189,
+        "endLine": 197,
+        "lines": [
+          {
+            "line": 189,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 190,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 191,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 192,
+            "content": "// ✅ CORRECT: Multiple async operations",
+            "highlighted": false
+          },
+          {
+            "line": 193,
+            "content": "describe('Proper parallel async operations', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 194,
+            "content": "  it('should handle Promise.all correctly', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 195,
+            "content": "    const results = await Promise.all([",
+            "highlighted": false
+          },
+          {
+            "line": 196,
+            "content": "      fetchUser('123'),",
+            "highlighted": false
+          },
+          {
+            "line": 197,
+            "content": "      fetchUser('456'),",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "mocha-describe-must-be-sync",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+      "line": 218,
+      "column": 1,
+      "package": "mocha",
+      "function": "describe",
+      "contract_clause": "describe-must-be-sync",
+      "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+      "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+      "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+      "code_snippet": {
+        "startLine": 214,
+        "endLine": 222,
+        "lines": [
+          {
+            "line": 214,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 215,
+            "content": "});",
+            "highlighted": false
+          },
+          {
+            "line": 216,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 217,
+            "content": "// ✅ CORRECT: Nested async operations",
+            "highlighted": false
+          },
+          {
+            "line": 218,
+            "content": "describe('Proper nested async operations', () => {",
+            "highlighted": true
+          },
+          {
+            "line": 219,
+            "content": "  it('should handle nested async/await', async () => {",
+            "highlighted": false
+          },
+          {
+            "line": 220,
+            "content": "    const user = await fetchUser('123');",
+            "highlighted": false
+          },
+          {
+            "line": 221,
+            "content": "    assert.ok(user);",
+            "highlighted": false
+          },
+          {
+            "line": 222,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 34,
+    "error_count": 34,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "mocha",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "mocha": {
+      "total": 34,
+      "errors": 34,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 46,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 42,
+            "endLine": 50,
+            "lines": [
+              {
+                "line": 42,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "// ✅ CORRECT: Instance-based async operations with proper handling",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "describe('Instance usage - proper handling', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 47,
+                "content": "  const db = new DatabaseService();",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  before(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "    // ✅ Proper async instance method in hook",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 72,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 68,
+            "endLine": 76,
+            "lines": [
+              {
+                "line": 68,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "// ❌ VIOLATION: Instance-based async operations without proper handling",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "describe('Instance usage - missing async handling', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 73,
+                "content": "  const db = new DatabaseService();",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  before(() => {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "    // ❌ Instance method returns promise but not awaited/returned",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 93,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 89,
+            "endLine": 97,
+            "lines": [
+              {
+                "line": 89,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "// Edge case: Timeout configuration",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "describe('Timeout configuration edge cases', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 94,
+                "content": "  it('should work with custom timeout', function() {",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    // ✅ Proper timeout configuration (must use function keyword)",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "    this.timeout(3000);",
+                "highlighted": false
+              },
+              {
+                "line": 97,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 114,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 110,
+            "endLine": 118,
+            "lines": [
+              {
+                "line": 110,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "// Edge case: Dynamic test generation",
+                "highlighted": false
+              },
+              {
+                "line": 114,
+                "content": "describe('Dynamic test generation', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 115,
+                "content": "  const testCases = ['user1', 'user2', 'user3'];",
+                "highlighted": false
+              },
+              {
+                "line": 116,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 117,
+                "content": "  testCases.forEach(userId => {",
+                "highlighted": false
+              },
+              {
+                "line": 118,
+                "content": "    it(`should fetch ${userId}`, async () => {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 137,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 133,
+            "endLine": 141,
+            "lines": [
+              {
+                "line": 133,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "// Edge case: Nested describe blocks",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "describe('Outer describe', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 138,
+                "content": "  let outerDb: DatabaseService;",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": "  before(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 141,
+                "content": "    outerDb = new DatabaseService();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 149,
+          "column": 3,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 145,
+            "endLine": 153,
+            "lines": [
+              {
+                "line": 145,
+                "content": "  after(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 146,
+                "content": "    await outerDb.disconnect();",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "  describe('Nested describe - proper handling', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 150,
+                "content": "    it('should access outer scope resource', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 151,
+                "content": "      // ✅ Can access resources from outer scope",
+                "highlighted": false
+              },
+              {
+                "line": 152,
+                "content": "      const results = await outerDb.query('SELECT 1');",
+                "highlighted": false
+              },
+              {
+                "line": 153,
+                "content": "      assert.ok(results);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 157,
+          "column": 3,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 153,
+            "endLine": 161,
+            "lines": [
+              {
+                "line": 153,
+                "content": "      assert.ok(results);",
+                "highlighted": false
+              },
+              {
+                "line": 154,
+                "content": "    });",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "  describe('Nested describe - improper handling', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 158,
+                "content": "    beforeEach(() => {",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "      // ❌ Async operation in nested hook without return/await",
+                "highlighted": false
+              },
+              {
+                "line": 160,
+                "content": "      outerDb.query('DELETE FROM test');",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "    });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 172,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 168,
+            "endLine": 176,
+            "lines": [
+              {
+                "line": 168,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "// Edge case: Skip and only",
+                "highlighted": false
+              },
+              {
+                "line": 172,
+                "content": "describe('Skip and only edge cases', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 173,
+                "content": "  it.skip('should skip this test', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "    // Even skipped tests should have proper async handling",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "    await Promise.resolve();",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 186,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 182,
+            "endLine": 190,
+            "lines": [
+              {
+                "line": 182,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 183,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 184,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 185,
+                "content": "// Edge case: Multiple assertions on same promise",
+                "highlighted": false
+              },
+              {
+                "line": 186,
+                "content": "describe('Multiple assertions on promise', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 187,
+                "content": "  it('should handle multiple assertions properly', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 188,
+                "content": "    // ✅ Proper pattern - await once, assert multiple times",
+                "highlighted": false
+              },
+              {
+                "line": 189,
+                "content": "    const result = await Promise.resolve({ id: 1, name: 'Test', age: 30 });",
+                "highlighted": false
+              },
+              {
+                "line": 190,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 207,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 203,
+            "endLine": 211,
+            "lines": [
+              {
+                "line": 203,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 204,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 205,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 206,
+                "content": "// Edge case: Conditional async logic",
+                "highlighted": false
+              },
+              {
+                "line": 207,
+                "content": "describe('Conditional async logic', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 208,
+                "content": "  it('should handle conditional await properly', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 209,
+                "content": "    const shouldFetch = true;",
+                "highlighted": false
+              },
+              {
+                "line": 210,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 211,
+                "content": "    if (shouldFetch) {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 233,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 229,
+            "endLine": 237,
+            "lines": [
+              {
+                "line": 229,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 230,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 231,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": "// Edge case: Error handling in hooks",
+                "highlighted": false
+              },
+              {
+                "line": 233,
+                "content": "describe('Error handling in hooks', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 234,
+                "content": "  before(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 235,
+                "content": "    // ✅ Proper error handling in hook",
+                "highlighted": false
+              },
+              {
+                "line": 236,
+                "content": "    try {",
+                "highlighted": false
+              },
+              {
+                "line": 237,
+                "content": "      await Promise.reject(new Error('Setup error'));",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 250,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 246,
+            "endLine": 254,
+            "lines": [
+              {
+                "line": 246,
+                "content": "    assert.ok(true);",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 249,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 250,
+                "content": "describe('Unhandled error in hook - prevents tests', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 251,
+                "content": "  before(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 252,
+                "content": "    // ❌ Unhandled rejection in hook - all tests will be skipped",
+                "highlighted": false
+              },
+              {
+                "line": 253,
+                "content": "    await Promise.reject(new Error('Fatal setup error'));",
+                "highlighted": false
+              },
+              {
+                "line": 254,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 263,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 259,
+            "endLine": 267,
+            "lines": [
+              {
+                "line": 259,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 260,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 261,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 262,
+                "content": "// Edge case: Promise.race and Promise.all",
+                "highlighted": false
+              },
+              {
+                "line": 263,
+                "content": "describe('Promise combinators', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 264,
+                "content": "  it('should handle Promise.all properly', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 265,
+                "content": "    // ✅ Proper Promise.all usage",
+                "highlighted": false
+              },
+              {
+                "line": 266,
+                "content": "    const results = await Promise.all([",
+                "highlighted": false
+              },
+              {
+                "line": 267,
+                "content": "      Promise.resolve(1),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 297,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 293,
+            "endLine": 301,
+            "lines": [
+              {
+                "line": 293,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 294,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 295,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 296,
+                "content": "// Edge case: Async iteration",
+                "highlighted": false
+              },
+              {
+                "line": 297,
+                "content": "describe('Async iteration', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 298,
+                "content": "  it('should handle for...of with async properly', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 299,
+                "content": "    const items = [1, 2, 3];",
+                "highlighted": false
+              },
+              {
+                "line": 300,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 301,
+                "content": "    // ✅ Proper sequential async iteration",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/instance-usage.ts",
+          "line": 323,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 319,
+            "endLine": 327,
+            "lines": [
+              {
+                "line": 319,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 320,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 321,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 322,
+                "content": "// Edge case: Nested async/await",
+                "highlighted": false
+              },
+              {
+                "line": 323,
+                "content": "describe('Nested async operations', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 324,
+                "content": "  it('should handle deeply nested async/await', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 325,
+                "content": "    // ✅ Proper deep nesting with await at each level",
+                "highlighted": false
+              },
+              {
+                "line": 326,
+                "content": "    const level1 = await Promise.resolve('level1');",
+                "highlighted": false
+              },
+              {
+                "line": 327,
+                "content": "    assert.ok(level1);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 37,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 33,
+            "endLine": 41,
+            "lines": [
+              {
+                "line": 33,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "// ❌ VIOLATION: Promise not returned (MOST COMMON BUG - 60-70%)",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "describe('Missing promise return', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 38,
+                "content": "  it('should trigger violation - promise not returned', () => {",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    // ❌ Promise created but NOT returned - test passes immediately!",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    fetchUser('123').then(user => {",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "      assert.strictEqual(user.name, 'John Doe');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 61,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 57,
+            "endLine": 65,
+            "lines": [
+              {
+                "line": 57,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "// ❌ VIOLATION: Missing await keyword (30-40% frequency)",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "describe('Missing await keyword', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 62,
+                "content": "  it('should trigger violation - missing await', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "    // ❌ Async operation not awaited",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "    fetchUser('123'); // Missing await!",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 80,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 76,
+            "endLine": 84,
+            "lines": [
+              {
+                "line": 76,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "// ❌ VIOLATION: Hooks without return or await (50-60% frequency)",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "describe('Hooks without proper async handling', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 81,
+                "content": "  before(() => {",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "    // ❌ Promise not returned - tests start before setup completes",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "    setupDatabase();",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 109,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 105,
+            "endLine": 113,
+            "lines": [
+              {
+                "line": 105,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "// ❌ VIOLATION: Assertion in promise catch block (40-50% frequency)",
+                "highlighted": false
+              },
+              {
+                "line": 109,
+                "content": "describe('Assertions in catch blocks', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 110,
+                "content": "  it('should trigger violation - assertion in catch causes timeout', () => {",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "    return fetchUser('123')",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "      .then(() => {",
+                "highlighted": false
+              },
+              {
+                "line": 113,
+                "content": "        // Expecting rejection but got success",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 134,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 130,
+            "endLine": 138,
+            "lines": [
+              {
+                "line": 130,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "// ❌ VIOLATION: Async operation in synchronous describe (15-20% frequency)",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "describe('Async in describe block', async () => {",
+                "highlighted": true
+              },
+              {
+                "line": 135,
+                "content": "  // ❌ describe() MUST be synchronous - Mocha doesn't await this!",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "  const userData = await fetchUser('123'); // NOT awaited by Mocha!",
+                "highlighted": false
+              },
+              {
+                "line": 137,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "  it('should have undefined user data', () => {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 145,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 141,
+            "endLine": 149,
+            "lines": [
+              {
+                "line": 141,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 142,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 143,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 144,
+                "content": "// ❌ VIOLATION: Promise.all without await",
+                "highlighted": false
+              },
+              {
+                "line": 145,
+                "content": "describe('Promise.all not awaited', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 146,
+                "content": "  it('should trigger violation - Promise.all not awaited', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 147,
+                "content": "    // ❌ Promise.all not awaited",
+                "highlighted": false
+              },
+              {
+                "line": 148,
+                "content": "    Promise.all([",
+                "highlighted": false
+              },
+              {
+                "line": 149,
+                "content": "      fetchUser('123'),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 159,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 155,
+            "endLine": 163,
+            "lines": [
+              {
+                "line": 155,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "// ❌ VIOLATION: Nested promises not returned",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "describe('Nested promises not handled', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 160,
+                "content": "  it('should trigger violation - nested promise not returned', () => {",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "    return fetchUser('123')",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "      .then(user => {",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "        assert.ok(user);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 176,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 172,
+            "endLine": 180,
+            "lines": [
+              {
+                "line": 172,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 173,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "// ❌ VIOLATION: Error in async operation not caught",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "describe('Unhandled async errors', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 177,
+                "content": "  it('should trigger violation - unhandled rejection', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 178,
+                "content": "    const failingOperation = async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 179,
+                "content": "      throw new Error('Unhandled error');",
+                "highlighted": false
+              },
+              {
+                "line": 180,
+                "content": "    };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 200,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 196,
+            "endLine": 204,
+            "lines": [
+              {
+                "line": 196,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 198,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 199,
+                "content": "// ❌ VIOLATION: Resource leak (25-35% frequency)",
+                "highlighted": false
+              },
+              {
+                "line": 200,
+                "content": "describe('Resource leak in hooks', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 201,
+                "content": "  // Simulated server",
+                "highlighted": false
+              },
+              {
+                "line": 202,
+                "content": "  const server = {",
+                "highlighted": false
+              },
+              {
+                "line": 203,
+                "content": "    close: async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 204,
+                "content": "      return new Promise<void>(resolve => {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 222,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 218,
+            "endLine": 226,
+            "lines": [
+              {
+                "line": 218,
+                "content": "  // After this test suite, Mocha may hang waiting for resources to close",
+                "highlighted": false
+              },
+              {
+                "line": 219,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 220,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "// ❌ VIOLATION: Timeout used to mask async bug (30-40% frequency)",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "describe('Timeout masking real bug', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 223,
+                "content": "  it('should trigger violation - timeout hides missing return', function() {",
+                "highlighted": false
+              },
+              {
+                "line": 224,
+                "content": "    this.timeout(5000); // Increased timeout to hide bug",
+                "highlighted": false
+              },
+              {
+                "line": 225,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 226,
+                "content": "    // ❌ Promise not returned - timeout just delays the error",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/missing-error-handling.ts",
+          "line": 234,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 230,
+            "endLine": 238,
+            "lines": [
+              {
+                "line": 230,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 231,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 232,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 233,
+                "content": "// ❌ VIOLATION: Multiple async issues in one test",
+                "highlighted": false
+              },
+              {
+                "line": 234,
+                "content": "describe('Multiple async violations', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 235,
+                "content": "  beforeEach(() => {",
+                "highlighted": false
+              },
+              {
+                "line": 236,
+                "content": "    // ❌ Hook promise not returned",
+                "highlighted": false
+              },
+              {
+                "line": 237,
+                "content": "    clearTestData();",
+                "highlighted": false
+              },
+              {
+                "line": 238,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 37,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 33,
+            "endLine": 41,
+            "lines": [
+              {
+                "line": 33,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "// ✅ CORRECT: Async/await pattern",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "describe('Proper async/await tests', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 38,
+                "content": "  it('should fetch user with async/await', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "    const user = await fetchUser('123');",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    assert.strictEqual(user.name, 'John Doe');",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 62,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 58,
+            "endLine": 66,
+            "lines": [
+              {
+                "line": 58,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "// ✅ CORRECT: Promise return pattern",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "describe('Proper promise return tests', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 63,
+                "content": "  it('should fetch user with promise return', () => {",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "    // MUST return the promise",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "    return fetchUser('123').then(user => {",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "      assert.strictEqual(user.name, 'John Doe');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 90,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 86,
+            "endLine": 94,
+            "lines": [
+              {
+                "line": 86,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "// ✅ CORRECT: Suite-level hooks with async/await",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "describe('Proper hook handling - suite level', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 91,
+                "content": "  before(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "    // Proper async setup",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "    await setupDatabase();",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 108,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 104,
+            "endLine": 112,
+            "lines": [
+              {
+                "line": 104,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "// ✅ CORRECT: Test-level hooks with async/await",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "describe('Proper hook handling - test level', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 109,
+                "content": "  beforeEach(async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "    // Proper async setup before each test",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "    await clearTestData();",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 131,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 127,
+            "endLine": 135,
+            "lines": [
+              {
+                "line": 127,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "// ✅ CORRECT: Hooks with promise return",
+                "highlighted": false
+              },
+              {
+                "line": 131,
+                "content": "describe('Proper hook handling - promise return', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 132,
+                "content": "  before(() => {",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "    // Return the promise",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "    return setupDatabase();",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  });",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 160,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 156,
+            "endLine": 164,
+            "lines": [
+              {
+                "line": 156,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 159,
+                "content": "// ✅ CORRECT: Testing expected rejections with async/await",
+                "highlighted": false
+              },
+              {
+                "line": 160,
+                "content": "describe('Proper rejection handling', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 161,
+                "content": "  it('should handle expected rejection with try/catch', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": "    const failingOperation = async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "      throw new Error('Expected error');",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "    };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 193,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 189,
+            "endLine": 197,
+            "lines": [
+              {
+                "line": 189,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 190,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 191,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 192,
+                "content": "// ✅ CORRECT: Multiple async operations",
+                "highlighted": false
+              },
+              {
+                "line": 193,
+                "content": "describe('Proper parallel async operations', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 194,
+                "content": "  it('should handle Promise.all correctly', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 195,
+                "content": "    const results = await Promise.all([",
+                "highlighted": false
+              },
+              {
+                "line": 196,
+                "content": "      fetchUser('123'),",
+                "highlighted": false
+              },
+              {
+                "line": 197,
+                "content": "      fetchUser('456'),",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "mocha-describe-must-be-sync",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/mocha/fixtures/proper-error-handling.ts",
+          "line": 218,
+          "column": 1,
+          "package": "mocha",
+          "function": "describe",
+          "contract_clause": "describe-must-be-sync",
+          "description": "No try-catch block found. Undefined behavior - async code in describe not awaited - this will crash the application.",
+          "source_doc": "https://mochajs.org/next/features/asynchronous-code/",
+          "suggested_fix": "describe() callbacks MUST be synchronous. Mocha does NOT await async code in describe blocks. Common mistake: describe('Suite', async () => { const data = await fetchData(); ... }) - data will be undefined. Use before() hook for async setup: before(async () => { data = await fetchData(); }). Frequency: 15-20% of suite setup bugs.\n",
+          "code_snippet": {
+            "startLine": 214,
+            "endLine": 222,
+            "lines": [
+              {
+                "line": 214,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 215,
+                "content": "});",
+                "highlighted": false
+              },
+              {
+                "line": 216,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 217,
+                "content": "// ✅ CORRECT: Nested async operations",
+                "highlighted": false
+              },
+              {
+                "line": 218,
+                "content": "describe('Proper nested async operations', () => {",
+                "highlighted": true
+              },
+              {
+                "line": 219,
+                "content": "  it('should handle nested async/await', async () => {",
+                "highlighted": false
+              },
+              {
+                "line": 220,
+                "content": "    const user = await fetchUser('123');",
+                "highlighted": false
+              },
+              {
+                "line": 221,
+                "content": "    assert.ok(user);",
+                "highlighted": false
+              },
+              {
+                "line": 222,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2634 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:57:41.230Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "square",
+    "superagent",
+    "sqlite3",
+    "socket.io-client",
+    "stripe",
+    "sinon",
+    "socket.io",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "puppeteer",
+    "pg",
+    "react-hook-form",
+    "passport",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "luxon",
+    "mongodb",
+    "mocha",
+    "knex",
+    "joi",
+    "ioredis",
+    "graphql",
+    "got",
+    "fastify",
+    "firebase-admin",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "discord.js",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "chai",
+    "cloudinary",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@tanstack/react-query",
+    "@prisma/client",
+    "@octokit/rest",
+    "@slack/web-api",
+    "@nestjs/common",
+    "@supabase/supabase-js",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+      "line": 29,
+      "column": 19,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'getValue' contains unprotected await expression. await this.redis.get(key)... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 25,
+        "endLine": 33,
+        "lines": [
+          {
+            "line": 25,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  // ❌ No try-catch on instance method - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  async getValue(key: string): Promise<string | null> {",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "    const value = await this.redis.get(key);",
+            "highlighted": true
+          },
+          {
+            "line": 30,
+            "content": "    return value;",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  // ❌ No try-catch on SET operation - should trigger violation",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+      "line": 35,
+      "column": 5,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'setValue' contains unprotected await expression. await this.redis.set(key, value)... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  // ❌ No try-catch on SET operation - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  async setValue(key: string, value: string): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "    await this.redis.set(key, value);",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  // ❌ No try-catch on pipeline - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  async batchOperations(keys: string[]): Promise<void> {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+      "line": 51,
+      "column": 5,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'publishMessage' contains unprotected await expression. await this.pubClient.publish(channel, message)... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 47,
+        "endLine": 55,
+        "lines": [
+          {
+            "line": 47,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  // ❌ No try-catch on pub/sub - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  async publishMessage(channel: string, message: string): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "    await this.pubClient.publish(channel, message);",
+            "highlighted": true
+          },
+          {
+            "line": 52,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  async cleanup(): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    await this.redis.quit();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+      "line": 55,
+      "column": 5,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'cleanup' contains unprotected await expression. await this.redis.quit()... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 51,
+        "endLine": 59,
+        "lines": [
+          {
+            "line": 51,
+            "content": "    await this.pubClient.publish(channel, message);",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  async cleanup(): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    await this.redis.quit();",
+            "highlighted": true
+          },
+          {
+            "line": 56,
+            "content": "    await this.pubClient.quit();",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "    await this.subClient.quit();",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+      "line": 56,
+      "column": 5,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'cleanup' contains unprotected await expression. await this.pubClient.quit()... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 52,
+        "endLine": 60,
+        "lines": [
+          {
+            "line": 52,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  async cleanup(): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    await this.redis.quit();",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "    await this.pubClient.quit();",
+            "highlighted": true
+          },
+          {
+            "line": 57,
+            "content": "    await this.subClient.quit();",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+      "line": 57,
+      "column": 5,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'cleanup' contains unprotected await expression. await this.subClient.quit()... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 53,
+        "endLine": 61,
+        "lines": [
+          {
+            "line": 53,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  async cleanup(): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "    await this.redis.quit();",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "    await this.pubClient.quit();",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "    await this.subClient.quit();",
+            "highlighted": true
+          },
+          {
+            "line": 58,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "// Test instance detection",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-pipeline-results-not-checked",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+      "line": 40,
+      "column": 11,
+      "package": "ioredis",
+      "function": "pipeline",
+      "contract_clause": "pipeline-results-not-checked",
+      "description": "Variable 'pipeline' assigned from ioredis.pipeline() has no error check. Return value must be checked for errors.",
+      "source_doc": "https://github.com/redis/ioredis#pipelines",
+      "suggested_fix": "Caller MUST check each result in pipeline.exec() return value. Format: [[null, 'OK'], [Error, undefined], ...]. Pipeline does NOT reject on individual command failures.\n",
+      "code_snippet": {
+        "startLine": 36,
+        "endLine": 44,
+        "lines": [
+          {
+            "line": 36,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  // ❌ No try-catch on pipeline - should trigger violation",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  async batchOperations(keys: string[]): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    const pipeline = this.redis.pipeline();",
+            "highlighted": true
+          },
+          {
+            "line": 41,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "    for (const key of keys) {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "      pipeline.get(key);",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "    }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 24,
+      "column": 17,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'getValueUnsafe' contains unprotected await expression. await redis.get(key)... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 20,
+        "endLine": 28,
+        "lines": [
+          {
+            "line": 20,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "// ❌ VIOLATION: Command without try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "async function getValueUnsafe(redis: Redis, key: string): Promise<string | null> {",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "  // No try-catch - promise rejection unhandled",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  const value = await redis.get(key);",
+            "highlighted": true
+          },
+          {
+            "line": 25,
+            "content": "  return value;",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "// ❌ VIOLATION: Command without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 31,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'setValueUnsafe' contains unprotected await expression. await redis.set(key, value)... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 27,
+        "endLine": 35,
+        "lines": [
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "// ❌ VIOLATION: Command without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "async function setValueUnsafe(redis: Redis, key: string, value: string): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  // No .catch() - unhandled promise rejection",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  await redis.set(key, value);",
+            "highlighted": true
+          },
+          {
+            "line": 32,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "// ❌ VIOLATION: Multiple commands without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 36,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'multipleCommandsUnsafe' contains unprotected await expression. await redis.set('key1', 'value1')... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 32,
+        "endLine": 40,
+        "lines": [
+          {
+            "line": 32,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "// ❌ VIOLATION: Multiple commands without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  await redis.set('key1', 'value1'); // No error handling",
+            "highlighted": true
+          },
+          {
+            "line": 37,
+            "content": "  await redis.set('key2', 'value2'); // No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  await redis.get('key1');          // No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 37,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'multipleCommandsUnsafe' contains unprotected await expression. await redis.set('key2', 'value2')... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 33,
+        "endLine": 41,
+        "lines": [
+          {
+            "line": 33,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "// ❌ VIOLATION: Multiple commands without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  await redis.set('key1', 'value1'); // No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  await redis.set('key2', 'value2'); // No error handling",
+            "highlighted": true
+          },
+          {
+            "line": 38,
+            "content": "  await redis.get('key1');          // No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "// ❌ VIOLATION: Pipeline without result checking",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 38,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'multipleCommandsUnsafe' contains unprotected await expression. await redis.get('key1')... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 34,
+        "endLine": 42,
+        "lines": [
+          {
+            "line": 34,
+            "content": "// ❌ VIOLATION: Multiple commands without error handling",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  await redis.set('key1', 'value1'); // No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  await redis.set('key2', 'value2'); // No error handling",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  await redis.get('key1');          // No error handling",
+            "highlighted": true
+          },
+          {
+            "line": 39,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "// ❌ VIOLATION: Pipeline without result checking",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "async function pipelineWithoutChecking(redis: Redis): Promise<void> {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 54,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'transactionWithoutNullCheck' contains unprotected await expression. await redis.watch('balance')... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 50,
+        "endLine": 58,
+        "lines": [
+          {
+            "line": 50,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "// ❌ VIOLATION: Transaction without null checking",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "async function transactionWithoutNullCheck(redis: Redis): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  await redis.watch('balance');",
+            "highlighted": true
+          },
+          {
+            "line": 55,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  const currentBalance = parseInt(await redis.get('balance') || '0');",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  await redis",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 56,
+      "column": 35,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'transactionWithoutNullCheck' contains unprotected await expression. await redis.get('balance')... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 52,
+        "endLine": 60,
+        "lines": [
+          {
+            "line": 52,
+            "content": "// ❌ VIOLATION: Transaction without null checking",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "async function transactionWithoutNullCheck(redis: Redis): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "  await redis.watch('balance');",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  const currentBalance = parseInt(await redis.get('balance') || '0');",
+            "highlighted": true
+          },
+          {
+            "line": 57,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  await redis",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "    .multi()",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "    .set('balance', (currentBalance + 100).toString())",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 68,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'subscribeWithoutDuplicate' contains unprotected await expression. await redis.subscribe('notifications')... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 64,
+        "endLine": 72,
+        "lines": [
+          {
+            "line": 64,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "// ❌ VIOLATION: Subscriber mode violation (no duplicate)",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "async function subscribeWithoutDuplicate(redis: Redis): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await redis.subscribe('notifications');",
+            "highlighted": true
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  // ❌ VIOLATION: Normal command in subscriber mode",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  await redis.set('last-subscribed', Date.now().toString());",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 71,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'subscribeWithoutDuplicate' contains unprotected await expression. await redis.set('last-subscribed', Date.now().toSt... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 67,
+        "endLine": 75,
+        "lines": [
+          {
+            "line": 67,
+            "content": "async function subscribeWithoutDuplicate(redis: Redis): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "  await redis.subscribe('notifications');",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  // ❌ VIOLATION: Normal command in subscriber mode",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": "  await redis.set('last-subscribed', Date.now().toString());",
+            "highlighted": true
+          },
+          {
+            "line": 72,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "// ❌ VIOLATION: Blocking command without timeout",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "async function blockingPopWithoutTimeout(redis: Redis): Promise<string | null> {",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 77,
+      "column": 18,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'blockingPopWithoutTimeout' contains unprotected await expression. await redis.brpop('queue')... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 73,
+        "endLine": 81,
+        "lines": [
+          {
+            "line": 73,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "// ❌ VIOLATION: Blocking command without timeout",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "async function blockingPopWithoutTimeout(redis: Redis): Promise<string | null> {",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  // Missing timeout parameter - may block forever",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  const result = await redis.brpop('queue');",
+            "highlighted": true
+          },
+          {
+            "line": 78,
+            "content": "  return result ? result[1] : null;",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "// ❌ VIOLATION: Connect without error handling",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+      "line": 90,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'connectWithoutErrorHandling' contains unprotected await expression. await redis.connect()... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 86,
+        "endLine": 94,
+        "lines": [
+          {
+            "line": 86,
+            "content": "    lazyConnect: true",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "  // Missing error listener",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": "  await redis.connect(); // No try-catch",
+            "highlighted": true
+          },
+          {
+            "line": 91,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "  return redis;",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ioredis-unhandled-promise-rejection",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/proper-error-handling.ts",
+      "line": 38,
+      "column": 3,
+      "package": "ioredis",
+      "function": "get",
+      "contract_clause": "unhandled-promise-rejection",
+      "description": "Async function 'setValueSafely' contains unprotected await expression. await redis.set(key, value).catch((err) => {\n    c... may throw unhandled errors.",
+      "source_doc": "https://github.com/redis/ioredis/issues/433",
+      "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+      "code_snippet": {
+        "startLine": 34,
+        "endLine": 42,
+        "lines": [
+          {
+            "line": 34,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "// ✅ CORRECT: Command with .catch()",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "async function setValueSafely(redis: Redis, key: string, value: string): Promise<void> {",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  await redis.set(key, value).catch((err) => {",
+            "highlighted": true
+          },
+          {
+            "line": 39,
+            "content": "    console.error('Error setting value:', err);",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "    throw err;",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 19,
+    "error_count": 19,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "ioredis",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "ioredis": {
+      "total": 19,
+      "errors": 19,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "line": 29,
+          "column": 19,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'getValue' contains unprotected await expression. await this.redis.get(key)... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 25,
+            "endLine": 33,
+            "lines": [
+              {
+                "line": 25,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  // ❌ No try-catch on instance method - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  async getValue(key: string): Promise<string | null> {",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "    const value = await this.redis.get(key);",
+                "highlighted": true
+              },
+              {
+                "line": 30,
+                "content": "    return value;",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  // ❌ No try-catch on SET operation - should trigger violation",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "line": 35,
+          "column": 5,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'setValue' contains unprotected await expression. await this.redis.set(key, value)... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  // ❌ No try-catch on SET operation - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  async setValue(key: string, value: string): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "    await this.redis.set(key, value);",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  // ❌ No try-catch on pipeline - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  async batchOperations(keys: string[]): Promise<void> {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "line": 51,
+          "column": 5,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'publishMessage' contains unprotected await expression. await this.pubClient.publish(channel, message)... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 47,
+            "endLine": 55,
+            "lines": [
+              {
+                "line": 47,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  // ❌ No try-catch on pub/sub - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  async publishMessage(channel: string, message: string): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "    await this.pubClient.publish(channel, message);",
+                "highlighted": true
+              },
+              {
+                "line": 52,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  async cleanup(): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    await this.redis.quit();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "line": 55,
+          "column": 5,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'cleanup' contains unprotected await expression. await this.redis.quit()... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 51,
+            "endLine": 59,
+            "lines": [
+              {
+                "line": 51,
+                "content": "    await this.pubClient.publish(channel, message);",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  async cleanup(): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    await this.redis.quit();",
+                "highlighted": true
+              },
+              {
+                "line": 56,
+                "content": "    await this.pubClient.quit();",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "    await this.subClient.quit();",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "line": 56,
+          "column": 5,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'cleanup' contains unprotected await expression. await this.pubClient.quit()... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 52,
+            "endLine": 60,
+            "lines": [
+              {
+                "line": 52,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  async cleanup(): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    await this.redis.quit();",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "    await this.pubClient.quit();",
+                "highlighted": true
+              },
+              {
+                "line": 57,
+                "content": "    await this.subClient.quit();",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "line": 57,
+          "column": 5,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'cleanup' contains unprotected await expression. await this.subClient.quit()... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 53,
+            "endLine": 61,
+            "lines": [
+              {
+                "line": 53,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  async cleanup(): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "    await this.redis.quit();",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "    await this.pubClient.quit();",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "    await this.subClient.quit();",
+                "highlighted": true
+              },
+              {
+                "line": 58,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "// Test instance detection",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-pipeline-results-not-checked",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/instance-usage.ts",
+          "line": 40,
+          "column": 11,
+          "package": "ioredis",
+          "function": "pipeline",
+          "contract_clause": "pipeline-results-not-checked",
+          "description": "Variable 'pipeline' assigned from ioredis.pipeline() has no error check. Return value must be checked for errors.",
+          "source_doc": "https://github.com/redis/ioredis#pipelines",
+          "suggested_fix": "Caller MUST check each result in pipeline.exec() return value. Format: [[null, 'OK'], [Error, undefined], ...]. Pipeline does NOT reject on individual command failures.\n",
+          "code_snippet": {
+            "startLine": 36,
+            "endLine": 44,
+            "lines": [
+              {
+                "line": 36,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  // ❌ No try-catch on pipeline - should trigger violation",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  async batchOperations(keys: string[]): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    const pipeline = this.redis.pipeline();",
+                "highlighted": true
+              },
+              {
+                "line": 41,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "    for (const key of keys) {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "      pipeline.get(key);",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "    }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 24,
+          "column": 17,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'getValueUnsafe' contains unprotected await expression. await redis.get(key)... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 20,
+            "endLine": 28,
+            "lines": [
+              {
+                "line": 20,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "// ❌ VIOLATION: Command without try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "async function getValueUnsafe(redis: Redis, key: string): Promise<string | null> {",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "  // No try-catch - promise rejection unhandled",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  const value = await redis.get(key);",
+                "highlighted": true
+              },
+              {
+                "line": 25,
+                "content": "  return value;",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "// ❌ VIOLATION: Command without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 31,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'setValueUnsafe' contains unprotected await expression. await redis.set(key, value)... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 27,
+            "endLine": 35,
+            "lines": [
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "// ❌ VIOLATION: Command without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "async function setValueUnsafe(redis: Redis, key: string, value: string): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  // No .catch() - unhandled promise rejection",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  await redis.set(key, value);",
+                "highlighted": true
+              },
+              {
+                "line": 32,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "// ❌ VIOLATION: Multiple commands without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 36,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'multipleCommandsUnsafe' contains unprotected await expression. await redis.set('key1', 'value1')... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 32,
+            "endLine": 40,
+            "lines": [
+              {
+                "line": 32,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "// ❌ VIOLATION: Multiple commands without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  await redis.set('key1', 'value1'); // No error handling",
+                "highlighted": true
+              },
+              {
+                "line": 37,
+                "content": "  await redis.set('key2', 'value2'); // No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  await redis.get('key1');          // No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 37,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'multipleCommandsUnsafe' contains unprotected await expression. await redis.set('key2', 'value2')... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 33,
+            "endLine": 41,
+            "lines": [
+              {
+                "line": 33,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "// ❌ VIOLATION: Multiple commands without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  await redis.set('key1', 'value1'); // No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  await redis.set('key2', 'value2'); // No error handling",
+                "highlighted": true
+              },
+              {
+                "line": 38,
+                "content": "  await redis.get('key1');          // No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "// ❌ VIOLATION: Pipeline without result checking",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 38,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'multipleCommandsUnsafe' contains unprotected await expression. await redis.get('key1')... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 34,
+            "endLine": 42,
+            "lines": [
+              {
+                "line": 34,
+                "content": "// ❌ VIOLATION: Multiple commands without error handling",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "async function multipleCommandsUnsafe(redis: Redis): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  await redis.set('key1', 'value1'); // No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  await redis.set('key2', 'value2'); // No error handling",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  await redis.get('key1');          // No error handling",
+                "highlighted": true
+              },
+              {
+                "line": 39,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "// ❌ VIOLATION: Pipeline without result checking",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "async function pipelineWithoutChecking(redis: Redis): Promise<void> {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 54,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'transactionWithoutNullCheck' contains unprotected await expression. await redis.watch('balance')... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 50,
+            "endLine": 58,
+            "lines": [
+              {
+                "line": 50,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "// ❌ VIOLATION: Transaction without null checking",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "async function transactionWithoutNullCheck(redis: Redis): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  await redis.watch('balance');",
+                "highlighted": true
+              },
+              {
+                "line": 55,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  const currentBalance = parseInt(await redis.get('balance') || '0');",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  await redis",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 56,
+          "column": 35,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'transactionWithoutNullCheck' contains unprotected await expression. await redis.get('balance')... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 52,
+            "endLine": 60,
+            "lines": [
+              {
+                "line": 52,
+                "content": "// ❌ VIOLATION: Transaction without null checking",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "async function transactionWithoutNullCheck(redis: Redis): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "  await redis.watch('balance');",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  const currentBalance = parseInt(await redis.get('balance') || '0');",
+                "highlighted": true
+              },
+              {
+                "line": 57,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  await redis",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "    .multi()",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "    .set('balance', (currentBalance + 100).toString())",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 68,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'subscribeWithoutDuplicate' contains unprotected await expression. await redis.subscribe('notifications')... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 64,
+            "endLine": 72,
+            "lines": [
+              {
+                "line": 64,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "// ❌ VIOLATION: Subscriber mode violation (no duplicate)",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "async function subscribeWithoutDuplicate(redis: Redis): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await redis.subscribe('notifications');",
+                "highlighted": true
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  // ❌ VIOLATION: Normal command in subscriber mode",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  await redis.set('last-subscribed', Date.now().toString());",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 71,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'subscribeWithoutDuplicate' contains unprotected await expression. await redis.set('last-subscribed', Date.now().toSt... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 67,
+            "endLine": 75,
+            "lines": [
+              {
+                "line": 67,
+                "content": "async function subscribeWithoutDuplicate(redis: Redis): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "  await redis.subscribe('notifications');",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  // ❌ VIOLATION: Normal command in subscriber mode",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": "  await redis.set('last-subscribed', Date.now().toString());",
+                "highlighted": true
+              },
+              {
+                "line": 72,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "// ❌ VIOLATION: Blocking command without timeout",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "async function blockingPopWithoutTimeout(redis: Redis): Promise<string | null> {",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 77,
+          "column": 18,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'blockingPopWithoutTimeout' contains unprotected await expression. await redis.brpop('queue')... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 73,
+            "endLine": 81,
+            "lines": [
+              {
+                "line": 73,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "// ❌ VIOLATION: Blocking command without timeout",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "async function blockingPopWithoutTimeout(redis: Redis): Promise<string | null> {",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  // Missing timeout parameter - may block forever",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  const result = await redis.brpop('queue');",
+                "highlighted": true
+              },
+              {
+                "line": 78,
+                "content": "  return result ? result[1] : null;",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "// ❌ VIOLATION: Connect without error handling",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/missing-error-handling.ts",
+          "line": 90,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'connectWithoutErrorHandling' contains unprotected await expression. await redis.connect()... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 86,
+            "endLine": 94,
+            "lines": [
+              {
+                "line": 86,
+                "content": "    lazyConnect: true",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "  // Missing error listener",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": "  await redis.connect(); // No try-catch",
+                "highlighted": true
+              },
+              {
+                "line": 91,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "  return redis;",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ioredis-unhandled-promise-rejection",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ioredis/fixtures/proper-error-handling.ts",
+          "line": 38,
+          "column": 3,
+          "package": "ioredis",
+          "function": "get",
+          "contract_clause": "unhandled-promise-rejection",
+          "description": "Async function 'setValueSafely' contains unprotected await expression. await redis.set(key, value).catch((err) => {\n    c... may throw unhandled errors.",
+          "source_doc": "https://github.com/redis/ioredis/issues/433",
+          "suggested_fix": "Caller MUST use try-catch (async/await) or .catch() on all Redis commands. Commands return promises that may reject due to: connection errors, WRONGTYPE, timeout, or serialization failures.\n",
+          "code_snippet": {
+            "startLine": 34,
+            "endLine": 42,
+            "lines": [
+              {
+                "line": 34,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "// ✅ CORRECT: Command with .catch()",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "async function setValueSafely(redis: Redis, key: string, value: string): Promise<void> {",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  await redis.set(key, value).catch((err) => {",
+                "highlighted": true
+              },
+              {
+                "line": 39,
+                "content": "    console.error('Error setting value:', err);",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "    throw err;",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

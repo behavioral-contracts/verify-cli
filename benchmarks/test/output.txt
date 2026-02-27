@@ -1,0 +1,224 @@
+  tsconfig: /Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/discord.js/fixtures/tsconfig.json
+  corpus: ../corpus
+  output: benchmarks/test/discord-output.json
+
+Loading behavioral contracts...
+✓ Loaded 66 package contracts
+  (Skipped 11 draft, 23 in-development - use --include-drafts to include)
+
+Discovering packages...
+✓ Discovered 12 packages
+
+Analyzing TypeScript code...
+✓ Analyzed 3 files
+
+Audit record written to benchmarks/test/discord-output.json
+
+Behavioral Contract Verification Report
+────────────────────────────────────────────────────────────────────────────────
+
+Summary:
+  Files analyzed: 3
+  Contracts applied: 363
+  Timestamp: 2026-02-27T16:40:44.187Z
+
+Package Discovery & Coverage
+────────────────────────────────────────────────────────────────────────────────
+
+  Total packages: 12
+  Packages with contracts: 2 (16.7%)
+  Packages without contracts: 10
+
+  ✓ Packages with contracts:
+    discord.js@unknown (contract v1.0.0)
+    typescript@^5.3.3 (contract v1.0.0)
+
+  ⚠ Packages without contracts:
+    @types/node@^20.11.0
+    @typescript-eslint/eslint-plugin@^6.19.0
+    @typescript-eslint/parser@^6.19.0
+    ajv@^8.12.0
+    chalk@^5.3.0
+    commander@^12.0.0
+    eslint@^8.56.0
+    glob@^10.3.10
+    vitest@^1.2.0
+    yaml@^2.3.4
+
+Violations by Package
+────────────────────────────────────────────────────────────────────────────────
+
+discord.js (87 violations)
+  Errors: 87 | Warnings: 0 | Info: 0
+
+  ✗ ../corpus/packages/discord.js/fixtures/instance-usage.ts:20:5
+    Async function 'deleteMessage' contains unprotected await expression. await msg.delete()... may throw unhandled errors.
+    Package: discord.js.Client.login()
+    Contract: discord-client-login-no-try-catch
+
+      16 |  */
+      17 | class MessageHandler {
+      18 |   async deleteMessage(msg: Message) {
+      19 |     // ❌ Should trigger violation - no try-catch
+    > 20 |     await msg.delete();
+      21 |   }
+      22 | 
+      23 |   async editMessage(msg: Message, content: string) {
+      24 |     // ❌ Should trigger violation
+    Fix: MUST wrap await client.login() in try-catch block
+    Docs: https://discord.js.org/docs/packages/discord.js/main/Client:Class#login
+
+  ✗ ../corpus/packages/discord.js/fixtures/instance-usage.ts:25:5
+    Async function 'editMessage' contains unprotected await expression. await msg.edit(content)... may throw unhandled errors.
+    Package: discord.js.Client.login()
+    Contract: discord-client-login-no-try-catch
+
+      21 |   }
+      22 | 
+      23 |   async editMessage(msg: Message, content: string) {
+      24 |     // ❌ Should trigger violation
+    > 25 |     await msg.edit(content);
+      26 |   }
+      27 | 
+      28 |   async replyToMessage(msg: Message, reply: string) {
+      29 |     // ❌ Should trigger violation
+    Fix: MUST wrap await client.login() in try-catch block
+    Docs: https://discord.js.org/docs/packages/discord.js/main/Client:Class#login
+
+  ✗ ../corpus/packages/discord.js/fixtures/instance-usage.ts:30:5
+    Async function 'replyToMessage' contains unprotected await expression. await msg.reply(reply)... may throw unhandled errors.
+    Package: discord.js.Client.login()
+    Contract: discord-client-login-no-try-catch
+
+      26 |   }
+      27 | 
+      28 |   async replyToMessage(msg: Message, reply: string) {
+      29 |     // ❌ Should trigger violation
+    > 30 |     await msg.reply(reply);
+      31 |   }
+      32 | 
+      33 |   async addReaction(msg: Message, emoji: string) {
+      34 |     // ❌ Should trigger violation
+    Fix: MUST wrap await client.login() in try-catch block
+    Docs: https://discord.js.org/docs/packages/discord.js/main/Client:Class#login
+
+  ✗ ../corpus/packages/discord.js/fixtures/instance-usage.ts:35:5
+    Async function 'addReaction' contains unprotected await expression. await msg.react(emoji)... may throw unhandled errors.
+    Package: discord.js.Client.login()
+    Contract: discord-client-login-no-try-catch
+
+      31 |   }
+      32 | 
+      33 |   async addReaction(msg: Message, emoji: string) {
+      34 |     // ❌ Should trigger violation
+    > 35 |     await msg.react(emoji);
+      36 |   }
+      37 | 
+      38 |   async pinMessage(msg: Message) {
+      39 |     // ❌ Should trigger violation
+    Fix: MUST wrap await client.login() in try-catch block
+    Docs: https://discord.js.org/docs/packages/discord.js/main/Client:Class#login
+
+  ✗ ../corpus/packages/discord.js/fixtures/instance-usage.ts:40:5
+    Async function 'pinMessage' contains unprotected await expression. await msg.pin()... may throw unhandled errors.
+    Package: discord.js.Client.login()
+    Contract: discord-client-login-no-try-catch
+
+      36 |   }
+      37 | 
+      38 |   async pinMessage(msg: Message) {
+      39 |     // ❌ Should trigger violation
+    > 40 |     await msg.pin();
+      41 |   }
+      42 | }
+      43 | 
+      44 | // ============================================================================
+    Fix: MUST wrap await client.login() in try-catch block
+    Docs: https://discord.js.org/docs/packages/discord.js/main/Client:Class#login
+
+    ... and 82 more violations in this package
+
+────────────────────────────────────────────────────────────────────────────────
+
+Overall Summary:
+  Total violations: 87
+  Errors: 87
+  Warnings: 0
+  Info: 0
+
+✗ FAILED
+
+
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                  Behavioral Contracts Analysis Report                         ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+Repository: fixtures
+Analyzed: 2/27/2026, 11:40:44 AM
+
+✅ CODE HEALTH SCORE: 58/100
+
+📊 COVERAGE SUMMARY
+────────────────────────────────────────────────────────────────────────────────
+  • Files Analyzed: 3
+  • Package Usages Detected: 363
+  • Contracts Applied: 363
+  • Violations Found: 87 !
+  • Checks Passed: 276 ✓
+
+📈 REPOSITORY HEALTH METRICS
+────────────────────────────────────────────────────────────────────────────────
+  • Error Handling Compliance: 76%
+  • Package Coverage: 17%
+  • Code Maturity: LOW
+  • Risk Level: CRITICAL
+
+
+🔍 PACKAGE USAGE BREAKDOWN
+────────────────────────────────────────────────────────────────────────────────
+  discord.js                      ✗   435 checks   87 issues  80% pass
+      ↳ 87 errors
+  typescript                      ✓   181 checks    0 issues  100% pass
+
+  Total packages analyzed: 66
+  Packages with contracts: 2
+  Fully compliant: 1 ✓
+  With violations: 1 ✗
+
+🏆 BENCHMARKING
+────────────────────────────────────────────────────────────────────────────────
+  Sample Size: 282 repositories analyzed
+
+  Your Violations: 87
+  Average Violations: 29
+
+
+  Your Ranking: Top 90%
+  Your repo is much worse than 10% of repos scanned.
+
+  Percentile Distribution:
+    25th percentile: 0 violations
+    50th percentile: 0 violations (median)
+    75th percentile: 2 violations
+    90th percentile: 38 violations
+
+💡 INSIGHTS
+────────────────────────────────────────────────────────────────────────────────
+  ✓ 1 packages have zero violations (typescript).
+  ! 10 packages don't have contracts yet - coverage opportunity for future scans.
+  ✓ Analyzed 363 function calls across 3 files - comprehensive coverage.
+
+🎯 RECOMMENDATIONS
+────────────────────────────────────────────────────────────────────────────────
+  1. Prioritize fixing ERROR-level violations first (production risk)
+  2. Consider fixing violations package-by-package for manageable progress
+  3. Review error handling patterns with team to establish standards
+  4. Request contracts for your most-used packages (10 uncovered)
+
+════════════════════════════════════════════════════════════════════════════════
+  Report generated by Behavioral Contracts v0.1.0
+  Next scan: Enable CI integration for continuous monitoring
+════════════════════════════════════════════════════════════════════════════════
+
+Reports written to:

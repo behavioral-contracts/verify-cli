@@ -1,0 +1,1098 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T17:58:08.006Z",
+  "git_commit": "8c03361a54e844ad89279ddada158a14f88fd37c",
+  "git_branch": "main",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "winston",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "superagent",
+    "square",
+    "stripe",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "sqlite3",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "puppeteer",
+    "pg",
+    "react-hook-form",
+    "openai",
+    "nodemailer",
+    "node-fetch",
+    "next",
+    "passport",
+    "mysql2",
+    "multer",
+    "moment",
+    "mongoose",
+    "mongodb",
+    "luxon",
+    "mocha",
+    "knex",
+    "ioredis",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "drizzle-orm",
+    "dayjs",
+    "cors",
+    "discord.js",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@tanstack/react-query",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 363,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "bullmq-queue-add-redis-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 9,
+      "package": "bullmq",
+      "function": "add",
+      "contract_clause": "queue-add-redis-error",
+      "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+      "source_doc": "https://docs.bullmq.io/guide/queues",
+      "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  // ❌ No try-catch - will crash if Redis is down",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  await queue.add('job-name', { foo: 'bar' });",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "  await queue.close();",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "// ❌ Missing try-catch on Queue.addBulk()",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bullmq-queue-addbulk-redis-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+      "line": 34,
+      "column": 9,
+      "package": "bullmq",
+      "function": "addBulk",
+      "contract_clause": "queue-addbulk-redis-error",
+      "description": "No try-catch block found. Error causing partial or complete bulk operation failure - this will crash the application.",
+      "source_doc": "https://docs.bullmq.io/guide/queues",
+      "suggested_fix": "Caller MUST wrap Queue.addBulk() in try-catch to handle Redis errors. Bulk operations can partially fail if Redis connection is lost - must handle to prevent data loss.",
+      "code_snippet": {
+        "startLine": 30,
+        "endLine": 38,
+        "lines": [
+          {
+            "line": 30,
+            "content": "    { name: 'job2', data: { id: 2 } },",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  ];",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "  // ❌ No try-catch - will crash if Redis connection fails",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  await queue.addBulk(jobs);",
+            "highlighted": true
+          },
+          {
+            "line": 35,
+            "content": "  await queue.close();",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "// ❌ Worker without error event handlers",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bullmq-queue-add-redis-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+      "line": 63,
+      "column": 9,
+      "package": "bullmq",
+      "function": "add",
+      "contract_clause": "queue-add-redis-error",
+      "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+      "source_doc": "https://docs.bullmq.io/guide/queues",
+      "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+      "code_snippet": {
+        "startLine": 59,
+        "endLine": 67,
+        "lines": [
+          {
+            "line": 59,
+            "content": "async function processJobsWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "  const queue = new Queue('taskQueue');",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  // ❌ No try-catch on add operations",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "  await queue.add('email', { to: 'user@example.com' });",
+            "highlighted": true
+          },
+          {
+            "line": 64,
+            "content": "  await queue.add('notification', { message: 'Hello' });",
+            "highlighted": false
+          },
+          {
+            "line": 65,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  const worker = new Worker('taskQueue', async (job) => {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "    console.log('Processing:', job.name);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bullmq-queue-add-redis-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+      "line": 64,
+      "column": 9,
+      "package": "bullmq",
+      "function": "add",
+      "contract_clause": "queue-add-redis-error",
+      "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+      "source_doc": "https://docs.bullmq.io/guide/queues",
+      "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+      "code_snippet": {
+        "startLine": 60,
+        "endLine": 68,
+        "lines": [
+          {
+            "line": 60,
+            "content": "  const queue = new Queue('taskQueue');",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "  // ❌ No try-catch on add operations",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "  await queue.add('email', { to: 'user@example.com' });",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "  await queue.add('notification', { message: 'Hello' });",
+            "highlighted": true
+          },
+          {
+            "line": 65,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  const worker = new Worker('taskQueue', async (job) => {",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "    console.log('Processing:', job.name);",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "    return { status: 'done' };",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bullmq-queue-add-redis-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+      "line": 80,
+      "column": 9,
+      "package": "bullmq",
+      "function": "add",
+      "contract_clause": "queue-add-redis-error",
+      "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+      "source_doc": "https://docs.bullmq.io/guide/queues",
+      "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+      "code_snippet": {
+        "startLine": 76,
+        "endLine": 84,
+        "lines": [
+          {
+            "line": 76,
+            "content": "async function chainedOperationsWithoutErrorHandling() {",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "  const queue = new Queue('pipeline');",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  // ❌ No try-catch on any of these operations",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "  await queue.add('step1', { data: 1 });",
+            "highlighted": true
+          },
+          {
+            "line": 81,
+            "content": "  await queue.add('step2', { data: 2 });",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "  await queue.add('step3', { data: 3 });",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  await queue.close();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bullmq-queue-add-redis-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+      "line": 81,
+      "column": 9,
+      "package": "bullmq",
+      "function": "add",
+      "contract_clause": "queue-add-redis-error",
+      "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+      "source_doc": "https://docs.bullmq.io/guide/queues",
+      "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+      "code_snippet": {
+        "startLine": 77,
+        "endLine": 85,
+        "lines": [
+          {
+            "line": 77,
+            "content": "  const queue = new Queue('pipeline');",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  // ❌ No try-catch on any of these operations",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "  await queue.add('step1', { data: 1 });",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "  await queue.add('step2', { data: 2 });",
+            "highlighted": true
+          },
+          {
+            "line": 82,
+            "content": "  await queue.add('step3', { data: 3 });",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  await queue.close();",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "bullmq-queue-add-redis-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+      "line": 82,
+      "column": 9,
+      "package": "bullmq",
+      "function": "add",
+      "contract_clause": "queue-add-redis-error",
+      "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+      "source_doc": "https://docs.bullmq.io/guide/queues",
+      "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+      "code_snippet": {
+        "startLine": 78,
+        "endLine": 86,
+        "lines": [
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 79,
+            "content": "  // ❌ No try-catch on any of these operations",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "  await queue.add('step1', { data: 1 });",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "  await queue.add('step2', { data: 2 });",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "  await queue.add('step3', { data: 3 });",
+            "highlighted": true
+          },
+          {
+            "line": 83,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 84,
+            "content": "  await queue.close();",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 7,
+    "error_count": 7,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "bullmq",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "bullmq": {
+      "total": 7,
+      "errors": 7,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "bullmq-queue-add-redis-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 9,
+          "package": "bullmq",
+          "function": "add",
+          "contract_clause": "queue-add-redis-error",
+          "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+          "source_doc": "https://docs.bullmq.io/guide/queues",
+          "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  // ❌ No try-catch - will crash if Redis is down",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  await queue.add('job-name', { foo: 'bar' });",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "  await queue.close();",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "// ❌ Missing try-catch on Queue.addBulk()",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bullmq-queue-addbulk-redis-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "line": 34,
+          "column": 9,
+          "package": "bullmq",
+          "function": "addBulk",
+          "contract_clause": "queue-addbulk-redis-error",
+          "description": "No try-catch block found. Error causing partial or complete bulk operation failure - this will crash the application.",
+          "source_doc": "https://docs.bullmq.io/guide/queues",
+          "suggested_fix": "Caller MUST wrap Queue.addBulk() in try-catch to handle Redis errors. Bulk operations can partially fail if Redis connection is lost - must handle to prevent data loss.",
+          "code_snippet": {
+            "startLine": 30,
+            "endLine": 38,
+            "lines": [
+              {
+                "line": 30,
+                "content": "    { name: 'job2', data: { id: 2 } },",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  ];",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "  // ❌ No try-catch - will crash if Redis connection fails",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  await queue.addBulk(jobs);",
+                "highlighted": true
+              },
+              {
+                "line": 35,
+                "content": "  await queue.close();",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "// ❌ Worker without error event handlers",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bullmq-queue-add-redis-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "line": 63,
+          "column": 9,
+          "package": "bullmq",
+          "function": "add",
+          "contract_clause": "queue-add-redis-error",
+          "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+          "source_doc": "https://docs.bullmq.io/guide/queues",
+          "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+          "code_snippet": {
+            "startLine": 59,
+            "endLine": 67,
+            "lines": [
+              {
+                "line": 59,
+                "content": "async function processJobsWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "  const queue = new Queue('taskQueue');",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  // ❌ No try-catch on add operations",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "  await queue.add('email', { to: 'user@example.com' });",
+                "highlighted": true
+              },
+              {
+                "line": 64,
+                "content": "  await queue.add('notification', { message: 'Hello' });",
+                "highlighted": false
+              },
+              {
+                "line": 65,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  const worker = new Worker('taskQueue', async (job) => {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "    console.log('Processing:', job.name);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bullmq-queue-add-redis-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "line": 64,
+          "column": 9,
+          "package": "bullmq",
+          "function": "add",
+          "contract_clause": "queue-add-redis-error",
+          "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+          "source_doc": "https://docs.bullmq.io/guide/queues",
+          "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+          "code_snippet": {
+            "startLine": 60,
+            "endLine": 68,
+            "lines": [
+              {
+                "line": 60,
+                "content": "  const queue = new Queue('taskQueue');",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "  // ❌ No try-catch on add operations",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "  await queue.add('email', { to: 'user@example.com' });",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "  await queue.add('notification', { message: 'Hello' });",
+                "highlighted": true
+              },
+              {
+                "line": 65,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  const worker = new Worker('taskQueue', async (job) => {",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "    console.log('Processing:', job.name);",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "    return { status: 'done' };",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bullmq-queue-add-redis-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "line": 80,
+          "column": 9,
+          "package": "bullmq",
+          "function": "add",
+          "contract_clause": "queue-add-redis-error",
+          "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+          "source_doc": "https://docs.bullmq.io/guide/queues",
+          "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+          "code_snippet": {
+            "startLine": 76,
+            "endLine": 84,
+            "lines": [
+              {
+                "line": 76,
+                "content": "async function chainedOperationsWithoutErrorHandling() {",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "  const queue = new Queue('pipeline');",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  // ❌ No try-catch on any of these operations",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "  await queue.add('step1', { data: 1 });",
+                "highlighted": true
+              },
+              {
+                "line": 81,
+                "content": "  await queue.add('step2', { data: 2 });",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "  await queue.add('step3', { data: 3 });",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  await queue.close();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bullmq-queue-add-redis-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "line": 81,
+          "column": 9,
+          "package": "bullmq",
+          "function": "add",
+          "contract_clause": "queue-add-redis-error",
+          "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+          "source_doc": "https://docs.bullmq.io/guide/queues",
+          "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+          "code_snippet": {
+            "startLine": 77,
+            "endLine": 85,
+            "lines": [
+              {
+                "line": 77,
+                "content": "  const queue = new Queue('pipeline');",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  // ❌ No try-catch on any of these operations",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "  await queue.add('step1', { data: 1 });",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "  await queue.add('step2', { data: 2 });",
+                "highlighted": true
+              },
+              {
+                "line": 82,
+                "content": "  await queue.add('step3', { data: 3 });",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  await queue.close();",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "bullmq-queue-add-redis-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/bullmq/fixtures/missing-error-handling.ts",
+          "line": 82,
+          "column": 9,
+          "package": "bullmq",
+          "function": "add",
+          "contract_clause": "queue-add-redis-error",
+          "description": "No try-catch block found. Error with Redis connection failure details - this will crash the application.",
+          "source_doc": "https://docs.bullmq.io/guide/queues",
+          "suggested_fix": "Caller MUST wrap Queue.add() in try-catch to handle Redis connection errors. Redis downtime crashes application if unhandled. Use try-catch to gracefully degrade or retry.",
+          "code_snippet": {
+            "startLine": 78,
+            "endLine": 86,
+            "lines": [
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 79,
+                "content": "  // ❌ No try-catch on any of these operations",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "  await queue.add('step1', { data: 1 });",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "  await queue.add('step2', { data: 2 });",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "  await queue.add('step3', { data: 3 });",
+                "highlighted": true
+              },
+              {
+                "line": 83,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 84,
+                "content": "  await queue.close();",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

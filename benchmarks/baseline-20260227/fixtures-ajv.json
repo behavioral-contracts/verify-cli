@@ -1,0 +1,1880 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:57:19.003Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "unzipper",
+    "uuid",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "tedious",
+    "supertest",
+    "square",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "stripe",
+    "superagent",
+    "redis",
+    "request-promise",
+    "pino",
+    "pg",
+    "react-hook-form",
+    "puppeteer",
+    "openai",
+    "node-fetch",
+    "passport",
+    "nodemailer",
+    "next",
+    "mysql2",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "multer",
+    "mocha",
+    "luxon",
+    "knex",
+    "lodash",
+    "jsonwebtoken",
+    "joi",
+    "helmet",
+    "ioredis",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "ethers",
+    "express",
+    "discord.js",
+    "drizzle-orm",
+    "cors",
+    "date-fns",
+    "dayjs",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@sendgrid/mail",
+    "@slack/web-api",
+    "@supabase/supabase-js",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@clerk/nextjs",
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 4,
+  "violations": [
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+      "line": 158,
+      "column": 3,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 154,
+        "endLine": 162,
+        "lines": [
+          {
+            "line": 154,
+            "content": "    }",
+            "highlighted": false
+          },
+          {
+            "line": 155,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 156,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 157,
+            "content": "  // ❌ VIOLATION: Return value not checked",
+            "highlighted": false
+          },
+          {
+            "line": 158,
+            "content": "  ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 159,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 160,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 161,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 162,
+            "content": " * Test 6: Ajv instance as parameter",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+      "line": 166,
+      "column": 3,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 162,
+        "endLine": 170,
+        "lines": [
+          {
+            "line": 162,
+            "content": " * Test 6: Ajv instance as parameter",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "function validateWithProvidedInstance(ajv: Ajv, data: unknown, schema: object): void {",
+            "highlighted": false
+          },
+          {
+            "line": 165,
+            "content": "  // ❌ VIOLATION: Return value ignored",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "  ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 167,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "function validateWithProvidedInstanceProper(ajv: Ajv, data: unknown, schema: object): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "  // ✅ PROPER: Return value checked",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+      "line": 171,
+      "column": 17,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 167,
+        "endLine": 175,
+        "lines": [
+          {
+            "line": 167,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "function validateWithProvidedInstanceProper(ajv: Ajv, data: unknown, schema: object): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "  // ✅ PROPER: Return value checked",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "  const valid = ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 172,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 173,
+            "content": "  if (!valid) {",
+            "highlighted": false
+          },
+          {
+            "line": 174,
+            "content": "    console.error('Validation failed:', ajv.errors);",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "    return false;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+      "line": 243,
+      "column": 5,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 239,
+        "endLine": 247,
+        "lines": [
+          {
+            "line": 239,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 240,
+            "content": "  static validate(data: unknown, schema: object): void {",
+            "highlighted": false
+          },
+          {
+            "line": 241,
+            "content": "    const ajv = ValidatorSingleton.getInstance();",
+            "highlighted": false
+          },
+          {
+            "line": 242,
+            "content": "    // ❌ VIOLATION: Return value not checked",
+            "highlighted": false
+          },
+          {
+            "line": 243,
+            "content": "    ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 244,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 245,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": "  static validateProper(data: unknown, schema: object): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": "    const ajv = ValidatorSingleton.getInstance();",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+      "line": 248,
+      "column": 19,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 244,
+        "endLine": 252,
+        "lines": [
+          {
+            "line": 244,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 245,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 246,
+            "content": "  static validateProper(data: unknown, schema: object): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 247,
+            "content": "    const ajv = ValidatorSingleton.getInstance();",
+            "highlighted": false
+          },
+          {
+            "line": 248,
+            "content": "    const valid = ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 249,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 250,
+            "content": "    if (!valid) {",
+            "highlighted": false
+          },
+          {
+            "line": 251,
+            "content": "      console.error('Validation failed:', ajv.errors);",
+            "highlighted": false
+          },
+          {
+            "line": 252,
+            "content": "      return false;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+      "line": 27,
+      "column": 3,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 23,
+        "endLine": 31,
+        "lines": [
+          {
+            "line": 23,
+            "content": "    required: ['name']",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  // ❌ VIOLATION: Return value ignored - invalid data passes unchecked!",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 28,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  // Data used without validation",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  console.log('Processing data:', data);",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+      "line": 89,
+      "column": 5,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 85,
+        "endLine": 93,
+        "lines": [
+          {
+            "line": 85,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "  for (const item of items) {",
+            "highlighted": false
+          },
+          {
+            "line": 88,
+            "content": "    // ❌ VIOLATION: Return value not checked in loop!",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": "    ajv.validate(schema, item);",
+            "highlighted": true
+          },
+          {
+            "line": 90,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "  console.log('All items processed');",
+            "highlighted": false
+          },
+          {
+            "line": 93,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+      "line": 108,
+      "column": 3,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 104,
+        "endLine": 112,
+        "lines": [
+          {
+            "line": 104,
+            "content": "    }",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "  // ❌ VIOLATION: Calling without checking return value",
+            "highlighted": false
+          },
+          {
+            "line": 108,
+            "content": "  ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 109,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 110,
+            "content": "  // Checking errors property is not enough - should check return value",
+            "highlighted": false
+          },
+          {
+            "line": 111,
+            "content": "  if (ajv.errors) {",
+            "highlighted": false
+          },
+          {
+            "line": 112,
+            "content": "    console.error('Errors found:', ajv.errors);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+      "line": 130,
+      "column": 3,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 126,
+        "endLine": 134,
+        "lines": [
+          {
+            "line": 126,
+            "content": "    required: ['username', 'email']",
+            "highlighted": false
+          },
+          {
+            "line": 127,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 128,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 129,
+            "content": "  // ❌ VIOLATION: Return value not used",
+            "highlighted": false
+          },
+          {
+            "line": 130,
+            "content": "  ajv.validate(userSchema, userData);",
+            "highlighted": true
+          },
+          {
+            "line": 131,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 132,
+            "content": "  // Unsafe - proceeding with potentially invalid data",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  console.log('User registered:', userData);",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+      "line": 173,
+      "column": 3,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 169,
+        "endLine": 177,
+        "lines": [
+          {
+            "line": 169,
+            "content": "    }",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 171,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 172,
+            "content": "  // ❌ VIOLATION: Return value ignored in complex validation",
+            "highlighted": false
+          },
+          {
+            "line": 173,
+            "content": "  ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 174,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 175,
+            "content": "  console.log('Complex data processed');",
+            "highlighted": false
+          },
+          {
+            "line": 176,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 177,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/proper-error-handling.ts",
+      "line": 26,
+      "column": 17,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 22,
+        "endLine": 30,
+        "lines": [
+          {
+            "line": 22,
+            "content": "    },",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "    required: ['name', 'age']",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": "  const valid = ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 27,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  if (!valid) {",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "    console.error('Validation failed:', ajv.errors);",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "    return false;",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/proper-error-handling.ts",
+      "line": 136,
+      "column": 19,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 132,
+        "endLine": 140,
+        "lines": [
+          {
+            "line": 132,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 133,
+            "content": "  const allErrors: unknown[] = [];",
+            "highlighted": false
+          },
+          {
+            "line": 134,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 135,
+            "content": "  for (const item of items) {",
+            "highlighted": false
+          },
+          {
+            "line": 136,
+            "content": "    const valid = ajv.validate(schema, item);",
+            "highlighted": true
+          },
+          {
+            "line": 137,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 138,
+            "content": "    if (!valid) {",
+            "highlighted": false
+          },
+          {
+            "line": 139,
+            "content": "      // Copy errors before next validation overwrites them",
+            "highlighted": false
+          },
+          {
+            "line": 140,
+            "content": "      const errorsCopy = ajv.errors ? [...ajv.errors] : [];",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ajv-validate-returns-false",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/proper-error-handling.ts",
+      "line": 166,
+      "column": 17,
+      "package": "ajv",
+      "function": "validate",
+      "contract_clause": "validate-returns-false",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+      "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+      "code_snippet": {
+        "startLine": 162,
+        "endLine": 170,
+        "lines": [
+          {
+            "line": 162,
+            "content": "      email: { type: 'string', format: 'email' }",
+            "highlighted": false
+          },
+          {
+            "line": 163,
+            "content": "    }",
+            "highlighted": false
+          },
+          {
+            "line": 164,
+            "content": "  };",
+            "highlighted": false
+          },
+          {
+            "line": 165,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 166,
+            "content": "  const valid = ajv.validate(schema, data);",
+            "highlighted": true
+          },
+          {
+            "line": 167,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 168,
+            "content": "  if (!valid) {",
+            "highlighted": false
+          },
+          {
+            "line": 169,
+            "content": "    console.error('Email validation failed:', ajv.errors);",
+            "highlighted": false
+          },
+          {
+            "line": 170,
+            "content": "    throw new Error('Invalid email format');",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 13,
+    "error_count": 13,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 2,
+    "withoutContracts": 11,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "both",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/edge-cases.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "ajv-formats",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": false,
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts"
+        ]
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "ajv": {
+      "total": 13,
+      "errors": 13,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+          "line": 158,
+          "column": 3,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 154,
+            "endLine": 162,
+            "lines": [
+              {
+                "line": 154,
+                "content": "    }",
+                "highlighted": false
+              },
+              {
+                "line": 155,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 156,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 157,
+                "content": "  // ❌ VIOLATION: Return value not checked",
+                "highlighted": false
+              },
+              {
+                "line": 158,
+                "content": "  ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 159,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 160,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 161,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 162,
+                "content": " * Test 6: Ajv instance as parameter",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+          "line": 166,
+          "column": 3,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 162,
+            "endLine": 170,
+            "lines": [
+              {
+                "line": 162,
+                "content": " * Test 6: Ajv instance as parameter",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "function validateWithProvidedInstance(ajv: Ajv, data: unknown, schema: object): void {",
+                "highlighted": false
+              },
+              {
+                "line": 165,
+                "content": "  // ❌ VIOLATION: Return value ignored",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "  ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 167,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "function validateWithProvidedInstanceProper(ajv: Ajv, data: unknown, schema: object): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "  // ✅ PROPER: Return value checked",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+          "line": 171,
+          "column": 17,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 167,
+            "endLine": 175,
+            "lines": [
+              {
+                "line": 167,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "function validateWithProvidedInstanceProper(ajv: Ajv, data: unknown, schema: object): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "  // ✅ PROPER: Return value checked",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "  const valid = ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 172,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 173,
+                "content": "  if (!valid) {",
+                "highlighted": false
+              },
+              {
+                "line": 174,
+                "content": "    console.error('Validation failed:', ajv.errors);",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "    return false;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+          "line": 243,
+          "column": 5,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 239,
+            "endLine": 247,
+            "lines": [
+              {
+                "line": 239,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 240,
+                "content": "  static validate(data: unknown, schema: object): void {",
+                "highlighted": false
+              },
+              {
+                "line": 241,
+                "content": "    const ajv = ValidatorSingleton.getInstance();",
+                "highlighted": false
+              },
+              {
+                "line": 242,
+                "content": "    // ❌ VIOLATION: Return value not checked",
+                "highlighted": false
+              },
+              {
+                "line": 243,
+                "content": "    ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 244,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 245,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": "  static validateProper(data: unknown, schema: object): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": "    const ajv = ValidatorSingleton.getInstance();",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/instance-usage.ts",
+          "line": 248,
+          "column": 19,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 244,
+            "endLine": 252,
+            "lines": [
+              {
+                "line": 244,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 245,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 246,
+                "content": "  static validateProper(data: unknown, schema: object): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 247,
+                "content": "    const ajv = ValidatorSingleton.getInstance();",
+                "highlighted": false
+              },
+              {
+                "line": 248,
+                "content": "    const valid = ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 249,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 250,
+                "content": "    if (!valid) {",
+                "highlighted": false
+              },
+              {
+                "line": 251,
+                "content": "      console.error('Validation failed:', ajv.errors);",
+                "highlighted": false
+              },
+              {
+                "line": 252,
+                "content": "      return false;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+          "line": 27,
+          "column": 3,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 23,
+            "endLine": 31,
+            "lines": [
+              {
+                "line": 23,
+                "content": "    required: ['name']",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  // ❌ VIOLATION: Return value ignored - invalid data passes unchecked!",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 28,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  // Data used without validation",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  console.log('Processing data:', data);",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+          "line": 89,
+          "column": 5,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 85,
+            "endLine": 93,
+            "lines": [
+              {
+                "line": 85,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "  for (const item of items) {",
+                "highlighted": false
+              },
+              {
+                "line": 88,
+                "content": "    // ❌ VIOLATION: Return value not checked in loop!",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": "    ajv.validate(schema, item);",
+                "highlighted": true
+              },
+              {
+                "line": 90,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "  console.log('All items processed');",
+                "highlighted": false
+              },
+              {
+                "line": 93,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+          "line": 108,
+          "column": 3,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 104,
+            "endLine": 112,
+            "lines": [
+              {
+                "line": 104,
+                "content": "    }",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "  // ❌ VIOLATION: Calling without checking return value",
+                "highlighted": false
+              },
+              {
+                "line": 108,
+                "content": "  ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 109,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 110,
+                "content": "  // Checking errors property is not enough - should check return value",
+                "highlighted": false
+              },
+              {
+                "line": 111,
+                "content": "  if (ajv.errors) {",
+                "highlighted": false
+              },
+              {
+                "line": 112,
+                "content": "    console.error('Errors found:', ajv.errors);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+          "line": 130,
+          "column": 3,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 126,
+            "endLine": 134,
+            "lines": [
+              {
+                "line": 126,
+                "content": "    required: ['username', 'email']",
+                "highlighted": false
+              },
+              {
+                "line": 127,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 128,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 129,
+                "content": "  // ❌ VIOLATION: Return value not used",
+                "highlighted": false
+              },
+              {
+                "line": 130,
+                "content": "  ajv.validate(userSchema, userData);",
+                "highlighted": true
+              },
+              {
+                "line": 131,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 132,
+                "content": "  // Unsafe - proceeding with potentially invalid data",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  console.log('User registered:', userData);",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/missing-error-handling.ts",
+          "line": 173,
+          "column": 3,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 169,
+            "endLine": 177,
+            "lines": [
+              {
+                "line": 169,
+                "content": "    }",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 171,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 172,
+                "content": "  // ❌ VIOLATION: Return value ignored in complex validation",
+                "highlighted": false
+              },
+              {
+                "line": 173,
+                "content": "  ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 174,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 175,
+                "content": "  console.log('Complex data processed');",
+                "highlighted": false
+              },
+              {
+                "line": 176,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 177,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/proper-error-handling.ts",
+          "line": 26,
+          "column": 17,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 22,
+            "endLine": 30,
+            "lines": [
+              {
+                "line": 22,
+                "content": "    },",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "    required: ['name', 'age']",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": "  const valid = ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 27,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  if (!valid) {",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "    console.error('Validation failed:', ajv.errors);",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "    return false;",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/proper-error-handling.ts",
+          "line": 136,
+          "column": 19,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 132,
+            "endLine": 140,
+            "lines": [
+              {
+                "line": 132,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 133,
+                "content": "  const allErrors: unknown[] = [];",
+                "highlighted": false
+              },
+              {
+                "line": 134,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 135,
+                "content": "  for (const item of items) {",
+                "highlighted": false
+              },
+              {
+                "line": 136,
+                "content": "    const valid = ajv.validate(schema, item);",
+                "highlighted": true
+              },
+              {
+                "line": 137,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 138,
+                "content": "    if (!valid) {",
+                "highlighted": false
+              },
+              {
+                "line": 139,
+                "content": "      // Copy errors before next validation overwrites them",
+                "highlighted": false
+              },
+              {
+                "line": 140,
+                "content": "      const errorsCopy = ajv.errors ? [...ajv.errors] : [];",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "ajv-validate-returns-false",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/ajv/fixtures/proper-error-handling.ts",
+          "line": 166,
+          "column": 17,
+          "package": "ajv",
+          "function": "validate",
+          "contract_clause": "validate-returns-false",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://ajv.js.org/guide/getting-started.html#basic-data-validation",
+          "suggested_fix": "Caller MUST check the return value of validate() and handle the false case. When validate() returns false, ajv.errors contains validation error details. Without checking the return value, invalid data will pass through, leading to data corruption, business logic errors, or security vulnerabilities. Use pattern: if (!ajv.validate(schema, data)) { console.error(ajv.errors); }\n",
+          "code_snippet": {
+            "startLine": 162,
+            "endLine": 170,
+            "lines": [
+              {
+                "line": 162,
+                "content": "      email: { type: 'string', format: 'email' }",
+                "highlighted": false
+              },
+              {
+                "line": 163,
+                "content": "    }",
+                "highlighted": false
+              },
+              {
+                "line": 164,
+                "content": "  };",
+                "highlighted": false
+              },
+              {
+                "line": 165,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 166,
+                "content": "  const valid = ajv.validate(schema, data);",
+                "highlighted": true
+              },
+              {
+                "line": 167,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 168,
+                "content": "  if (!valid) {",
+                "highlighted": false
+              },
+              {
+                "line": 169,
+                "content": "    console.error('Email validation failed:', ajv.errors);",
+                "highlighted": false
+              },
+              {
+                "line": 170,
+                "content": "    throw new Error('Invalid email format');",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

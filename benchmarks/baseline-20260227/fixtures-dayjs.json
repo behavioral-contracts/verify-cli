@@ -1,0 +1,3276 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:56:54.274Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "ws",
+    "yup",
+    "validator",
+    "winston",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "twilio",
+    "typeorm",
+    "tedious",
+    "supertest",
+    "square",
+    "superagent",
+    "stripe",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "sharp",
+    "simple-oauth2",
+    "sequelize",
+    "redis",
+    "pino",
+    "request-promise",
+    "pg",
+    "react-hook-form",
+    "puppeteer",
+    "openai",
+    "passport",
+    "nodemailer",
+    "next",
+    "node-fetch",
+    "mysql2",
+    "multer",
+    "mongoose",
+    "moment",
+    "mongodb",
+    "mocha",
+    "luxon",
+    "lodash",
+    "knex",
+    "jsonwebtoken",
+    "ioredis",
+    "helmet",
+    "joi",
+    "graphql",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "cors",
+    "date-fns",
+    "cloudinary",
+    "chai",
+    "cassandra-driver",
+    "bull",
+    "bullmq",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@tanstack/react-query",
+    "@supabase/supabase-js",
+    "@sendgrid/mail",
+    "@prisma/client",
+    "@slack/web-api",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@clerk/nextjs",
+    "@hapi/hapi",
+    "@aws-sdk/client-s3",
+    "@anthropic-ai/sdk"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 3,
+  "violations": [
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 16,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 20,
+        "lines": [
+          {
+            "line": 12,
+            "content": " * Edge case: Permissive parsing",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": " * Day.js may parse invalid dates as valid (e.g., Jan 33 → Feb 2)",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "export function testPermissiveParsing(): void {",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  const date = dayjs('2022-01-33'); // Invalid day",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "  if (!date.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "    // This won't trigger - dayjs parses it as 2022-02-02",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "    console.error('Invalid date');",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 28,
+      "column": 10,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 24,
+        "endLine": 32,
+        "lines": [
+          {
+            "line": 24,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": " * ❌ VIOLATION: Inline usage without validation",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "export function inlineUsage(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  return dayjs(input).format('YYYY-MM-DD');",
+            "highlighted": true
+          },
+          {
+            "line": 29,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Proper: Strict mode with validation",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 35,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " * Proper: Strict mode with validation",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "export function strictValidation(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const date = dayjs(input, 'YYYY-MM-DD', true);",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  if (!date.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "    throw new Error('Invalid date format');",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 48,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 44,
+        "endLine": 52,
+        "lines": [
+          {
+            "line": 44,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": " * ❌ VIOLATION: No validation even with strict parsing",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "export function strictNoValidation(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "  const date = dayjs(input, 'YYYY-MM-DD', true);",
+            "highlighted": true
+          },
+          {
+            "line": 49,
+            "content": "  // Missing: validation check",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "  return date.format();",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 57,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 53,
+        "endLine": 61,
+        "lines": [
+          {
+            "line": 53,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": " * Edge case: Conditional validation (may or may not be proper)",
+            "highlighted": false
+          },
+          {
+            "line": 55,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "export function conditionalValidation(input: string, strict: boolean): string {",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  const date = dayjs(input);",
+            "highlighted": true
+          },
+          {
+            "line": 58,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "  if (strict && !date.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 60,
+            "content": "    throw new Error('Invalid date');",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 70,
+      "column": 10,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 66,
+        "endLine": 74,
+        "lines": [
+          {
+            "line": 66,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": " * ❌ VIOLATION: Using result of dayjs() directly in expression",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 69,
+            "content": "export function directExpression(input: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": "  return dayjs(input).valueOf();",
+            "highlighted": true
+          },
+          {
+            "line": 71,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": " * Edge case: Validation in separate function",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 83,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 79,
+        "endLine": 87,
+        "lines": [
+          {
+            "line": 79,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 80,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 81,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 82,
+            "content": "export function useWithExternalValidation(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 83,
+            "content": "  const date = dayjs(input);",
+            "highlighted": true
+          },
+          {
+            "line": 84,
+            "content": "  validateDate(date); // Validation delegated",
+            "highlighted": false
+          },
+          {
+            "line": 85,
+            "content": "  return date.format();",
+            "highlighted": false
+          },
+          {
+            "line": 86,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 87,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 92,
+      "column": 10,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 88,
+        "endLine": 96,
+        "lines": [
+          {
+            "line": 88,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 89,
+            "content": " * ❌ VIOLATION: Chained method calls without validation",
+            "highlighted": false
+          },
+          {
+            "line": 90,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 91,
+            "content": "export function chainedCalls(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 92,
+            "content": "  return dayjs(input)",
+            "highlighted": true
+          },
+          {
+            "line": 93,
+            "content": "    .add(1, 'day')",
+            "highlighted": false
+          },
+          {
+            "line": 94,
+            "content": "    .subtract(1, 'month')",
+            "highlighted": false
+          },
+          {
+            "line": 95,
+            "content": "    .format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 96,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 102,
+      "column": 13,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 98,
+        "endLine": 106,
+        "lines": [
+          {
+            "line": 98,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 99,
+            "content": " * Edge case: Multiple dayjs calls in one statement",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "export function multipleCalls(start: string, end: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const s = dayjs(start);",
+            "highlighted": true
+          },
+          {
+            "line": 103,
+            "content": "  const e = dayjs(end);",
+            "highlighted": false
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  if (!s.isValid() || !e.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "    throw new Error('Invalid dates');",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+      "line": 103,
+      "column": 13,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 99,
+        "endLine": 107,
+        "lines": [
+          {
+            "line": 99,
+            "content": " * Edge case: Multiple dayjs calls in one statement",
+            "highlighted": false
+          },
+          {
+            "line": 100,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 101,
+            "content": "export function multipleCalls(start: string, end: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 102,
+            "content": "  const s = dayjs(start);",
+            "highlighted": false
+          },
+          {
+            "line": 103,
+            "content": "  const e = dayjs(end);",
+            "highlighted": true
+          },
+          {
+            "line": 104,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 105,
+            "content": "  if (!s.isValid() || !e.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 106,
+            "content": "    throw new Error('Invalid dates');",
+            "highlighted": false
+          },
+          {
+            "line": 107,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 16,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 12,
+        "endLine": 20,
+        "lines": [
+          {
+            "line": 12,
+            "content": " * ❌ VIOLATION: No .isValid() check after parsing",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": " * Invalid dates will cause incorrect calculations",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": "export function parseDate(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "  const date = dayjs(input);",
+            "highlighted": true
+          },
+          {
+            "line": 17,
+            "content": "  // Missing: if (!date.isValid()) { ... }",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  return date.format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-utc-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 25,
+      "column": 16,
+      "package": "dayjs",
+      "function": "utc",
+      "contract_clause": "utc-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/plugin/utc",
+      "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC dates can cause timezone calculation errors and data corruption. Use pattern: const d = dayjs.utc(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 21,
+        "endLine": 29,
+        "lines": [
+          {
+            "line": 21,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": " * ❌ VIOLATION: UTC parsing without validation",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": "export function parseDateUTC(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 25,
+            "content": "  const date = dayjs.utc(input);",
+            "highlighted": true
+          },
+          {
+            "line": 26,
+            "content": "  // Missing: validation check",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "  return date.format();",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 34,
+      "column": 17,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 30,
+        "endLine": 38,
+        "lines": [
+          {
+            "line": 30,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": " * ❌ VIOLATION: Direct usage without validation",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "export function calculateAge(birthdate: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  const birth = dayjs(birthdate);",
+            "highlighted": true
+          },
+          {
+            "line": 35,
+            "content": "  const now = dayjs();",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": "  // Missing: validation check",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  return now.diff(birth, 'year');",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 35,
+      "column": 15,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 31,
+        "endLine": 39,
+        "lines": [
+          {
+            "line": 31,
+            "content": " * ❌ VIOLATION: Direct usage without validation",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "export function calculateAge(birthdate: string): number {",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  const birth = dayjs(birthdate);",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "  const now = dayjs();",
+            "highlighted": true
+          },
+          {
+            "line": 36,
+            "content": "  // Missing: validation check",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "  return now.diff(birth, 'year');",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 44,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 40,
+        "endLine": 48,
+        "lines": [
+          {
+            "line": 40,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " * ❌ VIOLATION: Using parsed date in calculations without checking",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "export function addDays(dateStr: string, days: number): string {",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  const date = dayjs(dateStr);",
+            "highlighted": true
+          },
+          {
+            "line": 45,
+            "content": "  // Missing: validation check",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  return date.add(days, 'day').format();",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 54,
+      "column": 18,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 50,
+        "endLine": 58,
+        "lines": [
+          {
+            "line": 50,
+            "content": " * ❌ VIOLATION: Array processing without validation",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "export function formatDates(inputs: string[]): string[] {",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": "  return inputs.map(input => {",
+            "highlighted": false
+          },
+          {
+            "line": 54,
+            "content": "    const date = dayjs(input);",
+            "highlighted": true
+          },
+          {
+            "line": 55,
+            "content": "    // Missing: validation check",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "    return date.format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "  });",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 64,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 60,
+        "endLine": 68,
+        "lines": [
+          {
+            "line": 60,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": " * ❌ VIOLATION: Chained operations without validation",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "export function getMonthStart(dateStr: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 64,
+            "content": "  const date = dayjs(dateStr);",
+            "highlighted": true
+          },
+          {
+            "line": 65,
+            "content": "  // Missing: validation check",
+            "highlighted": false
+          },
+          {
+            "line": 66,
+            "content": "  return date.startOf('month').format('YYYY-MM-DD');",
+            "highlighted": false
+          },
+          {
+            "line": 67,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 68,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 73,
+      "column": 14,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 69,
+        "endLine": 77,
+        "lines": [
+          {
+            "line": 69,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 70,
+            "content": " * ❌ VIOLATION: Comparison without validation",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "export function isDateBefore(date1: string, date2: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "  const d1 = dayjs(date1);",
+            "highlighted": true
+          },
+          {
+            "line": 74,
+            "content": "  const d2 = dayjs(date2);",
+            "highlighted": false
+          },
+          {
+            "line": 75,
+            "content": "  // Missing: validation checks",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  return d1.isBefore(d2);",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+      "line": 74,
+      "column": 14,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 70,
+        "endLine": 78,
+        "lines": [
+          {
+            "line": 70,
+            "content": " * ❌ VIOLATION: Comparison without validation",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": "export function isDateBefore(date1: string, date2: string): boolean {",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "  const d1 = dayjs(date1);",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  const d2 = dayjs(date2);",
+            "highlighted": true
+          },
+          {
+            "line": 75,
+            "content": "  // Missing: validation checks",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "  return d1.isBefore(d2);",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 78,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+      "line": 17,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 13,
+        "endLine": 21,
+        "lines": [
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 14,
+            "content": " * Proper pattern: Check .isValid() after parsing",
+            "highlighted": false
+          },
+          {
+            "line": 15,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 16,
+            "content": "export function parseDate(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "  const date = dayjs(input);",
+            "highlighted": true
+          },
+          {
+            "line": 18,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  if (!date.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "    throw new Error('Invalid date input');",
+            "highlighted": false
+          },
+          {
+            "line": 21,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-utc-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+      "line": 30,
+      "column": 16,
+      "package": "dayjs",
+      "function": "utc",
+      "contract_clause": "utc-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/plugin/utc",
+      "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC dates can cause timezone calculation errors and data corruption. Use pattern: const d = dayjs.utc(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 26,
+        "endLine": 34,
+        "lines": [
+          {
+            "line": 26,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": " * Proper pattern: UTC parsing with validation",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "export function parseDateUTC(input: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "  const date = dayjs.utc(input);",
+            "highlighted": true
+          },
+          {
+            "line": 31,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  if (!date.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "    throw new Error('Invalid UTC date');",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+      "line": 43,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 39,
+        "endLine": 47,
+        "lines": [
+          {
+            "line": 39,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": " * Proper pattern: Strict parsing with validation",
+            "highlighted": false
+          },
+          {
+            "line": 41,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "export function parseDateStrict(input: string, format: string): string {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "  const date = dayjs(input, format, true);",
+            "highlighted": true
+          },
+          {
+            "line": 44,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "  if (!date.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "    throw new Error(`Invalid date for format ${format}`);",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "  }",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+      "line": 59,
+      "column": 18,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 55,
+        "endLine": 63,
+        "lines": [
+          {
+            "line": 55,
+            "content": "export function parseDates(inputs: string[]): dayjs.Dayjs[] {",
+            "highlighted": false
+          },
+          {
+            "line": 56,
+            "content": "  const results: dayjs.Dayjs[] = [];",
+            "highlighted": false
+          },
+          {
+            "line": 57,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 58,
+            "content": "  for (const input of inputs) {",
+            "highlighted": false
+          },
+          {
+            "line": 59,
+            "content": "    const date = dayjs(input);",
+            "highlighted": true
+          },
+          {
+            "line": 60,
+            "content": "    if (date.isValid()) {",
+            "highlighted": false
+          },
+          {
+            "line": 61,
+            "content": "      results.push(date);",
+            "highlighted": false
+          },
+          {
+            "line": 62,
+            "content": "    } else {",
+            "highlighted": false
+          },
+          {
+            "line": 63,
+            "content": "      console.warn(`Skipping invalid date: ${input}`);",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "dayjs-dayjs-invalid-date",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+      "line": 74,
+      "column": 16,
+      "package": "dayjs",
+      "function": "dayjs",
+      "contract_clause": "dayjs-invalid-date",
+      "description": "No error handling found. This operation can throw errors that will crash the application.",
+      "source_doc": "https://day.js.org/docs/en/parse/string",
+      "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+      "code_snippet": {
+        "startLine": 70,
+        "endLine": 77,
+        "lines": [
+          {
+            "line": 70,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 71,
+            "content": " * Proper pattern: Return type indicates validity",
+            "highlighted": false
+          },
+          {
+            "line": 72,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 73,
+            "content": "export function parseDateSafe(input: string): dayjs.Dayjs | null {",
+            "highlighted": false
+          },
+          {
+            "line": 74,
+            "content": "  const date = dayjs(input);",
+            "highlighted": true
+          },
+          {
+            "line": 75,
+            "content": "  return date.isValid() ? date : null;",
+            "highlighted": false
+          },
+          {
+            "line": 76,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 77,
+            "content": "",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 24,
+    "error_count": 24,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "dayjs",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.1.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "dayjs": {
+      "total": 24,
+      "errors": 24,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 16,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 20,
+            "lines": [
+              {
+                "line": 12,
+                "content": " * Edge case: Permissive parsing",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": " * Day.js may parse invalid dates as valid (e.g., Jan 33 → Feb 2)",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "export function testPermissiveParsing(): void {",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  const date = dayjs('2022-01-33'); // Invalid day",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "  if (!date.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "    // This won't trigger - dayjs parses it as 2022-02-02",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "    console.error('Invalid date');",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 28,
+          "column": 10,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 24,
+            "endLine": 32,
+            "lines": [
+              {
+                "line": 24,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": " * ❌ VIOLATION: Inline usage without validation",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "export function inlineUsage(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  return dayjs(input).format('YYYY-MM-DD');",
+                "highlighted": true
+              },
+              {
+                "line": 29,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Proper: Strict mode with validation",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 35,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " * Proper: Strict mode with validation",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "export function strictValidation(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const date = dayjs(input, 'YYYY-MM-DD', true);",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  if (!date.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "    throw new Error('Invalid date format');",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 48,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 44,
+            "endLine": 52,
+            "lines": [
+              {
+                "line": 44,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": " * ❌ VIOLATION: No validation even with strict parsing",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "export function strictNoValidation(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "  const date = dayjs(input, 'YYYY-MM-DD', true);",
+                "highlighted": true
+              },
+              {
+                "line": 49,
+                "content": "  // Missing: validation check",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "  return date.format();",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 57,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 53,
+            "endLine": 61,
+            "lines": [
+              {
+                "line": 53,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": " * Edge case: Conditional validation (may or may not be proper)",
+                "highlighted": false
+              },
+              {
+                "line": 55,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "export function conditionalValidation(input: string, strict: boolean): string {",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  const date = dayjs(input);",
+                "highlighted": true
+              },
+              {
+                "line": 58,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "  if (strict && !date.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 60,
+                "content": "    throw new Error('Invalid date');",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 70,
+          "column": 10,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 66,
+            "endLine": 74,
+            "lines": [
+              {
+                "line": 66,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": " * ❌ VIOLATION: Using result of dayjs() directly in expression",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 69,
+                "content": "export function directExpression(input: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": "  return dayjs(input).valueOf();",
+                "highlighted": true
+              },
+              {
+                "line": 71,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": " * Edge case: Validation in separate function",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 83,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 79,
+            "endLine": 87,
+            "lines": [
+              {
+                "line": 79,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 80,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 81,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 82,
+                "content": "export function useWithExternalValidation(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 83,
+                "content": "  const date = dayjs(input);",
+                "highlighted": true
+              },
+              {
+                "line": 84,
+                "content": "  validateDate(date); // Validation delegated",
+                "highlighted": false
+              },
+              {
+                "line": 85,
+                "content": "  return date.format();",
+                "highlighted": false
+              },
+              {
+                "line": 86,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 87,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 92,
+          "column": 10,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 88,
+            "endLine": 96,
+            "lines": [
+              {
+                "line": 88,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 89,
+                "content": " * ❌ VIOLATION: Chained method calls without validation",
+                "highlighted": false
+              },
+              {
+                "line": 90,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 91,
+                "content": "export function chainedCalls(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 92,
+                "content": "  return dayjs(input)",
+                "highlighted": true
+              },
+              {
+                "line": 93,
+                "content": "    .add(1, 'day')",
+                "highlighted": false
+              },
+              {
+                "line": 94,
+                "content": "    .subtract(1, 'month')",
+                "highlighted": false
+              },
+              {
+                "line": 95,
+                "content": "    .format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 96,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 102,
+          "column": 13,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 98,
+            "endLine": 106,
+            "lines": [
+              {
+                "line": 98,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 99,
+                "content": " * Edge case: Multiple dayjs calls in one statement",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "export function multipleCalls(start: string, end: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const s = dayjs(start);",
+                "highlighted": true
+              },
+              {
+                "line": 103,
+                "content": "  const e = dayjs(end);",
+                "highlighted": false
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  if (!s.isValid() || !e.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "    throw new Error('Invalid dates');",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/edge-cases.ts",
+          "line": 103,
+          "column": 13,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 99,
+            "endLine": 107,
+            "lines": [
+              {
+                "line": 99,
+                "content": " * Edge case: Multiple dayjs calls in one statement",
+                "highlighted": false
+              },
+              {
+                "line": 100,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 101,
+                "content": "export function multipleCalls(start: string, end: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 102,
+                "content": "  const s = dayjs(start);",
+                "highlighted": false
+              },
+              {
+                "line": 103,
+                "content": "  const e = dayjs(end);",
+                "highlighted": true
+              },
+              {
+                "line": 104,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 105,
+                "content": "  if (!s.isValid() || !e.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 106,
+                "content": "    throw new Error('Invalid dates');",
+                "highlighted": false
+              },
+              {
+                "line": 107,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 16,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 12,
+            "endLine": 20,
+            "lines": [
+              {
+                "line": 12,
+                "content": " * ❌ VIOLATION: No .isValid() check after parsing",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": " * Invalid dates will cause incorrect calculations",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": "export function parseDate(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "  const date = dayjs(input);",
+                "highlighted": true
+              },
+              {
+                "line": 17,
+                "content": "  // Missing: if (!date.isValid()) { ... }",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  return date.format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-utc-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 25,
+          "column": 16,
+          "package": "dayjs",
+          "function": "utc",
+          "contract_clause": "utc-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/plugin/utc",
+          "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC dates can cause timezone calculation errors and data corruption. Use pattern: const d = dayjs.utc(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 21,
+            "endLine": 29,
+            "lines": [
+              {
+                "line": 21,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": " * ❌ VIOLATION: UTC parsing without validation",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": "export function parseDateUTC(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 25,
+                "content": "  const date = dayjs.utc(input);",
+                "highlighted": true
+              },
+              {
+                "line": 26,
+                "content": "  // Missing: validation check",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "  return date.format();",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 34,
+          "column": 17,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 30,
+            "endLine": 38,
+            "lines": [
+              {
+                "line": 30,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": " * ❌ VIOLATION: Direct usage without validation",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "export function calculateAge(birthdate: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  const birth = dayjs(birthdate);",
+                "highlighted": true
+              },
+              {
+                "line": 35,
+                "content": "  const now = dayjs();",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": "  // Missing: validation check",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  return now.diff(birth, 'year');",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 35,
+          "column": 15,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 31,
+            "endLine": 39,
+            "lines": [
+              {
+                "line": 31,
+                "content": " * ❌ VIOLATION: Direct usage without validation",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "export function calculateAge(birthdate: string): number {",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  const birth = dayjs(birthdate);",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "  const now = dayjs();",
+                "highlighted": true
+              },
+              {
+                "line": 36,
+                "content": "  // Missing: validation check",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "  return now.diff(birth, 'year');",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 44,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 40,
+            "endLine": 48,
+            "lines": [
+              {
+                "line": 40,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " * ❌ VIOLATION: Using parsed date in calculations without checking",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "export function addDays(dateStr: string, days: number): string {",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  const date = dayjs(dateStr);",
+                "highlighted": true
+              },
+              {
+                "line": 45,
+                "content": "  // Missing: validation check",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  return date.add(days, 'day').format();",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 54,
+          "column": 18,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 50,
+            "endLine": 58,
+            "lines": [
+              {
+                "line": 50,
+                "content": " * ❌ VIOLATION: Array processing without validation",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "export function formatDates(inputs: string[]): string[] {",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": "  return inputs.map(input => {",
+                "highlighted": false
+              },
+              {
+                "line": 54,
+                "content": "    const date = dayjs(input);",
+                "highlighted": true
+              },
+              {
+                "line": 55,
+                "content": "    // Missing: validation check",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "    return date.format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "  });",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 64,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 60,
+            "endLine": 68,
+            "lines": [
+              {
+                "line": 60,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": " * ❌ VIOLATION: Chained operations without validation",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "export function getMonthStart(dateStr: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 64,
+                "content": "  const date = dayjs(dateStr);",
+                "highlighted": true
+              },
+              {
+                "line": 65,
+                "content": "  // Missing: validation check",
+                "highlighted": false
+              },
+              {
+                "line": 66,
+                "content": "  return date.startOf('month').format('YYYY-MM-DD');",
+                "highlighted": false
+              },
+              {
+                "line": 67,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 68,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 73,
+          "column": 14,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 69,
+            "endLine": 77,
+            "lines": [
+              {
+                "line": 69,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 70,
+                "content": " * ❌ VIOLATION: Comparison without validation",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "export function isDateBefore(date1: string, date2: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "  const d1 = dayjs(date1);",
+                "highlighted": true
+              },
+              {
+                "line": 74,
+                "content": "  const d2 = dayjs(date2);",
+                "highlighted": false
+              },
+              {
+                "line": 75,
+                "content": "  // Missing: validation checks",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  return d1.isBefore(d2);",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/missing-validation.ts",
+          "line": 74,
+          "column": 14,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 70,
+            "endLine": 78,
+            "lines": [
+              {
+                "line": 70,
+                "content": " * ❌ VIOLATION: Comparison without validation",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": "export function isDateBefore(date1: string, date2: string): boolean {",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "  const d1 = dayjs(date1);",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  const d2 = dayjs(date2);",
+                "highlighted": true
+              },
+              {
+                "line": 75,
+                "content": "  // Missing: validation checks",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "  return d1.isBefore(d2);",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 78,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+          "line": 17,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 13,
+            "endLine": 21,
+            "lines": [
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 14,
+                "content": " * Proper pattern: Check .isValid() after parsing",
+                "highlighted": false
+              },
+              {
+                "line": 15,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 16,
+                "content": "export function parseDate(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "  const date = dayjs(input);",
+                "highlighted": true
+              },
+              {
+                "line": 18,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  if (!date.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "    throw new Error('Invalid date input');",
+                "highlighted": false
+              },
+              {
+                "line": 21,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-utc-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+          "line": 30,
+          "column": 16,
+          "package": "dayjs",
+          "function": "utc",
+          "contract_clause": "utc-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/plugin/utc",
+          "suggested_fix": "Caller MUST check isValid() after parsing. Invalid UTC dates can cause timezone calculation errors and data corruption. Use pattern: const d = dayjs.utc(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 26,
+            "endLine": 34,
+            "lines": [
+              {
+                "line": 26,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": " * Proper pattern: UTC parsing with validation",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "export function parseDateUTC(input: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "  const date = dayjs.utc(input);",
+                "highlighted": true
+              },
+              {
+                "line": 31,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  if (!date.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "    throw new Error('Invalid UTC date');",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+          "line": 43,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 39,
+            "endLine": 47,
+            "lines": [
+              {
+                "line": 39,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": " * Proper pattern: Strict parsing with validation",
+                "highlighted": false
+              },
+              {
+                "line": 41,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "export function parseDateStrict(input: string, format: string): string {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "  const date = dayjs(input, format, true);",
+                "highlighted": true
+              },
+              {
+                "line": 44,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "  if (!date.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "    throw new Error(`Invalid date for format ${format}`);",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "  }",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+          "line": 59,
+          "column": 18,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 55,
+            "endLine": 63,
+            "lines": [
+              {
+                "line": 55,
+                "content": "export function parseDates(inputs: string[]): dayjs.Dayjs[] {",
+                "highlighted": false
+              },
+              {
+                "line": 56,
+                "content": "  const results: dayjs.Dayjs[] = [];",
+                "highlighted": false
+              },
+              {
+                "line": 57,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 58,
+                "content": "  for (const input of inputs) {",
+                "highlighted": false
+              },
+              {
+                "line": 59,
+                "content": "    const date = dayjs(input);",
+                "highlighted": true
+              },
+              {
+                "line": 60,
+                "content": "    if (date.isValid()) {",
+                "highlighted": false
+              },
+              {
+                "line": 61,
+                "content": "      results.push(date);",
+                "highlighted": false
+              },
+              {
+                "line": 62,
+                "content": "    } else {",
+                "highlighted": false
+              },
+              {
+                "line": 63,
+                "content": "      console.warn(`Skipping invalid date: ${input}`);",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "dayjs-dayjs-invalid-date",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/dayjs/fixtures/proper-validation.ts",
+          "line": 74,
+          "column": 16,
+          "package": "dayjs",
+          "function": "dayjs",
+          "contract_clause": "dayjs-invalid-date",
+          "description": "No error handling found. This operation can throw errors that will crash the application.",
+          "source_doc": "https://day.js.org/docs/en/parse/string",
+          "suggested_fix": "Caller MUST check isValid() before using the Day.js object. Invalid Day.js objects can cause incorrect date calculations, display issues, or NaN values propagating through the application. Use pattern: const d = dayjs(input); if (!d.isValid()) { /* handle error */ }\n",
+          "code_snippet": {
+            "startLine": 70,
+            "endLine": 77,
+            "lines": [
+              {
+                "line": 70,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 71,
+                "content": " * Proper pattern: Return type indicates validity",
+                "highlighted": false
+              },
+              {
+                "line": 72,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 73,
+                "content": "export function parseDateSafe(input: string): dayjs.Dayjs | null {",
+                "highlighted": false
+              },
+              {
+                "line": 74,
+                "content": "  const date = dayjs(input);",
+                "highlighted": true
+              },
+              {
+                "line": 75,
+                "content": "  return date.isValid() ? date : null;",
+                "highlighted": false
+              },
+              {
+                "line": 76,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 77,
+                "content": "",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

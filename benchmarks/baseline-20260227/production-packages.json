@@ -1,0 +1,455 @@
+[
+  {
+    "package": "discord.js",
+    "status": "success",
+    "violationCount": 87,
+    "exitCode": 1,
+    "outputFile": "discord.js-output.json"
+  },
+  {
+    "package": "zod",
+    "status": "success",
+    "violationCount": 27,
+    "exitCode": 1,
+    "outputFile": "zod-output.json"
+  },
+  {
+    "package": "tedious",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "tedious-output.json"
+  },
+  {
+    "package": "next",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "next-output.json"
+  },
+  {
+    "package": "@anthropic-ai/sdk",
+    "status": "success",
+    "violationCount": 18,
+    "exitCode": 1,
+    "outputFile": "@anthropic-ai-sdk-output.json"
+  },
+  {
+    "package": "mocha",
+    "status": "success",
+    "violationCount": 34,
+    "exitCode": 1,
+    "outputFile": "mocha-output.json"
+  },
+  {
+    "package": "@tanstack/react-query",
+    "status": "success",
+    "violationCount": 34,
+    "exitCode": 1,
+    "outputFile": "@tanstack-react-query-output.json"
+  },
+  {
+    "package": "mysql2",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "mysql2-output.json"
+  },
+  {
+    "package": "ethers",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "ethers-output.json"
+  },
+  {
+    "package": "joi",
+    "status": "success",
+    "violationCount": 5,
+    "exitCode": 1,
+    "outputFile": "joi-output.json"
+  },
+  {
+    "package": "node-fetch",
+    "status": "success",
+    "violationCount": 20,
+    "exitCode": 1,
+    "outputFile": "node-fetch-output.json"
+  },
+  {
+    "package": "chai",
+    "status": "no_fixtures",
+    "violations": []
+  },
+  {
+    "package": "moment",
+    "status": "success",
+    "violationCount": 36,
+    "exitCode": 1,
+    "outputFile": "moment-output.json"
+  },
+  {
+    "package": "puppeteer",
+    "status": "success",
+    "violationCount": 5,
+    "exitCode": 1,
+    "outputFile": "puppeteer-output.json"
+  },
+  {
+    "package": "@nestjs/common",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "@nestjs-common-output.json"
+  },
+  {
+    "package": "sinon",
+    "status": "success",
+    "violationCount": 187,
+    "exitCode": 1,
+    "outputFile": "sinon-output.json"
+  },
+  {
+    "package": "express",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "express-output.json"
+  },
+  {
+    "package": "redis",
+    "status": "success",
+    "violationCount": 61,
+    "exitCode": 1,
+    "outputFile": "redis-output.json"
+  },
+  {
+    "package": "@aws-sdk/client-s3",
+    "status": "success",
+    "violationCount": 27,
+    "exitCode": 1,
+    "outputFile": "@aws-sdk-client-s3-output.json"
+  },
+  {
+    "package": "square",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "square-output.json"
+  },
+  {
+    "package": "typescript",
+    "status": "success",
+    "violationCount": 90,
+    "exitCode": 1,
+    "outputFile": "typescript-output.json"
+  },
+  {
+    "package": "react-hook-form",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "react-hook-form-output.json"
+  },
+  {
+    "package": "socket.io-client",
+    "status": "success",
+    "violationCount": 35,
+    "exitCode": 1,
+    "outputFile": "socket.io-client-output.json"
+  },
+  {
+    "package": "date-fns",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "date-fns-output.json"
+  },
+  {
+    "package": "undici",
+    "status": "success",
+    "violationCount": 8,
+    "exitCode": 1,
+    "outputFile": "undici-output.json"
+  },
+  {
+    "package": "cloudinary",
+    "status": "success",
+    "violationCount": 7,
+    "exitCode": 1,
+    "outputFile": "cloudinary-output.json"
+  },
+  {
+    "package": "ioredis",
+    "status": "success",
+    "violationCount": 19,
+    "exitCode": 1,
+    "outputFile": "ioredis-output.json"
+  },
+  {
+    "package": "@sendgrid/mail",
+    "status": "success",
+    "violationCount": 7,
+    "exitCode": 1,
+    "outputFile": "@sendgrid-mail-output.json"
+  },
+  {
+    "package": "multer",
+    "status": "success",
+    "violationCount": 3,
+    "exitCode": 1,
+    "outputFile": "multer-output.json"
+  },
+  {
+    "package": "superagent",
+    "status": "success",
+    "violationCount": 52,
+    "exitCode": 1,
+    "outputFile": "superagent-output.json"
+  },
+  {
+    "package": "passport",
+    "status": "success",
+    "violationCount": 6,
+    "exitCode": 1,
+    "outputFile": "passport-output.json"
+  },
+  {
+    "package": "mongodb",
+    "status": "success",
+    "violationCount": 13,
+    "exitCode": 1,
+    "outputFile": "mongodb-output.json"
+  },
+  {
+    "package": "mongoose",
+    "status": "success",
+    "violationCount": 120,
+    "exitCode": 1,
+    "outputFile": "mongoose-output.json"
+  },
+  {
+    "package": "pg",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "pg-output.json"
+  },
+  {
+    "package": "bcryptjs",
+    "status": "success",
+    "violationCount": 7,
+    "exitCode": 1,
+    "outputFile": "bcryptjs-output.json"
+  },
+  {
+    "package": "socket.io",
+    "status": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "socket.io-output.json"
+  },
+  {
+    "package": "drizzle-orm",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "drizzle-orm-output.json"
+  },
+  {
+    "package": "firebase-admin",
+    "status": "success",
+    "violationCount": 34,
+    "exitCode": 1,
+    "outputFile": "firebase-admin-output.json"
+  },
+  {
+    "package": "graphql",
+    "status": "success",
+    "violationCount": 8,
+    "exitCode": 1,
+    "outputFile": "graphql-output.json"
+  },
+  {
+    "package": "sqlite3",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "sqlite3-output.json"
+  },
+  {
+    "package": "sequelize",
+    "status": "success",
+    "violationCount": 20,
+    "exitCode": 1,
+    "outputFile": "sequelize-output.json"
+  },
+  {
+    "package": "@prisma/client",
+    "status": "success",
+    "violationCount": 49,
+    "exitCode": 1,
+    "outputFile": "@prisma-client-output.json"
+  },
+  {
+    "package": "@supabase/supabase-js",
+    "status": "success",
+    "violationCount": 18,
+    "exitCode": 1,
+    "outputFile": "@supabase-supabase-js-output.json"
+  },
+  {
+    "package": "cors",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "cors-output.json"
+  },
+  {
+    "package": "request-promise",
+    "status": "success",
+    "violationCount": 15,
+    "exitCode": 1,
+    "outputFile": "request-promise-output.json"
+  },
+  {
+    "package": "@octokit/rest",
+    "status": "success",
+    "violationCount": 32,
+    "exitCode": 1,
+    "outputFile": "@octokit-rest-output.json"
+  },
+  {
+    "package": "dayjs",
+    "status": "success",
+    "violationCount": 46,
+    "exitCode": 1,
+    "outputFile": "dayjs-output.json"
+  },
+  {
+    "package": "@vercel/postgres",
+    "status": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "@vercel-postgres-output.json"
+  },
+  {
+    "package": "typeorm",
+    "status": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "typeorm-output.json"
+  },
+  {
+    "package": "bullmq",
+    "status": "success",
+    "violationCount": 7,
+    "exitCode": 1,
+    "outputFile": "bullmq-output.json"
+  },
+  {
+    "package": "knex",
+    "status": "success",
+    "violationCount": 4,
+    "exitCode": 1,
+    "outputFile": "knex-output.json"
+  },
+  {
+    "package": "cassandra-driver",
+    "status": "success",
+    "violationCount": 104,
+    "exitCode": 1,
+    "outputFile": "cassandra-driver-output.json"
+  },
+  {
+    "package": "luxon",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "luxon-output.json"
+  },
+  {
+    "package": "uuid",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "uuid-output.json"
+  },
+  {
+    "package": "@hapi/hapi",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "@hapi-hapi-output.json"
+  },
+  {
+    "package": "axios",
+    "status": "success",
+    "violationCount": 34,
+    "exitCode": 1,
+    "outputFile": "axios-output.json"
+  },
+  {
+    "package": "@slack/web-api",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "@slack-web-api-output.json"
+  },
+  {
+    "package": "sharp",
+    "status": "success",
+    "violationCount": 3,
+    "exitCode": 1,
+    "outputFile": "sharp-output.json"
+  },
+  {
+    "package": "@clerk/nextjs",
+    "status": "success",
+    "violationCount": 32,
+    "exitCode": 1,
+    "outputFile": "@clerk-nextjs-output.json"
+  },
+  {
+    "package": "nodemailer",
+    "status": "success",
+    "violationCount": 60,
+    "exitCode": 1,
+    "outputFile": "nodemailer-output.json"
+  },
+  {
+    "package": "winston",
+    "status": "success",
+    "violationCount": 0,
+    "exitCode": 0,
+    "outputFile": "winston-output.json"
+  },
+  {
+    "package": "openai",
+    "status": "success",
+    "violationCount": 53,
+    "exitCode": 1,
+    "outputFile": "openai-output.json"
+  },
+  {
+    "package": "twilio",
+    "status": "success",
+    "violationCount": 28,
+    "exitCode": 1,
+    "outputFile": "twilio-output.json"
+  },
+  {
+    "package": "stripe",
+    "status": "success",
+    "violationCount": 39,
+    "exitCode": 1,
+    "outputFile": "stripe-output.json"
+  },
+  {
+    "package": "fastify",
+    "status": "success",
+    "violationCount": 1,
+    "exitCode": 1,
+    "outputFile": "fastify-output.json"
+  }
+]

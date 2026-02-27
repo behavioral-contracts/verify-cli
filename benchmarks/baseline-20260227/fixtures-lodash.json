@@ -1,0 +1,1109 @@
+{
+  "tool": "@behavioral-contracts/verify-cli",
+  "tool_version": "0.1.0",
+  "corpus_version": "1.0.0",
+  "timestamp": "2026-02-27T16:55:26.650Z",
+  "tsconfig": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/tsconfig.json",
+  "packages_analyzed": [
+    "zod",
+    "yup",
+    "ws",
+    "winston",
+    "validator",
+    "uuid",
+    "unzipper",
+    "undici",
+    "typescript",
+    "typeorm",
+    "twilio",
+    "supertest",
+    "superagent",
+    "tedious",
+    "square",
+    "stripe",
+    "sqlite3",
+    "socket.io-client",
+    "socket.io",
+    "sinon",
+    "simple-oauth2",
+    "sharp",
+    "sequelize",
+    "redis",
+    "request-promise",
+    "pino",
+    "pg",
+    "react-hook-form",
+    "puppeteer",
+    "passport",
+    "openai",
+    "node-fetch",
+    "nodemailer",
+    "mysql2",
+    "next",
+    "multer",
+    "mongoose",
+    "mongodb",
+    "moment",
+    "luxon",
+    "knex",
+    "lodash",
+    "mocha",
+    "jsonwebtoken",
+    "helmet",
+    "graphql",
+    "ioredis",
+    "joi",
+    "got",
+    "firebase-admin",
+    "fastify",
+    "express",
+    "ethers",
+    "discord.js",
+    "drizzle-orm",
+    "dayjs",
+    "date-fns",
+    "cors",
+    "cloudinary",
+    "cassandra-driver",
+    "chai",
+    "bullmq",
+    "bull",
+    "bcryptjs",
+    "axios",
+    "ajv",
+    "archiver",
+    "@vercel/postgres",
+    "@sendgrid/mail",
+    "@supabase/supabase-js",
+    "@tanstack/react-query",
+    "@slack/web-api",
+    "@prisma/client",
+    "@octokit/rest",
+    "@nestjs/common",
+    "@hapi/hapi",
+    "@anthropic-ai/sdk",
+    "@clerk/nextjs",
+    "@aws-sdk/client-s3"
+  ],
+  "contracts_applied": 400,
+  "files_analyzed": 2,
+  "violations": [
+    {
+      "id": "lodash-syntax-error",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+      "line": 9,
+      "column": 20,
+      "package": "lodash",
+      "function": "template",
+      "contract_clause": "syntax-error",
+      "description": "No try-catch block found. SyntaxError - this will crash the application.",
+      "source_doc": "https://lodash.com/docs/#template",
+      "suggested_fix": "Caller MUST wrap in try-catch if template comes from untrusted input",
+      "code_snippet": {
+        "startLine": 5,
+        "endLine": 13,
+        "lines": [
+          {
+            "line": 5,
+            "content": " * Should trigger ERROR violation.",
+            "highlighted": false
+          },
+          {
+            "line": 6,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 7,
+            "content": "function compileTemplateWithoutErrorHandling(templateStr: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 8,
+            "content": "  // ❌ No try-catch",
+            "highlighted": false
+          },
+          {
+            "line": 9,
+            "content": "  const compiled = _.template(templateStr);",
+            "highlighted": true
+          },
+          {
+            "line": 10,
+            "content": "  return compiled({ name: 'World' });",
+            "highlighted": false
+          },
+          {
+            "line": 11,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 12,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 13,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "lodash-prototype-pollution",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+      "line": 20,
+      "column": 10,
+      "package": "lodash",
+      "function": "merge",
+      "contract_clause": "prototype-pollution",
+      "description": "No try-catch block found. Prototype pollution vulnerability - this will crash the application.",
+      "source_doc": "https://github.com/lodash/lodash/security/advisories (CVE-2019-10744)",
+      "suggested_fix": "Caller MUST validate input objects to exclude __proto__, constructor, and prototype keys when merging untrusted data",
+      "code_snippet": {
+        "startLine": 16,
+        "endLine": 24,
+        "lines": [
+          {
+            "line": 16,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 17,
+            "content": "function unsafeMergeConfig(userInput: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 18,
+            "content": "  const config = { timeout: 5000, retries: 3 };",
+            "highlighted": false
+          },
+          {
+            "line": 19,
+            "content": "  // ❌ No validation of userInput - prototype pollution risk",
+            "highlighted": false
+          },
+          {
+            "line": 20,
+            "content": "  return _.merge(config, userInput);",
+            "highlighted": true
+          },
+          {
+            "line": 21,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 22,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 23,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 24,
+            "content": " * UNSAFE: _.unset with untrusted path - no validation",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "lodash-prototype-pollution",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+      "line": 29,
+      "column": 3,
+      "package": "lodash",
+      "function": "unset",
+      "contract_clause": "prototype-pollution",
+      "description": "No try-catch block found. Prototype pollution vulnerability allowing prototype method deletion - this will crash the application.",
+      "source_doc": "https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg (CVE-2025-13465)",
+      "suggested_fix": "Caller MUST validate paths to exclude __proto__, constructor, and prototype when using with untrusted input. Upgrade to lodash 4.17.23+",
+      "code_snippet": {
+        "startLine": 25,
+        "endLine": 33,
+        "lines": [
+          {
+            "line": 25,
+            "content": " * Should trigger ERROR violation - prototype pollution risk.",
+            "highlighted": false
+          },
+          {
+            "line": 26,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 27,
+            "content": "function unsafeUnsetProperty(obj: any, userPath: string) {",
+            "highlighted": false
+          },
+          {
+            "line": 28,
+            "content": "  // ❌ No validation of userPath - can delete prototype methods",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  _.unset(obj, userPath);",
+            "highlighted": true
+          },
+          {
+            "line": 30,
+            "content": "  return obj;",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 33,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "lodash-prototype-pollution",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+      "line": 40,
+      "column": 10,
+      "package": "lodash",
+      "function": "defaultsDeep",
+      "contract_clause": "prototype-pollution",
+      "description": "No try-catch block found. Prototype pollution vulnerability - this will crash the application.",
+      "source_doc": "https://github.com/lodash/lodash/security/advisories (CVE-2019-10744)",
+      "suggested_fix": "Caller MUST validate input objects to exclude __proto__, constructor, and prototype keys when using with untrusted data",
+      "code_snippet": {
+        "startLine": 36,
+        "endLine": 44,
+        "lines": [
+          {
+            "line": 36,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 37,
+            "content": "function unsafeDefaultsDeep(userDefaults: any) {",
+            "highlighted": false
+          },
+          {
+            "line": 38,
+            "content": "  const defaults = { theme: 'light', lang: 'en' };",
+            "highlighted": false
+          },
+          {
+            "line": 39,
+            "content": "  // ❌ No validation - can pollute Object.prototype",
+            "highlighted": false
+          },
+          {
+            "line": 40,
+            "content": "  return _.defaultsDeep(userDefaults, defaults);",
+            "highlighted": true
+          },
+          {
+            "line": 41,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 42,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": " * UNSAFE: _.omit with untrusted paths",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "lodash-prototype-pollution",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+      "line": 49,
+      "column": 10,
+      "package": "lodash",
+      "function": "omit",
+      "contract_clause": "prototype-pollution",
+      "description": "No try-catch block found. Prototype pollution vulnerability allowing prototype method deletion - this will crash the application.",
+      "source_doc": "https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg (CVE-2025-13465)",
+      "suggested_fix": "Caller MUST validate property paths to exclude __proto__, constructor, and prototype when using with untrusted input. Upgrade to lodash 4.17.23+",
+      "code_snippet": {
+        "startLine": 45,
+        "endLine": 53,
+        "lines": [
+          {
+            "line": 45,
+            "content": " * Should trigger ERROR violation - prototype pollution risk.",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": " */",
+            "highlighted": false
+          },
+          {
+            "line": 47,
+            "content": "function unsafeOmitProperties(obj: any, userPaths: string[]) {",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "  // ❌ No validation of paths - can delete prototype methods",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "  return _.omit(obj, userPaths);",
+            "highlighted": true
+          },
+          {
+            "line": 50,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 51,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 52,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 53,
+            "content": " * UNSAFE: _.attempt without checking for error",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "lodash-prototype-pollution",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/proper-error-handling.ts",
+      "line": 32,
+      "column": 10,
+      "package": "lodash",
+      "function": "merge",
+      "contract_clause": "prototype-pollution",
+      "description": "No try-catch block found. Prototype pollution vulnerability - this will crash the application.",
+      "source_doc": "https://github.com/lodash/lodash/security/advisories (CVE-2019-10744)",
+      "suggested_fix": "Caller MUST validate input objects to exclude __proto__, constructor, and prototype keys when merging untrusted data",
+      "code_snippet": {
+        "startLine": 28,
+        "endLine": 36,
+        "lines": [
+          {
+            "line": 28,
+            "content": "    throw new Error('Invalid input: contains prototype pollution keys');",
+            "highlighted": false
+          },
+          {
+            "line": 29,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 30,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 31,
+            "content": "  const config = { timeout: 5000, retries: 3 };",
+            "highlighted": false
+          },
+          {
+            "line": 32,
+            "content": "  return _.merge(config, userInput);",
+            "highlighted": true
+          },
+          {
+            "line": 33,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 34,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 35,
+            "content": "/**",
+            "highlighted": false
+          },
+          {
+            "line": 36,
+            "content": " * Proper path validation for _.unset with untrusted paths",
+            "highlighted": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "lodash-prototype-pollution",
+      "severity": "error",
+      "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/proper-error-handling.ts",
+      "line": 46,
+      "column": 3,
+      "package": "lodash",
+      "function": "unset",
+      "contract_clause": "prototype-pollution",
+      "description": "No try-catch block found. Prototype pollution vulnerability allowing prototype method deletion - this will crash the application.",
+      "source_doc": "https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg (CVE-2025-13465)",
+      "suggested_fix": "Caller MUST validate paths to exclude __proto__, constructor, and prototype when using with untrusted input. Upgrade to lodash 4.17.23+",
+      "code_snippet": {
+        "startLine": 42,
+        "endLine": 50,
+        "lines": [
+          {
+            "line": 42,
+            "content": "      userPath.includes('prototype')) {",
+            "highlighted": false
+          },
+          {
+            "line": 43,
+            "content": "    throw new Error('Invalid path: contains dangerous keywords');",
+            "highlighted": false
+          },
+          {
+            "line": 44,
+            "content": "  }",
+            "highlighted": false
+          },
+          {
+            "line": 45,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 46,
+            "content": "  _.unset(obj, userPath);",
+            "highlighted": true
+          },
+          {
+            "line": 47,
+            "content": "  return obj;",
+            "highlighted": false
+          },
+          {
+            "line": 48,
+            "content": "}",
+            "highlighted": false
+          },
+          {
+            "line": 49,
+            "content": "",
+            "highlighted": false
+          },
+          {
+            "line": 50,
+            "content": "/**",
+            "highlighted": false
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_violations": 7,
+    "error_count": 7,
+    "warning_count": 0,
+    "info_count": 0,
+    "passed": false
+  },
+  "package_discovery": {
+    "total": 13,
+    "withContracts": 3,
+    "withoutContracts": 10,
+    "packages": [
+      {
+        "name": "ajv",
+        "version": "^8.12.0",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "lodash",
+        "version": "unknown",
+        "source": "import",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": [
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+          "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/proper-error-handling.ts"
+        ]
+      },
+      {
+        "name": "typescript",
+        "version": "^5.3.3",
+        "source": "package.json",
+        "hasContract": true,
+        "contractVersion": "1.0.0",
+        "usedIn": []
+      },
+      {
+        "name": "@behavioral-contracts/corpus",
+        "version": "^1.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@types/node",
+        "version": "^20.11.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/eslint-plugin",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "version": "^6.19.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "chalk",
+        "version": "^5.3.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "commander",
+        "version": "^12.0.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "eslint",
+        "version": "^8.56.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "glob",
+        "version": "^10.3.10",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "vitest",
+        "version": "^1.2.0",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      },
+      {
+        "name": "yaml",
+        "version": "^2.3.4",
+        "source": "package.json",
+        "hasContract": false,
+        "usedIn": []
+      }
+    ]
+  },
+  "violations_by_package": {
+    "lodash": {
+      "total": 7,
+      "errors": 7,
+      "warnings": 0,
+      "info": 0,
+      "violations": [
+        {
+          "id": "lodash-syntax-error",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+          "line": 9,
+          "column": 20,
+          "package": "lodash",
+          "function": "template",
+          "contract_clause": "syntax-error",
+          "description": "No try-catch block found. SyntaxError - this will crash the application.",
+          "source_doc": "https://lodash.com/docs/#template",
+          "suggested_fix": "Caller MUST wrap in try-catch if template comes from untrusted input",
+          "code_snippet": {
+            "startLine": 5,
+            "endLine": 13,
+            "lines": [
+              {
+                "line": 5,
+                "content": " * Should trigger ERROR violation.",
+                "highlighted": false
+              },
+              {
+                "line": 6,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 7,
+                "content": "function compileTemplateWithoutErrorHandling(templateStr: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 8,
+                "content": "  // ❌ No try-catch",
+                "highlighted": false
+              },
+              {
+                "line": 9,
+                "content": "  const compiled = _.template(templateStr);",
+                "highlighted": true
+              },
+              {
+                "line": 10,
+                "content": "  return compiled({ name: 'World' });",
+                "highlighted": false
+              },
+              {
+                "line": 11,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 12,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 13,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "lodash-prototype-pollution",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+          "line": 20,
+          "column": 10,
+          "package": "lodash",
+          "function": "merge",
+          "contract_clause": "prototype-pollution",
+          "description": "No try-catch block found. Prototype pollution vulnerability - this will crash the application.",
+          "source_doc": "https://github.com/lodash/lodash/security/advisories (CVE-2019-10744)",
+          "suggested_fix": "Caller MUST validate input objects to exclude __proto__, constructor, and prototype keys when merging untrusted data",
+          "code_snippet": {
+            "startLine": 16,
+            "endLine": 24,
+            "lines": [
+              {
+                "line": 16,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 17,
+                "content": "function unsafeMergeConfig(userInput: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 18,
+                "content": "  const config = { timeout: 5000, retries: 3 };",
+                "highlighted": false
+              },
+              {
+                "line": 19,
+                "content": "  // ❌ No validation of userInput - prototype pollution risk",
+                "highlighted": false
+              },
+              {
+                "line": 20,
+                "content": "  return _.merge(config, userInput);",
+                "highlighted": true
+              },
+              {
+                "line": 21,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 22,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 23,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 24,
+                "content": " * UNSAFE: _.unset with untrusted path - no validation",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "lodash-prototype-pollution",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+          "line": 29,
+          "column": 3,
+          "package": "lodash",
+          "function": "unset",
+          "contract_clause": "prototype-pollution",
+          "description": "No try-catch block found. Prototype pollution vulnerability allowing prototype method deletion - this will crash the application.",
+          "source_doc": "https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg (CVE-2025-13465)",
+          "suggested_fix": "Caller MUST validate paths to exclude __proto__, constructor, and prototype when using with untrusted input. Upgrade to lodash 4.17.23+",
+          "code_snippet": {
+            "startLine": 25,
+            "endLine": 33,
+            "lines": [
+              {
+                "line": 25,
+                "content": " * Should trigger ERROR violation - prototype pollution risk.",
+                "highlighted": false
+              },
+              {
+                "line": 26,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 27,
+                "content": "function unsafeUnsetProperty(obj: any, userPath: string) {",
+                "highlighted": false
+              },
+              {
+                "line": 28,
+                "content": "  // ❌ No validation of userPath - can delete prototype methods",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  _.unset(obj, userPath);",
+                "highlighted": true
+              },
+              {
+                "line": 30,
+                "content": "  return obj;",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 33,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "lodash-prototype-pollution",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+          "line": 40,
+          "column": 10,
+          "package": "lodash",
+          "function": "defaultsDeep",
+          "contract_clause": "prototype-pollution",
+          "description": "No try-catch block found. Prototype pollution vulnerability - this will crash the application.",
+          "source_doc": "https://github.com/lodash/lodash/security/advisories (CVE-2019-10744)",
+          "suggested_fix": "Caller MUST validate input objects to exclude __proto__, constructor, and prototype keys when using with untrusted data",
+          "code_snippet": {
+            "startLine": 36,
+            "endLine": 44,
+            "lines": [
+              {
+                "line": 36,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 37,
+                "content": "function unsafeDefaultsDeep(userDefaults: any) {",
+                "highlighted": false
+              },
+              {
+                "line": 38,
+                "content": "  const defaults = { theme: 'light', lang: 'en' };",
+                "highlighted": false
+              },
+              {
+                "line": 39,
+                "content": "  // ❌ No validation - can pollute Object.prototype",
+                "highlighted": false
+              },
+              {
+                "line": 40,
+                "content": "  return _.defaultsDeep(userDefaults, defaults);",
+                "highlighted": true
+              },
+              {
+                "line": 41,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 42,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": " * UNSAFE: _.omit with untrusted paths",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "lodash-prototype-pollution",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/missing-error-handling.ts",
+          "line": 49,
+          "column": 10,
+          "package": "lodash",
+          "function": "omit",
+          "contract_clause": "prototype-pollution",
+          "description": "No try-catch block found. Prototype pollution vulnerability allowing prototype method deletion - this will crash the application.",
+          "source_doc": "https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg (CVE-2025-13465)",
+          "suggested_fix": "Caller MUST validate property paths to exclude __proto__, constructor, and prototype when using with untrusted input. Upgrade to lodash 4.17.23+",
+          "code_snippet": {
+            "startLine": 45,
+            "endLine": 53,
+            "lines": [
+              {
+                "line": 45,
+                "content": " * Should trigger ERROR violation - prototype pollution risk.",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": " */",
+                "highlighted": false
+              },
+              {
+                "line": 47,
+                "content": "function unsafeOmitProperties(obj: any, userPaths: string[]) {",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "  // ❌ No validation of paths - can delete prototype methods",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "  return _.omit(obj, userPaths);",
+                "highlighted": true
+              },
+              {
+                "line": 50,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 51,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 52,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 53,
+                "content": " * UNSAFE: _.attempt without checking for error",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "lodash-prototype-pollution",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/proper-error-handling.ts",
+          "line": 32,
+          "column": 10,
+          "package": "lodash",
+          "function": "merge",
+          "contract_clause": "prototype-pollution",
+          "description": "No try-catch block found. Prototype pollution vulnerability - this will crash the application.",
+          "source_doc": "https://github.com/lodash/lodash/security/advisories (CVE-2019-10744)",
+          "suggested_fix": "Caller MUST validate input objects to exclude __proto__, constructor, and prototype keys when merging untrusted data",
+          "code_snippet": {
+            "startLine": 28,
+            "endLine": 36,
+            "lines": [
+              {
+                "line": 28,
+                "content": "    throw new Error('Invalid input: contains prototype pollution keys');",
+                "highlighted": false
+              },
+              {
+                "line": 29,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 30,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 31,
+                "content": "  const config = { timeout: 5000, retries: 3 };",
+                "highlighted": false
+              },
+              {
+                "line": 32,
+                "content": "  return _.merge(config, userInput);",
+                "highlighted": true
+              },
+              {
+                "line": 33,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 34,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 35,
+                "content": "/**",
+                "highlighted": false
+              },
+              {
+                "line": 36,
+                "content": " * Proper path validation for _.unset with untrusted paths",
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "lodash-prototype-pollution",
+          "severity": "error",
+          "file": "/Users/calebgates/WebstormProjects/behavioral-contracts/corpus/packages/lodash/fixtures/proper-error-handling.ts",
+          "line": 46,
+          "column": 3,
+          "package": "lodash",
+          "function": "unset",
+          "contract_clause": "prototype-pollution",
+          "description": "No try-catch block found. Prototype pollution vulnerability allowing prototype method deletion - this will crash the application.",
+          "source_doc": "https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg (CVE-2025-13465)",
+          "suggested_fix": "Caller MUST validate paths to exclude __proto__, constructor, and prototype when using with untrusted input. Upgrade to lodash 4.17.23+",
+          "code_snippet": {
+            "startLine": 42,
+            "endLine": 50,
+            "lines": [
+              {
+                "line": 42,
+                "content": "      userPath.includes('prototype')) {",
+                "highlighted": false
+              },
+              {
+                "line": 43,
+                "content": "    throw new Error('Invalid path: contains dangerous keywords');",
+                "highlighted": false
+              },
+              {
+                "line": 44,
+                "content": "  }",
+                "highlighted": false
+              },
+              {
+                "line": 45,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 46,
+                "content": "  _.unset(obj, userPath);",
+                "highlighted": true
+              },
+              {
+                "line": 47,
+                "content": "  return obj;",
+                "highlighted": false
+              },
+              {
+                "line": 48,
+                "content": "}",
+                "highlighted": false
+              },
+              {
+                "line": 49,
+                "content": "",
+                "highlighted": false
+              },
+              {
+                "line": 50,
+                "content": "/**",
+                "highlighted": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
