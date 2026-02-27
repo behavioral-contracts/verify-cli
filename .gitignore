@@ -11,3 +11,8 @@ output/
 *-audit.json
 *-output.txt
 *.tmp
+.behavioral-contracts
+
+# Prevent sibling repos from being tracked here
+corpus/
+dev-notes/
