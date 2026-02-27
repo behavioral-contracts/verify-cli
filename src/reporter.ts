@@ -6,11 +6,27 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import chalk from 'chalk';
+import { fileURLToPath } from 'url';
 import type { AuditRecord, Violation, VerificationSummary, EnhancedAuditRecord, PackageDiscoveryResult } from './types.js';
 import { extractCodeSnippet, formatSnippetForJSON, formatSnippetForTerminal } from './code-snippet.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const TOOL_NAME = '@behavioral-contracts/verify-cli';
-const TOOL_VERSION = '0.1.0'; // Should match package.json
+
+// Read version from package.json dynamically
+function getToolVersion(): string {
+  try {
+    const packageJsonPath = path.join(__dirname, '../../package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+    return packageJson.version;
+  } catch {
+    return '0.0.0'; // Fallback if package.json can't be read
+  }
+}
+
+const TOOL_VERSION = getToolVersion();
 
 /**
  * Enriches violations with code snippets
