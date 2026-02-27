@@ -22,7 +22,9 @@
     "test:fixtures:watch": "vitest fixture-regression",
     "test:fixtures:generate": "node scripts/generate-expected-outputs.js",
     "lint": "eslint src --ext .ts",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "verify": "node dist/index.js --tsconfig ./tsconfig.json --corpus ../corpus",
+    "verify:self": "npm run build && npm run verify"
   },
   "keywords": [
     "typescript",

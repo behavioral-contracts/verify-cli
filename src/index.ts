@@ -32,6 +32,8 @@ import {
 } from './reporters/index.js';
 import { ensureTsconfig } from './tsconfig-generator.js';
 import type { AnalyzerConfig } from './types.js';
+import { createSuppressionsCommand } from './cli/suppressions.js';
+import { generateAIPrompt } from './ai-prompt-generator.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,6 +44,9 @@ program
   .name('verify-cli')
   .description('Verify TypeScript code against behavioral contracts')
   .version('0.1.0');
+
+// Add suppressions subcommand
+program.addCommand(createSuppressionsCommand());
 
 program
   .option('--tsconfig <path>', 'Path to tsconfig.json or project directory (default: ./tsconfig.json)', './tsconfig.json')
@@ -56,9 +61,16 @@ program
   .option('--include-deprecated', 'Include deprecated contracts (default: excludes deprecated)', false)
   .option('--positive-report', 'Generate positive evidence report (default: true)', true)
   .option('--no-positive-report', 'Disable positive evidence report')
-  .parse(process.argv);
+  .option('--show-suppressions', 'Show suppressed violations in output', false)
+  .option('--check-dead-suppressions', 'Check for and report dead suppressions', false)
+  .option('--fail-on-dead-suppressions', 'Exit with error if dead suppressions are found', false)
+  .action(async (options) => {
+    // This action handler is called when the main command is invoked
+    // (i.e., not a subcommand like 'suppressions')
+    await main(options);
+  });
 
-const options = program.opts();
+program.parse(process.argv);
 
 /**
  * Find git repository root by walking up from a given path
@@ -76,35 +88,6 @@ function findGitRepoRoot(startPath: string): string | null {
   }
 
   return null;
-}
-
-/**
- * Get repository name from tsconfig path
- * Walks up to find git repo root, then uses that directory name
- */
-function getRepoNameFromTsconfig(tsconfigPath: string): string {
-  // First, try to find git repo root
-  const gitRoot = findGitRepoRoot(tsconfigPath);
-  if (gitRoot) {
-    return path.basename(gitRoot);
-  }
-
-  // Fallback: look for package.json
-  let currentDir = path.dirname(path.resolve(tsconfigPath));
-  const root = path.parse(currentDir).root;
-
-  while (currentDir !== root) {
-    const packageJsonPath = path.join(currentDir, 'package.json');
-    if (fs.existsSync(packageJsonPath)) {
-      return path.basename(currentDir);
-    }
-    currentDir = path.dirname(currentDir);
-  }
-
-  // Last resort: use directory name where tsconfig lives
-  const resolved = path.resolve(tsconfigPath);
-  const parts = resolved.split(path.sep);
-  return parts[parts.length - 2] || 'unknown-repo';
 }
 
 /**
@@ -131,20 +114,58 @@ function getGitHashFromRepo(tsconfigPath: string): string {
 }
 
 /**
- * Generate organized output path
+ * Ensure .behavioral-contracts is in .gitignore
+ */
+function ensureGitignore(projectRoot: string): void {
+  const gitignorePath = path.join(projectRoot, '.gitignore');
+  const entry = '.behavioral-contracts';
+
+  try {
+    let gitignoreContent = '';
+    if (fs.existsSync(gitignorePath)) {
+      gitignoreContent = fs.readFileSync(gitignorePath, 'utf-8');
+    }
+
+    // Check if already ignored
+    const lines = gitignoreContent.split('\n');
+    const alreadyIgnored = lines.some(line => line.trim() === entry);
+
+    if (!alreadyIgnored) {
+      // Add entry to .gitignore
+      const newContent = gitignoreContent.endsWith('\n')
+        ? gitignoreContent + entry + '\n'
+        : gitignoreContent + '\n' + entry + '\n';
+      fs.writeFileSync(gitignorePath, newContent, 'utf-8');
+    }
+  } catch (err) {
+    // If we can't update .gitignore, just warn but don't fail
+    console.warn(chalk.yellow(`Warning: Could not update .gitignore: ${err}`));
+  }
+}
+
+/**
+ * Generate organized output path in the analyzed project's .behavioral-contracts directory
  */
 function generateOutputPath(tsconfigPath: string): string {
-  const repoName = getRepoNameFromTsconfig(tsconfigPath);
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
 
   // Get git commit hash from the analyzed repo
   const gitHash = getGitHashFromRepo(tsconfigPath);
 
+  // Find the project root (git root or directory containing tsconfig)
+  const projectRoot = findGitRepoRoot(tsconfigPath) || path.dirname(path.resolve(tsconfigPath));
+
+  // Create run directory name
   const runDir = `${timestamp.replace(/T/, '-').replace(/-/g, '').substring(0, 13)}-${gitHash}`;
-  const outputDir = path.join(__dirname, '../output/runs', runDir, repoName);
+
+  // Output goes to .behavioral-contracts/runs/{runDir}/ in the analyzed project
+  const outputDir = path.join(projectRoot, '.behavioral-contracts', 'runs', runDir);
 
   // Create directory if it doesn't exist
   fs.mkdirSync(outputDir, { recursive: true });
+
+  // Ensure .behavioral-contracts is in .gitignore
+  ensureGitignore(projectRoot);
 
   return path.join(outputDir, 'audit.json');
 }
@@ -204,7 +225,7 @@ function normalizeTsconfigPath(tsconfigPath: string): string {
 /**
  * Main execution
  */
-async function main() {
+async function main(options: any) {
   console.log(chalk.bold('\nBehavioral Contract Verification\n'));
 
   // Normalize tsconfig path (allow directory or file)
@@ -307,6 +328,32 @@ async function main() {
 
   console.log(chalk.green(`✓ Analyzed ${stats.filesAnalyzed} files\n`));
 
+  // Report suppressions if requested
+  if (options.showSuppressions) {
+    const suppressedViolations = analyzer.getSuppressedViolations();
+    if (suppressedViolations.length > 0) {
+      console.log(chalk.yellow(`⚠️  ${suppressedViolations.length} suppressions active\n`));
+    }
+  }
+
+  // Check for dead suppressions if requested
+  if (options.checkDeadSuppressions || options.failOnDeadSuppressions) {
+    const deadSuppressions = analyzer.detectDeadSuppressions();
+    if (deadSuppressions.length > 0) {
+      console.log(chalk.yellow(`\n🎉 Found ${deadSuppressions.length} dead suppressions (analyzer improved!):\n`));
+      deadSuppressions.forEach((dead) => {
+        console.log(analyzer.formatDeadSuppression(dead));
+      });
+
+      if (options.failOnDeadSuppressions) {
+        console.error(chalk.red('\n❌ Failing due to dead suppressions (--fail-on-dead-suppressions)'));
+        process.exit(1);
+      }
+    } else {
+      console.log(chalk.green('✨ No dead suppressions found!\n'));
+    }
+  }
+
   // Generate audit record
   const packagesAnalyzed = Array.from(corpusResult.contracts.keys());
   const auditRecord = await generateAuditRecord(violations, {
@@ -325,6 +372,9 @@ async function main() {
   // Write JSON output
   writeAuditRecord(finalRecord, outputPath);
   console.log(chalk.gray(`Audit record written to ${outputPath}`));
+
+  // Generate AI agent prompt file
+  const aiPromptPath = await generateAIPrompt(finalRecord, outputPath);
 
   // Print terminal report
   if (options.terminal !== false) {
@@ -393,7 +443,13 @@ async function main() {
     console.log(chalk.gray(`  - ${outputTxtPath} (full terminal output)`));
     console.log(chalk.gray(`  - ${positiveReportTxtPath}`));
     console.log(chalk.gray(`  - ${positiveReportMdPath}`));
-    console.log(chalk.green(`  - file://${d3HtmlPath} (interactive visualization)\n`));
+    console.log(chalk.green(`  - file://${d3HtmlPath} (interactive visualization)`));
+
+    // Only show AI prompt if it was generated (i.e., if there are violations)
+    if (aiPromptPath) {
+      console.log(chalk.hex('#FFA500')(`  - ${aiPromptPath} (AI agent instructions)`));
+    }
+    console.log('');
   }
 
   // Final summary at the very end (easy to spot after all output)
@@ -468,13 +524,6 @@ function findDefaultCorpusPath(): string {
  */
 process.on('uncaughtException', (error) => {
   console.error(chalk.red('\nUnexpected error:'));
-  console.error(error);
-  process.exit(1);
-});
-
-// Run
-main().catch((error) => {
-  console.error(chalk.red('\nError during execution:'));
   console.error(error);
   process.exit(1);
 });

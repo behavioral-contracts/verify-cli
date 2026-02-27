@@ -16,6 +16,14 @@ import { ReactQueryAnalyzer } from './analyzers/react-query-analyzer.js';
 import { AsyncErrorAnalyzer } from './analyzers/async-error-analyzer.js';
 import { ReturnValueAnalyzer, type ReturnValueCheck } from './analyzers/return-value-analyzer.js';
 import { EventListenerAnalyzer, type EventListenerCheck } from './analyzers/event-listener-analyzer.js';
+import {
+  checkSuppression,
+  getSuppressionStats,
+  loadManifestSync,
+  detectDeadSuppressions,
+  formatDeadSuppression
+} from './suppressions/index.js';
+import type { Suppression, DeadSuppression } from './suppressions/types.js';
 
 /**
  * Main analyzer that coordinates the verification process
@@ -25,8 +33,10 @@ export class Analyzer {
   private typeChecker: ts.TypeChecker;
   private contracts: Map<string, PackageContract>;
   private violations: Violation[] = [];
+  private suppressedViolations: Array<{ violation: Violation; suppression: Suppression | any }> = [];
   private projectRoot: string;
   private includeTests: boolean;
+  private analyzerVersion: string = '1.1.0'; // From package.json
 
   // Detection maps built dynamically from contract definitions
   private typeToPackage: Map<string, string>;
@@ -102,6 +112,10 @@ export class Analyzer {
    */
   analyze(): Violation[] {
     this.violations = [];
+    this.suppressedViolations = [];
+
+    // Collect all violations first
+    const allViolations: Array<{ violation: Violation; sourceFile: ts.SourceFile }> = [];
 
     for (const sourceFile of this.program.getSourceFiles()) {
       // Skip declaration files and node_modules
@@ -114,10 +128,60 @@ export class Analyzer {
         continue;
       }
 
+      const beforeCount = this.violations.length;
       this.analyzeFile(sourceFile);
+      const afterCount = this.violations.length;
+
+      // Track which violations came from this source file
+      for (let i = beforeCount; i < afterCount; i++) {
+        allViolations.push({
+          violation: this.violations[i],
+          sourceFile
+        });
+      }
     }
 
-    return this.violations;
+    // Filter out suppressed violations
+    return this.filterSuppressedViolations(allViolations);
+  }
+
+  /**
+   * Filters out suppressed violations and updates manifest
+   */
+  private filterSuppressedViolations(
+    violationsWithSource: Array<{ violation: Violation; sourceFile: ts.SourceFile }>
+  ): Violation[] {
+    const unsuppressedViolations: Violation[] = [];
+
+    for (const { violation, sourceFile } of violationsWithSource) {
+      // Check if this violation is suppressed
+      const suppressionResult = checkSuppression({
+        projectRoot: this.projectRoot,
+        sourceFile,
+        line: violation.line,
+        column: violation.column,
+        packageName: violation.package,
+        postconditionId: violation.contract_clause,
+        analyzerVersion: this.analyzerVersion,
+        updateManifest: true
+      });
+
+      if (suppressionResult.suppressed) {
+        // Store suppressed violation for reporting
+        this.suppressedViolations.push({
+          violation,
+          suppression: suppressionResult.matchedSuppression || suppressionResult.originalSource
+        });
+      } else {
+        // Keep unsuppressed violation
+        unsuppressedViolations.push(violation);
+      }
+    }
+
+    // Update this.violations with filtered list
+    this.violations = unsuppressedViolations;
+
+    return unsuppressedViolations;
   }
 
   /**
@@ -3192,5 +3256,39 @@ export class Analyzer {
     return null;
   }
 
+  /**
+   * Get all suppressed violations
+   */
+  getSuppressedViolations(): Array<{ violation: Violation; suppression: any }> {
+    return this.suppressedViolations;
+  }
 
+  /**
+   * Get suppression statistics
+   */
+  getSuppressionStatistics() {
+    return getSuppressionStats(this.projectRoot);
+  }
+
+  /**
+   * Get suppression manifest
+   */
+  getSuppressionManifest() {
+    return loadManifestSync(this.projectRoot);
+  }
+
+  /**
+   * Detect dead suppressions (suppressions that are no longer needed)
+   */
+  detectDeadSuppressions(): DeadSuppression[] {
+    return detectDeadSuppressions(this.projectRoot, this.analyzerVersion);
+  }
+
+  /**
+   * Format dead suppression for display
+   */
+  formatDeadSuppression(dead: DeadSuppression): string {
+    return formatDeadSuppression(dead);
+  }
 }
+
