@@ -68,15 +68,18 @@ export class EventListenerAnalyzer {
    * 2. Find all .on(), .addEventListener(), .once() calls for tracked instances
    * 3. Check if all required listeners are attached
    * 4. Report violations for missing required listeners
+   *
+   * @param functionNode - The node to analyze (SourceFile for module-level, FunctionDeclaration for function-level)
+   * @param moduleLevelOnly - If true, stop traversal at function boundaries (for module-level analysis)
    */
-  analyze(functionNode: ts.Node): EventListenerCheck[] {
+  analyze(functionNode: ts.Node, moduleLevelOnly = false): EventListenerCheck[] {
     const violations: EventListenerCheck[] = [];
 
     // Step 1: Find all instance declarations requiring event listeners
-    this.findInstanceDeclarations(functionNode);
+    this.findInstanceDeclarations(functionNode, moduleLevelOnly);
 
     // Step 2: Find all event listener attachments
-    this.findEventListeners(functionNode);
+    this.findEventListeners(functionNode, moduleLevelOnly);
 
     // Step 3: Validate all required listeners are attached
     for (const [varName, instance] of this.trackedInstances.entries()) {
@@ -110,11 +113,18 @@ export class EventListenerAnalyzer {
    * - const socket = io(url)  ← Factory pattern (NEW)
    * - const client = createClient()  ← Factory pattern (NEW)
    * - this.client = axios.create()  ← Property assignment
+   *
+   * @param moduleLevelOnly - If true, stop traversal at function boundaries
    */
-  private findInstanceDeclarations(node: ts.Node): void {
+  private findInstanceDeclarations(node: ts.Node, moduleLevelOnly = false): void {
     const self = this;
 
     function visit(node: ts.Node): void {
+      // If module-level only, stop at function boundaries
+      if (moduleLevelOnly && self.isFunctionLike(node)) {
+        return; // Don't traverse into functions
+      }
+
       // Pattern: const ws = new WebSocket(url) OR const archive = archiver('zip')
       if (ts.isVariableDeclaration(node) && node.initializer) {
         self.checkNewExpression(node);
@@ -329,10 +339,15 @@ export class EventListenerAnalyzer {
    * - ws.once('error', handler)
    * - this.ws.on('error', handler)
    */
-  private findEventListeners(node: ts.Node): void {
+  private findEventListeners(node: ts.Node, moduleLevelOnly = false): void {
     const self = this;
 
     function visit(node: ts.Node): void {
+      // If module-level only, stop at function boundaries
+      if (moduleLevelOnly && self.isFunctionLike(node)) {
+        return; // Don't traverse into functions
+      }
+
       if (ts.isCallExpression(node)) {
         self.checkEventListenerCall(node);
       }
@@ -397,5 +412,19 @@ export class EventListenerAnalyzer {
     }
 
     return null;
+  }
+
+  /**
+   * Check if a node is a function-like construct
+   * Used to stop traversal at function boundaries in module-level analysis
+   */
+  private isFunctionLike(node: ts.Node): boolean {
+    return (
+      ts.isFunctionDeclaration(node) ||
+      ts.isFunctionExpression(node) ||
+      ts.isArrowFunction(node) ||
+      ts.isMethodDeclaration(node) ||
+      ts.isConstructorDeclaration(node)
+    );
   }
 }

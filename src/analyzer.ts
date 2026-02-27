@@ -509,6 +509,25 @@ export class Analyzer {
   ): void {
     const self = this;
 
+    // NEW: Module-level analysis pass
+    // Analyze code at the top level of the module (not inside functions)
+    // This catches patterns like: const myQueue = new Queue(); (at module scope)
+    // Pass true for moduleLevelOnly to stop traversal at function boundaries
+    const moduleLevelChecks = eventListenerAnalyzer.analyze(sourceFile, true);
+    for (const check of moduleLevelChecks) {
+      const violation = self.createEventListenerViolation(
+        sourceFile,
+        check,
+        fileImports
+      );
+
+      if (violation) {
+        self.violations.push(violation);
+      }
+    }
+
+    // EXISTING: Function-level analysis pass
+    // Analyze code inside functions, methods, and arrow functions
     function visitForFunctions(node: ts.Node): void {
       // Check functions (including arrow functions and methods)
       const isFunctionLike =
