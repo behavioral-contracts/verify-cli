@@ -14,6 +14,8 @@ import type {
 } from './types.js';
 import { ReactQueryAnalyzer } from './analyzers/react-query-analyzer.js';
 import { AsyncErrorAnalyzer } from './analyzers/async-error-analyzer.js';
+import { ReturnValueAnalyzer, type ReturnValueCheck } from './analyzers/return-value-analyzer.js';
+import { EventListenerAnalyzer, type EventListenerCheck } from './analyzers/event-listener-analyzer.js';
 
 /**
  * Main analyzer that coordinates the verification process
@@ -320,6 +322,14 @@ export class Analyzer {
     const asyncErrorAnalyzer = new AsyncErrorAnalyzer(sourceFile);
     this.detectAsyncErrors(sourceFile, asyncErrorAnalyzer, axiosInstances, fileImports);
 
+    // Return value error detection pass
+    const returnValueAnalyzer = new ReturnValueAnalyzer(sourceFile, this.contracts, this.typeChecker);
+    this.detectReturnValueErrors(sourceFile, returnValueAnalyzer, fileImports);
+
+    // Event listener detection pass
+    const eventListenerAnalyzer = new EventListenerAnalyzer(sourceFile, this.contracts, this.typeChecker);
+    this.detectEventListenerErrors(sourceFile, eventListenerAnalyzer, fileImports);
+
     function visit(node: ts.Node, parent?: ts.Node): void {
       // Set parent pointer if not already set
       if (parent && !(node as any).parent) {
@@ -405,6 +415,164 @@ export class Analyzer {
         }
       }
     }
+  }
+
+  /**
+   * Detects functions with unprotected return value error checks
+   */
+  private detectReturnValueErrors(
+    sourceFile: ts.SourceFile,
+    returnValueAnalyzer: ReturnValueAnalyzer,
+    fileImports: Set<string>
+  ): void {
+    const self = this;
+
+    function visitForFunctions(node: ts.Node): void {
+      // Check functions (including arrow functions and methods)
+      const isFunctionLike =
+        ts.isFunctionDeclaration(node) ||
+        ts.isFunctionExpression(node) ||
+        ts.isArrowFunction(node) ||
+        ts.isMethodDeclaration(node);
+
+      if (isFunctionLike) {
+        const returnValueChecks = returnValueAnalyzer.analyze(node);
+
+        // Create violations for unprotected return value checks
+        for (const check of returnValueChecks) {
+          const violation = self.createReturnValueViolation(
+            sourceFile,
+            check,
+            fileImports
+          );
+
+          if (violation) {
+            self.violations.push(violation);
+          }
+        }
+      }
+
+      // Continue traversing
+      ts.forEachChild(node, visitForFunctions);
+    }
+
+    visitForFunctions(sourceFile);
+  }
+
+  /**
+   * Creates a violation for unprotected return value error checks
+   */
+  private createReturnValueViolation(
+    sourceFile: ts.SourceFile,
+    check: ReturnValueCheck,
+    fileImports: Set<string>
+  ): Violation | null {
+    // Only create violation if this package is actually imported
+    if (!fileImports.has(check.packageName)) {
+      return null;
+    }
+
+    const location = sourceFile.getLineAndCharacterOfPosition(
+      check.declarationNode.getStart()
+    );
+
+    const checkLocation = check.checkNode
+      ? sourceFile.getLineAndCharacterOfPosition(check.checkNode.getStart())
+      : location;
+
+    const description = check.checkNode
+      ? `Variable '${check.variableName}' assigned from ${check.packageName}.${check.functionName}() has unprotected error check. Error handling must be in try-catch block.`
+      : `Variable '${check.variableName}' assigned from ${check.packageName}.${check.functionName}() has no error check. Return value must be checked for errors.`;
+
+    return {
+      id: `${check.packageName}-${check.postcondition.id}`,
+      severity: check.postcondition.severity || 'error',
+      file: sourceFile.fileName,
+      line: checkLocation.line + 1,
+      column: checkLocation.character + 1,
+      package: check.packageName,
+      function: check.functionName,
+      contract_clause: check.postcondition.id,
+      description,
+      source_doc: check.postcondition.source || '',
+      suggested_fix: check.postcondition.required_handling,
+    };
+  }
+
+  /**
+   * Detects instances missing required event listeners
+   */
+  private detectEventListenerErrors(
+    sourceFile: ts.SourceFile,
+    eventListenerAnalyzer: EventListenerAnalyzer,
+    fileImports: Set<string>
+  ): void {
+    const self = this;
+
+    function visitForFunctions(node: ts.Node): void {
+      // Check functions (including arrow functions and methods)
+      const isFunctionLike =
+        ts.isFunctionDeclaration(node) ||
+        ts.isFunctionExpression(node) ||
+        ts.isArrowFunction(node) ||
+        ts.isMethodDeclaration(node);
+
+      if (isFunctionLike) {
+        const eventListenerChecks = eventListenerAnalyzer.analyze(node);
+
+        // Create violations for missing event listeners
+        for (const check of eventListenerChecks) {
+          const violation = self.createEventListenerViolation(
+            sourceFile,
+            check,
+            fileImports
+          );
+
+          if (violation) {
+            self.violations.push(violation);
+          }
+        }
+      }
+
+      // Continue traversing
+      ts.forEachChild(node, visitForFunctions);
+    }
+
+    visitForFunctions(sourceFile);
+  }
+
+  /**
+   * Creates a violation for missing required event listeners
+   */
+  private createEventListenerViolation(
+    sourceFile: ts.SourceFile,
+    check: EventListenerCheck,
+    fileImports: Set<string>
+  ): Violation | null {
+    // Only create violation if this package is actually imported
+    if (!fileImports.has(check.packageName)) {
+      return null;
+    }
+
+    const location = sourceFile.getLineAndCharacterOfPosition(
+      check.declarationNode.getStart()
+    );
+
+    const description = `Instance '${check.variableName}' of ${check.packageName}.${check.className} is missing required '${check.missingEvent}' event listener. Unhandled events can cause crashes.`;
+
+    return {
+      id: `${check.packageName}-missing-${check.missingEvent}-listener`,
+      severity: check.requiredListener.severity || 'error',
+      file: sourceFile.fileName,
+      line: location.line + 1,
+      column: location.character + 1,
+      package: check.packageName,
+      function: check.className,
+      contract_clause: `missing-${check.missingEvent}-listener`,
+      description,
+      source_doc: '',
+      suggested_fix: `Add ${check.variableName}.on('${check.missingEvent}', (err) => { /* handle error */ }) to handle ${check.missingEvent} events`,
+    };
   }
 
   /**

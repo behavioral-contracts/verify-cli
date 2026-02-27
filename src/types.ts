@@ -51,6 +51,18 @@ export interface FunctionContract {
 }
 
 /**
+ * Required event listener configuration
+ */
+export interface RequiredEventListener {
+  /** Event name (e.g., "error", "failed") */
+  event: string;
+  /** Whether this listener is required */
+  required: boolean;
+  /** Severity if missing (error, warning, info) */
+  severity?: 'error' | 'warning' | 'info';
+}
+
+/**
  * Detection rules for identifying package usage in code
  */
 export interface DetectionRules {
@@ -68,6 +80,8 @@ export interface DetectionRules {
    * to eliminate false positives from pattern matching
    */
   require_instance_tracking?: boolean;
+  /** Required event listeners for event-emitting classes */
+  required_event_listeners?: RequiredEventListener[];
 }
 
 /**
@@ -79,6 +93,8 @@ export interface PackageContract {
   contract_version: string;
   maintainer: string;
   last_verified: string;
+  /** Quality/validation status (production, draft, in-development, deprecated) */
+  status?: 'production' | 'draft' | 'in-development' | 'deprecated';
   deprecated?: boolean;
   deprecated_reason?: string;
   deprecated_date?: string;
@@ -181,6 +197,7 @@ export interface AnalyzerConfig {
 export interface CorpusLoadResult {
   contracts: Map<string, PackageContract>;
   errors: string[];
+  skipped?: Array<{ package: string; status: string; reason: string }>;
 }
 
 /**
