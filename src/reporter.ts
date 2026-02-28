@@ -18,10 +18,11 @@ const TOOL_NAME = '@behavioral-contracts/verify-cli';
 // Read version from package.json dynamically
 function getToolVersion(): string {
   try {
-    const packageJsonPath = path.join(__dirname, '../../package.json');
+    // When running from dist/, __dirname is dist/, so go up one level to verify-cli root
+    const packageJsonPath = path.join(__dirname, '../package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
     return packageJson.version;
-  } catch {
+  } catch (error) {
     return '0.0.0'; // Fallback if package.json can't be read
   }
 }
